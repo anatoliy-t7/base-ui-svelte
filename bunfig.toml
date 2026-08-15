@@ -1,0 +1,3 @@
+[install]
+# Hoisted linker for predictable SvelteKit workspace resolution
+linker = "hoisted"

@@ -1,0 +1,29 @@
+<script lang="ts">
+	import { getContext } from 'svelte';
+	import { DIALOG_CONTEXT } from '../internal/context-keys.js';
+	import { mergeProps } from '../internal/merge-props.js';
+	import type { DialogContext, DialogDescriptionProps } from './types.js';
+
+	let {
+		class: className,
+		style,
+		children,
+		...rest
+	}: DialogDescriptionProps = $props();
+
+	const ctx = getContext<DialogContext>(DIALOG_CONTEXT);
+
+	const mergedProps: Record<string, unknown> = $derived(
+		mergeProps(rest, {
+			id: ctx.descriptionId,
+			class: className,
+			style
+		})
+	);
+</script>
+
+<p {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+	{#if children}
+		{@render children()}
+	{/if}
+</p>

@@ -1,0 +1,271 @@
+{
+	"name": "base-ui-svelte",
+	"version": "0.1.0",
+	"description": "Unofficial Svelte 5 port of Base UI \u2014 unstyled, accessible components",
+	"license": "MIT",
+	"type": "module",
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js",
+			"default": "./dist/index.js"
+		},
+		"./accordion": {
+			"types": "./dist/accordion/index.d.ts",
+			"svelte": "./dist/accordion/index.js",
+			"default": "./dist/accordion/index.js"
+		},
+		"./alert-dialog": {
+			"types": "./dist/alert-dialog/index.d.ts",
+			"svelte": "./dist/alert-dialog/index.js",
+			"default": "./dist/alert-dialog/index.js"
+		},
+		"./autocomplete": {
+			"types": "./dist/autocomplete/index.d.ts",
+			"svelte": "./dist/autocomplete/index.js",
+			"default": "./dist/autocomplete/index.js"
+		},
+		"./avatar": {
+			"types": "./dist/avatar/index.d.ts",
+			"svelte": "./dist/avatar/index.js",
+			"default": "./dist/avatar/index.js"
+		},
+		"./button": {
+			"types": "./dist/button/index.d.ts",
+			"svelte": "./dist/button/index.js",
+			"default": "./dist/button/index.js"
+		},
+		"./checkbox": {
+			"types": "./dist/checkbox/index.d.ts",
+			"svelte": "./dist/checkbox/index.js",
+			"default": "./dist/checkbox/index.js"
+		},
+		"./checkbox-group": {
+			"types": "./dist/checkbox-group/index.d.ts",
+			"svelte": "./dist/checkbox-group/index.js",
+			"default": "./dist/checkbox-group/index.js"
+		},
+		"./collapsible": {
+			"types": "./dist/collapsible/index.d.ts",
+			"svelte": "./dist/collapsible/index.js",
+			"default": "./dist/collapsible/index.js"
+		},
+		"./combobox": {
+			"types": "./dist/combobox/index.d.ts",
+			"svelte": "./dist/combobox/index.js",
+			"default": "./dist/combobox/index.js"
+		},
+		"./context-menu": {
+			"types": "./dist/context-menu/index.d.ts",
+			"svelte": "./dist/context-menu/index.js",
+			"default": "./dist/context-menu/index.js"
+		},
+		"./csp-provider": {
+			"types": "./dist/csp-provider/index.d.ts",
+			"svelte": "./dist/csp-provider/index.js",
+			"default": "./dist/csp-provider/index.js"
+		},
+		"./dialog": {
+			"types": "./dist/dialog/index.d.ts",
+			"svelte": "./dist/dialog/index.js",
+			"default": "./dist/dialog/index.js"
+		},
+		"./direction-provider": {
+			"types": "./dist/direction-provider/index.d.ts",
+			"svelte": "./dist/direction-provider/index.js",
+			"default": "./dist/direction-provider/index.js"
+		},
+		"./drawer": {
+			"types": "./dist/drawer/index.d.ts",
+			"svelte": "./dist/drawer/index.js",
+			"default": "./dist/drawer/index.js"
+		},
+		"./field": {
+			"types": "./dist/field/index.d.ts",
+			"svelte": "./dist/field/index.js",
+			"default": "./dist/field/index.js"
+		},
+		"./fieldset": {
+			"types": "./dist/fieldset/index.d.ts",
+			"svelte": "./dist/fieldset/index.js",
+			"default": "./dist/fieldset/index.js"
+		},
+		"./form": {
+			"types": "./dist/form/index.d.ts",
+			"svelte": "./dist/form/index.js",
+			"default": "./dist/form/index.js"
+		},
+		"./input": {
+			"types": "./dist/input/index.d.ts",
+			"svelte": "./dist/input/index.js",
+			"default": "./dist/input/index.js"
+		},
+		"./menu": {
+			"types": "./dist/menu/index.d.ts",
+			"svelte": "./dist/menu/index.js",
+			"default": "./dist/menu/index.js"
+		},
+		"./menubar": {
+			"types": "./dist/menubar/index.d.ts",
+			"svelte": "./dist/menubar/index.js",
+			"default": "./dist/menubar/index.js"
+		},
+		"./merge-props": {
+			"types": "./dist/merge-props/index.d.ts",
+			"svelte": "./dist/merge-props/index.js",
+			"default": "./dist/merge-props/index.js"
+		},
+		"./meter": {
+			"types": "./dist/meter/index.d.ts",
+			"svelte": "./dist/meter/index.js",
+			"default": "./dist/meter/index.js"
+		},
+		"./navigation-menu": {
+			"types": "./dist/navigation-menu/index.d.ts",
+			"svelte": "./dist/navigation-menu/index.js",
+			"default": "./dist/navigation-menu/index.js"
+		},
+		"./number-field": {
+			"types": "./dist/number-field/index.d.ts",
+			"svelte": "./dist/number-field/index.js",
+			"default": "./dist/number-field/index.js"
+		},
+		"./otp-field": {
+			"types": "./dist/otp-field/index.d.ts",
+			"svelte": "./dist/otp-field/index.js",
+			"default": "./dist/otp-field/index.js"
+		},
+		"./popover": {
+			"types": "./dist/popover/index.d.ts",
+			"svelte": "./dist/popover/index.js",
+			"default": "./dist/popover/index.js"
+		},
+		"./preview-card": {
+			"types": "./dist/preview-card/index.d.ts",
+			"svelte": "./dist/preview-card/index.js",
+			"default": "./dist/preview-card/index.js"
+		},
+		"./progress": {
+			"types": "./dist/progress/index.d.ts",
+			"svelte": "./dist/progress/index.js",
+			"default": "./dist/progress/index.js"
+		},
+		"./radio": {
+			"types": "./dist/radio/index.d.ts",
+			"svelte": "./dist/radio/index.js",
+			"default": "./dist/radio/index.js"
+		},
+		"./radio-group": {
+			"types": "./dist/radio-group/index.d.ts",
+			"svelte": "./dist/radio-group/index.js",
+			"default": "./dist/radio-group/index.js"
+		},
+		"./scroll-area": {
+			"types": "./dist/scroll-area/index.d.ts",
+			"svelte": "./dist/scroll-area/index.js",
+			"default": "./dist/scroll-area/index.js"
+		},
+		"./select": {
+			"types": "./dist/select/index.d.ts",
+			"svelte": "./dist/select/index.js",
+			"default": "./dist/select/index.js"
+		},
+		"./separator": {
+			"types": "./dist/separator/index.d.ts",
+			"svelte": "./dist/separator/index.js",
+			"default": "./dist/separator/index.js"
+		},
+		"./slider": {
+			"types": "./dist/slider/index.d.ts",
+			"svelte": "./dist/slider/index.js",
+			"default": "./dist/slider/index.js"
+		},
+		"./switch": {
+			"types": "./dist/switch/index.d.ts",
+			"svelte": "./dist/switch/index.js",
+			"default": "./dist/switch/index.js"
+		},
+		"./tabs": {
+			"types": "./dist/tabs/index.d.ts",
+			"svelte": "./dist/tabs/index.js",
+			"default": "./dist/tabs/index.js"
+		},
+		"./toast": {
+			"types": "./dist/toast/index.d.ts",
+			"svelte": "./dist/toast/index.js",
+			"default": "./dist/toast/index.js"
+		},
+		"./toggle": {
+			"types": "./dist/toggle/index.d.ts",
+			"svelte": "./dist/toggle/index.js",
+			"default": "./dist/toggle/index.js"
+		},
+		"./toggle-group": {
+			"types": "./dist/toggle-group/index.d.ts",
+			"svelte": "./dist/toggle-group/index.js",
+			"default": "./dist/toggle-group/index.js"
+		},
+		"./toolbar": {
+			"types": "./dist/toolbar/index.d.ts",
+			"svelte": "./dist/toolbar/index.js",
+			"default": "./dist/toolbar/index.js"
+		},
+		"./tooltip": {
+			"types": "./dist/tooltip/index.d.ts",
+			"svelte": "./dist/tooltip/index.js",
+			"default": "./dist/tooltip/index.js"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"sideEffects": false,
+	"scripts": {
+		"build": "svelte-package -i src -o dist",
+		"check": "svelte-check --tsconfig ./tsconfig.check.json",
+		"test": "vitest run",
+		"test:watch": "vitest"
+	},
+	"peerDependencies": {
+		"svelte": "^5.0.0"
+	},
+	"dependencies": {
+		"@floating-ui/dom": "^1.8.0"
+	},
+	"devDependencies": {
+		"@sveltejs/package": "^2.5.8",
+		"@sveltejs/vite-plugin-svelte": "^7.3.0",
+		"@testing-library/jest-dom": "^6.10.0",
+		"@testing-library/svelte": "^5.4.2",
+		"@testing-library/user-event": "^14.6.4",
+		"@types/node": "^22.20.1",
+		"happy-dom": "^20.11.2",
+		"iconv-lite": "^0.7.3",
+		"jsdom": "^26.1.0",
+		"publint": "^0.3.23",
+		"svelte": "^5.56.9",
+		"svelte-check": "^4.7.6",
+		"typescript": "^5.9.3",
+		"vite": "^8.2.1",
+		"vitest": "^3.2.7",
+		"vitest-axe": "^0.1.0"
+	},
+	"keywords": [
+		"svelte",
+		"svelte5",
+		"base-ui",
+		"headless",
+		"unstyled",
+		"a11y",
+		"components"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/anatoliy-t7/base-ui-svelte.git"
+	}
+}
