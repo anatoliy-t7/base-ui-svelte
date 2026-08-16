@@ -1,3 +1,5 @@
+<script lang="ts"></script>
+
 <svg
 	class="brand-mark"
 	viewBox="0 0 32 32"

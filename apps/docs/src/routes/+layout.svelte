@@ -1,4 +1,11 @@
 <script lang="ts">
+	import '@fontsource/ibm-plex-sans/400.css';
+	import '@fontsource/ibm-plex-sans/400-italic.css';
+	import '@fontsource/ibm-plex-sans/500.css';
+	import '@fontsource/ibm-plex-sans/600.css';
+	import '@fontsource/ibm-plex-sans/700.css';
+	import '@fontsource/ibm-plex-mono/400.css';
+	import '@fontsource/ibm-plex-mono/500.css';
 	import '../app.css';
 	import { ScrollArea } from 'base-ui-svelte/scroll-area';
 	import BrandMark from '$lib/BrandMark.svelte';
@@ -56,12 +63,11 @@
 <svelte:window onkeydown={onKeydown} />
 
 <svelte:head>
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-	<link
-		href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
-		rel="stylesheet"
-	/>
+	<script
+		defer
+		src="https://stats.t7t.app/script.js"
+		data-website-id="9aa36b1d-429a-4dee-9216-ada9204835e7"
+	></script>
 </svelte:head>
 
 <a class="skip-link" href="#main">Skip to content</a>
