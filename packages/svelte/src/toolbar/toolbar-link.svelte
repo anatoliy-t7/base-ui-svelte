@@ -6,13 +6,7 @@
 	import type { DirectionContext } from '../direction-provider/types.js';
 	import type { ToolbarContext, ToolbarLinkProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		id: idProp,
-		children,
-		...rest
-	}: ToolbarLinkProps = $props();
+	let { class: className, style, id: idProp, children, ...rest }: ToolbarLinkProps = $props();
 
 	const fallbackId = useId('toolbar-link');
 	const id = $derived(idProp ?? fallbackId);
@@ -26,17 +20,9 @@
 		const direction = directionContext?.direction ?? 'ltr';
 		const rtl = direction === 'rtl' && ctx.orientation === 'horizontal';
 		const prevKey =
-			ctx.orientation === 'horizontal'
-				? rtl
-					? 'ArrowRight'
-					: 'ArrowLeft'
-				: 'ArrowUp';
+			ctx.orientation === 'horizontal' ? (rtl ? 'ArrowRight' : 'ArrowLeft') : 'ArrowUp';
 		const nextKey =
-			ctx.orientation === 'horizontal'
-				? rtl
-					? 'ArrowLeft'
-					: 'ArrowRight'
-				: 'ArrowDown';
+			ctx.orientation === 'horizontal' ? (rtl ? 'ArrowLeft' : 'ArrowRight') : 'ArrowDown';
 		if (event.key === prevKey) {
 			event.preventDefault();
 			ctx.moveFocus(id, -1);
@@ -56,8 +42,8 @@
 			onfocus: () => {
 				ctx.setActiveId(id);
 			},
-			onkeydown: onToolbarKeyDown
-		})
+			onkeydown: onToolbarKeyDown,
+		}),
 	);
 </script>
 
@@ -69,7 +55,7 @@
 			element,
 			kind: 'link',
 			disabled: false,
-			focusableWhenDisabled: true
+			focusableWhenDisabled: true,
 		})}
 	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
 >

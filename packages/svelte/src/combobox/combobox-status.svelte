@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ComboboxContext, ComboboxStatusProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ComboboxStatusProps = $props();
+	let { class: className, style, children, ...rest }: ComboboxStatusProps = $props();
 
 	const ctx = getContext<ComboboxContext>(COMBOBOX_CONTEXT);
 
@@ -21,8 +16,8 @@
 			'aria-live': 'polite',
 			'aria-atomic': 'true',
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

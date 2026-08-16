@@ -3,7 +3,7 @@ import type {
 	HTMLAttributes,
 	HTMLButtonAttributes,
 	HTMLInputAttributes,
-	HTMLLabelAttributes
+	HTMLLabelAttributes,
 } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
 import type { Align, Side } from '../internal/floating.svelte.js';
@@ -60,8 +60,15 @@ export type ComboboxContext = {
 	readonly refs: ComboboxRefs;
 	readonly presence: ReturnType<typeof createPresence>;
 	readonly disabled: boolean;
+	readonly readOnly: boolean;
+	readonly required: boolean;
+	readonly name: string | undefined;
+	readonly form: string | undefined;
 	readonly filter: boolean;
 	readonly multiple: boolean;
+	readonly loopFocus: boolean;
+	readonly modal: boolean;
+	readonly openOnInputClick: boolean;
 	isSelected(value: string): boolean;
 	removeValue(value: string, event: Event): void;
 	getSelectedValues(): string[];
@@ -95,12 +102,22 @@ export type ComboboxRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>
 	onInputChange?: ((value: string, event?: Event) => void) | undefined;
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
-	onOpenChange?:
-		| ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void)
-		| undefined;
+	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
+	/** Called after open/close animations complete. */
+	onOpenChangeComplete?: ((open: boolean) => void) | undefined;
 	disabled?: boolean;
+	readOnly?: boolean;
+	required?: boolean;
+	name?: string | undefined;
+	form?: string | undefined;
 	filter?: boolean;
 	multiple?: boolean;
+	/** Whether highlight wraps at list ends. @default true */
+	loopFocus?: boolean;
+	/** Whether the popup behaves as a modal layer. @default false */
+	modal?: boolean;
+	/** Open the popup when the input is clicked. @default true */
+	openOnInputClick?: boolean;
 	items?: ComboboxItemsProp | undefined;
 	children?: Snippet<
 		[{ value: ComboboxValue; inputValue: string; open: boolean; disabled: boolean }]

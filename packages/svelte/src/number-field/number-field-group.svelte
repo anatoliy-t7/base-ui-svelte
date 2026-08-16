@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { NumberFieldContext, NumberFieldGroupProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: NumberFieldGroupProps = $props();
+	let { class: className, style, children, ...rest }: NumberFieldGroupProps = $props();
 
 	const ctx = getContext<NumberFieldContext>(NUMBER_FIELD_CONTEXT);
 
@@ -18,8 +13,8 @@
 			role: 'group',
 			class: className,
 			style,
-			'data-disabled': ctx.disabled ? '' : undefined
-		})
+			'data-disabled': ctx.disabled ? '' : undefined,
+		}),
 	);
 </script>
 

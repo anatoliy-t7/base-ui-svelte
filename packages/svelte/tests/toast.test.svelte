@@ -12,8 +12,8 @@
 				children: 'Undo',
 				onclick: () => {
 					toaster.close(toaster.toasts[0]?.id ?? '');
-				}
-			}
+				},
+			},
 		});
 	}
 </script>

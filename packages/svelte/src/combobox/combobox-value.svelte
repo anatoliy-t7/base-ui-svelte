@@ -21,12 +21,15 @@
 		mergeProps(rest, {
 			class: className,
 			style,
-			'data-placeholder': !hasSelection ? '' : undefined
-		})
+			'data-placeholder': !hasSelection ? '' : undefined,
+		}),
 	);
 </script>
 
-<span {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+<span
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+>
 	{#if children}
 		{@render children(ctx.value)}
 	{:else}

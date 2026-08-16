@@ -2,20 +2,15 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { OtpFieldSeparatorProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: OtpFieldSeparatorProps = $props();
+	let { class: className, style, children, ...rest }: OtpFieldSeparatorProps = $props();
 
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			role: 'separator',
 			class: className,
 			style,
-			'aria-hidden': 'true'
-		})
+			'aria-hidden': 'true',
+		}),
 	);
 </script>
 

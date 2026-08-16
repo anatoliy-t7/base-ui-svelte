@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SelectItemContext, SelectItemIndicatorProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: SelectItemIndicatorProps = $props();
+	let { class: className, style, children, ...rest }: SelectItemIndicatorProps = $props();
 
 	const item = getContext<SelectItemContext>(SELECT_ITEM_CONTEXT);
 
@@ -21,13 +16,16 @@
 			style,
 			hidden: !visible ? true : undefined,
 			'data-selected': item.selected ? '' : undefined,
-			'data-disabled': item.disabled ? '' : undefined
-		})
+			'data-disabled': item.disabled ? '' : undefined,
+		}),
 	);
 </script>
 
 {#if visible}
-	<span {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+	<span
+		{...mergedProps}
+		style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+	>
 		{#if children}
 			{@render children()}
 		{:else}

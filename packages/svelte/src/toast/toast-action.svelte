@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ToastActionProps, ToastContext } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ToastActionProps = $props();
+	let { class: className, style, children, ...rest }: ToastActionProps = $props();
 
 	const ctx = getContext<ToastContext>(TOAST_CONTEXT);
 	const actionProps = $derived(ctx.toast?.actionProps);
@@ -19,8 +14,8 @@
 		mergeProps(actionProps ?? {}, rest, {
 			type: 'button',
 			class: className,
-			style
-		})
+			style,
+		}),
 	);
 </script>
 

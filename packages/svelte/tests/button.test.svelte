@@ -3,17 +3,11 @@
 
 	let {
 		disabled = false,
-		focusableWhenDisabled = false
+		focusableWhenDisabled = false,
 	}: {
 		disabled?: boolean;
 		focusableWhenDisabled?: boolean;
 	} = $props();
 </script>
 
-<Button
-	data-testid="button"
-	{disabled}
-	{focusableWhenDisabled}
->
-	Click me
-</Button>
+<Button data-testid="button" {disabled} {focusableWhenDisabled}>Click me</Button>

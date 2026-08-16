@@ -12,4 +12,9 @@
 		transform: translateY(-0.25rem) scale(0.96);
 	}
 }
-.preview-card-trigger { @apply font-semibold text-accent no-underline hover:underline; }
+.preview-card-backdrop {
+	@apply fixed inset-0 z-40 bg-transparent;
+}
+.preview-card-trigger {
+	@apply font-semibold text-accent no-underline hover:underline;
+}

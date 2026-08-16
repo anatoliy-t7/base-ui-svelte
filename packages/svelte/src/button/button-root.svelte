@@ -54,8 +54,8 @@
 			onclick: (event: MouseEvent) => {
 				activate(event);
 			},
-			onkeydown: onKeyDown
-		})
+			onkeydown: onKeyDown,
+		}),
 	);
 </script>
 

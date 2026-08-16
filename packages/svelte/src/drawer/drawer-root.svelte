@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { getContext, hasContext, onDestroy, setContext, untrack } from 'svelte';
-	import {
-		createControllableOpen,
-		useId
-	} from '../internal/controllable.svelte.js';
+	import { createControllableOpen, useId } from '../internal/controllable.svelte.js';
 	import { DRAWER_CONTEXT, DRAWER_PROVIDER_CONTEXT } from '../internal/context-keys.js';
 	import { createPresence } from '../internal/presence.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
@@ -16,7 +13,7 @@
 		resolveSnapFractions,
 		signedMovement,
 		swipeStrength,
-		VELOCITY_THRESHOLD
+		VELOCITY_THRESHOLD,
 	} from './swipe-utils.js';
 	import type {
 		DrawerContext,
@@ -24,7 +21,7 @@
 		DrawerRefs,
 		DrawerRootProps,
 		DrawerSwipeMode,
-		DrawerSwipeVisual
+		DrawerSwipeVisual,
 	} from './types.js';
 	import type { OpenChangeReason } from '../internal/controllable.svelte.js';
 
@@ -36,6 +33,7 @@
 		modal = true,
 		disablePointerDismissal = false,
 		snapPoints,
+		handle,
 		class: className,
 		style,
 		id = useId('drawer'),
@@ -54,17 +52,20 @@
 		getDefaultOpen: () => defaultOpen,
 		onOpenChange: (next, eventDetails) => {
 			onOpenChange?.(next, eventDetails);
+			if (!next) {
+				handle?.clearPayload();
+			}
 		},
 		setOpenProp: (next) => {
 			open = next;
-		}
+		},
 	});
 
 	const presence = createPresence(() => openState.open);
 
 	const refs: DrawerRefs = {
 		trigger: null,
-		popup: null
+		popup: null,
 	};
 
 	const triggerId = useId('drawer-trigger');
@@ -106,6 +107,14 @@
 		openState.setOpen(next, reason);
 	}
 
+	$effect(() => {
+		if (!handle) return;
+		return handle.attach({
+			setOpen,
+			getOpen: () => openState.open,
+		});
+	});
+
 	function setActiveSnapPointIndex(index: number): void {
 		activeSnapPointIndex = Math.max(0, index);
 	}
@@ -136,7 +145,7 @@
 		nextPointerId: number,
 		nextStartX: number,
 		nextStartY: number,
-		mode: DrawerSwipeMode
+		mode: DrawerSwipeMode,
 	): void {
 		pointerId = nextPointerId;
 		startX = nextStartX;
@@ -158,12 +167,12 @@
 						resolvedSwipeDirection === 'left' || resolvedSwipeDirection === 'right'
 							? refs.popup.getBoundingClientRect().width
 							: refs.popup.getBoundingClientRect().height,
-						1
+						1,
 					)
 				: typeof window !== 'undefined'
 					? window.innerHeight
 					: 1,
-			1
+			1,
 		);
 		const fractions = resolveSnapFractions(snapPoints, size);
 		if (fractions.length > 0) {
@@ -178,12 +187,7 @@
 		}
 	}
 
-	function updateSwipe(
-		clientX: number,
-		clientY: number,
-		timeStamp: number,
-		size: number
-	): void {
+	function updateSwipe(clientX: number, clientY: number, timeStamp: number, size: number): void {
 		if (!swiping || pointerId === null) return;
 
 		const direction = resolvedSwipeDirection;
@@ -219,10 +223,7 @@
 			const dragFraction = rawAxis / safeSize;
 			const nextFraction = Math.min(1, Math.max(0, snapAnchorFraction - dragFraction));
 			const dismissProgress = Math.max(0, snapAnchorFraction - nextFraction);
-			const { delta, progress } = applySwipeResistance(
-				dismissProgress * safeSize,
-				safeSize
-			);
+			const { delta, progress } = applySwipeResistance(dismissProgress * safeSize, safeSize);
 			const movement = signedMovement(direction, delta);
 			swipeMovementX = movement.movementX;
 			swipeMovementY = movement.movementY;
@@ -252,8 +253,7 @@
 
 		if (mode === 'open') {
 			const isTap = progress < 0.05 && Math.abs(currentVelocity) < VELOCITY_THRESHOLD;
-			const shouldOpen =
-				isTap || progress > OPEN_PROGRESS || currentVelocity < -VELOCITY_THRESHOLD;
+			const shouldOpen = isTap || progress > OPEN_PROGRESS || currentVelocity < -VELOCITY_THRESHOLD;
 			if (shouldOpen) {
 				if (fractions.length > 0) {
 					setActiveSnapPointIndex(fractions.length - 1);
@@ -367,7 +367,10 @@
 		descriptionId,
 		popupId,
 		refs,
-		presence
+		presence,
+		get payload() {
+			return handle?.payload;
+		},
 	} satisfies DrawerContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -378,13 +381,13 @@
 			'data-open': openState.open ? '' : undefined,
 			'data-closed': !openState.open ? '' : undefined,
 			'data-swipe-direction': resolvedSwipeDirection,
-			'data-swiping': swiping ? '' : undefined
-		})
+			'data-swiping': swiping ? '' : undefined,
+		}),
 	);
 </script>
 
 <div {...rootProps} style={typeof rootProps.style === 'string' ? rootProps.style : undefined}>
 	{#if children}
-		{@render children({ open: openState.open })}
+		{@render children({ open: openState.open, payload: handle?.payload })}
 	{/if}
 </div>

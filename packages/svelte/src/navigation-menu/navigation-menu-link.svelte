@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { NavigationMenuContext, NavigationMenuLinkProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: NavigationMenuLinkProps = $props();
+	let { class: className, style, children, ...rest }: NavigationMenuLinkProps = $props();
 
 	const root = getContext<NavigationMenuContext>(NAVIGATION_MENU_CONTEXT);
 
@@ -20,8 +15,8 @@
 			role: 'menuitem',
 			onpointerenter: () => {
 				root.close();
-			}
-		})
+			},
+		}),
 	);
 </script>
 

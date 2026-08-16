@@ -24,6 +24,9 @@ import Group from './combobox-group.svelte';
 import GroupLabel from './combobox-group-label.svelte';
 import Row from './combobox-row.svelte';
 import Collection from './combobox-collection.svelte';
+import { useFilter } from '../internal/filter.js';
+
+export { useFilter };
 
 export const Combobox = {
 	Root,
@@ -51,7 +54,8 @@ export const Combobox = {
 	Group,
 	GroupLabel,
 	Row,
-	Collection
+	Collection,
+	useFilter,
 };
 
 export type {
@@ -87,5 +91,5 @@ export type {
 	ComboboxGroupContext,
 	ComboboxValue,
 	ComboboxCollectionItem,
-	ComboboxItemsProp
+	ComboboxItemsProp,
 } from './types.js';

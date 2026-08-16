@@ -1,16 +1,27 @@
 .slider {
-  @apply grid max-w-72 grid-cols-[1fr_auto] gap-x-3 gap-y-1.5;
+	@apply grid w-full max-w-md grid-cols-[1fr_auto] gap-x-3 gap-y-1.5;
 }
-.slider-label, .slider-value { @apply text-sm; }
-.slider-control { @apply col-span-full py-2; }
+.slider-label,
+.slider-value {
+	@apply text-sm;
+}
+.slider-control {
+	@apply col-span-full py-2;
+}
 .slider-track {
-  @apply relative h-1.5 rounded-full bg-default;
+	@apply relative h-1.5 rounded-full bg-default;
 }
 .slider-indicator {
-  @apply absolute inset-y-0 start-0 rounded-full bg-accent;
+	@apply absolute inset-y-0 start-0 rounded-full bg-accent;
 }
 .slider-thumb {
-  @apply absolute top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-accent bg-surface outline-none;
-  &:focus-visible, &[data-focus-visible="true"] { @apply status-focused; }
-  &:disabled, &[data-disabled] { @apply status-disabled; }
+	@apply absolute top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-accent bg-surface outline-none;
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply status-focused;
+	}
+	&:disabled,
+	&[data-disabled] {
+		@apply status-disabled;
+	}
 }

@@ -20,6 +20,21 @@ describe('Checkbox', () => {
 		expect(checkbox).toHaveAttribute('aria-checked', 'false');
 	});
 
+	it('exposes indeterminate as aria-checked mixed', () => {
+		render(CheckboxTest, { indeterminate: true });
+		expect(screen.getByTestId('checkbox')).toHaveAttribute('aria-checked', 'mixed');
+		expect(screen.getByTestId('checkbox')).toHaveAttribute('data-indeterminate');
+	});
+
+	it('does not toggle when readOnly', async () => {
+		const user = userEvent.setup();
+		render(CheckboxTest, { readOnly: true });
+
+		const checkbox = screen.getByTestId('checkbox');
+		await user.click(checkbox);
+		expect(checkbox).toHaveAttribute('aria-checked', 'false');
+	});
+
 	it('has no axe violations', async () => {
 		const { container } = render(CheckboxTest);
 		expect(await axe(container)).toHaveNoViolations();

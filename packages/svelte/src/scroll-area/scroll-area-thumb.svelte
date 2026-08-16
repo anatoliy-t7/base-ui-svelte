@@ -5,12 +5,7 @@
 	import { SCROLLBAR_CONTEXT } from './scrollbar-context.js';
 	import type { ScrollAreaContext, ScrollAreaThumbProps, ScrollbarContext } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ScrollAreaThumbProps = $props();
+	let { class: className, style, children, ...rest }: ScrollAreaThumbProps = $props();
 
 	const ctx = getContext<ScrollAreaContext>(SCROLL_AREA_CONTEXT);
 	const scrollbar = getContext<ScrollbarContext>(SCROLLBAR_CONTEXT);
@@ -97,14 +92,14 @@
 						`height:${sizePercent}%`,
 						`top:${offsetPercent}%`,
 						'left:0',
-						'right:0'
+						'right:0',
 					]
 				: [
 						'position:absolute',
 						`width:${sizePercent}%`,
 						`left:${offsetPercent}%`,
 						'top:0',
-						'bottom:0'
+						'bottom:0',
 					];
 		if (typeof style === 'string' && style.length > 0) {
 			parts.push(style);
@@ -128,8 +123,8 @@
 			onpointerdown: onPointerDown,
 			onpointermove: onPointerMove,
 			onpointerup: onPointerUp,
-			onpointercancel: onPointerUp
-		})
+			onpointercancel: onPointerUp,
+		}),
 	);
 </script>
 

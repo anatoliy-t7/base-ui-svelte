@@ -17,7 +17,7 @@
 	setContext(FIELDSET_CONTEXT, {
 		get disabled() {
 			return disabled;
-		}
+		},
 	} satisfies FieldsetContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -26,8 +26,8 @@
 			class: className,
 			style,
 			disabled: disabled || undefined,
-			'data-disabled': disabled ? '' : undefined
-		})
+			'data-disabled': disabled ? '' : undefined,
+		}),
 	);
 </script>
 

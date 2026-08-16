@@ -9,11 +9,20 @@
 		value = $bindable(undefined),
 		defaultValue = null,
 		onValueChange,
+		onValueCommitted,
 		min,
 		max,
 		step = 1,
+		smallStep = 1,
+		largeStep = 10,
+		allowOutOfRange = false,
+		snapOnStep = true,
+		locale,
+		format,
 		disabled = false,
+		readOnly = false,
 		name,
+		form,
 		required = false,
 		class: className,
 		style,
@@ -32,21 +41,28 @@
 	let scrubPixelSensitivity = $state(2);
 
 	const isValueControlled = $derived(value !== undefined);
-	const currentValue = $derived(
-		value !== undefined ? value : (uncontrolledValue ?? defaultValue)
-	);
+	const currentValue = $derived(value !== undefined ? value : (uncontrolledValue ?? defaultValue));
 
 	const inputId = useId('number-field-input');
 
+	const formatter = $derived.by(() => {
+		if (format == null && locale == null) return null;
+		return new Intl.NumberFormat(locale, format);
+	});
+
 	function clamp(next: number): number {
 		let result = next;
-		if (min !== undefined) result = Math.max(min, result);
-		if (max !== undefined) result = Math.min(max, result);
-		if (step > 0 && min !== undefined) {
-			const stepped = Math.round((result - min) / step) * step + min;
-			result = Number(stepped.toFixed(10));
+		if (!allowOutOfRange) {
 			if (min !== undefined) result = Math.max(min, result);
 			if (max !== undefined) result = Math.min(max, result);
+		}
+		if (snapOnStep && step > 0 && min !== undefined) {
+			const stepped = Math.round((result - min) / step) * step + min;
+			result = Number(stepped.toFixed(10));
+			if (!allowOutOfRange) {
+				if (min !== undefined) result = Math.max(min, result);
+				if (max !== undefined) result = Math.min(max, result);
+			}
 		}
 		return result;
 	}
@@ -60,12 +76,17 @@
 		return Number.isFinite(parsed) ? parsed : null;
 	}
 
+	function formatDisplay(next: number | null): string {
+		if (next == null) return '';
+		return formatter ? formatter.format(next) : String(next);
+	}
+
 	function syncInputFromValue(next: number | null): void {
-		inputValue = next == null ? '' : String(next);
+		inputValue = formatDisplay(next);
 	}
 
 	function writeValue(next: number | null, event: Event, syncInput: boolean): void {
-		if (disabled) return;
+		if (disabled || readOnly) return;
 		if (isValueControlled) {
 			value = next;
 		} else {
@@ -82,7 +103,7 @@
 	}
 
 	function setInputValue(next: string, event?: Event): void {
-		if (disabled) return;
+		if (disabled || readOnly) return;
 		inputValue = next;
 		if (!event) return;
 		const trimmed = next.trim();
@@ -97,25 +118,38 @@
 	}
 
 	function commitInput(event: Event): void {
-		if (disabled) return;
+		if (disabled || readOnly) return;
 		const parsed = parseNumber(inputValue);
 		if (parsed == null) {
 			writeValue(null, event, true);
+			onValueCommitted?.(null, event);
 			return;
 		}
-		writeValue(clamp(parsed), event, true);
+		const next = clamp(parsed);
+		writeValue(next, event, true);
+		onValueCommitted?.(next, event);
+	}
+
+	function resolveStepAmount(event: Event): number {
+		if (event instanceof KeyboardEvent || event instanceof MouseEvent) {
+			if (event.shiftKey) return largeStep;
+			if (event.altKey) return smallStep;
+		}
+		return step;
 	}
 
 	function increment(event: Event): void {
-		if (disabled) return;
-		const base = currentValue ?? (min !== undefined ? min - step : 0);
-		writeValue(clamp(base + step), event, true);
+		if (disabled || readOnly) return;
+		const amount = resolveStepAmount(event);
+		const base = currentValue ?? (min !== undefined ? min - amount : 0);
+		writeValue(clamp(base + amount), event, true);
 	}
 
 	function decrement(event: Event): void {
-		if (disabled) return;
-		const base = currentValue ?? (max !== undefined ? max + step : 0);
-		writeValue(clamp(base - step), event, true);
+		if (disabled || readOnly) return;
+		const amount = resolveStepAmount(event);
+		const base = currentValue ?? (max !== undefined ? max + amount : 0);
+		writeValue(clamp(base - amount), event, true);
 	}
 
 	function setInputFocused(focused: boolean): void {
@@ -123,7 +157,7 @@
 	}
 
 	function startScrub(clientX: number, event: PointerEvent, pixelSensitivity = 2): void {
-		if (disabled) return;
+		if (disabled || readOnly) return;
 		scrubbing = true;
 		scrubStartX = clientX;
 		scrubStartValue = currentValue;
@@ -132,7 +166,7 @@
 	}
 
 	function moveScrub(clientX: number, event: PointerEvent): void {
-		if (!scrubbing || disabled) return;
+		if (!scrubbing || disabled || readOnly) return;
 		scrubPointer = { x: event.clientX, y: event.clientY };
 		const delta = clientX - scrubStartX;
 		const steps = Math.trunc(delta / scrubPixelSensitivity);
@@ -140,22 +174,30 @@
 		writeValue(clamp(base + steps * step), event, true);
 	}
 
-	function endScrub(): void {
+	function endScrub(event?: Event): void {
+		if (!scrubbing) return;
 		scrubbing = false;
 		scrubPointer = null;
+		if (event) {
+			onValueCommitted?.(currentValue, event);
+		}
 	}
 
 	const canIncrement = $derived(
-		!disabled && (max === undefined || (currentValue ?? Number.NEGATIVE_INFINITY) < max)
+		!disabled &&
+			!readOnly &&
+			(max === undefined || (currentValue ?? Number.NEGATIVE_INFINITY) < max),
 	);
 	const canDecrement = $derived(
-		!disabled && (min === undefined || (currentValue ?? Number.POSITIVE_INFINITY) > min)
+		!disabled &&
+			!readOnly &&
+			(min === undefined || (currentValue ?? Number.POSITIVE_INFINITY) > min),
 	);
 
 	$effect(() => {
 		if (inputFocused) return;
 		const next = currentValue;
-		const display = next == null ? '' : String(next);
+		const display = formatDisplay(next);
 		if (inputValue !== display) {
 			inputValue = display;
 		}
@@ -192,8 +234,17 @@
 		get step() {
 			return step;
 		},
+		get smallStep() {
+			return smallStep;
+		},
+		get largeStep() {
+			return largeStep;
+		},
 		get disabled() {
 			return disabled;
+		},
+		get readOnly() {
+			return readOnly;
 		},
 		get required() {
 			return required;
@@ -201,13 +252,16 @@
 		get name() {
 			return name;
 		},
+		get form() {
+			return form;
+		},
 		inputId,
 		get canIncrement() {
 			return canIncrement;
 		},
 		get canDecrement() {
 			return canDecrement;
-		}
+		},
 	} satisfies NumberFieldContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -216,8 +270,9 @@
 			class: className,
 			style,
 			'data-disabled': disabled ? '' : undefined,
-			'data-scrubbing': scrubbing ? '' : undefined
-		})
+			'data-readonly': readOnly ? '' : undefined,
+			'data-scrubbing': scrubbing ? '' : undefined,
+		}),
 	);
 </script>
 
@@ -229,6 +284,7 @@
 		<input
 			type="hidden"
 			{name}
+			{form}
 			value={currentValue == null ? '' : String(currentValue)}
 			{required}
 		/>

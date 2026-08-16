@@ -23,7 +23,7 @@
 	@apply min-w-40 rounded-lg border border-border bg-overlay p-1 shadow-overlay outline-none;
 }
 .menubar-item {
-	@apply flex w-full appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none cursor-default;
+	@apply flex w-full cursor-default appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none;
 	&[data-highlighted],
 	&[data-selected],
 	&[data-focus] {

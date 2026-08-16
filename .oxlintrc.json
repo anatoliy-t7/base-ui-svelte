@@ -1,0 +1,35 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": ["typescript", "unicorn", "oxc", "vitest"],
+	"categories": {
+		"correctness": "error"
+	},
+	"rules": {
+		"vitest/require-mock-type-parameters": "off"
+	},
+	"env": {
+		"builtin": true
+	},
+	"ignorePatterns": [
+		"**/.svelte-kit/**",
+		"**/build/**",
+		"**/dist/**",
+		"**/coverage/**",
+		"**/node_modules/**"
+	],
+	"overrides": [
+		{
+			"files": ["**/*.svelte"],
+			"rules": {
+				"no-unused-expressions": "off"
+			}
+		},
+		{
+			"files": ["**/tests/**", "**/*.test.ts", "**/*.test.js"],
+			"plugins": ["vitest"],
+			"env": {
+				"vitest": true
+			}
+		}
+	]
+}

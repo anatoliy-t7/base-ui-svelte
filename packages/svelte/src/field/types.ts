@@ -82,7 +82,7 @@ export type FieldRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & 
 				focused: boolean;
 				filled: boolean;
 				valid: boolean | null;
-			}
+			},
 		]
 	>;
 };
@@ -136,5 +136,5 @@ export const DEFAULT_VALIDITY_FLAGS: FieldValidityFlags = {
 	tooShort: false,
 	typeMismatch: false,
 	valueMissing: false,
-	valid: null
+	valid: null,
 };

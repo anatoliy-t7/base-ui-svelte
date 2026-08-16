@@ -1,4 +1,6 @@
 .toggle-group {
-  @apply inline-flex gap-px rounded-md border border-border bg-border p-px;
+	@apply inline-flex gap-px rounded-md border border-border bg-border p-px;
 }
-.toggle-group .toggle { @apply rounded-sm border-0; }
+.toggle-group .toggle {
+	@apply rounded-sm border-0;
+}

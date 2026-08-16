@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { AvatarContext, AvatarRootProps, ImageLoadingStatus } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: AvatarRootProps = $props();
+	let { class: className, style, children, ...rest }: AvatarRootProps = $props();
 
 	let imageLoadingStatus = $state<ImageLoadingStatus>('idle');
 
@@ -21,14 +16,14 @@
 		get imageLoadingStatus() {
 			return imageLoadingStatus;
 		},
-		setImageLoadingStatus
+		setImageLoadingStatus,
 	} satisfies AvatarContext);
 
 	const rootProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			class: className,
-			style
-		})
+			style,
+		}),
 	);
 </script>
 

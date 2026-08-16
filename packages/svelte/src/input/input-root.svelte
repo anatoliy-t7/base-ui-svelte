@@ -24,7 +24,7 @@
 	let uncontrolled = $state<string | undefined>(undefined);
 	const isControlled = $derived(value !== undefined);
 	const currentValue = $derived(
-		isControlled ? String(value ?? '') : (uncontrolled ?? defaultValue)
+		isControlled ? String(value ?? '') : (uncontrolled ?? defaultValue),
 	);
 	const isDisabled = $derived(Boolean(disabled || field?.disabled));
 
@@ -52,9 +52,9 @@
 					'data-dirty': field.dirty ? '' : undefined,
 					'data-touched': field.touched ? '' : undefined,
 					'data-filled': field.filled ? '' : undefined,
-					'data-focused': field.focused ? '' : undefined
+					'data-focused': field.focused ? '' : undefined,
 				}
-			: {}
+			: {},
 	);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -77,9 +77,12 @@
 			onblur: () => {
 				field?.setFocused(false);
 				field?.setTouched(true);
-			}
-		})
+			},
+		}),
 	);
 </script>
 
-<input {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined} />
+<input
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+/>

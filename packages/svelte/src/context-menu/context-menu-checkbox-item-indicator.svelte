@@ -4,7 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type {
 		ContextMenuCheckboxItemContext,
-		ContextMenuCheckboxItemIndicatorProps
+		ContextMenuCheckboxItemIndicatorProps,
 	} from './types.js';
 
 	let {
@@ -25,8 +25,8 @@
 			hidden: !visible ? true : undefined,
 			'data-checked': ctx.checked ? '' : undefined,
 			'data-unchecked': !ctx.checked ? '' : undefined,
-			'data-disabled': ctx.disabled ? '' : undefined
-		})
+			'data-disabled': ctx.disabled ? '' : undefined,
+		}),
 	);
 </script>
 

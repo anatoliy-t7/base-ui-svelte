@@ -1,9 +1,24 @@
 .toggle {
-  @apply appearance-none inline-flex items-center justify-center gap-2 rounded-md border border-transparent bg-surface px-3 py-2 text-sm outline-none cursor-(--cursor-interactive);
-  &:hover { @apply bg-default; }
-  &:focus-visible, &[data-focus-visible="true"] { @apply status-focused; }
-  &:disabled, &[data-disabled] { @apply status-disabled; }
-  &[data-pressed], &[aria-pressed="true"] { @apply bg-accent text-accent-foreground; }
+	@apply inline-flex cursor-(--cursor-interactive) appearance-none items-center justify-center gap-2 rounded-md border border-transparent bg-surface px-3 py-2 text-sm outline-none;
+	&:hover {
+		@apply bg-default;
+	}
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply status-focused;
+	}
+	&:disabled,
+	&[data-disabled] {
+		@apply status-disabled;
+	}
+	&[data-pressed],
+	&[aria-pressed='true'] {
+		@apply bg-accent text-accent-foreground;
+	}
 }
-.toggle-sm { @apply px-2 py-1 text-xs; }
-.toggle-lg { @apply px-4 py-2.5 text-base; }
+.toggle-sm {
+	@apply px-2 py-1 text-xs;
+}
+.toggle-lg {
+	@apply px-4 py-2.5 text-base;
+}

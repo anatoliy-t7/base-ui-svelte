@@ -2,7 +2,10 @@ import type { Snippet } from 'svelte';
 import type { HTMLAnchorAttributes, HTMLAttributes } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
 import type { Align, Side } from '../internal/floating.svelte.js';
+import type { PopupHandle } from '../internal/popup-handle.js';
 import type { createPresence } from '../internal/presence.svelte.js';
+
+export type PreviewCardHandle<Payload = unknown> = PopupHandle<Payload>;
 
 export type PreviewCardRefs = {
 	trigger: HTMLElement | null;
@@ -23,22 +26,28 @@ export type PreviewCardContext = {
 	readonly presence: ReturnType<typeof createPresence>;
 	readonly openDelay: number;
 	readonly closeDelay: number;
+	readonly payload: unknown;
 };
 
 export type PreviewCardRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
-	onOpenChange?:
-		| ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void)
-		| undefined;
+	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
 	openDelay?: number;
 	closeDelay?: number;
-	children?: Snippet<[{ open: boolean }]>;
+	/** Imperative handle from {@link createHandle}. */
+	handle?: PreviewCardHandle | undefined;
+	children?: Snippet<[{ open: boolean; payload: unknown }]>;
 };
 
-export type PreviewCardTriggerProps = Omit<HTMLAnchorAttributes, 'children'> & {
+export type PreviewCardTriggerProps = Omit<HTMLAnchorAttributes, 'children' | 'id'> & {
 	render?: string;
 	disabled?: boolean;
+	id?: string | undefined;
+	/** Same handle as Root — enables triggers outside the Root tree. */
+	handle?: PreviewCardHandle | undefined;
+	/** Optional payload associated when opening via this trigger. */
+	payload?: unknown;
 	children?: Snippet;
 };
 

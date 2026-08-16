@@ -3,7 +3,7 @@
 	import {
 		createControllableOpen,
 		useId,
-		type OpenChangeReason
+		type OpenChangeReason,
 	} from '../internal/controllable.svelte.js';
 	import { MENU_CONTEXT } from '../internal/context-keys.js';
 	import { createHoverDelay } from '../internal/hover-delay.svelte.js';
@@ -14,7 +14,7 @@
 		MenuItemEntry,
 		MenuRefs,
 		MenuSubmenuEntry,
-		MenuSubmenuRootProps
+		MenuSubmenuRootProps,
 	} from './types.js';
 
 	const SUBMENU_OPEN_DELAY = 100;
@@ -42,12 +42,12 @@
 		},
 		setOpenProp: (next) => {
 			open = next;
-		}
+		},
 	});
 
 	const hover = createHoverDelay(
 		() => SUBMENU_OPEN_DELAY,
-		() => SUBMENU_CLOSE_DELAY
+		() => SUBMENU_CLOSE_DELAY,
 	);
 
 	function setOpen(next: boolean, reason: OpenChangeReason): void {
@@ -57,6 +57,7 @@
 		} else {
 			closeSubmenus();
 		}
+		lastOpenChangeReason = reason;
 		openState.setOpen(next, reason);
 	}
 
@@ -86,7 +87,7 @@
 		trigger: null,
 		popup: null,
 		positioner: null,
-		arrow: null
+		arrow: null,
 	};
 
 	const triggerId = useId('menu-submenu-trigger');
@@ -95,6 +96,7 @@
 	let items = $state<MenuItemEntry[]>([]);
 	let highlightedId = $state<string | null>(null);
 	let submenus = $state<MenuSubmenuEntry[]>([]);
+	let lastOpenChangeReason = $state<OpenChangeReason | null>(null);
 
 	function getEnabledItems(): MenuItemEntry[] {
 		return items.filter((item) => !item.disabled);
@@ -152,7 +154,18 @@
 		const enabled = getEnabledItems();
 		if (enabled.length === 0) return;
 		const current = enabled.findIndex((item) => item.id === highlightedId);
-		const next = enabled[(current + 1) % enabled.length];
+		if (current === -1) {
+			setHighlighted(enabled[0]?.id ?? null);
+			return;
+		}
+		const nextIndex = current + 1;
+		if (parentMenu.loopFocus) {
+			const next = enabled[nextIndex % enabled.length];
+			if (next) setHighlighted(next.id);
+			return;
+		}
+		if (nextIndex >= enabled.length) return;
+		const next = enabled[nextIndex];
 		if (next) setHighlighted(next.id);
 	}
 
@@ -160,7 +173,18 @@
 		const enabled = getEnabledItems();
 		if (enabled.length === 0) return;
 		const current = enabled.findIndex((item) => item.id === highlightedId);
-		const next = enabled[current <= 0 ? enabled.length - 1 : current - 1];
+		if (current === -1) {
+			setHighlighted(enabled[enabled.length - 1]?.id ?? null);
+			return;
+		}
+		const nextIndex = current - 1;
+		if (parentMenu.loopFocus) {
+			const next = enabled[nextIndex < 0 ? enabled.length - 1 : nextIndex];
+			if (next) setHighlighted(next.id);
+			return;
+		}
+		if (nextIndex < 0) return;
+		const next = enabled[nextIndex];
 		if (next) setHighlighted(next.id);
 	}
 
@@ -191,7 +215,7 @@
 			id: menuId,
 			triggerId,
 			setOpen,
-			getOpen: () => openState.open
+			getOpen: () => openState.open,
 		});
 	});
 
@@ -218,6 +242,21 @@
 		get closeDelay() {
 			return SUBMENU_CLOSE_DELAY;
 		},
+		get disabled() {
+			return parentMenu.disabled;
+		},
+		get modal() {
+			return parentMenu.modal;
+		},
+		get lastOpenChangeReason() {
+			return lastOpenChangeReason;
+		},
+		get orientation() {
+			return parentMenu.orientation;
+		},
+		get loopFocus() {
+			return parentMenu.loopFocus;
+		},
 		menuId,
 		triggerId,
 		popupId,
@@ -237,7 +276,10 @@
 		isSubmenu: true,
 		parentMenu,
 		registerSubmenu,
-		closeSubmenus
+		closeSubmenus,
+		get payload() {
+			return parentMenu.payload;
+		},
 	} satisfies MenuContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -246,8 +288,8 @@
 			class: className,
 			style,
 			'data-open': openState.open ? '' : undefined,
-			'data-closed': !openState.open ? '' : undefined
-		})
+			'data-closed': !openState.open ? '' : undefined,
+		}),
 	);
 </script>
 

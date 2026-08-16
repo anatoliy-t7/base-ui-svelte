@@ -37,7 +37,7 @@ export const Select = {
 	Group,
 	GroupLabel,
 	ScrollUpArrow,
-	ScrollDownArrow
+	ScrollDownArrow,
 };
 
 export type {
@@ -62,5 +62,8 @@ export type {
 	SelectScrollDownArrowProps,
 	SelectContext,
 	SelectItemContext,
-	SelectGroupContext
+	SelectGroupContext,
+	SelectValue,
+	SelectItemsProp,
+	SelectCollectionItem,
 } from './types.js';

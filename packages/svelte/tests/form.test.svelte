@@ -5,7 +5,7 @@
 	let {
 		errors = {},
 		onFormSubmit,
-		requireUsername = false
+		requireUsername = false,
 	}: {
 		errors?: Record<string, string | string[]>;
 		onFormSubmit?: (formData: FormData, event: SubmitEvent) => void;

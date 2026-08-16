@@ -35,7 +35,7 @@
 		},
 		setArrow(el: HTMLElement | null) {
 			arrowEl = el;
-		}
+		},
 	});
 
 	createPositioner({
@@ -53,7 +53,7 @@
 		},
 		get sideOffset() {
 			return sideOffset;
-		}
+		},
 	});
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -63,8 +63,8 @@
 			role: 'presentation',
 			'data-open': ctx.open ? '' : undefined,
 			'data-closed': !ctx.open ? '' : undefined,
-			'data-side': side
-		})
+			'data-side': side,
+		}),
 	);
 </script>
 

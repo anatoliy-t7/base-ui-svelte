@@ -1,5 +1,5 @@
 .select-trigger {
-	@apply relative isolate inline-flex h-10 min-w-40 w-fit items-center justify-between gap-3 rounded-lg border border-border bg-field px-3 text-sm text-field-foreground outline-none shadow-field;
+	@apply relative isolate inline-flex h-10 w-fit min-w-40 items-center justify-between gap-3 rounded-lg border border-border bg-field px-3 text-sm text-field-foreground shadow-field outline-none;
 	cursor: var(--cursor-interactive);
 	border-width: var(--border-width-field);
 	transition:
@@ -25,8 +25,13 @@
 }
 
 .select-icon {
-	@apply size-4 shrink-0 text-muted transition-transform duration-150 ease-out;
+	@apply inline-flex size-4 shrink-0 items-center justify-center text-muted transition-transform duration-150 ease-out;
 	@apply motion-reduce:transition-none;
+
+	& svg {
+		fill: none;
+		stroke: currentColor;
+	}
 
 	.select-trigger[data-open] &,
 	&[data-open] {
@@ -36,7 +41,7 @@
 }
 
 .select-popup {
-	@apply max-h-72 min-w-[var(--anchor-width,10rem)] overflow-auto rounded-xl border border-border bg-overlay p-1 shadow-overlay outline-none;
+	@apply max-h-72 min-w-(--anchor-width,10rem) overflow-auto rounded-xl border border-border bg-overlay p-1 shadow-overlay outline-none;
 	transform-origin: var(--transform-origin, top center);
 	transition:
 		opacity 150ms var(--ease-smooth),
@@ -51,7 +56,7 @@
 }
 
 .select-item {
-	@apply flex w-full appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none cursor-default;
+	@apply flex w-full cursor-default appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none;
 	transition: background-color 100ms var(--ease-smooth);
 
 	&[data-highlighted],

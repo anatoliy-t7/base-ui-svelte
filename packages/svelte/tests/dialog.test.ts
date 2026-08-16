@@ -44,6 +44,25 @@ describe('Dialog', () => {
 		});
 	});
 
+	it('does not close on backdrop when disablePointerDismissal is set', async () => {
+		const user = userEvent.setup();
+		render(DialogTest, { disablePointerDismissal: true });
+
+		await user.click(screen.getByTestId('trigger'));
+		expect(screen.getByTestId('popup')).toBeInTheDocument();
+
+		await user.click(screen.getByTestId('backdrop'));
+		expect(screen.getByTestId('popup')).toBeInTheDocument();
+	});
+
+	it('omits aria-modal when modal is false', async () => {
+		const user = userEvent.setup();
+		render(DialogTest, { modal: false });
+
+		await user.click(screen.getByTestId('trigger'));
+		expect(screen.getByTestId('popup')).not.toHaveAttribute('aria-modal');
+	});
+
 	it('has no axe violations when open', async () => {
 		const user = userEvent.setup();
 		const { container } = render(DialogTest);

@@ -19,8 +19,14 @@
 		"sourceMap": true,
 		"isolatedModules": true,
 		"verbatimModuleSyntax": true,
-		"types": ["vitest/globals", "node"]
+		"types": ["vitest/globals", "node", "@testing-library/jest-dom/vitest"]
 	},
-	"include": ["src/**/*.ts", "src/**/*.svelte", "vitest-setup.ts"],
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.svelte",
+		"tests/**/*.ts",
+		"vitest-setup.ts",
+		"vitest-axe.d.ts"
+	],
 	"exclude": ["dist", "node_modules"]
 }

@@ -21,7 +21,7 @@
 		get swipeDirection() {
 			return swipeDirection;
 		},
-		registerOpen
+		registerOpen,
 	} satisfies DrawerProviderContext);
 </script>
 

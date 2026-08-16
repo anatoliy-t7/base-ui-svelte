@@ -13,7 +13,7 @@ export const NumberField = {
 	Input,
 	Increment,
 	ScrubArea,
-	ScrubAreaCursor
+	ScrubAreaCursor,
 };
 
 export type {
@@ -24,5 +24,5 @@ export type {
 	NumberFieldIncrementProps,
 	NumberFieldScrubAreaProps,
 	NumberFieldScrubAreaCursorProps,
-	NumberFieldContext
+	NumberFieldContext,
 } from './types.js';

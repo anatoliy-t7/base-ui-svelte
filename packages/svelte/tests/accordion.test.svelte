@@ -3,7 +3,7 @@
 
 	let {
 		multiple = false,
-		defaultValue
+		defaultValue,
 	}: {
 		multiple?: boolean;
 		defaultValue?: string | string[];

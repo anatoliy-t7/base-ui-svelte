@@ -28,7 +28,7 @@
 		},
 		setCheckedProp: (next) => {
 			checked = next;
-		}
+		},
 	});
 
 	setContext(SWITCH_CONTEXT, {
@@ -37,7 +37,7 @@
 		},
 		get disabled() {
 			return disabled;
-		}
+		},
 	} satisfies SwitchContext);
 
 	function toggle(event: Event): void {
@@ -66,8 +66,8 @@
 					event.preventDefault();
 					toggle(event);
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 

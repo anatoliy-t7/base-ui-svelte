@@ -11,7 +11,7 @@ export const ScrollArea = {
 	Content,
 	Scrollbar,
 	Thumb,
-	Corner
+	Corner,
 };
 
 export type {
@@ -23,5 +23,5 @@ export type {
 	ScrollAreaCornerProps,
 	ScrollAreaContext,
 	ScrollAreaMetrics,
-	ScrollAreaOrientation
+	ScrollAreaOrientation,
 } from './types.js';

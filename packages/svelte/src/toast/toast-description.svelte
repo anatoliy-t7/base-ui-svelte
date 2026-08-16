@@ -4,27 +4,23 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ToastContext, ToastDescriptionProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ToastDescriptionProps = $props();
+	let { class: className, style, children, ...rest }: ToastDescriptionProps = $props();
 
 	const ctx = getContext<ToastContext>(TOAST_CONTEXT);
 
 	const descriptionProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			class: className,
-			style
-		})
+			style,
+			'data-type': ctx.toast?.type,
+		}),
 	);
 </script>
 
-<div {...descriptionProps}>
+<p {...descriptionProps}>
 	{#if children}
 		{@render children()}
 	{:else if ctx.toast?.description}
 		{ctx.toast.description}
 	{/if}
-</div>
+</p>

@@ -2,13 +2,13 @@
 	import { getContext } from 'svelte';
 	import {
 		NAVIGATION_MENU_CONTEXT,
-		NAVIGATION_MENU_ITEM_CONTEXT
+		NAVIGATION_MENU_ITEM_CONTEXT,
 	} from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type {
 		NavigationMenuContext,
 		NavigationMenuItemContext,
-		NavigationMenuTriggerProps
+		NavigationMenuTriggerProps,
 	} from './types.js';
 
 	let {
@@ -61,8 +61,8 @@
 			},
 			onfocus: () => {
 				root.cancelClose();
-			}
-		})
+			},
+		}),
 	);
 </script>
 

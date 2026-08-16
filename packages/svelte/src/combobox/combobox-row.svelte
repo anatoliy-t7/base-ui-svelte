@@ -2,19 +2,14 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ComboboxRowProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ComboboxRowProps = $props();
+	let { class: className, style, children, ...rest }: ComboboxRowProps = $props();
 
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			role: 'presentation',
 			class: className,
-			style
-		})
+			style,
+		}),
 	);
 </script>
 

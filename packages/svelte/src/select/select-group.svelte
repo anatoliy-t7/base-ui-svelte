@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SelectContext, SelectGroupContext, SelectGroupProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: SelectGroupProps = $props();
+	let { class: className, style, children, ...rest }: SelectGroupProps = $props();
 
 	getContext<SelectContext>(SELECT_CONTEXT);
 
@@ -21,7 +16,7 @@
 		},
 		setLabelId: (id) => {
 			labelId = id;
-		}
+		},
 	} satisfies SelectGroupContext);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -29,8 +24,8 @@
 			role: 'group',
 			class: className,
 			style,
-			'aria-labelledby': labelId
-		})
+			'aria-labelledby': labelId,
+		}),
 	);
 </script>
 

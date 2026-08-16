@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { AutocompleteItemContext, AutocompleteItemIndicatorProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: AutocompleteItemIndicatorProps = $props();
+	let { class: className, style, children, ...rest }: AutocompleteItemIndicatorProps = $props();
 
 	const item = getContext<AutocompleteItemContext>(AUTOCOMPLETE_ITEM_CONTEXT);
 
@@ -21,13 +16,16 @@
 			style,
 			hidden: !visible ? true : undefined,
 			'data-selected': item.selected ? '' : undefined,
-			'data-disabled': item.disabled ? '' : undefined
-		})
+			'data-disabled': item.disabled ? '' : undefined,
+		}),
 	);
 </script>
 
 {#if visible}
-	<span {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+	<span
+		{...mergedProps}
+		style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+	>
 		{#if children}
 			{@render children()}
 		{:else}

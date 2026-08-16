@@ -3,7 +3,7 @@
 
 	let {
 		snapPoints,
-		withVirtualKeyboard = false
+		withVirtualKeyboard = false,
 	}: {
 		snapPoints?: ReadonlyArray<number | string>;
 		withVirtualKeyboard?: boolean;

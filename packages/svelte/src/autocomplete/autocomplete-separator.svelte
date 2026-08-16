@@ -2,20 +2,19 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { AutocompleteSeparatorProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		...rest
-	}: AutocompleteSeparatorProps = $props();
+	let { class: className, style, ...rest }: AutocompleteSeparatorProps = $props();
 
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			role: 'separator',
 			class: className,
 			style,
-			'aria-orientation': 'horizontal'
-		})
+			'aria-orientation': 'horizontal',
+		}),
 	);
 </script>
 
-<div {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}></div>
+<div
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+></div>

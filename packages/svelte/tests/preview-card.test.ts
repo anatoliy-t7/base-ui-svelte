@@ -15,7 +15,7 @@ describe('PreviewCard', () => {
 		});
 		expect(screen.getByTestId('trigger')).toHaveAttribute(
 			'aria-describedby',
-			screen.getByTestId('popup').id
+			screen.getByTestId('popup').id,
 		);
 	});
 

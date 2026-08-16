@@ -22,15 +22,15 @@
 	const labelId = useId('progress-label');
 
 	const status: ProgressStatus = $derived(
-		value === null ? 'indeterminate' : value >= max ? 'complete' : 'progressing'
+		value === null ? 'indeterminate' : value >= max ? 'complete' : 'progressing',
 	);
 
 	const formattedValue = $derived(
-		value === null ? null : new Intl.NumberFormat(locale, format).format(value)
+		value === null ? null : new Intl.NumberFormat(locale, format).format(value),
 	);
 
 	const ariaValueText = $derived(
-		getAriaValueText?.(formattedValue, value) ?? formattedValue ?? undefined
+		getAriaValueText?.(formattedValue, value) ?? formattedValue ?? undefined,
 	);
 
 	setContext(PROGRESS_CONTEXT, {
@@ -51,7 +51,7 @@
 		},
 		get labelId() {
 			return labelId;
-		}
+		},
 	} satisfies ProgressContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -67,8 +67,8 @@
 			'aria-labelledby': labelId,
 			'data-complete': status === 'complete' ? '' : undefined,
 			'data-indeterminate': status === 'indeterminate' ? '' : undefined,
-			'data-progressing': status === 'progressing' ? '' : undefined
-		})
+			'data-progressing': status === 'progressing' ? '' : undefined,
+		}),
 	);
 </script>
 

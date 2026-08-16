@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ComboboxArrowProps, ComboboxContext } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ComboboxArrowProps = $props();
+	let { class: className, style, children, ...rest }: ComboboxArrowProps = $props();
 
 	const ctx = getContext<ComboboxContext>(COMBOBOX_CONTEXT);
 
@@ -30,8 +25,8 @@
 			style,
 			'aria-hidden': 'true',
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

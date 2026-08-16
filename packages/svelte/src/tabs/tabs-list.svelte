@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { TabsContext, TabsListProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: TabsListProps = $props();
+	let { class: className, style, children, ...rest }: TabsListProps = $props();
 
 	const ctx = getContext<TabsContext>(TABS_CONTEXT);
 
@@ -30,8 +25,8 @@
 			class: className,
 			style,
 			'aria-orientation': ctx.orientation,
-			'data-orientation': ctx.orientation
-		})
+			'data-orientation': ctx.orientation,
+		}),
 	);
 </script>
 

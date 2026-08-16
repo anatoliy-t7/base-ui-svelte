@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { RadioContext, RadioIndicatorProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: RadioIndicatorProps = $props();
+	let { class: className, style, children, ...rest }: RadioIndicatorProps = $props();
 
 	const ctx = getContext<RadioContext>(RADIO_CONTEXT);
 
@@ -22,13 +17,16 @@
 			hidden: !visible ? true : undefined,
 			'data-checked': ctx.checked ? '' : undefined,
 			'data-unchecked': !ctx.checked ? '' : undefined,
-			'data-disabled': ctx.disabled ? '' : undefined
-		})
+			'data-disabled': ctx.disabled ? '' : undefined,
+		}),
 	);
 </script>
 
 {#if visible}
-	<span {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+	<span
+		{...mergedProps}
+		style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+	>
 		{#if children}
 			{@render children()}
 		{:else}

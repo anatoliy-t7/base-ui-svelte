@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ScrollAreaContext, ScrollAreaCornerProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ScrollAreaCornerProps = $props();
+	let { class: className, style, children, ...rest }: ScrollAreaCornerProps = $props();
 
 	const ctx = getContext<ScrollAreaContext>(SCROLL_AREA_CONTEXT);
 
@@ -17,8 +12,8 @@
 		mergeProps(rest, {
 			class: className,
 			style,
-			'data-scrolling': ctx.scrolling ? '' : undefined
-		})
+			'data-scrolling': ctx.scrolling ? '' : undefined,
+		}),
 	);
 </script>
 

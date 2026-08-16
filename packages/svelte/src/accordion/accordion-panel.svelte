@@ -16,36 +16,50 @@
 	const item = getContext<AccordionItemContext>(ACCORDION_ITEM_CONTEXT);
 
 	let panelHeight = $state<string | undefined>(undefined);
+	let panelWidth = $state<string | undefined>(undefined);
 
 	const shouldRender = $derived(keepMounted || item.presence.isPresent);
 
-	function measurePanel(element: HTMLElement) {
+	function attachPanel(element: HTMLElement) {
+		item.presence.setNode(element);
+
 		const sync = () => {
+			// Freeze dimensions while collapsing so height transitions stay stable.
+			if (item.presence.isEnding) return;
 			panelHeight = `${element.scrollHeight}px`;
+			panelWidth = `${element.scrollWidth}px`;
 		};
 		sync();
 		const observer = new ResizeObserver(sync);
 		observer.observe(element);
+
 		return () => {
 			observer.disconnect();
+			item.presence.setNode(null);
 		};
 	}
 
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			id: item.panelId,
-			role,
+			role: role ?? 'region',
 			class: className,
 			style: [
+				panelHeight ? `--accordion-panel-height:${panelHeight}` : undefined,
+				panelWidth ? `--accordion-panel-width:${panelWidth}` : undefined,
 				panelHeight ? `--collapsible-panel-height:${panelHeight}` : undefined,
-				typeof style === 'string' ? style : undefined
+				panelWidth ? `--collapsible-panel-width:${panelWidth}` : undefined,
+				typeof style === 'string' ? style : undefined,
 			]
 				.filter(Boolean)
 				.join(';'),
-			hidden: keepMounted && !item.open ? true : undefined,
+			hidden: keepMounted && !item.presence.isPresent ? true : undefined,
+			'aria-labelledby': item.triggerId,
 			'data-open': item.open ? '' : undefined,
-			'data-closed': !item.open ? '' : undefined
-		})
+			'data-closed': !item.open ? '' : undefined,
+			'data-starting-style': item.presence.isStarting ? '' : undefined,
+			'data-ending-style': item.presence.isEnding ? '' : undefined,
+		}),
 	);
 </script>
 
@@ -53,7 +67,7 @@
 	<div
 		{...mergedProps}
 		style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
-		{@attach measurePanel}
+		{@attach attachPanel}
 	>
 		{#if children}
 			{@render children()}

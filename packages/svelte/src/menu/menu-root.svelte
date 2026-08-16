@@ -3,7 +3,7 @@
 	import {
 		createControllableOpen,
 		useId,
-		type OpenChangeReason
+		type OpenChangeReason,
 	} from '../internal/controllable.svelte.js';
 	import { MENU_CONTEXT, MENUBAR_CONTEXT } from '../internal/context-keys.js';
 	import { createHoverDelay } from '../internal/hover-delay.svelte.js';
@@ -15,16 +15,22 @@
 		MenuItemEntry,
 		MenuRefs,
 		MenuRootProps,
-		MenuSubmenuEntry
+		MenuSubmenuEntry,
 	} from './types.js';
 
 	let {
 		open = $bindable(undefined),
 		defaultOpen = false,
 		onOpenChange,
+		onOpenChangeComplete,
+		modal = true,
+		disabled = false,
+		orientation = 'vertical',
+		loopFocus = true,
 		openOnHover = false,
 		delay = 0,
 		closeDelay = 0,
+		handle,
 		class: className,
 		style,
 		id = useId('menu'),
@@ -43,18 +49,22 @@
 		getDefaultOpen: () => defaultOpen,
 		onOpenChange: (next, eventDetails) => {
 			onOpenChange?.(next, eventDetails);
+			if (!next) {
+				handle?.clearPayload();
+			}
 		},
 		setOpenProp: (next) => {
 			open = next;
-		}
+		},
 	});
 
 	const hover = createHoverDelay(
 		() => delay,
-		() => (menubar ? menubar.closeDelay : closeDelay)
+		() => (menubar ? menubar.closeDelay : closeDelay),
 	);
 
 	function setOpen(next: boolean, reason: OpenChangeReason): void {
+		if (disabled && next) return;
 		hover.cancel();
 		if (next && menubar) {
 			menubar.closeOthers(menuId);
@@ -62,11 +72,13 @@
 		if (!next) {
 			closeSubmenus();
 		}
+		lastOpenChangeReason = reason;
 		openState.setOpen(next, reason);
 		menubar?.onMenuOpenChange(menuId, next);
 	}
 
 	function openWithHoverDelay(reason: OpenChangeReason): void {
+		if (disabled) return;
 		if (openState.open) {
 			hover.cancel();
 			menubar?.cancelClose();
@@ -98,7 +110,7 @@
 		trigger: null,
 		popup: null,
 		positioner: null,
-		arrow: null
+		arrow: null,
 	};
 
 	const triggerId = useId('menu-trigger');
@@ -107,6 +119,45 @@
 	let items = $state<MenuItemEntry[]>([]);
 	let highlightedId = $state<string | null>(null);
 	let submenus = $state<MenuSubmenuEntry[]>([]);
+	let lastOpenChangeReason = $state<OpenChangeReason | null>(null);
+
+	let lastReportedOpen: boolean | undefined = undefined;
+	let hasSyncedComplete = false;
+
+	$effect(() => {
+		if (!handle) return;
+		return handle.attach({
+			setOpen,
+			getOpen: () => openState.open,
+		});
+	});
+
+	$effect(() => {
+		const present = presence.isPresent;
+		const ending = presence.isEnding;
+		const starting = presence.isStarting;
+		const openNow = openState.open;
+
+		if (!hasSyncedComplete) {
+			hasSyncedComplete = true;
+			lastReportedOpen = openNow;
+			return;
+		}
+
+		if (openNow && present && !starting) {
+			if (lastReportedOpen !== true) {
+				lastReportedOpen = true;
+				onOpenChangeComplete?.(true);
+			}
+			return;
+		}
+		if (!openNow && !present && !ending) {
+			if (lastReportedOpen !== false) {
+				lastReportedOpen = false;
+				onOpenChangeComplete?.(false);
+			}
+		}
+	});
 
 	function getEnabledItems(): MenuItemEntry[] {
 		return items.filter((item) => !item.disabled);
@@ -119,10 +170,10 @@
 		entry?.element.focus();
 	}
 
-	function registerItem(itemId: string, element: HTMLElement, disabled: boolean): () => void {
+	function registerItem(itemId: string, element: HTMLElement, itemDisabled: boolean): () => void {
 		queueMicrotask(() => {
 			const index = items.findIndex((item) => item.id === itemId);
-			const entry: MenuItemEntry = { id: itemId, element, disabled };
+			const entry: MenuItemEntry = { id: itemId, element, disabled: itemDisabled };
 			if (index >= 0) {
 				items[index] = entry;
 			} else {
@@ -164,7 +215,18 @@
 		const enabled = getEnabledItems();
 		if (enabled.length === 0) return;
 		const current = enabled.findIndex((item) => item.id === highlightedId);
-		const next = enabled[(current + 1) % enabled.length];
+		if (current === -1) {
+			setHighlighted(enabled[0]?.id ?? null);
+			return;
+		}
+		const nextIndex = current + 1;
+		if (loopFocus) {
+			const next = enabled[nextIndex % enabled.length];
+			if (next) setHighlighted(next.id);
+			return;
+		}
+		if (nextIndex >= enabled.length) return;
+		const next = enabled[nextIndex];
 		if (next) setHighlighted(next.id);
 	}
 
@@ -172,7 +234,18 @@
 		const enabled = getEnabledItems();
 		if (enabled.length === 0) return;
 		const current = enabled.findIndex((item) => item.id === highlightedId);
-		const next = enabled[current <= 0 ? enabled.length - 1 : current - 1];
+		if (current === -1) {
+			setHighlighted(enabled[enabled.length - 1]?.id ?? null);
+			return;
+		}
+		const nextIndex = current - 1;
+		if (loopFocus) {
+			const next = enabled[nextIndex < 0 ? enabled.length - 1 : nextIndex];
+			if (next) setHighlighted(next.id);
+			return;
+		}
+		if (nextIndex < 0) return;
+		const next = enabled[nextIndex];
 		if (next) setHighlighted(next.id);
 	}
 
@@ -203,7 +276,7 @@
 		return menubar.registerMenu({
 			id: menuId,
 			setOpen,
-			getOpen: () => openState.open
+			getOpen: () => openState.open,
 		});
 	});
 
@@ -230,6 +303,21 @@
 		get closeDelay() {
 			return closeDelay;
 		},
+		get disabled() {
+			return disabled;
+		},
+		get modal() {
+			return modal;
+		},
+		get lastOpenChangeReason() {
+			return lastOpenChangeReason;
+		},
+		get orientation() {
+			return orientation;
+		},
+		get loopFocus() {
+			return loopFocus;
+		},
 		menuId,
 		triggerId,
 		popupId,
@@ -249,7 +337,10 @@
 		isSubmenu: false,
 		parentMenu: null,
 		registerSubmenu,
-		closeSubmenus
+		closeSubmenus,
+		get payload() {
+			return handle?.payload;
+		},
 	} satisfies MenuContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -258,13 +349,15 @@
 			class: className,
 			style,
 			'data-open': openState.open ? '' : undefined,
-			'data-closed': !openState.open ? '' : undefined
-		})
+			'data-closed': !openState.open ? '' : undefined,
+			'data-disabled': disabled ? '' : undefined,
+			'data-orientation': orientation,
+		}),
 	);
 </script>
 
 <div {...rootProps} style={typeof rootProps.style === 'string' ? rootProps.style : undefined}>
 	{#if children}
-		{@render children({ open: openState.open })}
+		{@render children({ open: openState.open, payload: handle?.payload })}
 	{/if}
 </div>

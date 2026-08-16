@@ -45,8 +45,8 @@
 				if (isDisabled) return;
 				ctx.setOpen(!ctx.open, 'trigger-press');
 				ctx.refs.input?.focus();
-			}
-		})
+			},
+		}),
 	);
 </script>
 

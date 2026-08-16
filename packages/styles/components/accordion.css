@@ -1,12 +1,38 @@
 .accordion {
-  @apply max-w-96 overflow-hidden rounded-xl border border-border bg-surface shadow-surface;
+	@apply w-full max-w-lg overflow-hidden rounded-xl border border-border bg-surface shadow-surface;
 }
-.accordion-item { @apply border-b border-border last:border-b-0; }
-.accordion-header { @apply m-0; }
+.accordion-item {
+	@apply border-b border-border last:border-b-0;
+}
+.accordion-header {
+	@apply m-0;
+}
 .accordion-trigger {
-  @apply flex w-full appearance-none items-center justify-between gap-4 border-0 bg-transparent px-3.5 py-2.5 text-left text-sm outline-none cursor-(--cursor-interactive);
-  &:hover { @apply bg-surface-hover; }
-  &:focus-visible, &[data-focus-visible="true"] { @apply status-focused; }
-  &:disabled, &[data-disabled] { @apply status-disabled; }
+	@apply flex w-full cursor-(--cursor-interactive) appearance-none items-center justify-between gap-4 border-0 bg-transparent px-3.5 py-2.5 text-left text-sm outline-none;
+	&:hover {
+		@apply bg-surface-hover;
+	}
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply status-focused;
+	}
+	&:disabled,
+	&[data-disabled] {
+		@apply status-disabled;
+	}
 }
-.accordion-panel { @apply px-3.5 pb-3.5 text-sm text-muted outline-none; }
+.accordion-panel {
+	/* Keep vertical padding on .accordion-content so height:0 can reach 0. */
+	@apply overflow-hidden text-sm text-muted outline-none;
+	height: var(--accordion-panel-height, auto);
+	transition: height 150ms var(--ease-out-fluid);
+	@apply motion-reduce:transition-none;
+
+	&[data-starting-style],
+	&[data-ending-style] {
+		height: 0;
+	}
+}
+.accordion-content {
+	@apply px-3.5 pb-3.5;
+}

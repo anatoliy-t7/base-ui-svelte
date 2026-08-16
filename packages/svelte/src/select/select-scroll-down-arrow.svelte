@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SelectContext, SelectScrollDownArrowProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: SelectScrollDownArrowProps = $props();
+	let { class: className, style, children, ...rest }: SelectScrollDownArrowProps = $props();
 
 	const ctx = getContext<SelectContext>(SELECT_CONTEXT);
 
@@ -77,15 +72,35 @@
 			onclick: (event: MouseEvent) => {
 				event.preventDefault();
 				scrollDown();
-			}
-		})
+			},
+		}),
 	);
 </script>
 
-<button {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+<button
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+>
 	{#if children}
 		{@render children()}
 	{:else}
-		▼
+		<svg
+			width="16"
+			height="16"
+			viewBox="0 0 16 16"
+			fill="none"
+			stroke="currentColor"
+			aria-hidden="true"
+			style="display: block;"
+		>
+			<path
+				d="M3.5 6.5 8 11l4.5-4.5"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="1.75"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+		</svg>
 	{/if}
 </button>

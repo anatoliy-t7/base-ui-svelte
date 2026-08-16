@@ -97,8 +97,8 @@
 						ctx.setOpen(false, 'imperative-action');
 						break;
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 

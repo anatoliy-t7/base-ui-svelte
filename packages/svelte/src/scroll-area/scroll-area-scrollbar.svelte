@@ -18,7 +18,7 @@
 	setContext(SCROLLBAR_CONTEXT, {
 		get orientation() {
 			return orientation;
-		}
+		},
 	} satisfies ScrollbarContext);
 
 	let trackEl: HTMLDivElement | undefined = $state();
@@ -44,7 +44,12 @@
 	}
 
 	const scrollbarStyle = $derived.by(() => {
-		const parts = ['position:relative', 'touch-action:none'];
+		const parts = ['position:absolute', 'touch-action:none'];
+		if (orientation === 'vertical') {
+			parts.push('top:0', 'bottom:0', 'inset-inline-end:0');
+		} else {
+			parts.push('bottom:0', 'inset-inline-start:0', 'inset-inline-end:0');
+		}
 		if (typeof style === 'string' && style.length > 0) {
 			parts.push(style);
 		} else if (typeof style === 'object' && style !== null) {
@@ -63,8 +68,8 @@
 			style: scrollbarStyle,
 			'data-orientation': orientation,
 			'data-scrolling': ctx.scrolling ? '' : undefined,
-			onpointerdown: onPointerDown
-		})
+			onpointerdown: onPointerDown,
+		}),
 	);
 </script>
 

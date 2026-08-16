@@ -77,9 +77,7 @@ describe('createPresence', () => {
 		const finished = new Promise<void>((resolve) => {
 			resolveFinished = resolve;
 		});
-		HTMLElement.prototype.getAnimations = vi.fn(() => [
-			{ finished } as unknown as Animation
-		]);
+		HTMLElement.prototype.getAnimations = vi.fn(() => [{ finished } as unknown as Animation]);
 
 		render(PresenceTest, { props: { fallbackMs: 5000 } });
 

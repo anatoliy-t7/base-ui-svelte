@@ -2,18 +2,9 @@
 	import { getContext, setContext } from 'svelte';
 	import { COMBOBOX_CONTEXT, COMBOBOX_GROUP_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type {
-		ComboboxContext,
-		ComboboxGroupContext,
-		ComboboxGroupProps
-	} from './types.js';
+	import type { ComboboxContext, ComboboxGroupContext, ComboboxGroupProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ComboboxGroupProps = $props();
+	let { class: className, style, children, ...rest }: ComboboxGroupProps = $props();
 
 	getContext<ComboboxContext>(COMBOBOX_CONTEXT);
 
@@ -25,7 +16,7 @@
 		},
 		setLabelId: (id) => {
 			labelId = id;
-		}
+		},
 	} satisfies ComboboxGroupContext);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -33,8 +24,8 @@
 			role: 'group',
 			class: className,
 			style,
-			'aria-labelledby': labelId
-		})
+			'aria-labelledby': labelId,
+		}),
 	);
 </script>
 

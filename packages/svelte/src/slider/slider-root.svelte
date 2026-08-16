@@ -43,7 +43,7 @@
 		},
 		setValueProp: (next) => {
 			value = next;
-		}
+		},
 	});
 
 	const range = $derived(Array.isArray(valueState.value));
@@ -100,11 +100,7 @@
 		return bestIndex;
 	}
 
-	function setValueFromPointer(
-		pointerValue: number,
-		event: Event,
-		preferredIndex?: number
-	): void {
+	function setValueFromPointer(pointerValue: number, event: Event, preferredIndex?: number): void {
 		if (disabled) return;
 		const index = closestThumbIndex(pointerValue, preferredIndex);
 		activeThumbIndex = index;
@@ -135,18 +131,12 @@
 
 	const percentages = $derived(values.map((item) => percentageFor(item)));
 	const percentage = $derived(percentages[0] ?? 0);
-	const percentageStart = $derived(
-		range ? Math.min(...percentages) : 0
-	);
-	const percentageEnd = $derived(
-		range ? Math.max(...percentages) : percentage
-	);
+	const percentageStart = $derived(range ? Math.min(...percentages) : 0);
+	const percentageEnd = $derived(range ? Math.max(...percentages) : percentage);
 
 	const formatter = $derived(new Intl.NumberFormat(locale, format));
 	const formattedValues = $derived(values.map((item) => formatter.format(item)));
-	const formattedValue = $derived(
-		range ? formattedValues.join(' – ') : (formattedValues[0] ?? '')
-	);
+	const formattedValue = $derived(range ? formattedValues.join(' – ') : (formattedValues[0] ?? ''));
 
 	setContext(SLIDER_CONTEXT, {
 		get values() {
@@ -209,7 +199,7 @@
 			activeThumbIndex = index;
 		},
 		setThumbValue,
-		setValueFromPointer
+		setValueFromPointer,
 	} satisfies SliderContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -220,8 +210,8 @@
 			dir: directionContext?.direction,
 			role: range ? 'group' : undefined,
 			'data-disabled': disabled ? '' : undefined,
-			'data-orientation': orientation
-		})
+			'data-orientation': orientation,
+		}),
 	);
 </script>
 

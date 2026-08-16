@@ -3,7 +3,7 @@
 }
 
 .autocomplete-input {
-	@apply appearance-none w-full min-w-0 rounded-field border bg-field py-2 pe-9 ps-3 text-sm text-field-foreground outline-none shadow-field;
+	@apply w-full min-w-0 appearance-none rounded-field border bg-field py-2 ps-3 pe-9 text-sm text-field-foreground shadow-field outline-none;
 	border-width: var(--border-width-field);
 	border-color: var(--field-border);
 
@@ -32,7 +32,7 @@
 }
 
 .autocomplete-trigger {
-	@apply absolute end-0 top-1/2 z-10 flex h-full -translate-y-1/2 items-center justify-center border-0 bg-transparent pe-2.5 ps-1 text-muted outline-none no-highlight;
+	@apply absolute end-0 top-1/2 z-10 flex h-full -translate-y-1/2 items-center justify-center border-0 bg-transparent ps-1 pe-2.5 text-muted outline-none no-highlight;
 	cursor: var(--cursor-interactive);
 	transition:
 		color 150ms var(--ease-smooth),
@@ -59,6 +59,11 @@
 	@apply inline-flex size-4 items-center justify-center transition-transform duration-150 ease-out;
 	@apply motion-reduce:transition-none;
 
+	& svg {
+		fill: none;
+		stroke: currentColor;
+	}
+
 	.autocomplete-trigger[data-open] &,
 	&[data-open] {
 		transform: rotate(180deg);
@@ -81,7 +86,7 @@
 }
 
 .autocomplete-item {
-	@apply flex w-full appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none cursor-default;
+	@apply flex w-full cursor-default appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none;
 	transition: background-color 100ms var(--ease-smooth);
 
 	&[data-highlighted],

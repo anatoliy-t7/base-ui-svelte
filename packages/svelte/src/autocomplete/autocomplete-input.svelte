@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { AutocompleteContext, AutocompleteInputProps } from './types.js';
 
-	let {
-		disabled = false,
-		class: className,
-		style,
-		...rest
-	}: AutocompleteInputProps = $props();
+	let { disabled = false, class: className, style, ...rest }: AutocompleteInputProps = $props();
 
 	const ctx = getContext<AutocompleteContext>(AUTOCOMPLETE_CONTEXT);
 
@@ -104,7 +99,7 @@
 	}
 
 	const activeDescendant = $derived(
-		ctx.open && ctx.highlighted != null ? ctx.getItemId(ctx.highlighted) : undefined
+		ctx.open && ctx.highlighted != null ? ctx.getItemId(ctx.highlighted) : undefined,
 	);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -144,8 +139,8 @@
 				if (isDisabled) return;
 				ctx.setOpen(true, 'trigger-focus');
 			},
-			onkeydown: onKeyDown
-		})
+			onkeydown: onKeyDown,
+		}),
 	);
 </script>
 

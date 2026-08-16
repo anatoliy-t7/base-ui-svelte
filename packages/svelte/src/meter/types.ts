@@ -17,9 +17,7 @@ export type MeterRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & 
 	min?: number;
 	max?: number;
 	format?: Intl.NumberFormatOptions | undefined;
-	getAriaValueText?:
-		| ((formattedValue: string, value: number) => string | undefined)
-		| undefined;
+	getAriaValueText?: ((formattedValue: string, value: number) => string | undefined) | undefined;
 	locale?: Intl.LocalesArgument | undefined;
 	children?: Snippet;
 };

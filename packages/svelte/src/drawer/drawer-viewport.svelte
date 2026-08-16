@@ -1,14 +1,11 @@
 <script lang="ts">
 	import { getContext, hasContext } from 'svelte';
-	import {
-		DRAWER_CONTEXT,
-		DRAWER_VIRTUAL_KEYBOARD_CONTEXT
-	} from '../internal/context-keys.js';
+	import { DRAWER_CONTEXT, DRAWER_VIRTUAL_KEYBOARD_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type {
 		DrawerContext,
 		DrawerViewportProps,
-		DrawerVirtualKeyboardContext
+		DrawerVirtualKeyboardContext,
 	} from './types.js';
 
 	let {
@@ -27,10 +24,10 @@
 	const viewportStyle = $derived(
 		[
 			vk ? `--drawer-keyboard-inset:${vk.keyboardInset}px` : undefined,
-			typeof style === 'string' ? style : undefined
+			typeof style === 'string' ? style : undefined,
 		]
 			.filter(Boolean)
-			.join(';')
+			.join(';'),
 	);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -42,8 +39,8 @@
 			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
 			'data-ending-style': ctx.presence.isEnding ? '' : undefined,
 			'data-swipe-direction': ctx.swipeDirection,
-			'data-keyboard-open': vk?.keyboardOpen ? '' : undefined
-		})
+			'data-keyboard-open': vk?.keyboardOpen ? '' : undefined,
+		}),
 	);
 </script>
 

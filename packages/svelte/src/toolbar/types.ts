@@ -3,7 +3,7 @@ import type {
 	HTMLAnchorAttributes,
 	HTMLAttributes,
 	HTMLButtonAttributes,
-	HTMLInputAttributes
+	HTMLInputAttributes,
 } from 'svelte/elements';
 
 export type ToolbarOrientation = 'horizontal' | 'vertical';
@@ -52,10 +52,7 @@ export type ToolbarGroupProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>
 	children?: Snippet;
 };
 
-export type ToolbarInputProps = Omit<
-	HTMLInputAttributes,
-	'children' | 'disabled' | 'value'
-> & {
+export type ToolbarInputProps = Omit<HTMLInputAttributes, 'children' | 'disabled' | 'value'> & {
 	disabled?: boolean;
 	focusableWhenDisabled?: boolean;
 	value?: string | undefined;

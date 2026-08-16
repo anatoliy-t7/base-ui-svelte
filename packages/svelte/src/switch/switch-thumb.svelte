@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SwitchContext, SwitchThumbProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: SwitchThumbProps = $props();
+	let { class: className, style, children, ...rest }: SwitchThumbProps = $props();
 
 	const ctx = getContext<SwitchContext>(SWITCH_CONTEXT);
 
@@ -19,12 +14,15 @@
 			style,
 			'data-checked': ctx.checked ? '' : undefined,
 			'data-unchecked': !ctx.checked ? '' : undefined,
-			'data-disabled': ctx.disabled ? '' : undefined
-		})
+			'data-disabled': ctx.disabled ? '' : undefined,
+		}),
 	);
 </script>
 
-<span {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+<span
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+>
 	{#if children}
 		{@render children()}
 	{/if}

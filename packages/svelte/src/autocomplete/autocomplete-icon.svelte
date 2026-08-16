@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { AutocompleteContext, AutocompleteIconProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: AutocompleteIconProps = $props();
+	let { class: className, style, children, ...rest }: AutocompleteIconProps = $props();
 
 	const ctx = getContext<AutocompleteContext>(AUTOCOMPLETE_CONTEXT);
 
@@ -19,13 +14,35 @@
 			style,
 			'aria-hidden': 'true',
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 
-<span {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+<span
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+>
 	{#if children}
 		{@render children()}
+	{:else}
+		<svg
+			width="16"
+			height="16"
+			viewBox="0 0 16 16"
+			fill="none"
+			stroke="currentColor"
+			aria-hidden="true"
+			style="display: block;"
+		>
+			<path
+				d="M3.5 6.5 8 11l4.5-4.5"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="1.75"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+		</svg>
 	{/if}
 </span>

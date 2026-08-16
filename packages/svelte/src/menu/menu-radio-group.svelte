@@ -20,9 +20,7 @@
 	let uncontrolled = $state<string | undefined>(undefined);
 
 	const isControlled = $derived(value !== undefined);
-	const currentValue = $derived(
-		isControlled ? String(value) : (uncontrolled ?? defaultValue)
-	);
+	const currentValue = $derived(isControlled ? String(value) : (uncontrolled ?? defaultValue));
 
 	function setValue(next: string, event: Event): void {
 		if (disabled) return;
@@ -41,7 +39,7 @@
 		get disabled() {
 			return disabled;
 		},
-		setValue
+		setValue,
 	} satisfies MenuRadioGroupContext);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -49,8 +47,8 @@
 			role: 'group',
 			class: className,
 			style,
-			'data-disabled': disabled ? '' : undefined
-		})
+			'data-disabled': disabled ? '' : undefined,
+		}),
 	);
 </script>
 

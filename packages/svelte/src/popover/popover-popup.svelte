@@ -5,13 +5,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { PopoverContext, PopoverPopupProps } from './types.js';
 
-	let {
-		render = 'div',
-		class: className,
-		style,
-		children,
-		...rest
-	}: PopoverPopupProps = $props();
+	let { render = 'div', class: className, style, children, ...rest }: PopoverPopupProps = $props();
 
 	const ctx = getContext<PopoverContext>(POPOVER_CONTEXT);
 
@@ -42,7 +36,7 @@
 			ctx.setOpen(false, reason);
 		},
 		dismissOnEscape: true,
-		dismissOnOutsidePress: true
+		dismissOnOutsidePress: true,
 	});
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -65,8 +59,8 @@
 				if (ctx.openOnHover) {
 					ctx.closeWithHoverDelay('trigger-hover');
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 

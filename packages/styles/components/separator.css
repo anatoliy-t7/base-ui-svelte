@@ -1,10 +1,12 @@
 .sep {
-  @apply shrink-0 bg-separator;
-  align-self: stretch;
-  width: 1px;
-  &[data-orientation="horizontal"] {
-    @apply w-auto self-auto;
-    height: 1px;
-  }
+	@apply shrink-0 bg-separator;
+	align-self: stretch;
+	width: 1px;
+	&[data-orientation='horizontal'] {
+		@apply w-auto self-auto;
+		height: 1px;
+	}
 }
-.sep-row { @apply flex flex-wrap items-center gap-3; }
+.sep-row {
+	@apply flex flex-wrap items-center gap-3;
+}

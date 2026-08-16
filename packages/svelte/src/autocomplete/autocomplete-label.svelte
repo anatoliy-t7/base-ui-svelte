@@ -5,13 +5,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { AutocompleteContext, AutocompleteLabelProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		id: idProp,
-		children,
-		...rest
-	}: AutocompleteLabelProps = $props();
+	let { class: className, style, id: idProp, children, ...rest }: AutocompleteLabelProps = $props();
 
 	const ctx = getContext<AutocompleteContext>(AUTOCOMPLETE_CONTEXT);
 	const fallbackId = useId('autocomplete-label');
@@ -32,12 +26,15 @@
 			for: ctx.inputId,
 			class: className,
 			style,
-			'data-disabled': ctx.disabled ? '' : undefined
-		})
+			'data-disabled': ctx.disabled ? '' : undefined,
+		}),
 	);
 </script>
 
-<label {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+<label
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+>
 	{#if children}
 		{@render children()}
 	{/if}

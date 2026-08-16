@@ -3,7 +3,7 @@
 	import {
 		createControllableOpen,
 		useId,
-		type OpenChangeReason
+		type OpenChangeReason,
 	} from '../internal/controllable.svelte.js';
 	import { PREVIEW_CARD_CONTEXT } from '../internal/context-keys.js';
 	import { createHoverDelay } from '../internal/hover-delay.svelte.js';
@@ -17,6 +17,7 @@
 		onOpenChange,
 		openDelay = 600,
 		closeDelay = 300,
+		handle,
 		class: className,
 		style,
 		id = useId('preview-card'),
@@ -29,23 +30,26 @@
 		getDefaultOpen: () => defaultOpen,
 		onOpenChange: (next, eventDetails) => {
 			onOpenChange?.(next, eventDetails);
+			if (!next) {
+				handle?.clearPayload();
+			}
 		},
 		setOpenProp: (next) => {
 			open = next;
-		}
+		},
 	});
 
 	const presence = createPresence(() => state.open);
 	const hover = createHoverDelay(
 		() => openDelay,
-		() => closeDelay
+		() => closeDelay,
 	);
 
 	const refs: PreviewCardRefs = {
 		trigger: null,
 		popup: null,
 		arrow: null,
-		positioner: null
+		positioner: null,
 	};
 
 	const triggerId = useId('preview-card-trigger');
@@ -72,6 +76,14 @@
 	}
 
 	$effect(() => {
+		if (!handle) return;
+		return handle.attach({
+			setOpen: state.setOpen,
+			getOpen: () => state.open,
+		});
+	});
+
+	$effect(() => {
 		return () => {
 			hover.dispose();
 		};
@@ -94,7 +106,10 @@
 		},
 		get closeDelay() {
 			return closeDelay;
-		}
+		},
+		get payload() {
+			return handle?.payload;
+		},
 	} satisfies PreviewCardContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -103,13 +118,13 @@
 			class: className,
 			style,
 			'data-open': state.open ? '' : undefined,
-			'data-closed': !state.open ? '' : undefined
-		})
+			'data-closed': !state.open ? '' : undefined,
+		}),
 	);
 </script>
 
 <div {...rootProps} style={typeof rootProps.style === 'string' ? rootProps.style : undefined}>
 	{#if children}
-		{@render children({ open: state.open })}
+		{@render children({ open: state.open, payload: handle?.payload })}
 	{/if}
 </div>

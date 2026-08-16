@@ -14,7 +14,7 @@ describe('Button', () => {
 
 	it('keeps focusability when focusableWhenDisabled', () => {
 		render(ButtonTest, {
-			props: { disabled: true, focusableWhenDisabled: true }
+			props: { disabled: true, focusableWhenDisabled: true },
 		});
 		const button = screen.getByTestId('button');
 		expect(button).not.toBeDisabled();

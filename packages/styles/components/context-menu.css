@@ -13,7 +13,7 @@
 	}
 }
 .context-menu-item {
-	@apply flex w-full appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none cursor-default;
+	@apply flex w-full cursor-default appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none;
 	&[data-highlighted],
 	&[data-selected],
 	&[data-focus] {
@@ -25,8 +25,8 @@
 	}
 }
 .context-menu-separator {
-	@apply my-1 mx-1.5 h-px border-0 bg-separator;
+	@apply mx-1.5 my-1 h-px border-0 bg-separator;
 }
 .context-surface {
-	@apply grid min-h-32 place-items-center rounded-xl border border-dashed border-border bg-surface text-muted select-none;
+	@apply grid min-h-44 w-full place-items-center rounded-xl border border-dashed border-border bg-surface px-6 text-center text-muted select-none;
 }

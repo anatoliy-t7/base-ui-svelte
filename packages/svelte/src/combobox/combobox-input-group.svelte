@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ComboboxContext, ComboboxInputGroupProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ComboboxInputGroupProps = $props();
+	let { class: className, style, children, ...rest }: ComboboxInputGroupProps = $props();
 
 	const ctx = getContext<ComboboxContext>(COMBOBOX_CONTEXT);
 
@@ -19,8 +14,8 @@
 			style,
 			'data-disabled': ctx.disabled ? '' : undefined,
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

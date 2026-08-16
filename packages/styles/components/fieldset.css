@@ -1,4 +1,6 @@
 .fieldset {
-  @apply grid max-w-96 gap-3 rounded-xl border border-border p-4;
+	@apply grid max-w-96 gap-3 rounded-xl border border-border p-4;
 }
-.fieldset-legend { @apply px-1 text-sm font-semibold; }
+.fieldset-legend {
+	@apply px-1 text-sm font-semibold;
+}

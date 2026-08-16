@@ -40,6 +40,69 @@ describe('Drawer', () => {
 		});
 	});
 
+	it('does not start dismiss swipe from Close or Content mouse pointerdown', async () => {
+		const user = userEvent.setup();
+		render(DrawerTest);
+		await user.click(screen.getByTestId('trigger'));
+
+		const popup = screen.getByTestId('popup');
+		const close = screen.getByTestId('close');
+		const content = screen.getByTestId('content');
+
+		close.dispatchEvent(
+			new PointerEvent('pointerdown', {
+				bubbles: true,
+				button: 0,
+				pointerId: 1,
+				clientX: 10,
+				clientY: 10,
+				pointerType: 'touch',
+			}),
+		);
+		expect(popup).not.toHaveAttribute('data-swiping');
+
+		content.dispatchEvent(
+			new PointerEvent('pointerdown', {
+				bubbles: true,
+				button: 0,
+				pointerId: 2,
+				clientX: 20,
+				clientY: 20,
+				pointerType: 'mouse',
+			}),
+		);
+		expect(popup).not.toHaveAttribute('data-swiping');
+	});
+
+	it('locks document scroll while open', async () => {
+		const user = userEvent.setup();
+		render(DrawerTest);
+
+		await user.click(screen.getByTestId('trigger'));
+		await waitFor(() => {
+			const html = document.documentElement;
+			const body = document.body;
+			const locked =
+				html.style.overflow === 'hidden' ||
+				html.style.overflowY === 'hidden' ||
+				body.style.overflow === 'hidden' ||
+				body.style.overflowY === 'hidden' ||
+				html.hasAttribute('data-base-ui-scroll-locked');
+			expect(locked).toBe(true);
+		});
+
+		await user.click(screen.getByTestId('close'));
+		await waitFor(() => {
+			expect(screen.queryByTestId('popup')).toBeNull();
+			expect(document.documentElement.style.overflow).toBe('');
+			expect(document.documentElement.style.overflowY).toBe('');
+			expect(document.documentElement.style.overflowX).toBe('');
+			expect(document.body.style.overflow).toBe('');
+			expect(document.body.style.overflowY).toBe('');
+			expect(document.documentElement.hasAttribute('data-base-ui-scroll-locked')).toBe(false);
+		});
+	});
+
 	it('opens from swipe area when closed', async () => {
 		const user = userEvent.setup();
 		render(DrawerTest);
@@ -69,16 +132,16 @@ describe('Drawer', () => {
 			},
 			removeEventListener: (type: string, listener: EventListener) => {
 				listeners.get(type)?.delete(listener);
-			}
+			},
 		};
 
 		Object.defineProperty(window, 'visualViewport', {
 			configurable: true,
-			value: visualViewport
+			value: visualViewport,
 		});
 		Object.defineProperty(window, 'innerHeight', {
 			configurable: true,
-			value: 800
+			value: 800,
 		});
 
 		const user = userEvent.setup();
@@ -92,7 +155,7 @@ describe('Drawer', () => {
 		const popup = screen.getByTestId('popup');
 		expect(popup.style.getPropertyValue('--drawer-keyboard-inset')).toBe('300px');
 		expect(screen.getByTestId('viewport').style.getPropertyValue('--drawer-keyboard-inset')).toBe(
-			'300px'
+			'300px',
 		);
 	});
 

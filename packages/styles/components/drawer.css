@@ -33,7 +33,7 @@
 }
 
 .drawer-popup {
-	@apply relative pointer-events-auto overflow-auto border border-border bg-overlay p-5 text-overlay-foreground shadow-overlay outline-none;
+	@apply pointer-events-auto relative overflow-auto border border-border bg-overlay p-5 text-overlay-foreground shadow-overlay outline-none;
 	--drawer-hidden-x: 0%;
 	--drawer-hidden-y: 0%;
 	--drawer-slide-x: var(--drawer-hidden-x);

@@ -10,7 +10,7 @@
 		defaultValue = [],
 		onValueChange,
 		disabled = false,
-		allValues: _allValues,
+		allValues,
 		class: className,
 		style,
 		id = useId('checkbox-group'),
@@ -42,11 +42,26 @@
 		if (isChecked(val)) {
 			setValue(
 				currentValue.filter((v) => v !== val),
-				event
+				event,
 			);
 		} else {
 			setValue([...currentValue, val], event);
 		}
+	}
+
+	function setAll(checked: boolean, event: Event): void {
+		if (disabled) return;
+		const targets = allValues ?? [];
+		if (checked) {
+			const merged = new Set([...currentValue, ...targets]);
+			setValue([...merged], event);
+			return;
+		}
+		const remove = new Set(targets);
+		setValue(
+			currentValue.filter((v) => !remove.has(v)),
+			event,
+		);
 	}
 
 	setContext(CHECKBOX_GROUP_CONTEXT, {
@@ -56,8 +71,12 @@
 		get disabled() {
 			return disabled;
 		},
+		get allValues() {
+			return allValues;
+		},
 		isChecked,
-		toggle
+		toggle,
+		setAll,
 	} satisfies CheckboxGroupContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -66,8 +85,8 @@
 			role: 'group',
 			class: className,
 			style,
-			'data-disabled': disabled ? '' : undefined
-		})
+			'data-disabled': disabled ? '' : undefined,
+		}),
 	);
 </script>
 

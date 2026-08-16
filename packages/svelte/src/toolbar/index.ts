@@ -11,7 +11,7 @@ export const Toolbar = {
 	Link,
 	Separator,
 	Group,
-	Input
+	Input,
 };
 
 export type {
@@ -22,5 +22,5 @@ export type {
 	ToolbarGroupProps,
 	ToolbarInputProps,
 	ToolbarContext,
-	ToolbarOrientation
+	ToolbarOrientation,
 } from './types.js';

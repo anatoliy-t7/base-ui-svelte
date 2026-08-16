@@ -41,7 +41,7 @@
 			ctx.setOpen(false, reason);
 		},
 		dismissOnEscape: true,
-		dismissOnOutsidePress: true
+		dismissOnOutsidePress: true,
 	});
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -52,8 +52,8 @@
 			'data-open': ctx.open ? '' : undefined,
 			'data-closed': !ctx.open || ctx.presence.isEnding ? '' : undefined,
 			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
-			'data-ending-style': ctx.presence.isEnding ? '' : undefined
-		})
+			'data-ending-style': ctx.presence.isEnding ? '' : undefined,
+		}),
 	);
 </script>
 

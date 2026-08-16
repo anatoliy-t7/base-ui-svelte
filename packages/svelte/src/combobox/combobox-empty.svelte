@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ComboboxContext, ComboboxEmptyProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ComboboxEmptyProps = $props();
+	let { class: className, style, children, ...rest }: ComboboxEmptyProps = $props();
 
 	const ctx = getContext<ComboboxContext>(COMBOBOX_CONTEXT);
 
@@ -20,13 +15,16 @@
 			class: className,
 			style,
 			role: 'status',
-			'data-empty': isEmpty ? '' : undefined
-		})
+			'data-empty': isEmpty ? '' : undefined,
+		}),
 	);
 </script>
 
 {#if isEmpty}
-	<div {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+	<div
+		{...mergedProps}
+		style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+	>
 		{#if children}
 			{@render children()}
 		{:else}

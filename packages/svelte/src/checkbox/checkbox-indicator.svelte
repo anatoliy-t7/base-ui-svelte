@@ -5,6 +5,7 @@
 	import type { CheckboxContext, CheckboxIndicatorProps } from './types.js';
 
 	let {
+		keepMounted = false,
 		class: className,
 		style,
 		children,
@@ -14,22 +15,26 @@
 	const ctx = getContext<CheckboxContext>(CHECKBOX_CONTEXT);
 
 	const visible = $derived(ctx.checked || ctx.indeterminate);
+	const shouldRender = $derived(keepMounted || visible);
 
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			class: className,
 			style,
-			hidden: !visible ? true : undefined,
+			hidden: keepMounted && !visible ? true : undefined,
 			'data-checked': ctx.checked ? '' : undefined,
 			'data-unchecked': !ctx.checked && !ctx.indeterminate ? '' : undefined,
 			'data-indeterminate': ctx.indeterminate ? '' : undefined,
-			'data-disabled': ctx.disabled ? '' : undefined
-		})
+			'data-disabled': ctx.disabled ? '' : undefined,
+		}),
 	);
 </script>
 
-{#if visible}
-	<span {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+{#if shouldRender}
+	<span
+		{...mergedProps}
+		style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+	>
 		{#if children}
 			{@render children()}
 		{:else}

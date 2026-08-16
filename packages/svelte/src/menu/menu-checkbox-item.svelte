@@ -3,11 +3,7 @@
 	import { createControllableChecked, useId } from '../internal/controllable.svelte.js';
 	import { MENU_CHECKBOX_ITEM_CONTEXT, MENU_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type {
-		MenuCheckboxItemContext,
-		MenuCheckboxItemProps,
-		MenuContext
-	} from './types.js';
+	import type { MenuCheckboxItemContext, MenuCheckboxItemProps, MenuContext } from './types.js';
 
 	let {
 		checked = $bindable(undefined),
@@ -34,7 +30,7 @@
 		},
 		setCheckedProp: (next) => {
 			checked = next;
-		}
+		},
 	});
 
 	let itemEl = $state<HTMLElement | null>(null);
@@ -52,7 +48,7 @@
 		},
 		get disabled() {
 			return disabled;
-		}
+		},
 	} satisfies MenuCheckboxItemContext);
 
 	function closeSubmenuOnLeft(event: KeyboardEvent): void {
@@ -127,8 +123,8 @@
 						ctx.setOpen(false, 'imperative-action');
 						break;
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 

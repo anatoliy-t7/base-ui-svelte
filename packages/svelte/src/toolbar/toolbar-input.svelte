@@ -24,7 +24,9 @@
 
 	let uncontrolled = $state<string | undefined>(undefined);
 	const isControlled = $derived(value !== undefined);
-	const currentValue = $derived(isControlled ? String(value ?? '') : (uncontrolled ?? defaultValue));
+	const currentValue = $derived(
+		isControlled ? String(value ?? '') : (uncontrolled ?? defaultValue),
+	);
 
 	const isFocusable = $derived(!disabled || focusableWhenDisabled);
 	const useAriaDisabled = $derived(disabled && focusableWhenDisabled);
@@ -58,8 +60,8 @@
 				if (disabled) return;
 				const target = event.currentTarget as HTMLInputElement;
 				setValue(target.value, event);
-			}
-		})
+			},
+		}),
 	);
 </script>
 
@@ -71,7 +73,7 @@
 			element,
 			kind: 'input',
 			disabled,
-			focusableWhenDisabled
+			focusableWhenDisabled,
 		})}
 	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
 />

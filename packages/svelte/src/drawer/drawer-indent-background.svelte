@@ -25,8 +25,8 @@
 			'data-active': active ? '' : undefined,
 			'data-inactive': !active ? '' : undefined,
 			'data-swipe-direction': provider?.swipeDirection,
-			'aria-hidden': 'true'
-		})
+			'aria-hidden': 'true',
+		}),
 	);
 </script>
 

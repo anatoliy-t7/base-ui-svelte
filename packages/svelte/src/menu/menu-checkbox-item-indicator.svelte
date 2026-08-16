@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { MenuCheckboxItemContext, MenuCheckboxItemIndicatorProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: MenuCheckboxItemIndicatorProps = $props();
+	let { class: className, style, children, ...rest }: MenuCheckboxItemIndicatorProps = $props();
 
 	const ctx = getContext<MenuCheckboxItemContext>(MENU_CHECKBOX_ITEM_CONTEXT);
 
@@ -22,8 +17,8 @@
 			hidden: !visible ? true : undefined,
 			'data-checked': ctx.checked ? '' : undefined,
 			'data-unchecked': !ctx.checked ? '' : undefined,
-			'data-disabled': ctx.disabled ? '' : undefined
-		})
+			'data-disabled': ctx.disabled ? '' : undefined,
+		}),
 	);
 </script>
 

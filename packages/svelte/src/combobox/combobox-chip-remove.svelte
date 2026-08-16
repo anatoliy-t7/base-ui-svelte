@@ -2,11 +2,7 @@
 	import { getContext } from 'svelte';
 	import { COMBOBOX_CHIP_CONTEXT, COMBOBOX_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type {
-		ComboboxChipContext,
-		ComboboxChipRemoveProps,
-		ComboboxContext
-	} from './types.js';
+	import type { ComboboxChipContext, ComboboxChipRemoveProps, ComboboxContext } from './types.js';
 
 	let {
 		disabled = false,
@@ -34,12 +30,15 @@
 				if (isDisabled) return;
 				event.preventDefault();
 				ctx.removeValue(chip.value, event);
-			}
-		})
+			},
+		}),
 	);
 </script>
 
-<button {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+<button
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+>
 	{#if children}
 		{@render children()}
 	{:else}

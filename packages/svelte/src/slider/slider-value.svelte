@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SliderContext, SliderValueProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: SliderValueProps = $props();
+	let { class: className, style, children, ...rest }: SliderValueProps = $props();
 
 	const ctx = getContext<SliderContext>(SLIDER_CONTEXT);
 
@@ -19,8 +14,8 @@
 		mergeProps(rest, {
 			class: className,
 			style,
-			'data-disabled': ctx.disabled ? '' : undefined
-		})
+			'data-disabled': ctx.disabled ? '' : undefined,
+		}),
 	);
 </script>
 

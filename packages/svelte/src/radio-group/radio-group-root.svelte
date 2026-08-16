@@ -23,9 +23,7 @@
 	let radios = $state<RadioEntry[]>([]);
 
 	const isControlled = $derived(value !== undefined);
-	const currentValue = $derived(
-		isControlled ? String(value) : (uncontrolled ?? defaultValue)
-	);
+	const currentValue = $derived(isControlled ? String(value) : (uncontrolled ?? defaultValue));
 
 	function setValue(next: string, event: Event): void {
 		if (isControlled) {
@@ -61,7 +59,7 @@
 		},
 		setValue,
 		registerRadio,
-		getRadios: () => radios
+		getRadios: () => radios,
 	} satisfies RadioGroupContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -71,8 +69,8 @@
 			class: className,
 			style,
 			'aria-required': required || undefined,
-			'data-disabled': disabled ? '' : undefined
-		})
+			'data-disabled': disabled ? '' : undefined,
+		}),
 	);
 </script>
 

@@ -2,11 +2,7 @@
 	import { getContext } from 'svelte';
 	import { DRAWER_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type {
-		DrawerContext,
-		DrawerSwipeAreaProps,
-		DrawerSwipeDirection
-	} from './types.js';
+	import type { DrawerContext, DrawerSwipeAreaProps, DrawerSwipeDirection } from './types.js';
 
 	let {
 		render = 'div',
@@ -24,7 +20,7 @@
 		up: 'down',
 		down: 'up',
 		left: 'right',
-		right: 'left'
+		right: 'left',
 	};
 
 	const openDirection = $derived(swipeDirectionProp ?? opposite[ctx.swipeDirection]);
@@ -51,10 +47,8 @@
 		if (ctx.refs.popup) {
 			const rect = ctx.refs.popup.getBoundingClientRect();
 			return Math.max(
-				ctx.swipeDirection === 'left' || ctx.swipeDirection === 'right'
-					? rect.width
-					: rect.height,
-				1
+				ctx.swipeDirection === 'left' || ctx.swipeDirection === 'right' ? rect.width : rect.height,
+				1,
 			);
 		}
 		if (typeof window === 'undefined') return 1;
@@ -62,7 +56,7 @@
 			ctx.swipeDirection === 'left' || ctx.swipeDirection === 'right'
 				? window.innerWidth
 				: window.innerHeight,
-			1
+			1,
 		);
 	}
 
@@ -115,8 +109,8 @@
 			onpointerdown: handlePointerDown,
 			onpointermove: handlePointerMove,
 			onpointerup: handlePointerUp,
-			onpointercancel: handlePointerCancel
-		})
+			onpointercancel: handlePointerCancel,
+		}),
 	);
 </script>
 

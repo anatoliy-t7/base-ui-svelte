@@ -5,12 +5,12 @@ import Panel from './collapsible-panel.svelte';
 export const Collapsible = {
 	Root,
 	Trigger,
-	Panel
+	Panel,
 };
 
 export type {
 	CollapsibleRootProps,
 	CollapsibleTriggerProps,
 	CollapsiblePanelProps,
-	CollapsibleContext
+	CollapsibleContext,
 } from './types.js';

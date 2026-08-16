@@ -13,8 +13,8 @@
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			class: className,
-			style
-		})
+			style,
+		}),
 	);
 </script>
 

@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { MenuContext, MenuGroupContext, MenuGroupProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: MenuGroupProps = $props();
+	let { class: className, style, children, ...rest }: MenuGroupProps = $props();
 
 	getContext<MenuContext>(MENU_CONTEXT);
 
@@ -21,7 +16,7 @@
 		},
 		setLabelId: (id) => {
 			labelId = id;
-		}
+		},
 	} satisfies MenuGroupContext);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -29,8 +24,8 @@
 			role: 'group',
 			class: className,
 			style,
-			'aria-labelledby': labelId
-		})
+			'aria-labelledby': labelId,
+		}),
 	);
 </script>
 

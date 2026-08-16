@@ -5,13 +5,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { MenuContext, MenuPopupProps } from './types.js';
 
-	let {
-		render = 'div',
-		class: className,
-		style,
-		children,
-		...rest
-	}: MenuPopupProps = $props();
+	let { render = 'div', class: className, style, children, ...rest }: MenuPopupProps = $props();
 
 	const ctx = getContext<MenuContext>(MENU_CONTEXT);
 
@@ -63,10 +57,13 @@
 			ctx.setOpen(false, reason);
 		},
 		dismissOnEscape: true,
-		dismissOnOutsidePress: true
+		dismissOnOutsidePress: true,
 	});
 
 	function onKeyDown(event: KeyboardEvent): void {
+		// Items handle their own keys; ignore bubbled events so arrows don't move twice.
+		if (event.target !== event.currentTarget) return;
+
 		switch (event.key) {
 			case 'ArrowDown':
 				event.preventDefault();
@@ -107,10 +104,13 @@
 			class: className,
 			style,
 			tabindex: -1,
+			'aria-modal': ctx.modal ? 'true' : undefined,
+			'aria-orientation': ctx.orientation,
 			'data-open': ctx.open ? '' : undefined,
 			'data-closed': !ctx.open || ctx.presence.isEnding ? '' : undefined,
 			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
 			'data-ending-style': ctx.presence.isEnding ? '' : undefined,
+			'data-orientation': ctx.orientation,
 			onkeydown: onKeyDown,
 			onpointerenter: () => {
 				ctx.cancelHover();
@@ -122,8 +122,8 @@
 				if (ctx.openOnHover || ctx.isSubmenu) {
 					ctx.closeWithHoverDelay('trigger-hover');
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 

@@ -42,7 +42,7 @@
 			ctx.setOpen(false, reason);
 		},
 		dismissOnEscape: true,
-		dismissOnOutsidePress: true
+		dismissOnOutsidePress: true,
 	});
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -59,8 +59,8 @@
 			},
 			onpointerleave: () => {
 				ctx.closeWithDelay('trigger-hover');
-			}
-		})
+			},
+		}),
 	);
 </script>
 

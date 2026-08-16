@@ -1,20 +1,34 @@
 {
 	"name": "base-ui-svelte-monorepo",
 	"private": true,
+	"workspaces": [
+		"packages/*",
+		"apps/*"
+	],
 	"type": "module",
-	"packageManager": "bun@1.3.14",
-	"workspaces": ["packages/*", "apps/*"],
 	"scripts": {
 		"build": "bun run --filter @base-ui-svelte/styles build && bun run --filter base-ui-svelte build",
 		"test": "bun run --filter base-ui-svelte test",
-		"check": "bun run --filter @base-ui-svelte/styles check && bun run --filter base-ui-svelte check && bun run --filter playground check",
-		"dev": "bun run --filter playground dev",
-		"playground:build": "bun run --filter playground build"
+		"check": "bun run --filter @base-ui-svelte/styles check && bun run --filter base-ui-svelte check && bun run --filter docs check",
+		"dev": "bun run --filter docs dev",
+		"docs:build": "bun run --filter docs build",
+		"fmt": "oxfmt",
+		"fmt:check": "oxfmt --check",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix"
+	},
+	"dependencies": {
+		"@types/node": "^26.2.0"
+	},
+	"devDependencies": {
+		"oxfmt": "^0.63.0",
+		"oxlint": "^1.78.0"
+	},
+	"overrides": {
+		"vite": "^7.0.0"
 	},
 	"engines": {
 		"node": ">=22"
 	},
-	"overrides": {
-		"vite": "^7.0.0"
-	}
+	"packageManager": "bun@1.3.14"
 }

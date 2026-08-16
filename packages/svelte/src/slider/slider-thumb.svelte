@@ -4,13 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SliderContext, SliderThumbProps } from './types.js';
 
-	let {
-		index: indexProp,
-		class: className,
-		style,
-		children,
-		...rest
-	}: SliderThumbProps = $props();
+	let { index: indexProp, class: className, style, children, ...rest }: SliderThumbProps = $props();
 
 	const ctx = getContext<SliderContext>(SLIDER_CONTEXT);
 	// Claim once for the thumb lifetime; explicit `index` supports SSR for range sliders.
@@ -95,8 +89,8 @@
 			onfocus: () => {
 				ctx.setActiveThumbIndex(index);
 			},
-			onkeydown: onKeyDown
-		})
+			onkeydown: onKeyDown,
+		}),
 	);
 </script>
 

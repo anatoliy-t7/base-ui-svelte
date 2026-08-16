@@ -1,11 +1,16 @@
 .progress {
-  @apply grid max-w-64 grid-cols-[1fr_auto] gap-x-3 gap-y-1.5;
+	@apply grid max-w-64 grid-cols-[1fr_auto] gap-x-3 gap-y-1.5;
 }
-.progress-label, .progress-value { @apply text-sm; }
-.progress-value { @apply text-muted; }
+.progress-label,
+.progress-value {
+	@apply text-sm;
+}
+.progress-value {
+	@apply text-muted;
+}
 .progress-track {
-  @apply col-span-full h-1.5 overflow-hidden rounded-full bg-default;
+	@apply col-span-full h-1.5 overflow-hidden rounded-full bg-default;
 }
 .progress-indicator {
-  @apply h-full rounded-full bg-accent transition-[width] duration-200;
+	@apply h-full rounded-full bg-accent transition-[width] duration-200;
 }

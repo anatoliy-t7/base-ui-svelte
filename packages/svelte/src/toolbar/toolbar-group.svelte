@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ToolbarContext, ToolbarGroupProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ToolbarGroupProps = $props();
+	let { class: className, style, children, ...rest }: ToolbarGroupProps = $props();
 
 	const ctx = getContext<ToolbarContext>(TOOLBAR_CONTEXT);
 
@@ -18,8 +13,8 @@
 			role: 'group',
 			class: className,
 			style,
-			'data-orientation': ctx.orientation
-		})
+			'data-orientation': ctx.orientation,
+		}),
 	);
 </script>
 

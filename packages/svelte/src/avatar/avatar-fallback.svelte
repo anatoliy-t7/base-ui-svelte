@@ -4,13 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { AvatarContext, AvatarFallbackProps } from './types.js';
 
-	let {
-		delay = 0,
-		class: className,
-		style,
-		children,
-		...rest
-	}: AvatarFallbackProps = $props();
+	let { delay = 0, class: className, style, children, ...rest }: AvatarFallbackProps = $props();
 
 	const ctx = getContext<AvatarContext>(AVATAR_CONTEXT);
 
@@ -33,15 +27,14 @@
 	});
 
 	const canShow = $derived(
-		delayElapsed &&
-			(ctx.imageLoadingStatus === 'idle' || ctx.imageLoadingStatus === 'error')
+		delayElapsed && (ctx.imageLoadingStatus === 'idle' || ctx.imageLoadingStatus === 'error'),
 	);
 
 	const fallbackProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			class: className,
-			style
-		})
+			style,
+		}),
 	);
 </script>
 

@@ -16,18 +16,26 @@
 	const ctx = getContext<CollapsibleContext>(COLLAPSIBLE_CONTEXT);
 
 	let panelHeight = $state<string | undefined>(undefined);
+	let panelWidth = $state<string | undefined>(undefined);
 
 	const shouldRender = $derived(keepMounted || ctx.presence.isPresent);
 
-	function measurePanel(element: HTMLElement) {
+	function attachPanel(element: HTMLElement) {
+		ctx.presence.setNode(element);
+
 		const sync = () => {
+			// Freeze dimensions while collapsing so height transitions stay stable.
+			if (ctx.presence.isEnding) return;
 			panelHeight = `${element.scrollHeight}px`;
+			panelWidth = `${element.scrollWidth}px`;
 		};
 		sync();
 		const observer = new ResizeObserver(sync);
 		observer.observe(element);
+
 		return () => {
 			observer.disconnect();
+			ctx.presence.setNode(null);
 		};
 	}
 
@@ -38,14 +46,17 @@
 			class: className,
 			style: [
 				panelHeight ? `--collapsible-panel-height:${panelHeight}` : undefined,
-				typeof style === 'string' ? style : undefined
+				panelWidth ? `--collapsible-panel-width:${panelWidth}` : undefined,
+				typeof style === 'string' ? style : undefined,
 			]
 				.filter(Boolean)
 				.join(';'),
-			hidden: keepMounted && !ctx.open ? true : undefined,
+			hidden: keepMounted && !ctx.presence.isPresent ? true : undefined,
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
+			'data-ending-style': ctx.presence.isEnding ? '' : undefined,
+		}),
 	);
 </script>
 
@@ -53,7 +64,7 @@
 	<div
 		{...mergedProps}
 		style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
-		{@attach measurePanel}
+		{@attach attachPanel}
 	>
 		{#if children}
 			{@render children()}

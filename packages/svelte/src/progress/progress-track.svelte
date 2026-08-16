@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ProgressContext, ProgressTrackProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ProgressTrackProps = $props();
+	let { class: className, style, children, ...rest }: ProgressTrackProps = $props();
 
 	const ctx = getContext<ProgressContext>(PROGRESS_CONTEXT);
 
@@ -19,8 +14,8 @@
 			style,
 			'data-complete': ctx.status === 'complete' ? '' : undefined,
 			'data-indeterminate': ctx.status === 'indeterminate' ? '' : undefined,
-			'data-progressing': ctx.status === 'progressing' ? '' : undefined
-		})
+			'data-progressing': ctx.status === 'progressing' ? '' : undefined,
+		}),
 	);
 </script>
 

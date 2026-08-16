@@ -4,7 +4,7 @@
 	const fruits = [
 		{ value: 'apple', label: 'Apple' },
 		{ value: 'banana', label: 'Banana' },
-		{ value: 'cherry', label: 'Cherry' }
+		{ value: 'cherry', label: 'Cherry' },
 	];
 
 	let value = $state<string[]>([]);

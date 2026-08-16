@@ -19,6 +19,7 @@ export type MenubarContext = {
 	readonly orientation: MenubarOrientation;
 	readonly openOnHover: boolean;
 	readonly closeDelay: number;
+	readonly modal: boolean;
 	registerMenu(entry: MenubarMenuEntry): () => void;
 	registerTrigger(menuId: string, element: HTMLElement): () => void;
 	moveFocus(fromMenuId: string, direction: 1 | -1): void;
@@ -32,5 +33,10 @@ export type MenubarProps = Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'ro
 	orientation?: MenubarOrientation;
 	/** Delay before closing after pointer leaves (ms). @default 150 */
 	closeDelay?: number;
+	/**
+	 * Whether menus in this menubar lock document scroll when open.
+	 * @default true
+	 */
+	modal?: boolean;
 	children?: Snippet;
 };

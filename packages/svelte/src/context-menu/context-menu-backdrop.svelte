@@ -26,8 +26,8 @@
 			onclick: () => {
 				if (!dismissible) return;
 				ctx.setOpen(false, 'outside-press');
-			}
-		})
+			},
+		}),
 	);
 </script>
 

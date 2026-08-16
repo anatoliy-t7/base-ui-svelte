@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { MenuContext, MenuViewportProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: MenuViewportProps = $props();
+	let { class: className, style, children, ...rest }: MenuViewportProps = $props();
 
 	getContext<MenuContext>(MENU_CONTEXT);
 
@@ -17,13 +12,10 @@
 		mergeProps(rest, {
 			role: 'presentation',
 			class: className,
-			style: [
-				'overflow:auto;max-height:inherit;',
-				typeof style === 'string' ? style : undefined
-			]
+			style: ['overflow:auto;max-height:inherit;', typeof style === 'string' ? style : undefined]
 				.filter(Boolean)
-				.join(';')
-		})
+				.join(';'),
+		}),
 	);
 </script>
 

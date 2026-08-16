@@ -39,7 +39,7 @@ export const ContextMenu = {
 	RadioItemIndicator,
 	Separator,
 	Group,
-	GroupLabel
+	GroupLabel,
 };
 
 export type {
@@ -63,5 +63,5 @@ export type {
 	ContextMenuSeparatorProps,
 	ContextMenuGroupProps,
 	ContextMenuGroupLabelProps,
-	ContextMenuContext
+	ContextMenuContext,
 } from './types.js';

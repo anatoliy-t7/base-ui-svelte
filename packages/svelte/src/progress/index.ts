@@ -9,7 +9,7 @@ export const Progress = {
 	Label,
 	Track,
 	Indicator,
-	Value
+	Value,
 };
 
 export type {
@@ -19,5 +19,5 @@ export type {
 	ProgressIndicatorProps,
 	ProgressValueProps,
 	ProgressContext,
-	ProgressStatus
+	ProgressStatus,
 } from './types.js';

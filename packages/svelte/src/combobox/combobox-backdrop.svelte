@@ -21,8 +21,8 @@
 				.filter(Boolean)
 				.join(';'),
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

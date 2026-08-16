@@ -17,10 +17,7 @@
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			class: className,
-			style: [
-				'position:fixed;inset:0;',
-				typeof style === 'string' ? style : undefined
-			]
+			style: ['position:fixed;inset:0;', typeof style === 'string' ? style : undefined]
 				.filter(Boolean)
 				.join(';'),
 			'data-open': ctx.open ? '' : undefined,
@@ -30,8 +27,8 @@
 			onclick: () => {
 				if (ctx.disablePointerDismissal) return;
 				ctx.setOpen(false, 'outside-press');
-			}
-		})
+			},
+		}),
 	);
 </script>
 

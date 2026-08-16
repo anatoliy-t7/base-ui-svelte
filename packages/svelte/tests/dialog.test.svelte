@@ -1,8 +1,16 @@
 <script lang="ts">
 	import { Dialog } from '../src/index.js';
+
+	let {
+		modal = true as boolean | 'trap-focus',
+		disablePointerDismissal = false,
+	}: {
+		modal?: boolean | 'trap-focus';
+		disablePointerDismissal?: boolean;
+	} = $props();
 </script>
 
-<Dialog.Root data-testid="dialog-root">
+<Dialog.Root data-testid="dialog-root" {modal} {disablePointerDismissal}>
 	<Dialog.Trigger data-testid="trigger">Open</Dialog.Trigger>
 	<Dialog.Portal>
 		<Dialog.Backdrop data-testid="backdrop" />

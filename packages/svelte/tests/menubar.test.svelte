@@ -9,7 +9,9 @@
 		<Menu.Portal>
 			<Menu.Positioner>
 				<Menu.Popup data-testid="file-popup">
-					<Menu.Item data-testid="file-item">New</Menu.Item>
+					<Menu.Item data-testid="file-item-new">New</Menu.Item>
+					<Menu.Item data-testid="file-item-open">Open</Menu.Item>
+					<Menu.Item data-testid="file-item-save">Save</Menu.Item>
 				</Menu.Popup>
 			</Menu.Positioner>
 		</Menu.Portal>

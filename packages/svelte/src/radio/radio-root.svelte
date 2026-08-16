@@ -75,7 +75,7 @@
 		},
 		get disabled() {
 			return isDisabled;
-		}
+		},
 	} satisfies RadioContext);
 
 	const buttonProps: Record<string, unknown> = $derived(
@@ -95,8 +95,8 @@
 			onclick: (event: MouseEvent) => {
 				select(event);
 			},
-			onkeydown: onKeyDown
-		})
+			onkeydown: onKeyDown,
+		}),
 	);
 </script>
 
@@ -115,7 +115,7 @@
 		type="radio"
 		name={group.name}
 		{value}
-		checked={checked}
+		{checked}
 		required={group.required}
 		tabindex="-1"
 		aria-hidden="true"

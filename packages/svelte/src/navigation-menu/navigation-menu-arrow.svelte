@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { NavigationMenuArrowProps, NavigationMenuContext } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: NavigationMenuArrowProps = $props();
+	let { class: className, style, children, ...rest }: NavigationMenuArrowProps = $props();
 
 	const ctx = getContext<NavigationMenuContext>(NAVIGATION_MENU_CONTEXT);
 
@@ -30,8 +25,8 @@
 			style,
 			'aria-hidden': 'true',
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

@@ -4,14 +4,14 @@ Unofficial Svelte 5 port of [Base UI](https://base-ui.com). Unstyled, accessible
 
 ## Repo layout
 
-| Path | Role |
-|------|------|
-| `packages/svelte` | Library (`base-ui-svelte`) — headless source of truth |
-| `packages/styles` | Optional styles (`@base-ui-svelte/styles`) — Tailwind CSS v4 + `tv` recipes |
-| `packages/svelte/src/<component>/` | One folder per component |
-| `packages/svelte/src/internal/` | Shared primitives (context keys, mergeProps, floating, presence, focus trap, dismiss, controllable state, portal) |
-| `packages/svelte/tests/` | Vitest + Testing Library (+ vitest-axe) |
-| `apps/playground` | Manual demos (SvelteKit) |
+| Path                               | Role                                                                                                              |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `packages/svelte`                  | Library (`base-ui-svelte`) — headless source of truth                                                             |
+| `packages/styles`                  | Optional styles (`@base-ui-svelte/styles`) — Tailwind CSS v4 + `tv` recipes                                       |
+| `packages/svelte/src/<component>/` | One folder per component                                                                                          |
+| `packages/svelte/src/internal/`    | Shared primitives (context keys, mergeProps, floating, presence, focus trap, dismiss, controllable state, portal) |
+| `packages/svelte/tests/`           | Vitest + Testing Library (+ vitest-axe)                                                                           |
+| `apps/docs`                        | Docs site + demos (SvelteKit)                                                                                     |
 
 Package manager: **Bun** (workspaces). Node `>=22`.
 
@@ -22,9 +22,13 @@ Run from monorepo root:
 ```bash
 bun install
 bun run test          # packages/svelte vitest
-bun run check         # styles typecheck + svelte-check (library + playground)
+bun run check         # styles typecheck + svelte-check (library + docs)
 bun run build         # styles tsc + svelte-package → dist
-bun run dev           # playground
+bun run fmt           # oxfmt (whole monorepo)
+bun run fmt:check     # oxfmt --check
+bun run lint          # oxlint (whole monorepo)
+bun run lint:fix      # oxlint --fix
+bun run dev           # docs
 ```
 
 Scoped:
@@ -35,7 +39,7 @@ bun run --filter base-ui-svelte check
 bun run --filter @base-ui-svelte/styles build
 ```
 
-After changing library APIs or exports, rebuild before relying on playground/consumers of `dist`.
+After changing library APIs or exports, rebuild before relying on docs/consumers of `dist`.
 
 ## Component conventions
 
@@ -46,7 +50,7 @@ Mirror Base UI public APIs:
 
 ```ts
 // packages/svelte/src/popover/index.ts
-export const Popover = { Root, Trigger, Portal, Positioner, Popup, /* … */ };
+export const Popover = { Root, Trigger, Portal, Positioner, Popup /* … */ };
 ```
 
 Per component folder:
@@ -60,7 +64,7 @@ Also wire:
 1. Subpath export in `packages/svelte/package.json` (`./popover`, etc.)
 2. Root barrel in `packages/svelte/src/index.ts`
 3. Context `Symbol` in `packages/svelte/src/internal/context-keys.ts` (`base-ui-svelte.<name>`)
-4. Playground route under `apps/playground/src/routes/<component>/` when adding a user-facing demo
+4. Docs route under `apps/docs/src/routes/<component>/` when adding a user-facing demo
 5. Tests: `packages/svelte/tests/<name>.test.ts` + `<name>.test.svelte`
 
 ### Patterns to follow
@@ -124,13 +128,13 @@ When writing or editing `.svelte` / `.svelte.ts` files:
 
 When adding or changing a component, copy structure from the closest existing peer:
 
-| Kind | Example |
-|------|---------|
-| Disclosure | `accordion`, `collapsible` |
-| Dialog-like | `dialog`, `alert-dialog`, `drawer` |
-| Floating | `popover`, `tooltip`, `preview-card`, `menu` |
-| Form control | `checkbox`, `switch`, `radio`, `slider`, `field`, `input`, `number-field` |
-| Collection | `tabs`, `toggle-group`, `select`, `combobox`, `autocomplete` |
-| Navigation | `menubar`, `navigation-menu`, `toolbar` |
-| Utilities | `direction-provider`, `csp-provider`, `merge-props` |
-| Styles | `packages/styles` (`btn btn-sm`, `{component}-{part}`, Tailwind v4 + `tv`) |
+| Kind         | Example                                                                    |
+| ------------ | -------------------------------------------------------------------------- |
+| Disclosure   | `accordion`, `collapsible`                                                 |
+| Dialog-like  | `dialog`, `alert-dialog`, `drawer`                                         |
+| Floating     | `popover`, `tooltip`, `preview-card`, `menu`                               |
+| Form control | `checkbox`, `switch`, `radio`, `slider`, `field`, `input`, `number-field`  |
+| Collection   | `tabs`, `toggle-group`, `select`, `combobox`, `autocomplete`               |
+| Navigation   | `menubar`, `navigation-menu`, `toolbar`                                    |
+| Utilities    | `direction-provider`, `csp-provider`, `merge-props`                        |
+| Styles       | `packages/styles` (`btn btn-sm`, `{component}-{part}`, Tailwind v4 + `tv`) |

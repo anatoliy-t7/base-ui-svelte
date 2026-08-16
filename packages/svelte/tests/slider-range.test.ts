@@ -16,7 +16,7 @@ describe('Slider range', () => {
 		expect(screen.getByTestId('indicator')).toHaveStyle({
 			left: '20%',
 			width: '40%',
-			height: '100%'
+			height: '100%',
 		});
 	});
 

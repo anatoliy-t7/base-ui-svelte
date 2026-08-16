@@ -9,8 +9,8 @@ export const autocompleteVariants = tv({
 		icon: 'autocomplete-icon',
 		popup: 'autocomplete-popup',
 		item: 'autocomplete-item',
-		empty: 'autocomplete-empty'
-	}
+		empty: 'autocomplete-empty',
+	},
 });
 
 export type AutocompleteVariants = VariantProps<typeof autocompleteVariants>;

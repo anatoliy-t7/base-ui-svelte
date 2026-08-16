@@ -15,7 +15,7 @@
 	const ctx = getContext<NumberFieldContext>(NUMBER_FIELD_CONTEXT);
 
 	function handlePointerDown(event: PointerEvent): void {
-		if (ctx.disabled) return;
+		if (ctx.disabled || ctx.readOnly) return;
 		const isMainButton = !event.button || event.button === 0;
 		if (!isMainButton) return;
 		ctx.startScrub(event.clientX, event, pixelSensitivity);
@@ -31,17 +31,17 @@
 		ctx.moveScrub(event.clientX, event);
 	}
 
-	function handlePointerUp(): void {
-		ctx.endScrub();
+	function handlePointerUp(event: PointerEvent): void {
+		ctx.endScrub(event);
 	}
 
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			class: className,
 			style,
-			'data-disabled': ctx.disabled ? '' : undefined,
-			'data-scrubbing': ctx.scrubbing ? '' : undefined
-		})
+			'data-disabled': ctx.disabled || ctx.readOnly ? '' : undefined,
+			'data-scrubbing': ctx.scrubbing ? '' : undefined,
+		}),
 	);
 </script>
 

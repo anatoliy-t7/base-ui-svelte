@@ -5,6 +5,26 @@ import { describe, expect, it } from 'vitest';
 import MenubarTest from './menubar.test.svelte';
 
 describe('Menubar', () => {
+	it('moves highlight one item at a time with ArrowDown', async () => {
+		const user = userEvent.setup();
+		render(MenubarTest);
+
+		await user.click(screen.getByTestId('file-trigger'));
+		const first = screen.getByTestId('file-item-new');
+		const second = screen.getByTestId('file-item-open');
+		const third = screen.getByTestId('file-item-save');
+
+		await waitFor(() => {
+			expect(first).toHaveFocus();
+		});
+
+		await user.keyboard('{ArrowDown}');
+		expect(second).toHaveFocus();
+
+		await user.keyboard('{ArrowDown}');
+		expect(third).toHaveFocus();
+	});
+
 	it('opens menus and moves between triggers with arrows', async () => {
 		const user = userEvent.setup();
 		render(MenubarTest);

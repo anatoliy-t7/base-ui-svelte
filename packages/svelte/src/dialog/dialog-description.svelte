@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { DialogContext, DialogDescriptionProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: DialogDescriptionProps = $props();
+	let { class: className, style, children, ...rest }: DialogDescriptionProps = $props();
 
 	const ctx = getContext<DialogContext>(DIALOG_CONTEXT);
 
@@ -17,8 +12,8 @@
 		mergeProps(rest, {
 			id: ctx.descriptionId,
 			class: className,
-			style
-		})
+			style,
+		}),
 	);
 </script>
 

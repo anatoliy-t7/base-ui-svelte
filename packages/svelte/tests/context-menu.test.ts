@@ -11,7 +11,7 @@ describe('ContextMenu', () => {
 
 		await fireEvent.contextMenu(screen.getByTestId('trigger'), {
 			clientX: 40,
-			clientY: 60
+			clientY: 60,
 		});
 
 		await waitFor(() => {
@@ -25,7 +25,7 @@ describe('ContextMenu', () => {
 
 		await fireEvent.contextMenu(screen.getByTestId('trigger'), {
 			clientX: 40,
-			clientY: 60
+			clientY: 60,
 		});
 
 		await waitFor(() => {
@@ -41,7 +41,7 @@ describe('ContextMenu', () => {
 		const { container } = render(ContextMenuTest);
 		await fireEvent.contextMenu(screen.getByTestId('trigger'), {
 			clientX: 40,
-			clientY: 60
+			clientY: 60,
 		});
 		await waitFor(() => {
 			expect(screen.getByTestId('popup')).toBeInTheDocument();

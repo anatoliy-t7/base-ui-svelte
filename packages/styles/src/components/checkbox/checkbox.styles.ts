@@ -5,18 +5,18 @@ export const checkboxVariants = tv({
 	slots: {
 		root: 'checkbox',
 		indicator: 'checkbox-indicator',
-		label: 'checkbox-label'
+		label: 'checkbox-label',
 	},
 	variants: {
 		size: {
 			sm: { root: 'checkbox-sm' },
 			md: { root: '' },
-			lg: { root: 'checkbox-lg' }
-		}
+			lg: { root: 'checkbox-lg' },
+		},
 	},
 	defaultVariants: {
-		size: 'md'
-	}
+		size: 'md',
+	},
 });
 
 export type CheckboxVariants = VariantProps<typeof checkboxVariants>;

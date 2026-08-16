@@ -1,12 +1,24 @@
 .scroll-area {
-  @apply relative max-w-md overflow-hidden rounded-xl border border-border bg-surface;
+	@apply relative h-40 w-full max-w-lg overflow-hidden rounded-xl border border-border bg-surface;
 }
-.scroll-area-viewport { @apply size-full scrollbar-thin; }
-.scroll-area-content { @apply p-3 text-sm; }
+.scroll-area-viewport {
+	@apply h-full w-full;
+}
+.scroll-area-content {
+	@apply p-3 text-sm;
+}
 .scroll-area-scrollbar {
-  @apply absolute flex touch-none select-none bg-default/60 p-0.5;
-  &[data-orientation="vertical"] { @apply top-1.5 right-1 bottom-1.5 w-1.5; }
-  &[data-orientation="horizontal"] { @apply right-1.5 bottom-1 left-1.5 h-1.5; }
+	@apply flex touch-none bg-default/60 p-0.5 select-none;
+	&[data-orientation='vertical'] {
+		@apply m-1 w-1.5;
+	}
+	&[data-orientation='horizontal'] {
+		@apply m-1 h-1.5;
+	}
 }
-.scroll-area-thumb { @apply relative flex-1 rounded-full bg-muted; }
-.scroll-area-corner { @apply bg-transparent; }
+.scroll-area-thumb {
+	@apply rounded-full bg-muted;
+}
+.scroll-area-corner {
+	@apply bg-transparent;
+}

@@ -13,13 +13,13 @@ describe('mergeProps', () => {
 			{
 				onclick: () => {
 					calls.push('first');
-				}
+				},
 			},
 			{
 				onclick: () => {
 					calls.push('second');
-				}
-			}
+				},
+			},
 		);
 		const handler = merged.onclick as () => void;
 		handler();

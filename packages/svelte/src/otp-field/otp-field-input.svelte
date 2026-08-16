@@ -96,8 +96,8 @@
 				if (target instanceof HTMLInputElement) {
 					target.select();
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 

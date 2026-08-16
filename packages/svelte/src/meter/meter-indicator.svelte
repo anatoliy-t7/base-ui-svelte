@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { MeterContext, MeterIndicatorProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: MeterIndicatorProps = $props();
+	let { class: className, style, children, ...rest }: MeterIndicatorProps = $props();
 
 	const ctx = getContext<MeterContext>(METER_CONTEXT);
 
@@ -34,8 +29,8 @@
 			class: className,
 			style: indicatorStyle,
 			'data-complete': ctx.status === 'complete' ? '' : undefined,
-			'data-progressing': ctx.status === 'progressing' ? '' : undefined
-		})
+			'data-progressing': ctx.status === 'progressing' ? '' : undefined,
+		}),
 	);
 </script>
 

@@ -2,15 +2,18 @@
 	@apply relative;
 }
 .navigation-menu-list {
-	@apply flex flex-wrap items-center gap-1.5;
+	@apply m-0 flex list-none flex-wrap items-center gap-1.5 p-0;
 }
 .navigation-menu-item {
-	@apply relative;
+	@apply relative m-0 flex list-none items-center;
 }
-.navigation-menu-trigger {
-	@apply relative isolate inline-flex h-8 w-fit items-center justify-center gap-2 rounded-lg px-3 text-xs font-medium outline-none;
+.navigation-menu-trigger,
+.navigation-menu-link {
+	@apply relative isolate inline-flex h-8 w-fit items-center justify-center gap-2 rounded-lg border-0 px-3 no-underline outline-none;
 	cursor: var(--cursor-interactive);
 	background-color: transparent;
+	color: inherit;
+	font: inherit;
 	&:hover,
 	&[data-open] {
 		background-color: var(--default);
@@ -29,11 +32,9 @@
 .navigation-menu-viewport {
 	@apply relative overflow-hidden;
 }
-.navigation-menu-link {
-	@apply block rounded-md px-2.5 py-2 text-sm no-underline outline-none;
-	&:hover {
-		background-color: var(--default);
-	}
+.navigation-menu-content .navigation-menu-link,
+.navigation-menu-popup .navigation-menu-link {
+	@apply block h-auto w-full justify-start rounded-md px-2.5 py-2;
 	&[data-active] {
 		@apply bg-accent-soft text-accent-soft-foreground;
 	}

@@ -9,12 +9,7 @@
 		setArrow(el: HTMLElement | null): void;
 	};
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: TooltipArrowProps = $props();
+	let { class: className, style, children, ...rest }: TooltipArrowProps = $props();
 
 	const ctx = getContext<TooltipContext>(TOOLTIP_CONTEXT);
 	const positioner = hasContext(TOOLTIP_POSITIONER_CONTEXT)
@@ -40,8 +35,8 @@
 			style,
 			'aria-hidden': 'true',
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

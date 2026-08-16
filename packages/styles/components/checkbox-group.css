@@ -1,2 +1,6 @@
-.checkbox-group { @apply flex flex-col gap-2; }
-.checkbox-group-label { @apply text-sm font-medium text-foreground; }
+.checkbox-group {
+	@apply flex flex-col gap-2;
+}
+.checkbox-group-label {
+	@apply text-sm font-medium text-foreground;
+}

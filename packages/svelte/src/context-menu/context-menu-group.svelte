@@ -1,22 +1,14 @@
 <script lang="ts">
 	import { getContext, setContext } from 'svelte';
-	import {
-		CONTEXT_MENU_CONTEXT,
-		CONTEXT_MENU_GROUP_CONTEXT
-	} from '../internal/context-keys.js';
+	import { CONTEXT_MENU_CONTEXT, CONTEXT_MENU_GROUP_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type {
 		ContextMenuContext,
 		ContextMenuGroupContext,
-		ContextMenuGroupProps
+		ContextMenuGroupProps,
 	} from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ContextMenuGroupProps = $props();
+	let { class: className, style, children, ...rest }: ContextMenuGroupProps = $props();
 
 	getContext<ContextMenuContext>(CONTEXT_MENU_CONTEXT);
 
@@ -28,7 +20,7 @@
 		},
 		setLabelId: (id) => {
 			labelId = id;
-		}
+		},
 	} satisfies ContextMenuGroupContext);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -36,8 +28,8 @@
 			role: 'group',
 			class: className,
 			style,
-			'aria-labelledby': labelId
-		})
+			'aria-labelledby': labelId,
+		}),
 	);
 </script>
 

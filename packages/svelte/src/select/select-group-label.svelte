@@ -5,13 +5,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SelectGroupContext, SelectGroupLabelProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		id: idProp,
-		children,
-		...rest
-	}: SelectGroupLabelProps = $props();
+	let { class: className, style, id: idProp, children, ...rest }: SelectGroupLabelProps = $props();
 
 	const fallbackId = useId('select-group-label');
 	const id = $derived(idProp ?? fallbackId);
@@ -31,8 +25,8 @@
 		mergeProps(rest, {
 			id,
 			class: className,
-			style
-		})
+			style,
+		}),
 	);
 </script>
 

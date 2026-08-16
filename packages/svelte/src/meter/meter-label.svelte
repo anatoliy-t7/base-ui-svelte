@@ -4,13 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { MeterContext, MeterLabelProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		id,
-		children,
-		...rest
-	}: MeterLabelProps = $props();
+	let { class: className, style, id, children, ...rest }: MeterLabelProps = $props();
 
 	const ctx = getContext<MeterContext>(METER_CONTEXT);
 
@@ -20,8 +14,8 @@
 			class: className,
 			style,
 			'data-complete': ctx.status === 'complete' ? '' : undefined,
-			'data-progressing': ctx.status === 'progressing' ? '' : undefined
-		})
+			'data-progressing': ctx.status === 'progressing' ? '' : undefined,
+		}),
 	);
 </script>
 

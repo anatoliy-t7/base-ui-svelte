@@ -4,13 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { FieldContext, FieldErrorProps } from './types.js';
 
-	let {
-		match,
-		class: className,
-		style,
-		children,
-		...rest
-	}: FieldErrorProps = $props();
+	let { match, class: className, style, children, ...rest }: FieldErrorProps = $props();
 
 	const ctx = getContext<FieldContext>(FIELD_CONTEXT);
 
@@ -37,13 +31,16 @@
 			'data-dirty': ctx.dirty ? '' : undefined,
 			'data-touched': ctx.touched ? '' : undefined,
 			'data-filled': ctx.filled ? '' : undefined,
-			'data-focused': ctx.focused ? '' : undefined
-		})
+			'data-focused': ctx.focused ? '' : undefined,
+		}),
 	);
 </script>
 
 {#if shouldShow}
-	<div {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+	<div
+		{...mergedProps}
+		style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+	>
 		{#if children}
 			{@render children({ error: errorMessage })}
 		{:else if errorMessage}

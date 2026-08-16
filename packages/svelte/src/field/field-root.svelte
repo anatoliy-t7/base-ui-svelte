@@ -8,7 +8,7 @@
 		DEFAULT_VALIDITY_FLAGS,
 		type FieldContext,
 		type FieldRootProps,
-		type FieldValidityFlags
+		type FieldValidityFlags,
 	} from './types.js';
 
 	let {
@@ -61,7 +61,7 @@
 		if (!hasValidated && !hasExternalInvalid) {
 			return {
 				...DEFAULT_VALIDITY_FLAGS,
-				valid: invalid === false ? true : null
+				valid: invalid === false ? true : null,
 			};
 		}
 
@@ -91,7 +91,7 @@
 			tooShort: v.tooShort,
 			typeMismatch: v.typeMismatch,
 			valueMissing: v.valueMissing,
-			valid: v.valid
+			valid: v.valid,
 		};
 	}
 
@@ -153,13 +153,13 @@
 					nativeFlags = {
 						...readNativeFlags(controlEl),
 						customError: true,
-						valid: false
+						valid: false,
 					};
 				} else {
 					nativeFlags = {
 						...DEFAULT_VALIDITY_FLAGS,
 						customError: true,
-						valid: false
+						valid: false,
 					};
 				}
 			} else if (controlEl) {
@@ -285,7 +285,7 @@
 		getDescribedBy,
 		setHasDescription: (next: boolean) => {
 			hasDescription = next;
-		}
+		},
 	} satisfies FieldContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -299,8 +299,8 @@
 			'data-dirty': dirty ? '' : undefined,
 			'data-touched': touched ? '' : undefined,
 			'data-filled': filled ? '' : undefined,
-			'data-focused': focused ? '' : undefined
-		})
+			'data-focused': focused ? '' : undefined,
+		}),
 	);
 </script>
 
@@ -312,7 +312,7 @@
 			dirty,
 			focused,
 			filled,
-			valid
+			valid,
 		})}
 	{/if}
 </div>

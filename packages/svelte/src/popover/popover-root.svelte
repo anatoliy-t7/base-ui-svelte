@@ -3,7 +3,7 @@
 	import {
 		createControllableOpen,
 		useId,
-		type OpenChangeReason
+		type OpenChangeReason,
 	} from '../internal/controllable.svelte.js';
 	import { POPOVER_CONTEXT } from '../internal/context-keys.js';
 	import { createHoverDelay } from '../internal/hover-delay.svelte.js';
@@ -18,6 +18,8 @@
 		openOnHover = false,
 		delay = 0,
 		closeDelay = 0,
+		modal = false,
+		handle,
 		class: className,
 		style,
 		id = useId('popover'),
@@ -25,28 +27,31 @@
 		...rest
 	}: PopoverRootProps = $props();
 
-	const state = createControllableOpen({
+	const openState = createControllableOpen({
 		getOpen: () => open,
 		getDefaultOpen: () => defaultOpen,
 		onOpenChange: (next, eventDetails) => {
 			onOpenChange?.(next, eventDetails);
+			if (!next) {
+				handle?.clearPayload();
+			}
 		},
 		setOpenProp: (next) => {
 			open = next;
-		}
+		},
 	});
 
-	const presence = createPresence(() => state.open);
+	const presence = createPresence(() => openState.open);
 	const hover = createHoverDelay(
 		() => delay,
-		() => closeDelay
+		() => closeDelay,
 	);
 
 	const refs: PopoverRefs = {
 		trigger: null,
 		popup: null,
 		arrow: null,
-		positioner: null
+		positioner: null,
 	};
 
 	const triggerId = useId('popover-trigger');
@@ -54,24 +59,37 @@
 	const descriptionId = useId('popover-description');
 	const popupId = useId('popover-popup');
 
+	let lastOpenChangeReason = $state<OpenChangeReason | null>(null);
+
 	function setOpen(next: boolean, reason: OpenChangeReason): void {
 		hover.cancel();
-		state.setOpen(next, reason);
+		lastOpenChangeReason = reason;
+		openState.setOpen(next, reason);
 	}
 
+	$effect(() => {
+		if (!handle) return;
+		return handle.attach({
+			setOpen,
+			getOpen: () => openState.open,
+		});
+	});
+
 	function openWithHoverDelay(reason: OpenChangeReason): void {
-		if (state.open) {
+		if (openState.open) {
 			hover.cancel();
 			return;
 		}
 		hover.openWithDelay(() => {
-			state.setOpen(true, reason);
+			lastOpenChangeReason = reason;
+			openState.setOpen(true, reason);
 		});
 	}
 
 	function closeWithHoverDelay(reason: OpenChangeReason): void {
 		hover.closeWithDelay(() => {
-			state.setOpen(false, reason);
+			lastOpenChangeReason = reason;
+			openState.setOpen(false, reason);
 		});
 	}
 
@@ -87,7 +105,7 @@
 
 	setContext(POPOVER_CONTEXT, {
 		get open() {
-			return state.open;
+			return openState.open;
 		},
 		setOpen,
 		openWithHoverDelay,
@@ -102,12 +120,21 @@
 		get closeDelay() {
 			return closeDelay;
 		},
+		get modal() {
+			return modal;
+		},
+		get lastOpenChangeReason() {
+			return lastOpenChangeReason;
+		},
 		triggerId,
 		titleId,
 		descriptionId,
 		popupId,
 		refs,
-		presence
+		presence,
+		get payload() {
+			return handle?.payload;
+		},
 	} satisfies PopoverContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -115,14 +142,14 @@
 			id,
 			class: className,
 			style,
-			'data-open': state.open ? '' : undefined,
-			'data-closed': !state.open ? '' : undefined
-		})
+			'data-open': openState.open ? '' : undefined,
+			'data-closed': !openState.open ? '' : undefined,
+		}),
 	);
 </script>
 
 <div {...rootProps} style={typeof rootProps.style === 'string' ? rootProps.style : undefined}>
 	{#if children}
-		{@render children({ open: state.open })}
+		{@render children({ open: openState.open, payload: handle?.payload })}
 	{/if}
 </div>

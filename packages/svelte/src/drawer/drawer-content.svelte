@@ -4,13 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { DrawerContentProps, DrawerContext } from './types.js';
 
-	let {
-		render = 'div',
-		class: className,
-		style,
-		children,
-		...rest
-	}: DrawerContentProps = $props();
+	let { render = 'div', class: className, style, children, ...rest }: DrawerContentProps = $props();
 
 	const ctx = getContext<DrawerContext>(DRAWER_CONTEXT);
 
@@ -18,9 +12,10 @@
 		mergeProps(rest, {
 			class: className,
 			style,
+			'data-base-ui-drawer-content': '',
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

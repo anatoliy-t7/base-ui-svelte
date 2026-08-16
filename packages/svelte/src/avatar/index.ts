@@ -5,7 +5,7 @@ import Fallback from './avatar-fallback.svelte';
 export const Avatar = {
 	Root,
 	Image,
-	Fallback
+	Fallback,
 };
 
 export type {
@@ -13,5 +13,5 @@ export type {
 	AvatarImageProps,
 	AvatarFallbackProps,
 	AvatarContext,
-	ImageLoadingStatus
+	ImageLoadingStatus,
 } from './types.js';

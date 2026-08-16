@@ -25,7 +25,7 @@ export const NavigationMenu = {
 	Positioner,
 	Popup,
 	Arrow,
-	Viewport
+	Viewport,
 };
 
 export type {
@@ -44,5 +44,5 @@ export type {
 	NavigationMenuViewportProps,
 	NavigationMenuContext,
 	NavigationMenuItemContext,
-	NavigationMenuOrientation
+	NavigationMenuOrientation,
 } from './types.js';

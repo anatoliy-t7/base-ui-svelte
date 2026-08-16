@@ -34,17 +34,9 @@
 		const direction = directionContext?.direction ?? 'ltr';
 		const rtl = direction === 'rtl' && ctx.orientation === 'horizontal';
 		const prevKey =
-			ctx.orientation === 'horizontal'
-				? rtl
-					? 'ArrowRight'
-					: 'ArrowLeft'
-				: 'ArrowUp';
+			ctx.orientation === 'horizontal' ? (rtl ? 'ArrowRight' : 'ArrowLeft') : 'ArrowUp';
 		const nextKey =
-			ctx.orientation === 'horizontal'
-				? rtl
-					? 'ArrowLeft'
-					: 'ArrowRight'
-				: 'ArrowDown';
+			ctx.orientation === 'horizontal' ? (rtl ? 'ArrowLeft' : 'ArrowRight') : 'ArrowDown';
 		if (event.key === prevKey) {
 			event.preventDefault();
 			ctx.moveFocus(id, -1);
@@ -74,8 +66,8 @@
 					event.preventDefault();
 					event.stopPropagation();
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 
@@ -87,7 +79,7 @@
 			element,
 			kind: 'button',
 			disabled,
-			focusableWhenDisabled
+			focusableWhenDisabled,
 		})}
 	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
 >

@@ -9,7 +9,7 @@ export const Meter = {
 	Label,
 	Track,
 	Indicator,
-	Value
+	Value,
 };
 
 export type {
@@ -19,5 +19,5 @@ export type {
 	MeterIndicatorProps,
 	MeterValueProps,
 	MeterContext,
-	MeterStatus
+	MeterStatus,
 } from './types.js';

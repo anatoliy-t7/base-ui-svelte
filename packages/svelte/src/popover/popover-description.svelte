@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { PopoverContext, PopoverDescriptionProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: PopoverDescriptionProps = $props();
+	let { class: className, style, children, ...rest }: PopoverDescriptionProps = $props();
 
 	const ctx = getContext<PopoverContext>(POPOVER_CONTEXT);
 
@@ -17,8 +12,8 @@
 		mergeProps(rest, {
 			id: ctx.descriptionId,
 			class: className,
-			style
-		})
+			style,
+		}),
 	);
 </script>
 

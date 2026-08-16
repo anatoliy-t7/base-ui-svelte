@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { NavigationMenuContext, NavigationMenuListProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: NavigationMenuListProps = $props();
+	let { class: className, style, children, ...rest }: NavigationMenuListProps = $props();
 
 	const ctx = getContext<NavigationMenuContext>(NAVIGATION_MENU_CONTEXT);
 
@@ -30,8 +25,8 @@
 			style,
 			role: 'menubar',
 			'aria-orientation': ctx.orientation,
-			'data-orientation': ctx.orientation
-		})
+			'data-orientation': ctx.orientation,
+		}),
 	);
 </script>
 

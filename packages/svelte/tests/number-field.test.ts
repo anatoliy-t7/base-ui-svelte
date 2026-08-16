@@ -48,7 +48,7 @@ describe('NumberField', () => {
 		await user.pointer([
 			{ keys: '[MouseLeft>]', target: scrub, coords: { x: 100, y: 10 } },
 			{ coords: { x: 110, y: 10 } },
-			{ keys: '[/MouseLeft]' }
+			{ keys: '[/MouseLeft]' },
 		]);
 
 		expect(input).toHaveValue('10');

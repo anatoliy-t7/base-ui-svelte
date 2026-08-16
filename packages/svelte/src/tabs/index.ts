@@ -9,7 +9,7 @@ export const Tabs = {
 	List,
 	Tab,
 	Panel,
-	Indicator
+	Indicator,
 };
 
 export type {
@@ -19,5 +19,5 @@ export type {
 	TabsTabProps,
 	TabsPanelProps,
 	TabsIndicatorProps,
-	TabsOrientation
+	TabsOrientation,
 } from './types.js';

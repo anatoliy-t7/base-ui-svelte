@@ -10,6 +10,8 @@ import Action from './toast-action.svelte';
 import Close from './toast-close.svelte';
 import Arrow from './toast-arrow.svelte';
 export { createToastManager } from './manager.svelte.js';
+import { useToastManager } from './use-toast-manager.js';
+export { useToastManager };
 
 export const Toast = {
 	Provider,
@@ -22,7 +24,8 @@ export const Toast = {
 	Description,
 	Action,
 	Close,
-	Arrow
+	Arrow,
+	useToastManager,
 };
 
 export type {
@@ -40,6 +43,11 @@ export type {
 	ToastContext,
 	ToastData,
 	ToastAddInput,
+	ToastUpdateInput,
 	ToastManager,
-	ToastActionPropsData
+	ToastManagerOptions,
+	ToastPromiseOptions,
+	ToastActionPropsData,
+	ToastSwipeDirection,
+	ToastTransitionStatus,
 } from './types.js';

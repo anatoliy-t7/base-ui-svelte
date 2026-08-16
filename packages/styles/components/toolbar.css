@@ -1,11 +1,14 @@
 .toolbar {
-	@apply flex flex-wrap items-center gap-1.5;
+	@apply inline-flex h-fit w-fit max-w-full flex-wrap items-center gap-1 rounded-xl border border-border bg-surface-secondary p-1;
 }
 .toolbar-button {
-	@apply relative isolate inline-flex h-8 w-fit items-center justify-center gap-2 rounded-lg px-3 text-xs font-medium whitespace-nowrap outline-none select-none no-highlight;
+	@apply relative isolate inline-flex h-8 min-w-8 items-center justify-center rounded-lg px-2 text-xs font-medium whitespace-nowrap outline-none select-none no-highlight;
+	@apply transition-[transform,background-color,box-shadow,color,border-color] duration-150 ease-out motion-reduce:transition-none;
 	cursor: var(--cursor-interactive);
 	background-color: transparent;
 	color: var(--foreground);
+	text-decoration: none;
+	border: var(--border-width) solid transparent;
 	&:hover {
 		background-color: var(--default);
 	}
@@ -13,11 +16,23 @@
 	&[data-focus-visible='true'] {
 		@apply status-focused;
 	}
+	&:disabled,
+	&[aria-disabled='true'],
+	&[data-disabled] {
+		@apply status-disabled;
+	}
+	&:active,
+	&[data-pressed='true'] {
+		transform: scale(0.97);
+	}
 }
 .toolbar-separator {
-	@apply mx-1 shrink-0 self-stretch bg-separator;
-	width: 1px;
+	@apply mx-0.5 h-4 w-px shrink-0 self-center;
+	background-color: var(--separator-secondary, var(--separator));
 }
 .toolbar-group {
-	@apply flex items-center gap-1;
+	@apply flex items-center gap-0.5;
+}
+.toolbar :where(.input) {
+	@apply w-36 shrink-0 shadow-none;
 }

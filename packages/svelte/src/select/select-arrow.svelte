@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SelectArrowProps, SelectContext } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: SelectArrowProps = $props();
+	let { class: className, style, children, ...rest }: SelectArrowProps = $props();
 
 	const ctx = getContext<SelectContext>(SELECT_CONTEXT);
 
@@ -30,8 +25,8 @@
 			style,
 			'aria-hidden': 'true',
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

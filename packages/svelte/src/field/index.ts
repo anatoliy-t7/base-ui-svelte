@@ -13,7 +13,7 @@ export const Field = {
 	Description,
 	Error,
 	Item,
-	Validity
+	Validity,
 };
 
 export type {
@@ -30,7 +30,7 @@ export type {
 	FieldValidityState,
 	FieldValidityFlags,
 	FieldTransitionStatus,
-	FieldValidationMode
+	FieldValidationMode,
 } from './types.js';
 
 export { DEFAULT_VALIDITY_FLAGS } from './types.js';

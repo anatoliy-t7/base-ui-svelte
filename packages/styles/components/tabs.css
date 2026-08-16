@@ -84,7 +84,7 @@
 	}
 
 	.tabs-tab {
-		@apply rounded-none h-9;
+		@apply h-9 rounded-none;
 	}
 
 	.tabs-indicator {

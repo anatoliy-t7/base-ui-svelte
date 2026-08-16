@@ -1,12 +1,11 @@
 import type { Snippet } from 'svelte';
-import type {
-	HTMLAnchorAttributes,
-	HTMLAttributes,
-	HTMLButtonAttributes
-} from 'svelte/elements';
+import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
 import type { Align, Side } from '../internal/floating.svelte.js';
+import type { PopupHandle } from '../internal/popup-handle.js';
 import type { createPresence } from '../internal/presence.svelte.js';
+
+export type MenuHandle<Payload = unknown> = PopupHandle<Payload>;
 
 export type MenuRefs = {
 	trigger: HTMLElement | null;
@@ -37,11 +36,16 @@ export type MenuContext = {
 	readonly openOnHover: boolean;
 	readonly delay: number;
 	readonly closeDelay: number;
+	readonly disabled: boolean;
+	readonly modal: boolean;
+	readonly orientation: 'horizontal' | 'vertical';
+	readonly loopFocus: boolean;
 	readonly menuId: string;
 	readonly triggerId: string;
 	readonly popupId: string;
 	readonly refs: MenuRefs;
 	readonly presence: ReturnType<typeof createPresence>;
+	readonly lastOpenChangeReason: OpenChangeReason | null;
 	readonly highlightedId: string | null;
 	setHighlighted(id: string | null): void;
 	registerItem(id: string, element: HTMLElement, disabled: boolean): () => void;
@@ -55,6 +59,7 @@ export type MenuContext = {
 	readonly parentMenu: MenuContext | null;
 	registerSubmenu(entry: MenuSubmenuEntry): () => void;
 	closeSubmenus(exceptId?: string): void;
+	readonly payload: unknown;
 };
 
 export type MenuGroupContext = {
@@ -81,21 +86,34 @@ export type MenuRadioItemContext = {
 export type MenuRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
-	onOpenChange?:
-		| ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void)
-		| undefined;
+	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
+	/** Called after open/close animations complete. */
+	onOpenChangeComplete?: ((open: boolean) => void) | undefined;
+	/** Whether the menu enters a modal state when open. @default true */
+	modal?: boolean;
+	disabled?: boolean;
+	orientation?: 'horizontal' | 'vertical';
+	/** Whether highlight wraps at list ends. @default true */
+	loopFocus?: boolean;
 	/** Open the menu when the pointer enters the trigger. */
 	openOnHover?: boolean;
 	/** Open delay when `openOnHover` is set (ms). @default 0 */
 	delay?: number;
 	/** Close delay when leaving trigger/popup under hover (ms). @default 0 */
 	closeDelay?: number;
-	children?: Snippet<[{ open: boolean }]>;
+	/** Imperative handle from {@link createHandle}. */
+	handle?: MenuHandle | undefined;
+	children?: Snippet<[{ open: boolean; payload: unknown }]>;
 };
 
-export type MenuTriggerProps = Omit<HTMLButtonAttributes, 'children' | 'disabled'> & {
+export type MenuTriggerProps = Omit<HTMLButtonAttributes, 'children' | 'disabled' | 'id'> & {
 	render?: string;
 	disabled?: boolean;
+	id?: string | undefined;
+	/** Same handle as Root — enables triggers outside the Root tree. */
+	handle?: MenuHandle | undefined;
+	/** Optional payload associated when opening via this trigger. */
+	payload?: unknown;
 	openOnHover?: boolean;
 	children?: Snippet;
 };
@@ -144,9 +162,7 @@ export type MenuLinkItemProps = Omit<HTMLAnchorAttributes, 'children' | 'disable
 export type MenuSubmenuRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
-	onOpenChange?:
-		| ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void)
-		| undefined;
+	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
 	children?: Snippet<[{ open: boolean }]>;
 };
 

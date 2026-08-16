@@ -1,12 +1,20 @@
 import type { Snippet } from 'svelte';
-import type {
-	HTMLAttributes,
-	HTMLButtonAttributes,
-	HTMLLabelAttributes
-} from 'svelte/elements';
+import type { HTMLAttributes, HTMLButtonAttributes, HTMLLabelAttributes } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
 import type { Align, Side } from '../internal/floating.svelte.js';
 import type { createPresence } from '../internal/presence.svelte.js';
+
+export type SelectValue = string | string[] | null;
+
+export type SelectCollectionItem = {
+	readonly value: string;
+	readonly label: string;
+};
+
+export type SelectItemsProp = ReadonlyArray<{
+	readonly value: string;
+	readonly label?: string;
+}>;
 
 export type SelectItemEntry = {
 	readonly id: string;
@@ -24,8 +32,8 @@ export type SelectRefs = {
 };
 
 export type SelectContext = {
-	readonly value: string | null;
-	setValue(value: string | null, event: Event): void;
+	readonly value: SelectValue;
+	setValue(value: SelectValue, event: Event): void;
 	readonly open: boolean;
 	setOpen(open: boolean, reason: OpenChangeReason): void;
 	registerItem(id: string, value: string, element: HTMLElement): () => void;
@@ -43,7 +51,14 @@ export type SelectContext = {
 	readonly presence: ReturnType<typeof createPresence>;
 	readonly disabled: boolean;
 	readonly name: string | undefined;
+	readonly multiple: boolean;
+	readonly modal: boolean;
+	isSelected(value: string): boolean;
+	getSelectedValues(): string[];
 	getSelectedLabel(): string | null;
+	getLabelForValue(value: string): string;
+	readonly collectionItems: ReadonlyArray<SelectCollectionItem>;
+	selectItem(value: string, event: Event): void;
 };
 
 export type SelectItemContext = {
@@ -60,17 +75,23 @@ export type SelectGroupContext = {
 };
 
 export type SelectRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
-	value?: string | null | undefined;
-	defaultValue?: string | null;
-	onValueChange?: ((value: string | null, event: Event) => void) | undefined;
+	value?: SelectValue | undefined;
+	defaultValue?: SelectValue;
+	onValueChange?: ((value: SelectValue, event: Event) => void) | undefined;
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
-	onOpenChange?:
-		| ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void)
-		| undefined;
+	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
 	disabled?: boolean;
 	name?: string | undefined;
-	children?: Snippet<[{ value: string | null; open: boolean; disabled: boolean }]>;
+	multiple?: boolean;
+	/**
+	 * Whether the select enters a modal state when open.
+	 * When `true`, document scroll is locked while open.
+	 * @default true
+	 */
+	modal?: boolean;
+	items?: SelectItemsProp | undefined;
+	children?: Snippet<[{ value: SelectValue; open: boolean; disabled: boolean }]>;
 };
 
 export type SelectLabelProps = Omit<HTMLLabelAttributes, 'children'> & {
@@ -85,7 +106,7 @@ export type SelectTriggerProps = Omit<HTMLButtonAttributes, 'children' | 'disabl
 
 export type SelectValueProps = Omit<HTMLAttributes<HTMLSpanElement>, 'children'> & {
 	placeholder?: string;
-	children?: Snippet<[string | null]>;
+	children?: Snippet<[SelectValue]>;
 };
 
 export type SelectIconProps = Omit<HTMLAttributes<HTMLSpanElement>, 'children'> & {

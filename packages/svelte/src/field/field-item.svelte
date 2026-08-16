@@ -20,7 +20,7 @@
 	setContext(FIELD_ITEM_CONTEXT, {
 		get disabled() {
 			return disabled;
-		}
+		},
 	} satisfies FieldItemContext);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -33,8 +33,8 @@
 			'data-dirty': ctx?.dirty ? '' : undefined,
 			'data-touched': ctx?.touched ? '' : undefined,
 			'data-filled': ctx?.filled ? '' : undefined,
-			'data-focused': ctx?.focused ? '' : undefined
-		})
+			'data-focused': ctx?.focused ? '' : undefined,
+		}),
 	);
 </script>
 

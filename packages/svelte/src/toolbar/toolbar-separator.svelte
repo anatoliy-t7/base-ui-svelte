@@ -20,9 +20,12 @@
 			class: className,
 			style,
 			'aria-orientation': orientation === 'vertical' ? 'vertical' : undefined,
-			'data-orientation': orientation
-		})
+			'data-orientation': orientation,
+		}),
 	);
 </script>
 
-<div {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}></div>
+<div
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+></div>

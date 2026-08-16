@@ -1,10 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
 
-export type ButtonProps = Omit<
-	HTMLAttributes<HTMLElement>,
-	'children' | 'disabled' | 'type'
-> & {
+export type ButtonProps = Omit<HTMLAttributes<HTMLElement>, 'children' | 'disabled' | 'type'> & {
 	disabled?: boolean;
 	focusableWhenDisabled?: boolean;
 	/** HTML element tag to render. Defaults to `button`. */

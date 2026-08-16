@@ -1,8 +1,5 @@
 import type { Snippet } from 'svelte';
-import type {
-	HTMLAnchorAttributes,
-	HTMLAttributes
-} from 'svelte/elements';
+import type { HTMLAnchorAttributes, HTMLAttributes } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
 import type { Align, Side } from '../internal/floating.svelte.js';
 import type { createPresence } from '../internal/presence.svelte.js';
@@ -81,9 +78,7 @@ export type ContextMenuRadioItemContext = {
 export type ContextMenuRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
-	onOpenChange?:
-		| ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void)
-		| undefined;
+	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
 	children?: Snippet<[{ open: boolean }]>;
 };
 
@@ -123,10 +118,7 @@ export type ContextMenuViewportProps = Omit<HTMLAttributes<HTMLDivElement>, 'chi
 	children?: Snippet;
 };
 
-export type ContextMenuItemProps = Omit<
-	HTMLAttributes<HTMLDivElement>,
-	'children' | 'disabled'
-> & {
+export type ContextMenuItemProps = Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'disabled'> & {
 	disabled?: boolean;
 	onClick?: ((event: MouseEvent) => void) | undefined;
 	children?: Snippet;
@@ -140,9 +132,7 @@ export type ContextMenuLinkItemProps = Omit<HTMLAnchorAttributes, 'children' | '
 export type ContextMenuSubmenuRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
-	onOpenChange?:
-		| ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void)
-		| undefined;
+	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
 	children?: Snippet<[{ open: boolean }]>;
 };
 

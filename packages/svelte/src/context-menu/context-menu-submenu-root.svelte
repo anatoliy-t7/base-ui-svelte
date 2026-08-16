@@ -3,7 +3,7 @@
 	import {
 		createControllableOpen,
 		useId,
-		type OpenChangeReason
+		type OpenChangeReason,
 	} from '../internal/controllable.svelte.js';
 	import { CONTEXT_MENU_CONTEXT } from '../internal/context-keys.js';
 	import { createPresence } from '../internal/presence.svelte.js';
@@ -13,7 +13,7 @@
 		ContextMenuItemEntry,
 		ContextMenuRefs,
 		ContextMenuSubmenuEntry,
-		ContextMenuSubmenuRootProps
+		ContextMenuSubmenuRootProps,
 	} from './types.js';
 
 	let {
@@ -38,7 +38,7 @@
 		},
 		setOpenProp: (next) => {
 			open = next;
-		}
+		},
 	});
 
 	function setOpen(next: boolean, reason: OpenChangeReason): void {
@@ -56,7 +56,7 @@
 		trigger: null,
 		popup: null,
 		positioner: null,
-		arrow: null
+		arrow: null,
 	};
 
 	const triggerId = useId('context-menu-submenu-trigger');
@@ -74,7 +74,7 @@
 		highlightedId = nextId;
 		if (nextId == null) return;
 		const entry = items.find((item) => item.id === nextId);
-		entry?.element.focus();
+		entry?.element.focus({ preventScroll: true });
 	}
 
 	function registerItem(itemId: string, element: HTMLElement, disabled: boolean): () => void {
@@ -161,7 +161,7 @@
 			id: menuId,
 			triggerId,
 			setOpen,
-			getOpen: () => openState.open
+			getOpen: () => openState.open,
 		});
 	});
 
@@ -193,7 +193,7 @@
 		isSubmenu: true,
 		parentMenu,
 		registerSubmenu,
-		closeSubmenus
+		closeSubmenus,
 	} satisfies ContextMenuContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -202,8 +202,8 @@
 			class: className,
 			style,
 			'data-open': openState.open ? '' : undefined,
-			'data-closed': !openState.open ? '' : undefined
-		})
+			'data-closed': !openState.open ? '' : undefined,
+		}),
 	);
 </script>
 

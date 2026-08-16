@@ -14,6 +14,8 @@ describe('Popover', () => {
 		await user.click(screen.getByTestId('trigger'));
 		expect(screen.getByTestId('popup')).toBeInTheDocument();
 		expect(screen.getByTestId('popup')).toHaveAttribute('role', 'dialog');
+		expect(screen.getByTestId('backdrop')).toBeInTheDocument();
+		expect(screen.getByTestId('viewport')).toBeInTheDocument();
 		expect(screen.getByTestId('trigger')).toHaveAttribute('aria-expanded', 'true');
 
 		await user.keyboard('{Escape}');

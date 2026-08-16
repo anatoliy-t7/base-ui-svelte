@@ -16,7 +16,7 @@
 	const ctx = getContext<SelectContext>(SELECT_CONTEXT);
 
 	const itemId = $derived(ctx.getItemId(value));
-	const selected = $derived(ctx.value === value);
+	const selected = $derived(ctx.isSelected(value));
 	const highlighted = $derived(ctx.highlighted === value);
 	const isDisabled = $derived(Boolean(disabled || ctx.disabled));
 
@@ -37,13 +37,12 @@
 		get disabled() {
 			return isDisabled;
 		},
-		setLabel
+		setLabel,
 	} satisfies SelectItemContext);
 
 	function select(event: Event): void {
 		if (isDisabled) return;
-		ctx.setValue(value, event);
-		ctx.setOpen(false, 'imperative-action');
+		ctx.selectItem(value, event);
 	}
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -64,8 +63,8 @@
 			onpointermove: () => {
 				if (isDisabled) return;
 				ctx.setHighlighted(value);
-			}
-		})
+			},
+		}),
 	);
 </script>
 

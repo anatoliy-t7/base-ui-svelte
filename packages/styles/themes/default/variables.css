@@ -2,8 +2,8 @@
 	:root,
 	.light,
 	.default,
-	[data-theme="light"],
-	[data-theme="default"] {
+	[data-theme='light'],
+	[data-theme='default'] {
 		color-scheme: light;
 
 		--white: oklch(100% 0 0);
@@ -131,15 +131,16 @@
 		--border-tertiary: color-mix(in oklab, var(--surface) 66%, var(--surface-foreground) 34%);
 
 		--surface-shadow:
-			0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 0 1px 0 rgba(0, 0, 0, 0.06);
-		--overlay-shadow:
-			0 4px 16px 0 rgba(24, 24, 27, 0.08), 0 8px 24px 0 rgba(24, 24, 27, 0.09);
+			0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+			0 0 1px 0 rgba(0, 0, 0, 0.06);
+		--overlay-shadow: 0 4px 16px 0 rgba(24, 24, 27, 0.08), 0 8px 24px 0 rgba(24, 24, 27, 0.09);
 		--field-shadow:
-			0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 0 1px 0 rgba(0, 0, 0, 0.06);
+			0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+			0 0 1px 0 rgba(0, 0, 0, 0.06);
 	}
 
 	.dark,
-	[data-theme="dark"] {
+	[data-theme='dark'] {
 		color-scheme: dark;
 
 		--background: oklch(12% 0.005 285.823);

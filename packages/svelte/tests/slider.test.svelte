@@ -7,7 +7,7 @@
 	let {
 		value = 40,
 		direction = 'ltr',
-		withProvider = false
+		withProvider = false,
 	}: {
 		value?: SliderValue;
 		direction?: TextDirection;

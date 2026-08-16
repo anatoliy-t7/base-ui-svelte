@@ -5,13 +5,7 @@
 	import { ScrollAreaState } from './scroll-area-state.svelte.js';
 	import type { ScrollAreaContext, ScrollAreaRootProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		id,
-		children,
-		...rest
-	}: ScrollAreaRootProps = $props();
+	let { class: className, style, id, children, ...rest }: ScrollAreaRootProps = $props();
 
 	const state = new ScrollAreaState();
 
@@ -28,7 +22,7 @@
 		setViewport: (node) => state.setViewport(node),
 		scrollTo: (options) => state.scrollTo(options),
 		refreshMetrics: () => state.refreshMetrics(),
-		markScrolling: () => state.markScrolling()
+		markScrolling: () => state.markScrolling(),
 	} satisfies ScrollAreaContext);
 
 	const rootStyle = $derived.by(() => {
@@ -50,8 +44,8 @@
 			id,
 			class: className,
 			style: rootStyle,
-			'data-scrolling': state.scrolling ? '' : undefined
-		})
+			'data-scrolling': state.scrolling ? '' : undefined,
+		}),
 	);
 </script>
 

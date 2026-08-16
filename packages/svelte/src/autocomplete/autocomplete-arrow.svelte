@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { AutocompleteArrowProps, AutocompleteContext } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: AutocompleteArrowProps = $props();
+	let { class: className, style, children, ...rest }: AutocompleteArrowProps = $props();
 
 	const ctx = getContext<AutocompleteContext>(AUTOCOMPLETE_CONTEXT);
 
@@ -30,8 +25,8 @@
 			style,
 			'aria-hidden': 'true',
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

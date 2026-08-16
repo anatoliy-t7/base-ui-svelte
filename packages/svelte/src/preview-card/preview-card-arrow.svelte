@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { PreviewCardArrowProps, PreviewCardContext } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: PreviewCardArrowProps = $props();
+	let { class: className, style, children, ...rest }: PreviewCardArrowProps = $props();
 
 	const ctx = getContext<PreviewCardContext>(PREVIEW_CARD_CONTEXT);
 
@@ -30,8 +25,8 @@
 			style,
 			'aria-hidden': 'true',
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

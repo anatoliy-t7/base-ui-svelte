@@ -22,7 +22,7 @@ describe('Slider', () => {
 		expect(screen.getByTestId('indicator')).toHaveStyle({
 			left: '0%',
 			width: '40%',
-			height: '100%'
+			height: '100%',
 		});
 	});
 
@@ -54,7 +54,7 @@ describe('Slider', () => {
 		expect(screen.getByTestId('indicator')).toHaveStyle({
 			left: '20%',
 			width: '40%',
-			height: '100%'
+			height: '100%',
 		});
 		expect(screen.getByTestId('slider')).toHaveAttribute('role', 'group');
 	});
@@ -82,7 +82,7 @@ describe('Slider', () => {
 	it('flips horizontal arrow keys under DirectionProvider rtl', async () => {
 		const user = userEvent.setup();
 		render(SliderTest, {
-			props: { value: 40, direction: 'rtl', withProvider: true }
+			props: { value: 40, direction: 'rtl', withProvider: true },
 		});
 
 		const thumb = screen.getByTestId('thumb');

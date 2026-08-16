@@ -3,13 +3,13 @@
 	import { createControllableChecked, useId } from '../internal/controllable.svelte.js';
 	import {
 		CONTEXT_MENU_CHECKBOX_ITEM_CONTEXT,
-		CONTEXT_MENU_CONTEXT
+		CONTEXT_MENU_CONTEXT,
 	} from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type {
 		ContextMenuCheckboxItemContext,
 		ContextMenuCheckboxItemProps,
-		ContextMenuContext
+		ContextMenuContext,
 	} from './types.js';
 
 	let {
@@ -37,7 +37,7 @@
 		},
 		setCheckedProp: (next) => {
 			checked = next;
-		}
+		},
 	});
 
 	let itemEl = $state<HTMLElement | null>(null);
@@ -55,7 +55,7 @@
 		},
 		get disabled() {
 			return disabled;
-		}
+		},
 	} satisfies ContextMenuCheckboxItemContext);
 
 	function closeSubmenuOnLeft(event: KeyboardEvent): void {
@@ -130,8 +130,8 @@
 						ctx.setOpen(false, 'imperative-action');
 						break;
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 

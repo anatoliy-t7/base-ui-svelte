@@ -50,8 +50,8 @@
 				if (typeof onerror === 'function') {
 					(onerror as (e: Event) => void)(event);
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 

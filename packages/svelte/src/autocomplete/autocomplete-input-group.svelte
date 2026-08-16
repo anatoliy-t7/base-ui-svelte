@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { AutocompleteContext, AutocompleteInputGroupProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: AutocompleteInputGroupProps = $props();
+	let { class: className, style, children, ...rest }: AutocompleteInputGroupProps = $props();
 
 	const ctx = getContext<AutocompleteContext>(AUTOCOMPLETE_CONTEXT);
 
@@ -19,8 +14,8 @@
 			style,
 			'data-disabled': ctx.disabled ? '' : undefined,
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SelectItemContext, SelectItemTextProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: SelectItemTextProps = $props();
+	let { class: className, style, children, ...rest }: SelectItemTextProps = $props();
 
 	const item = getContext<SelectItemContext>(SELECT_ITEM_CONTEXT);
 
@@ -19,8 +14,8 @@
 			style,
 			'data-select-item-text': '',
 			'data-selected': item.selected ? '' : undefined,
-			'data-highlighted': item.highlighted ? '' : undefined
-		})
+			'data-highlighted': item.highlighted ? '' : undefined,
+		}),
 	);
 </script>
 

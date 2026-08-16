@@ -3,12 +3,7 @@
 	import { useId } from '../internal/controllable.svelte.js';
 	import { FORM_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type {
-		FormContext,
-		FormErrors,
-		FormFieldRegistration,
-		FormProps
-	} from './types.js';
+	import type { FormContext, FormErrors, FormFieldRegistration, FormProps } from './types.js';
 
 	let {
 		errors = {},
@@ -66,7 +61,7 @@
 		getFieldError,
 		clearFieldError,
 		registerField,
-		unregisterField
+		unregisterField,
 	} satisfies FormContext);
 
 	async function handleSubmit(event: SubmitEvent): Promise<void> {
@@ -96,8 +91,8 @@
 			class: className,
 			style,
 			novalidate: true,
-			onsubmit: handleSubmit
-		})
+			onsubmit: handleSubmit,
+		}),
 	);
 </script>
 

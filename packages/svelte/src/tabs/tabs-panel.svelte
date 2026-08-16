@@ -4,13 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { TabsContext, TabsPanelProps } from './types.js';
 
-	let {
-		value,
-		class: className,
-		style,
-		children,
-		...rest
-	}: TabsPanelProps = $props();
+	let { value, class: className, style, children, ...rest }: TabsPanelProps = $props();
 
 	const ctx = getContext<TabsContext>(TABS_CONTEXT);
 
@@ -28,8 +22,8 @@
 			tabindex: selected ? 0 : undefined,
 			'aria-labelledby': tabId,
 			'data-selected': selected ? '' : undefined,
-			'data-orientation': ctx.orientation
-		})
+			'data-orientation': ctx.orientation,
+		}),
 	);
 </script>
 

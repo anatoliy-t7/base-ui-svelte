@@ -1,26 +1,14 @@
 <script lang="ts">
 	import { getContext, hasContext } from 'svelte';
-	import {
-		DRAWER_CONTEXT,
-		DRAWER_VIRTUAL_KEYBOARD_CONTEXT
-	} from '../internal/context-keys.js';
+	import { DRAWER_CONTEXT, DRAWER_VIRTUAL_KEYBOARD_CONTEXT } from '../internal/context-keys.js';
 	import { createDismiss } from '../internal/dismiss.svelte.js';
 	import { createFocusTrap } from '../internal/focus-trap.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
+	import { createScrollLock } from '../internal/scroll-lock.svelte.js';
 	import { dismissSize, resolveSnapFractions } from './swipe-utils.js';
-	import type {
-		DrawerContext,
-		DrawerPopupProps,
-		DrawerVirtualKeyboardContext
-	} from './types.js';
+	import type { DrawerContext, DrawerPopupProps, DrawerVirtualKeyboardContext } from './types.js';
 
-	let {
-		render = 'div',
-		class: className,
-		style,
-		children,
-		...rest
-	}: DrawerPopupProps = $props();
+	let { render = 'div', class: className, style, children, ...rest }: DrawerPopupProps = $props();
 
 	const ctx = getContext<DrawerContext>(DRAWER_CONTEXT);
 	const vk = hasContext(DRAWER_VIRTUAL_KEYBOARD_CONTEXT)
@@ -64,7 +52,14 @@
 			return ctx.open && ctx.modal;
 		},
 		container: () => ctx.refs.popup,
-		restoreFocus: true
+		restoreFocus: true,
+	});
+
+	createScrollLock({
+		get enabled() {
+			return ctx.open && ctx.modal;
+		},
+		reference: () => popupEl,
 	});
 
 	createDismiss({
@@ -78,14 +73,26 @@
 			ctx.setOpen(false, reason);
 		},
 		dismissOnEscape: true,
-		dismissOnOutsidePress: false
+		dismissOnOutsidePress: false,
 	});
 
 	function onPointerDown(event: PointerEvent): void {
 		if (event.button !== 0) return;
 		const target = event.target;
 		if (!(target instanceof Element)) return;
-		if (target.closest('[data-base-ui-swipe-ignore]')) return;
+		// Match Base UI / Toast: don't capture pointer on interactive targets or
+		// explicit opt-outs — otherwise clicks (e.g. Drawer.Close) never fire.
+		if (
+			target.closest(
+				'button,a,input,select,textarea,label,[role="button"],[data-base-ui-swipe-ignore]',
+			)
+		) {
+			return;
+		}
+		// Drawer.Content opts mouse/pen out of dismiss swipes so text selection works.
+		if (event.pointerType !== 'touch' && target.closest('[data-base-ui-drawer-content]')) {
+			return;
+		}
 		if (ctx.swiping) return;
 
 		ctx.beginSwipe(event.pointerId, event.clientX, event.clientY, 'dismiss');
@@ -131,10 +138,10 @@
 				? `--drawer-snap-point-offset:${snapOffset}px`
 				: undefined,
 			vk ? `--drawer-keyboard-inset:${vk.keyboardInset}px` : undefined,
-			typeof style === 'string' ? style : undefined
+			typeof style === 'string' ? style : undefined,
 		]
 			.filter(Boolean)
-			.join(';')
+			.join(';'),
 	);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -158,8 +165,8 @@
 			onpointerdown: onPointerDown,
 			onpointermove: onPointerMove,
 			onpointerup: onPointerUp,
-			onpointercancel: onPointerCancel
-		})
+			onpointercancel: onPointerCancel,
+		}),
 	);
 </script>
 

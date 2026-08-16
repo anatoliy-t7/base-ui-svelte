@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { AlertDialogContext, AlertDialogTitleProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: AlertDialogTitleProps = $props();
+	let { class: className, style, children, ...rest }: AlertDialogTitleProps = $props();
 
 	const ctx = getContext<AlertDialogContext>(ALERT_DIALOG_CONTEXT);
 
@@ -17,8 +12,8 @@
 		mergeProps(rest, {
 			id: ctx.titleId,
 			class: className,
-			style
-		})
+			style,
+		}),
 	);
 </script>
 

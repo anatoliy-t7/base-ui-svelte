@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { MenuRadioItemContext, MenuRadioItemIndicatorProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: MenuRadioItemIndicatorProps = $props();
+	let { class: className, style, children, ...rest }: MenuRadioItemIndicatorProps = $props();
 
 	const ctx = getContext<MenuRadioItemContext>(MENU_RADIO_ITEM_CONTEXT);
 
@@ -22,8 +17,8 @@
 			hidden: !visible ? true : undefined,
 			'data-checked': ctx.checked ? '' : undefined,
 			'data-unchecked': !ctx.checked ? '' : undefined,
-			'data-disabled': ctx.disabled ? '' : undefined
-		})
+			'data-disabled': ctx.disabled ? '' : undefined,
+		}),
 	);
 </script>
 

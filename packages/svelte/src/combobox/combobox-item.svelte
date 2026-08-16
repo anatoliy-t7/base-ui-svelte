@@ -2,11 +2,7 @@
 	import { getContext, setContext } from 'svelte';
 	import { COMBOBOX_CONTEXT, COMBOBOX_ITEM_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type {
-		ComboboxContext,
-		ComboboxItemContext,
-		ComboboxItemProps
-	} from './types.js';
+	import type { ComboboxContext, ComboboxItemContext, ComboboxItemProps } from './types.js';
 
 	let {
 		value,
@@ -39,7 +35,7 @@
 		},
 		get disabled() {
 			return isDisabled;
-		}
+		},
 	} satisfies ComboboxItemContext);
 
 	function select(event: Event): void {
@@ -66,8 +62,8 @@
 			onpointermove: () => {
 				if (isDisabled || !visible) return;
 				ctx.setHighlighted(value);
-			}
-		})
+			},
+		}),
 	);
 </script>
 

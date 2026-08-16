@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { DrawerContext, DrawerDescriptionProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: DrawerDescriptionProps = $props();
+	let { class: className, style, children, ...rest }: DrawerDescriptionProps = $props();
 
 	const ctx = getContext<DrawerContext>(DRAWER_CONTEXT);
 
@@ -17,8 +12,8 @@
 		mergeProps(rest, {
 			id: ctx.descriptionId,
 			class: className,
-			style
-		})
+			style,
+		}),
 	);
 </script>
 

@@ -2,6 +2,4 @@
 	import { Toggle } from '../src/index.js';
 </script>
 
-<Toggle data-testid="toggle" aria-label="Bold">
-	B
-</Toggle>
+<Toggle data-testid="toggle" aria-label="Bold">B</Toggle>

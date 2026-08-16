@@ -20,9 +20,7 @@
 	let uncontrolled = $state<string | undefined>(undefined);
 
 	const isControlled = $derived(value !== undefined);
-	const currentValue = $derived(
-		isControlled ? String(value) : (uncontrolled ?? defaultValue)
-	);
+	const currentValue = $derived(isControlled ? String(value) : (uncontrolled ?? defaultValue));
 
 	type TabEntry = {
 		id: string;
@@ -89,7 +87,7 @@
 		getTabId,
 		getPanelId,
 		activateTab,
-		getTabs: () => tabs
+		getTabs: () => tabs,
 	};
 
 	setContext(TABS_CONTEXT, context);
@@ -99,8 +97,8 @@
 			id,
 			class: className,
 			style,
-			'data-orientation': orientation
-		})
+			'data-orientation': orientation,
+		}),
 	);
 </script>
 

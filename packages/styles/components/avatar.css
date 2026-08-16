@@ -1,9 +1,21 @@
 .avatar {
-  @apply relative inline-flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-default text-sm font-semibold text-default-foreground;
-  & img { @apply size-full object-cover; }
-  &[data-loading] { @apply animate-pulse; }
+	@apply relative inline-flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-default text-sm font-semibold text-default-foreground;
+	& img {
+		@apply size-full object-cover;
+	}
+	&[data-loading] {
+		@apply animate-pulse;
+	}
 }
-.avatar-sm { @apply size-8 text-xs; }
-.avatar-md { @apply size-10 text-sm; }
-.avatar-lg { @apply size-12 text-base; }
-.avatar-fallback { @apply flex size-full items-center justify-center; }
+.avatar-sm {
+	@apply size-8 text-xs;
+}
+.avatar-md {
+	@apply size-10 text-sm;
+}
+.avatar-lg {
+	@apply size-12 text-base;
+}
+.avatar-fallback {
+	@apply flex size-full items-center justify-center;
+}

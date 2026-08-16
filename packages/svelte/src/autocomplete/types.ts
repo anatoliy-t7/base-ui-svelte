@@ -3,11 +3,21 @@ import type {
 	HTMLAttributes,
 	HTMLButtonAttributes,
 	HTMLInputAttributes,
-	HTMLLabelAttributes
+	HTMLLabelAttributes,
 } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
 import type { Align, Side } from '../internal/floating.svelte.js';
 import type { createPresence } from '../internal/presence.svelte.js';
+
+export type AutocompleteCollectionItem = {
+	readonly value: string;
+	readonly label: string;
+};
+
+export type AutocompleteItemsProp = ReadonlyArray<{
+	readonly value: string;
+	readonly label?: string;
+}>;
 
 export type AutocompleteItemEntry = {
 	readonly id: string;
@@ -40,6 +50,7 @@ export type AutocompleteContext = {
 	getVisibleItems(): AutocompleteItemEntry[];
 	isItemVisible(value: string): boolean;
 	getItemId(value: string): string;
+	getSelectedLabel(): string | null;
 	readonly inputId: string;
 	readonly listId: string;
 	readonly labelId: string | undefined;
@@ -48,6 +59,7 @@ export type AutocompleteContext = {
 	readonly presence: ReturnType<typeof createPresence>;
 	readonly disabled: boolean;
 	readonly filter: boolean;
+	readonly collectionItems: ReadonlyArray<AutocompleteCollectionItem>;
 	selectItem(value: string, label: string, event: Event): void;
 };
 
@@ -72,11 +84,10 @@ export type AutocompleteRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'childr
 	onInputChange?: ((value: string, event?: Event) => void) | undefined;
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
-	onOpenChange?:
-		| ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void)
-		| undefined;
+	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
 	disabled?: boolean;
 	filter?: boolean;
+	items?: AutocompleteItemsProp | undefined;
 	children?: Snippet<
 		[{ value: string | null; inputValue: string; open: boolean; disabled: boolean }]
 	>;
@@ -90,7 +101,10 @@ export type AutocompleteInputGroupProps = Omit<HTMLAttributes<HTMLDivElement>, '
 	children?: Snippet;
 };
 
-export type AutocompleteInputProps = Omit<HTMLInputAttributes, 'children' | 'disabled' | 'value'> & {
+export type AutocompleteInputProps = Omit<
+	HTMLInputAttributes,
+	'children' | 'disabled' | 'value'
+> & {
 	disabled?: boolean;
 };
 
@@ -107,6 +121,14 @@ export type AutocompleteIconProps = Omit<HTMLAttributes<HTMLSpanElement>, 'child
 export type AutocompleteClearProps = Omit<HTMLButtonAttributes, 'children' | 'disabled'> & {
 	disabled?: boolean;
 	children?: Snippet;
+};
+
+export type AutocompleteValueProps = {
+	children?: Snippet<[string | null]>;
+};
+
+export type AutocompleteCollectionProps = {
+	children?: Snippet<[AutocompleteCollectionItem]>;
 };
 
 export type AutocompletePortalProps = {

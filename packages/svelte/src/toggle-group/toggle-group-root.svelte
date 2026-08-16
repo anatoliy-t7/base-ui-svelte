@@ -44,7 +44,7 @@
 			if (isSelected) {
 				setValue(
 					current.filter((v) => v !== itemValue),
-					event
+					event,
 				);
 			} else {
 				setValue([...current, itemValue], event);
@@ -70,7 +70,7 @@
 			return multiple;
 		},
 		setValue,
-		toggleValue
+		toggleValue,
 	} satisfies ToggleGroupContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -80,8 +80,8 @@
 			class: className,
 			style,
 			'data-disabled': disabled ? '' : undefined,
-			'data-orientation': orientation
-		})
+			'data-orientation': orientation,
+		}),
 	);
 </script>
 

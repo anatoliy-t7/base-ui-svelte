@@ -27,8 +27,8 @@ describe('OTPField', () => {
 		first.focus();
 		await fireEvent.paste(first, {
 			clipboardData: {
-				getData: () => '9876'
-			}
+				getData: () => '9876',
+			},
 		});
 
 		expect(screen.getByTestId('digit-0')).toHaveValue('9');

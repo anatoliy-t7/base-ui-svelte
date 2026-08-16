@@ -3,11 +3,7 @@
 	import { useId } from '../internal/controllable.svelte.js';
 	import { TOOLBAR_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type {
-		ToolbarContext,
-		ToolbarItemRegistration,
-		ToolbarRootProps
-	} from './types.js';
+	import type { ToolbarContext, ToolbarItemRegistration, ToolbarRootProps } from './types.js';
 
 	let {
 		orientation = 'horizontal',
@@ -90,7 +86,7 @@
 		setActiveId,
 		focusItem,
 		moveFocus,
-		getTabIndex
+		getTabIndex,
 	} satisfies ToolbarContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -100,8 +96,8 @@
 			class: className,
 			style,
 			'aria-orientation': orientation,
-			'data-orientation': orientation
-		})
+			'data-orientation': orientation,
+		}),
 	);
 </script>
 

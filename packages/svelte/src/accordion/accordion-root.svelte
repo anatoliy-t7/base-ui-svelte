@@ -3,11 +3,7 @@
 	import { useId } from '../internal/controllable.svelte.js';
 	import { ACCORDION_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type {
-		AccordionContext,
-		AccordionRootProps,
-		AccordionValue
-	} from './types.js';
+	import type { AccordionContext, AccordionRootProps, AccordionValue } from './types.js';
 
 	let {
 		value = $bindable(undefined),
@@ -37,7 +33,7 @@
 
 	const isControlled = $derived(value !== undefined);
 	const openValues = $derived(
-		isControlled ? toArray(value) : (uncontrolled ?? toArray(defaultValue))
+		isControlled ? toArray(value) : (uncontrolled ?? toArray(defaultValue)),
 	);
 
 	function setValues(next: string[]): void {
@@ -108,7 +104,7 @@
 		},
 		registerItem,
 		getTriggerId,
-		getPanelId
+		getPanelId,
 	} satisfies AccordionContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -117,8 +113,8 @@
 			class: className,
 			style,
 			'data-orientation': orientation,
-			'data-disabled': disabled ? '' : undefined
-		})
+			'data-disabled': disabled ? '' : undefined,
+		}),
 	);
 </script>
 

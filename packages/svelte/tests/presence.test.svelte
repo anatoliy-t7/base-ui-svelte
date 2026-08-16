@@ -3,7 +3,7 @@
 
 	let {
 		present = $bindable(false),
-		fallbackMs = 5000
+		fallbackMs = 5000,
 	}: {
 		present?: boolean;
 		fallbackMs?: number;
@@ -12,7 +12,7 @@
 	const presence = createPresence(() => present, {
 		get fallbackMs() {
 			return fallbackMs;
-		}
+		},
 	});
 
 	let nodeEl = $state<HTMLElement | null>(null);
@@ -23,9 +23,7 @@
 	});
 </script>
 
-<button type="button" data-testid="toggle" onclick={() => (present = !present)}>
-	Toggle
-</button>
+<button type="button" data-testid="toggle" onclick={() => (present = !present)}> Toggle </button>
 
 {#if presence.isPresent}
 	<div

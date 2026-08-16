@@ -2,7 +2,7 @@
 	import { Slider } from '../src/slider/index.js';
 
 	let {
-		value = [20, 60]
+		value = [20, 60],
 	}: {
 		value?: number[];
 	} = $props();

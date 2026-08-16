@@ -8,12 +8,13 @@
 		MenubarContext,
 		MenubarMenuEntry,
 		MenubarProps,
-		MenubarTriggerEntry
+		MenubarTriggerEntry,
 	} from './types.js';
 
 	let {
 		orientation = 'horizontal',
 		closeDelay = 150,
+		modal = true,
 		class: className,
 		style,
 		id = useId('menubar'),
@@ -28,7 +29,7 @@
 	const openOnHover = $derived(openMenuId != null);
 	const hover = createHoverDelay(
 		() => 0,
-		() => closeDelay
+		() => closeDelay,
 	);
 
 	function registerMenu(entry: MenubarMenuEntry): () => void {
@@ -80,7 +81,7 @@
 		}
 		if (openMenuId === menuId) {
 			openMenuId = menus.some((menu) => menu.id !== menuId && menu.getOpen())
-				? menus.find((menu) => menu.id !== menuId && menu.getOpen())?.id ?? null
+				? (menus.find((menu) => menu.id !== menuId && menu.getOpen())?.id ?? null)
 				: null;
 		}
 	}
@@ -136,13 +137,16 @@
 		get closeDelay() {
 			return closeDelay;
 		},
+		get modal() {
+			return modal;
+		},
 		registerMenu,
 		registerTrigger,
 		moveFocus,
 		onMenuOpenChange,
 		closeOthers,
 		cancelClose,
-		closeWithDelay
+		closeWithDelay,
 	} satisfies MenubarContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -152,8 +156,8 @@
 			class: className,
 			style,
 			'aria-orientation': orientation,
-			'data-orientation': orientation
-		})
+			'data-orientation': orientation,
+		}),
 	);
 </script>
 

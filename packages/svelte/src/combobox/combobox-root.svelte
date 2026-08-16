@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { setContext } from 'svelte';
-	import {
-		createControllableOpen,
-		useId
-	} from '../internal/controllable.svelte.js';
+	import { createControllableOpen, useId } from '../internal/controllable.svelte.js';
 	import { COMBOBOX_CONTEXT } from '../internal/context-keys.js';
 	import { createPresence } from '../internal/presence.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
@@ -13,7 +10,7 @@
 		ComboboxItemEntry,
 		ComboboxRefs,
 		ComboboxRootProps,
-		ComboboxValue
+		ComboboxValue,
 	} from './types.js';
 
 	let {
@@ -26,9 +23,17 @@
 		open = $bindable(undefined),
 		defaultOpen = false,
 		onOpenChange,
+		onOpenChangeComplete,
 		disabled = false,
+		readOnly = false,
+		required = false,
+		name,
+		form,
 		filter = true,
 		multiple = false,
+		loopFocus = true,
+		modal = false,
+		openOnInputClick = true,
 		items: itemsProp,
 		class: className,
 		style,
@@ -45,7 +50,7 @@
 		},
 		setOpenProp: (next) => {
 			open = next;
-		}
+		},
 	});
 
 	const resolvedDefaultValue = $derived.by((): ComboboxValue => {
@@ -60,19 +65,19 @@
 
 	const isValueControlled = $derived(value !== undefined);
 	const currentValue = $derived(
-		value !== undefined ? value : (uncontrolledValue ?? resolvedDefaultValue)
+		value !== undefined ? value : (uncontrolledValue ?? resolvedDefaultValue),
 	);
 
 	const isInputControlled = $derived(inputValue !== undefined);
 	const currentInputValue = $derived(
-		inputValue !== undefined ? inputValue : (uncontrolledInput ?? defaultInputValue)
+		inputValue !== undefined ? inputValue : (uncontrolledInput ?? defaultInputValue),
 	);
 
 	const collectionItems = $derived.by((): ReadonlyArray<ComboboxCollectionItem> => {
 		if (!itemsProp) return [];
 		return itemsProp.map((item) => ({
 			value: item.value,
-			label: item.label ?? item.value
+			label: item.label ?? item.value,
 		}));
 	});
 
@@ -84,12 +89,42 @@
 		popup: null,
 		positioner: null,
 		list: null,
-		arrow: null
+		arrow: null,
 	};
 
 	const inputId = useId('combobox-input');
 	const listId = useId('combobox-list');
 	let labelId = $state<string | undefined>(undefined);
+
+	let lastReportedOpen: boolean | undefined = undefined;
+	let hasSyncedComplete = false;
+
+	$effect(() => {
+		const present = presence.isPresent;
+		const ending = presence.isEnding;
+		const starting = presence.isStarting;
+		const openNow = openState.open;
+
+		if (!hasSyncedComplete) {
+			hasSyncedComplete = true;
+			lastReportedOpen = openNow;
+			return;
+		}
+
+		if (openNow && present && !starting) {
+			if (lastReportedOpen !== true) {
+				lastReportedOpen = true;
+				onOpenChangeComplete?.(true);
+			}
+			return;
+		}
+		if (!openNow && !present && !ending) {
+			if (lastReportedOpen !== false) {
+				lastReportedOpen = false;
+				onOpenChangeComplete?.(false);
+			}
+		}
+	});
 
 	function getSelectedValues(): string[] {
 		if (currentValue == null) return [];
@@ -102,7 +137,7 @@
 	}
 
 	function setValue(next: ComboboxValue, event: Event): void {
-		if (disabled) return;
+		if (disabled || readOnly) return;
 		if (isValueControlled) {
 			value = next;
 		} else {
@@ -112,7 +147,7 @@
 	}
 
 	function setInputValue(next: string, event?: Event): void {
-		if (disabled) return;
+		if (disabled || readOnly) return;
 		if (isInputControlled) {
 			inputValue = next;
 		} else {
@@ -137,7 +172,7 @@
 		itemId: string,
 		itemValue: string,
 		label: string,
-		element: HTMLElement
+		element: HTMLElement,
 	): () => void {
 		queueMicrotask(() => {
 			const existing = items.find((item) => item.id === itemId);
@@ -198,11 +233,11 @@
 	}
 
 	function removeValue(itemValue: string, event: Event): void {
-		if (disabled) return;
+		if (disabled || readOnly) return;
 		if (multiple) {
 			setValue(
 				getSelectedValues().filter((entry) => entry !== itemValue),
-				event
+				event,
 			);
 			return;
 		}
@@ -268,11 +303,32 @@
 		get disabled() {
 			return disabled;
 		},
+		get readOnly() {
+			return readOnly;
+		},
+		get required() {
+			return required;
+		},
+		get name() {
+			return name;
+		},
+		get form() {
+			return form;
+		},
 		get filter() {
 			return filter;
 		},
 		get multiple() {
 			return multiple;
+		},
+		get loopFocus() {
+			return loopFocus;
+		},
+		get modal() {
+			return modal;
+		},
+		get openOnInputClick() {
+			return openOnInputClick;
 		},
 		isSelected,
 		removeValue,
@@ -281,7 +337,7 @@
 		get collectionItems() {
 			return collectionItems;
 		},
-		selectItem
+		selectItem,
 	} satisfies ComboboxContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -291,9 +347,12 @@
 			style,
 			'data-open': openState.open ? '' : undefined,
 			'data-closed': !openState.open ? '' : undefined,
-			'data-disabled': disabled ? '' : undefined
-		})
+			'data-disabled': disabled ? '' : undefined,
+			'data-readonly': readOnly ? '' : undefined,
+		}),
 	);
+
+	const selectedSet = $derived(new Set(getSelectedValues()));
 </script>
 
 <div {...rootProps} style={typeof rootProps.style === 'string' ? rootProps.style : undefined}>
@@ -302,7 +361,36 @@
 			value: currentValue,
 			inputValue: currentInputValue,
 			open: openState.open,
-			disabled
+			disabled,
 		})}
+	{/if}
+
+	{#if name && !disabled}
+		<select
+			{name}
+			{form}
+			multiple={multiple || undefined}
+			required={required || undefined}
+			value={multiple ? undefined : ((currentValue as string | null) ?? '')}
+			tabindex="-1"
+			aria-hidden="true"
+			style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;"
+		>
+			{#if !multiple}
+				<option value=""></option>
+			{/if}
+			{#each items as item (item.id)}
+				<option value={item.value} selected={selectedSet.has(item.value)}>
+					{item.label}
+				</option>
+			{/each}
+			{#each collectionItems as item (item.value)}
+				{#if !items.some((entry) => entry.value === item.value)}
+					<option value={item.value} selected={selectedSet.has(item.value)}>
+						{item.label}
+					</option>
+				{/if}
+			{/each}
+		</select>
 	{/if}
 </div>

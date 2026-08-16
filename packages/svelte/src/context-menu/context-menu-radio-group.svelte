@@ -2,13 +2,13 @@
 	import { getContext, setContext } from 'svelte';
 	import {
 		CONTEXT_MENU_CONTEXT,
-		CONTEXT_MENU_RADIO_GROUP_CONTEXT
+		CONTEXT_MENU_RADIO_GROUP_CONTEXT,
 	} from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type {
 		ContextMenuContext,
 		ContextMenuRadioGroupContext,
-		ContextMenuRadioGroupProps
+		ContextMenuRadioGroupProps,
 	} from './types.js';
 
 	let {
@@ -27,9 +27,7 @@
 	let uncontrolled = $state<string | undefined>(undefined);
 
 	const isControlled = $derived(value !== undefined);
-	const currentValue = $derived(
-		isControlled ? String(value) : (uncontrolled ?? defaultValue)
-	);
+	const currentValue = $derived(isControlled ? String(value) : (uncontrolled ?? defaultValue));
 
 	function setValue(next: string, event: Event): void {
 		if (disabled) return;
@@ -48,7 +46,7 @@
 		get disabled() {
 			return disabled;
 		},
-		setValue
+		setValue,
 	} satisfies ContextMenuRadioGroupContext);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -56,8 +54,8 @@
 			role: 'group',
 			class: className,
 			style,
-			'data-disabled': disabled ? '' : undefined
-		})
+			'data-disabled': disabled ? '' : undefined,
+		}),
 	);
 </script>
 

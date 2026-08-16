@@ -4,17 +4,12 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ProgressContext, ProgressIndicatorProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ProgressIndicatorProps = $props();
+	let { class: className, style, children, ...rest }: ProgressIndicatorProps = $props();
 
 	const ctx = getContext<ProgressContext>(PROGRESS_CONTEXT);
 
 	const percentage = $derived(
-		ctx.value === null ? undefined : ((ctx.value - ctx.min) / (ctx.max - ctx.min)) * 100
+		ctx.value === null ? undefined : ((ctx.value - ctx.min) / (ctx.max - ctx.min)) * 100,
 	);
 
 	const indicatorStyle = $derived.by(() => {
@@ -40,8 +35,8 @@
 			style: indicatorStyle,
 			'data-complete': ctx.status === 'complete' ? '' : undefined,
 			'data-indeterminate': ctx.status === 'indeterminate' ? '' : undefined,
-			'data-progressing': ctx.status === 'progressing' ? '' : undefined
-		})
+			'data-progressing': ctx.status === 'progressing' ? '' : undefined,
+		}),
 	);
 </script>
 

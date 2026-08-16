@@ -1,11 +1,30 @@
 {
 	"name": "base-ui-svelte",
 	"version": "0.1.0",
-	"description": "Unofficial Svelte 5 port of Base UI \u2014 unstyled, accessible components",
+	"description": "Unofficial Svelte 5 port of Base UI — unstyled, accessible components",
+	"keywords": [
+		"a11y",
+		"base-ui",
+		"components",
+		"headless",
+		"svelte",
+		"svelte5",
+		"unstyled"
+	],
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/anatoliy-t7/base-ui-svelte.git"
+	},
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
 	"type": "module",
-	"svelte": "./dist/index.js",
+	"sideEffects": false,
 	"types": "./dist/index.d.ts",
+	"svelte": "./dist/index.js",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -219,20 +238,13 @@
 		},
 		"./package.json": "./package.json"
 	},
-	"files": [
-		"dist",
-		"!dist/**/*.test.*",
-		"!dist/**/*.spec.*"
-	],
-	"sideEffects": false,
 	"scripts": {
 		"build": "svelte-package -i src -o dist",
 		"check": "svelte-check --tsconfig ./tsconfig.check.json",
+		"fmt": "oxfmt .",
+		"fmt:check": "oxfmt --check .",
 		"test": "vitest run",
 		"test:watch": "vitest"
-	},
-	"peerDependencies": {
-		"svelte": "^5.0.0"
 	},
 	"dependencies": {
 		"@floating-ui/dom": "^1.8.0"
@@ -255,17 +267,7 @@
 		"vitest": "^3.2.7",
 		"vitest-axe": "^0.1.0"
 	},
-	"keywords": [
-		"svelte",
-		"svelte5",
-		"base-ui",
-		"headless",
-		"unstyled",
-		"a11y",
-		"components"
-	],
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/anatoliy-t7/base-ui-svelte.git"
+	"peerDependencies": {
+		"svelte": "^5.0.0"
 	}
 }

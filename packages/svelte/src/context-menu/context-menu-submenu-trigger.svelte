@@ -31,9 +31,7 @@
 		return parentMenu.registerItem(ctx.triggerId, triggerEl, disabled);
 	});
 
-	const highlighted = $derived(
-		parentMenu ? parentMenu.highlightedId === ctx.triggerId : false
-	);
+	const highlighted = $derived(parentMenu ? parentMenu.highlightedId === ctx.triggerId : false);
 
 	function openSubmenu(reason: 'trigger-hover' | 'trigger-press' | 'imperative-action'): void {
 		if (disabled || !parentMenu) return;
@@ -108,8 +106,8 @@
 						parentMenu.setOpen(false, 'imperative-action');
 						break;
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 

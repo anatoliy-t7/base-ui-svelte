@@ -17,10 +17,11 @@ describe('Tooltip', () => {
 		await waitFor(() => {
 			expect(screen.getByTestId('popup')).toBeInTheDocument();
 		});
+		expect(screen.getByTestId('viewport')).toBeInTheDocument();
 		expect(screen.getByTestId('popup')).toHaveAttribute('role', 'tooltip');
 		expect(screen.getByTestId('trigger')).toHaveAttribute(
 			'aria-describedby',
-			screen.getByTestId('popup').id
+			screen.getByTestId('popup').id,
 		);
 
 		await user.keyboard('{Escape}');

@@ -1,7 +1,10 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
+import type { PopupHandle } from '../internal/popup-handle.js';
 import type { createPresence } from '../internal/presence.svelte.js';
+
+export type DrawerHandle<Payload = unknown> = PopupHandle<Payload>;
 
 export type DrawerSwipeDirection = 'up' | 'down' | 'left' | 'right';
 
@@ -37,18 +40,8 @@ export type DrawerContext = {
 	readonly swiping: boolean;
 	readonly swipeMode: DrawerSwipeMode | null;
 	setSwipeVisual(visual: DrawerSwipeVisual | null): void;
-	beginSwipe(
-		pointerId: number,
-		startX: number,
-		startY: number,
-		mode: DrawerSwipeMode
-	): void;
-	updateSwipe(
-		clientX: number,
-		clientY: number,
-		timeStamp: number,
-		size: number
-	): void;
+	beginSwipe(pointerId: number, startX: number, startY: number, mode: DrawerSwipeMode): void;
+	updateSwipe(clientX: number, clientY: number, timeStamp: number, size: number): void;
 	endSwipe(size: number): void;
 	cancelSwipe(): void;
 	readonly triggerId: string;
@@ -57,24 +50,36 @@ export type DrawerContext = {
 	readonly popupId: string;
 	readonly refs: DrawerRefs;
 	readonly presence: ReturnType<typeof createPresence>;
+	readonly payload: unknown;
 };
 
 export type DrawerRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
-	onOpenChange?:
-		| ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void)
-		| undefined;
+	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
 	swipeDirection?: DrawerSwipeDirection;
+	/**
+	 * Whether the drawer enters a modal state when open.
+	 * When `true`, focus is trapped, document scroll is locked, and outside
+	 * pointer interaction is limited.
+	 * @default true
+	 */
 	modal?: boolean;
 	disablePointerDismissal?: boolean;
 	snapPoints?: ReadonlyArray<DrawerSnapPoint>;
-	children?: Snippet<[{ open: boolean }]>;
+	/** Imperative handle from {@link createHandle}. */
+	handle?: DrawerHandle | undefined;
+	children?: Snippet<[{ open: boolean; payload: unknown }]>;
 };
 
-export type DrawerTriggerProps = Omit<HTMLButtonAttributes, 'children' | 'disabled'> & {
+export type DrawerTriggerProps = Omit<HTMLButtonAttributes, 'children' | 'disabled' | 'id'> & {
 	render?: string;
 	disabled?: boolean;
+	id?: string | undefined;
+	/** Same handle as Root — enables triggers outside the Root tree. */
+	handle?: DrawerHandle | undefined;
+	/** Optional payload associated when opening via this trigger. */
+	payload?: unknown;
 	children?: Snippet;
 };
 

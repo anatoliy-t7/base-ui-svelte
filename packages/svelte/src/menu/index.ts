@@ -18,6 +18,13 @@ import RadioItemIndicator from './menu-radio-item-indicator.svelte';
 import Separator from './menu-separator.svelte';
 import Group from './menu-group.svelte';
 import GroupLabel from './menu-group-label.svelte';
+import { createPopupHandle, PopupHandle } from '../internal/popup-handle.js';
+
+export function createHandle<Payload = unknown>() {
+	return createPopupHandle<Payload>();
+}
+
+export { PopupHandle as Handle };
 
 export const Menu = {
 	Root,
@@ -39,7 +46,8 @@ export const Menu = {
 	RadioItemIndicator,
 	Separator,
 	Group,
-	GroupLabel
+	GroupLabel,
+	createHandle,
 };
 
 export type {
@@ -63,5 +71,6 @@ export type {
 	MenuSeparatorProps,
 	MenuGroupProps,
 	MenuGroupLabelProps,
-	MenuContext
+	MenuContext,
+	MenuHandle,
 } from './types.js';

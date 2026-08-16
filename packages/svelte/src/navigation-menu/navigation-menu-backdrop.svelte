@@ -24,8 +24,8 @@
 			'data-closed': !ctx.open ? '' : undefined,
 			onclick: () => {
 				ctx.close();
-			}
-		})
+			},
+		}),
 	);
 </script>
 

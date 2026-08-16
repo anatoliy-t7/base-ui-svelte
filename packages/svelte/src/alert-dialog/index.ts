@@ -7,6 +7,13 @@ import Popup from './alert-dialog-popup.svelte';
 import Title from './alert-dialog-title.svelte';
 import Description from './alert-dialog-description.svelte';
 import Close from './alert-dialog-close.svelte';
+import { createPopupHandle, PopupHandle } from '../internal/popup-handle.js';
+
+export function createHandle<Payload = unknown>() {
+	return createPopupHandle<Payload>();
+}
+
+export { PopupHandle as Handle };
 
 export const AlertDialog = {
 	Root,
@@ -17,7 +24,8 @@ export const AlertDialog = {
 	Popup,
 	Title,
 	Description,
-	Close
+	Close,
+	createHandle,
 };
 
 export type {
@@ -30,5 +38,7 @@ export type {
 	AlertDialogTitleProps,
 	AlertDialogDescriptionProps,
 	AlertDialogCloseProps,
-	AlertDialogContext
+	AlertDialogContext,
+	AlertDialogModal,
+	AlertDialogHandle,
 } from './types.js';

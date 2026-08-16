@@ -1,11 +1,16 @@
 .meter {
-  @apply grid max-w-64 grid-cols-[1fr_auto] gap-x-3 gap-y-1.5;
+	@apply grid max-w-64 grid-cols-[1fr_auto] gap-x-3 gap-y-1.5;
 }
-.meter-label, .meter-value { @apply text-sm; }
-.meter-value { @apply text-muted; }
+.meter-label,
+.meter-value {
+	@apply text-sm;
+}
+.meter-value {
+	@apply text-muted;
+}
 .meter-track {
-  @apply col-span-full h-3 overflow-hidden rounded-md bg-default;
+	@apply col-span-full h-3 overflow-hidden rounded-md bg-default;
 }
 .meter-indicator {
-  @apply h-full rounded-md bg-foreground transition-[width] duration-200;
+	@apply h-full rounded-md bg-foreground transition-[width] duration-200;
 }

@@ -8,7 +8,7 @@
 	setContext(CSP_CONTEXT, {
 		get nonce() {
 			return nonce;
-		}
+		},
 	} satisfies CspContext);
 </script>
 

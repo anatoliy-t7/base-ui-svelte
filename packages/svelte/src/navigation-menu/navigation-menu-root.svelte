@@ -10,7 +10,7 @@
 	import type {
 		NavigationMenuContext,
 		NavigationMenuRefs,
-		NavigationMenuRootProps
+		NavigationMenuRootProps,
 	} from './types.js';
 
 	let {
@@ -44,7 +44,7 @@
 	const presence = createPresence(() => open);
 	const hover = createHoverDelay(
 		() => delay,
-		() => closeDelay
+		() => closeDelay,
 	);
 
 	const refs: NavigationMenuRefs = {
@@ -52,7 +52,7 @@
 		popup: null,
 		positioner: null,
 		arrow: null,
-		triggers: new Map()
+		triggers: new Map(),
 	};
 
 	const popupId = useId('navigation-menu-popup');
@@ -153,7 +153,7 @@
 		},
 		openWithDelay,
 		closeWithDelay,
-		cancelClose
+		cancelClose,
 	} satisfies NavigationMenuContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -163,8 +163,8 @@
 			style,
 			'data-orientation': orientation,
 			'data-open': open ? '' : undefined,
-			'data-closed': !open ? '' : undefined
-		})
+			'data-closed': !open ? '' : undefined,
+		}),
 	);
 </script>
 

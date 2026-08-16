@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { AutocompleteContext, AutocompleteStatusProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: AutocompleteStatusProps = $props();
+	let { class: className, style, children, ...rest }: AutocompleteStatusProps = $props();
 
 	const ctx = getContext<AutocompleteContext>(AUTOCOMPLETE_CONTEXT);
 
@@ -21,8 +16,8 @@
 			'aria-live': 'polite',
 			'aria-atomic': 'true',
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

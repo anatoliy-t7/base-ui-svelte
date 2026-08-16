@@ -7,25 +7,25 @@ export const buttonVariants = tv({
 		size: {
 			sm: 'btn-sm',
 			md: 'btn-md',
-			lg: 'btn-lg'
+			lg: 'btn-lg',
 		},
 		variant: {
 			primary: 'btn-primary',
 			secondary: 'btn-secondary',
 			ghost: 'btn-ghost',
 			outline: 'btn-outline',
-			danger: 'btn-danger'
+			danger: 'btn-danger',
 		},
 		icon: {
 			true: 'btn-icon',
-			false: ''
-		}
+			false: '',
+		},
 	},
 	defaultVariants: {
 		size: 'md',
 		variant: 'primary',
-		icon: false
-	}
+		icon: false,
+	},
 });
 
 export type ButtonVariants = VariantProps<typeof buttonVariants>;

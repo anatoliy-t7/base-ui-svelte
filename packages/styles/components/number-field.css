@@ -1,17 +1,32 @@
-.number-field { @apply inline-flex items-center gap-1.5; }
-.number-field-group { @apply inline-flex items-center gap-1.5; }
+.number-field {
+	@apply inline-flex items-center gap-1.5;
+}
+.number-field-group {
+	@apply inline-flex items-center gap-1.5;
+}
 .number-field-input {
-  @apply appearance-none w-[4.5rem] rounded-field border bg-field px-2 py-2 text-center text-sm text-field-foreground outline-none shadow-field;
-  border-width: var(--border-width-field);
-  border-color: var(--field-border);
-  &:focus-visible, &[data-focus-visible="true"] { @apply status-focused-field; }
+	@apply w-[4.5rem] appearance-none rounded-field border bg-field px-2 py-2 text-center text-sm text-field-foreground shadow-field outline-none;
+	border-width: var(--border-width-field);
+	border-color: var(--field-border);
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply status-focused-field;
+	}
 }
-.number-field-increment, .number-field-decrement {
-  @apply relative isolate inline-flex size-8 items-center justify-center rounded-lg text-xs outline-none;
-  cursor: var(--cursor-interactive);
-  background-color: var(--default);
-  color: var(--default-foreground);
-  &:hover { background-color: var(--default-hover); }
-  &:focus-visible, &[data-focus-visible="true"] { @apply status-focused; }
+.number-field-increment,
+.number-field-decrement {
+	@apply relative isolate inline-flex size-8 items-center justify-center rounded-lg text-xs outline-none;
+	cursor: var(--cursor-interactive);
+	background-color: var(--default);
+	color: var(--default-foreground);
+	&:hover {
+		background-color: var(--default-hover);
+	}
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply status-focused;
+	}
 }
-.number-field-scrub-area { @apply cursor-ew-resize select-none; }
+.number-field-scrub-area {
+	@apply cursor-ew-resize select-none;
+}

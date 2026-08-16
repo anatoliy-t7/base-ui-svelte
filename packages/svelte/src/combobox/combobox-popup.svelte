@@ -5,13 +5,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ComboboxContext, ComboboxPopupProps } from './types.js';
 
-	let {
-		render = 'div',
-		class: className,
-		style,
-		children,
-		...rest
-	}: ComboboxPopupProps = $props();
+	let { render = 'div', class: className, style, children, ...rest }: ComboboxPopupProps = $props();
 
 	const ctx = getContext<ComboboxContext>(COMBOBOX_CONTEXT);
 
@@ -41,7 +35,7 @@
 			ctx.setOpen(false, reason);
 		},
 		dismissOnEscape: true,
-		dismissOnOutsidePress: true
+		dismissOnOutsidePress: true,
 	});
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -49,11 +43,12 @@
 			role: 'presentation',
 			class: className,
 			style,
+			'aria-modal': ctx.modal ? 'true' : undefined,
 			'data-open': ctx.open ? '' : undefined,
 			'data-closed': !ctx.open || ctx.presence.isEnding ? '' : undefined,
 			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
-			'data-ending-style': ctx.presence.isEnding ? '' : undefined
-		})
+			'data-ending-style': ctx.presence.isEnding ? '' : undefined,
+		}),
 	);
 </script>
 

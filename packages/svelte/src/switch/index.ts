@@ -3,7 +3,7 @@ import Thumb from './switch-thumb.svelte';
 
 export const Switch = {
 	Root,
-	Thumb
+	Thumb,
 };
 
 export type { SwitchRootProps, SwitchContext, SwitchThumbProps } from './types.js';

@@ -108,7 +108,7 @@
 	}
 
 	const activeDescendant = $derived(
-		ctx.open && ctx.highlighted != null ? ctx.getItemId(ctx.highlighted) : undefined
+		ctx.open && ctx.highlighted != null ? ctx.getItemId(ctx.highlighted) : undefined,
 	);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -132,8 +132,8 @@
 				if (isDisabled) return;
 				ctx.setOpen(!ctx.open, 'trigger-press');
 			},
-			onkeydown: onKeyDown
-		})
+			onkeydown: onKeyDown,
+		}),
 	);
 </script>
 

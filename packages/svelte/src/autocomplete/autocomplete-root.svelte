@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { setContext } from 'svelte';
-	import {
-		createControllableOpen,
-		useId
-	} from '../internal/controllable.svelte.js';
+	import { createControllableOpen, useId } from '../internal/controllable.svelte.js';
 	import { AUTOCOMPLETE_CONTEXT } from '../internal/context-keys.js';
 	import { createPresence } from '../internal/presence.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
@@ -11,7 +8,7 @@
 		AutocompleteContext,
 		AutocompleteItemEntry,
 		AutocompleteRefs,
-		AutocompleteRootProps
+		AutocompleteRootProps,
 	} from './types.js';
 
 	let {
@@ -26,6 +23,7 @@
 		onOpenChange,
 		disabled = false,
 		filter = true,
+		items: itemsProp,
 		class: className,
 		style,
 		id = useId('autocomplete'),
@@ -41,7 +39,7 @@
 		},
 		setOpenProp: (next) => {
 			open = next;
-		}
+		},
 	});
 
 	let uncontrolledValue = $state<string | null | undefined>(undefined);
@@ -54,8 +52,16 @@
 
 	const isInputControlled = $derived(inputValue !== undefined);
 	const currentInputValue = $derived(
-		inputValue !== undefined ? inputValue : (uncontrolledInput ?? defaultInputValue)
+		inputValue !== undefined ? inputValue : (uncontrolledInput ?? defaultInputValue),
 	);
+
+	const collectionItems = $derived.by(() => {
+		if (!itemsProp) return [];
+		return itemsProp.map((item) => ({
+			value: item.value,
+			label: item.label ?? item.value,
+		}));
+	});
 
 	const presence = createPresence(() => openState.open);
 
@@ -65,7 +71,7 @@
 		popup: null,
 		positioner: null,
 		list: null,
-		arrow: null
+		arrow: null,
 	};
 
 	const inputId = useId('autocomplete-input');
@@ -108,7 +114,7 @@
 		itemId: string,
 		itemValue: string,
 		label: string,
-		element: HTMLElement
+		element: HTMLElement,
 	): () => void {
 		queueMicrotask(() => {
 			const existing = items.find((item) => item.id === itemId);
@@ -155,6 +161,15 @@
 		setInputValue('', event);
 	}
 
+	function getSelectedLabel(): string | null {
+		if (currentValue == null) return null;
+		const registered = items.find((item) => item.value === currentValue);
+		if (registered) return registered.label;
+		const collection = collectionItems.find((item) => item.value === currentValue);
+		if (collection) return collection.label;
+		return currentValue;
+	}
+
 	setContext(AUTOCOMPLETE_CONTEXT, {
 		get value() {
 			return currentValue;
@@ -182,6 +197,7 @@
 		getVisibleItems,
 		isItemVisible,
 		getItemId,
+		getSelectedLabel,
 		inputId,
 		listId,
 		get labelId() {
@@ -198,7 +214,10 @@
 		get filter() {
 			return filter;
 		},
-		selectItem
+		get collectionItems() {
+			return collectionItems;
+		},
+		selectItem,
 	} satisfies AutocompleteContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -208,8 +227,8 @@
 			style,
 			'data-open': openState.open ? '' : undefined,
 			'data-closed': !openState.open ? '' : undefined,
-			'data-disabled': disabled ? '' : undefined
-		})
+			'data-disabled': disabled ? '' : undefined,
+		}),
 	);
 </script>
 
@@ -219,7 +238,7 @@
 			value: currentValue,
 			inputValue: currentInputValue,
 			open: openState.open,
-			disabled
+			disabled,
 		})}
 	{/if}
 </div>

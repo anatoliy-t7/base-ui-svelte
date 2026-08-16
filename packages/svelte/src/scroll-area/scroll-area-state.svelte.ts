@@ -6,7 +6,7 @@ const emptyMetrics: ScrollAreaMetrics = {
 	scrollHeight: 0,
 	scrollWidth: 0,
 	clientHeight: 0,
-	clientWidth: 0
+	clientWidth: 0,
 };
 
 export class ScrollAreaState {
@@ -33,7 +33,7 @@ export class ScrollAreaState {
 			scrollHeight: viewport.scrollHeight,
 			scrollWidth: viewport.scrollWidth,
 			clientHeight: viewport.clientHeight,
-			clientWidth: viewport.clientWidth
+			clientWidth: viewport.clientWidth,
 		};
 	}
 
@@ -42,7 +42,7 @@ export class ScrollAreaState {
 		if (!viewport) return;
 		viewport.scrollTo({
 			top: options.top ?? viewport.scrollTop,
-			left: options.left ?? viewport.scrollLeft
+			left: options.left ?? viewport.scrollLeft,
 		});
 		this.refreshMetrics();
 	}

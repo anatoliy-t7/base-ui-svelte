@@ -4,13 +4,18 @@
 	import { portal } from '../internal/portal.js';
 	import type { AlertDialogContext, AlertDialogPortalProps } from './types.js';
 
-	let { children }: AlertDialogPortalProps = $props();
+	let { container, keepMounted = false, children }: AlertDialogPortalProps = $props();
 
 	const ctx = getContext<AlertDialogContext>(ALERT_DIALOG_CONTEXT);
+
+	const shouldRender = $derived(keepMounted || ctx.presence.isPresent);
 </script>
 
-{#if ctx.presence.isPresent}
-	<div {@attach portal()}>
+{#if shouldRender}
+	<div
+		{@attach portal(container)}
+		hidden={keepMounted && !ctx.presence.isPresent ? true : undefined}
+	>
 		{#if children}
 			{@render children()}
 		{/if}

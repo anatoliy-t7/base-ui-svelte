@@ -1,24 +1,195 @@
 .toast-viewport {
-	@apply fixed end-4 bottom-4 z-50 grid w-[min(22rem,calc(100vw-2rem))] gap-2;
+	position: fixed;
+	z-index: 50;
+	width: min(22.5rem, calc(100vw - 2rem));
+	margin: 0;
+	inset: auto 1rem 1rem auto;
+	outline: none;
 }
+
 .toast {
-	@apply relative rounded-xl border border-border bg-overlay p-3.5 shadow-overlay outline-none;
+	/* Base UI stacking recipe: scale + peek + height-shrink offset */
+	--toast-gap: 0.75rem;
+	--toast-peek: 0.75rem;
+	--toast-swipe-movement-x: 0px;
+	--toast-swipe-movement-y: 0px;
+	--toast-scale: calc(max(0, 1 - (var(--toast-index) * 0.1)));
+	--toast-shrink: calc(1 - var(--toast-scale));
+	--toast-height-locked: var(--toast-frontmost-height, var(--toast-height));
+	--toast-offset-expanded: calc(
+		(var(--toast-offset-y) * -1) + (var(--toast-index) * var(--toast-gap) * -1) +
+			var(--toast-swipe-movement-y)
+	);
+
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: auto;
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0;
+	overflow: hidden;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	background-color: var(--overlay);
+	color: var(--overlay-foreground);
+	/* Hard offset shadow (Base UI) — makes stacked peeks readable */
+	box-shadow: 0.25rem 0.25rem 0 color-mix(in oklab, var(--foreground) 12%, transparent);
+	transform-origin: bottom center;
+	user-select: none;
+	cursor: default;
+	z-index: calc(1000 - var(--toast-index, 0));
+	height: var(--toast-height-locked);
+	transform: translateX(var(--toast-swipe-movement-x))
+		translateY(
+			calc(
+				var(--toast-swipe-movement-y) - (var(--toast-index) * var(--toast-peek)) -
+					(var(--toast-shrink) * var(--toast-height-locked, 0px))
+			)
+		)
+		scale(var(--toast-scale));
+	transition:
+		transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+		opacity 0.5s,
+		height 0.15s;
 }
+
+@media (prefers-reduced-motion: reduce) {
+	.toast {
+		transition: none;
+	}
+}
+
+.toast[data-expanded] {
+	height: var(--toast-height);
+	transform: translateX(var(--toast-swipe-movement-x)) translateY(var(--toast-offset-expanded));
+}
+
+/* Enter / exit — match Base UI: slide only on start; fade on end */
+.toast[data-starting-style],
+.toast[data-ending-style] {
+	transform: translateY(150%);
+}
+
+.toast[data-limited] {
+	opacity: 0;
+}
+
+.toast[data-ending-style] {
+	opacity: 0;
+}
+
+.toast[data-ending-style][data-swipe-direction='up'] {
+	transform: translateY(calc(var(--toast-swipe-movement-y) - 150%));
+}
+
+.toast[data-ending-style][data-swipe-direction='down'] {
+	transform: translateY(calc(var(--toast-swipe-movement-y) + 150%));
+}
+
+.toast[data-ending-style][data-swipe-direction='left'] {
+	transform: translateX(calc(var(--toast-swipe-movement-x) - 150%))
+		translateY(var(--toast-offset-expanded));
+}
+
+.toast[data-ending-style][data-swipe-direction='right'] {
+	transform: translateX(calc(var(--toast-swipe-movement-x) + 150%))
+		translateY(var(--toast-offset-expanded));
+}
+
+/* Hover bridge between stacked toasts (Base UI) */
+.toast::after {
+	content: '';
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	height: calc(var(--toast-gap) + 1px);
+}
+
+.toast:focus-visible {
+	outline: 2px solid var(--focus);
+	outline-offset: -1px;
+}
+
+.toast-content {
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 0.75rem;
+	overflow: hidden;
+	transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.toast-content {
+		transition: none;
+	}
+}
+
+/* Collapsed stack: hide behind toast copy so only the card chrome peeks */
+.toast-content[data-behind] {
+	opacity: 0;
+}
+
+.toast-content[data-expanded] {
+	opacity: 1;
+}
+
 .toast-title {
-	@apply m-0 text-sm font-semibold;
+	margin: 0;
+	font-size: 0.875rem;
+	font-weight: 600;
+	line-height: 1.25rem;
 }
+
 .toast-description {
-	@apply mt-1 text-sm text-muted;
+	margin: 0.25rem 0 0;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	color: var(--muted);
 }
+
 .toast-close {
-	@apply absolute end-2 top-2;
-}
-.toast-action {
-	@apply relative isolate mt-2 inline-flex h-8 w-fit items-center justify-center gap-2 rounded-lg px-3 text-xs font-medium outline-none;
+	display: flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	height: 2rem;
+	padding: 0 0.75rem;
+	border: 1px solid var(--border);
+	border-radius: calc(var(--radius) * 0.75);
+	background-color: var(--overlay);
+	color: var(--overlay-foreground);
+	font: inherit;
+	font-size: 0.875rem;
+	line-height: 1;
+	white-space: nowrap;
 	cursor: var(--cursor-interactive);
+}
+
+.toast-close:hover {
+	background-color: var(--surface-secondary);
+}
+
+.toast-action {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	height: 2rem;
+	padding: 0 0.75rem;
+	border-radius: calc(var(--radius) * 0.75);
 	background-color: var(--default);
 	color: var(--default-foreground);
-	&:hover {
-		background-color: var(--default-hover);
-	}
+	font-size: 0.75rem;
+	font-weight: 500;
+	cursor: var(--cursor-interactive);
+}
+
+.toast-action:hover {
+	background-color: var(--default-hover, var(--default));
 }

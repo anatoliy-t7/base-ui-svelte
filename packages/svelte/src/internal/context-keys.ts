@@ -9,11 +9,10 @@ export const DIALOG_CONTEXT = Symbol('base-ui-svelte.dialog');
 export const ALERT_DIALOG_CONTEXT = Symbol('base-ui-svelte.alert-dialog');
 export const DRAWER_CONTEXT = Symbol('base-ui-svelte.drawer');
 export const DRAWER_PROVIDER_CONTEXT = Symbol('base-ui-svelte.drawer-provider');
-export const DRAWER_VIRTUAL_KEYBOARD_CONTEXT = Symbol(
-	'base-ui-svelte.drawer-virtual-keyboard'
-);
+export const DRAWER_VIRTUAL_KEYBOARD_CONTEXT = Symbol('base-ui-svelte.drawer-virtual-keyboard');
 export const POPOVER_CONTEXT = Symbol('base-ui-svelte.popover');
 export const TOOLTIP_CONTEXT = Symbol('base-ui-svelte.tooltip');
+export const TOOLTIP_PROVIDER_CONTEXT = Symbol('base-ui-svelte.tooltip-provider');
 export const TOOLTIP_POSITIONER_CONTEXT = Symbol('base-ui-svelte.tooltip-positioner');
 export const PREVIEW_CARD_CONTEXT = Symbol('base-ui-svelte.preview-card');
 export const COLLAPSIBLE_CONTEXT = Symbol('base-ui-svelte.collapsible');
@@ -31,7 +30,7 @@ export const MENUBAR_CONTEXT = Symbol('base-ui-svelte.menubar');
 export const CONTEXT_MENU_CONTEXT = Symbol('base-ui-svelte.context-menu');
 export const CONTEXT_MENU_GROUP_CONTEXT = Symbol('base-ui-svelte.context-menu-group');
 export const CONTEXT_MENU_CHECKBOX_ITEM_CONTEXT = Symbol(
-	'base-ui-svelte.context-menu-checkbox-item'
+	'base-ui-svelte.context-menu-checkbox-item',
 );
 export const CONTEXT_MENU_RADIO_GROUP_CONTEXT = Symbol('base-ui-svelte.context-menu-radio-group');
 export const CONTEXT_MENU_RADIO_ITEM_CONTEXT = Symbol('base-ui-svelte.context-menu-radio-item');

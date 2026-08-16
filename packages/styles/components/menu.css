@@ -13,17 +13,35 @@
 	}
 }
 .menu-item {
-  @apply flex w-full appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none cursor-default;
-  &[data-highlighted], &[data-selected], &[data-focus] { @apply bg-accent text-accent-foreground; }
-  &[data-disabled], &:disabled { @apply status-disabled; }
+	@apply flex w-full cursor-default appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none;
+	&[data-highlighted],
+	&[data-selected],
+	&[data-focus] {
+		@apply bg-accent text-accent-foreground;
+	}
+	&[data-disabled],
+	&:disabled {
+		@apply status-disabled;
+	}
 }
-.menu-item-indicator { @apply size-4; }
-.menu-separator { @apply my-1 mx-1.5 h-px border-0 bg-separator; }
-.menu-group-label { @apply px-2.5 py-1.5 text-xs font-medium text-muted; }
-.menu-empty { @apply px-2.5 py-2 text-sm text-muted; }
+.menu-item-indicator {
+	@apply size-4;
+}
+.menu-separator {
+	@apply mx-1.5 my-1 h-px border-0 bg-separator;
+}
+.menu-group-label {
+	@apply px-2.5 py-1.5 text-xs font-medium text-muted;
+}
+.menu-empty {
+	@apply px-2.5 py-2 text-sm text-muted;
+}
 .menu-submenu-trigger {
-  @apply flex w-full appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none cursor-default;
-  &[data-highlighted], &[data-selected], &[data-focus], &[data-popup-open] {
-    @apply bg-accent text-accent-foreground;
-  }
+	@apply flex w-full cursor-default appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none;
+	&[data-highlighted],
+	&[data-selected],
+	&[data-focus],
+	&[data-popup-open] {
+		@apply bg-accent text-accent-foreground;
+	}
 }

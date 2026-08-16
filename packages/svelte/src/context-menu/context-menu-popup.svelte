@@ -46,7 +46,7 @@
 				if (first) {
 					ctx.setHighlighted(first.id);
 				} else {
-					popupEl?.focus();
+					popupEl?.focus({ preventScroll: true });
 				}
 			});
 		});
@@ -62,10 +62,13 @@
 			ctx.setOpen(false, reason);
 		},
 		dismissOnEscape: true,
-		dismissOnOutsidePress: true
+		dismissOnOutsidePress: true,
 	});
 
 	function onKeyDown(event: KeyboardEvent): void {
+		// Items handle their own keys; ignore bubbled events so arrows don't move twice.
+		if (event.target !== event.currentTarget) return;
+
 		switch (event.key) {
 			case 'ArrowDown':
 				event.preventDefault();
@@ -110,8 +113,8 @@
 			'data-closed': !ctx.open || ctx.presence.isEnding ? '' : undefined,
 			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
 			'data-ending-style': ctx.presence.isEnding ? '' : undefined,
-			onkeydown: onKeyDown
-		})
+			onkeydown: onKeyDown,
+		}),
 	);
 </script>
 

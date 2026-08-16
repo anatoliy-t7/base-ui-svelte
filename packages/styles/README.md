@@ -11,13 +11,13 @@ bun add @base-ui-svelte/styles tailwindcss
 ## Usage
 
 ```css
-@import "@base-ui-svelte/styles";
+@import '@base-ui-svelte/styles';
 ```
 
 Or import CSS only:
 
 ```css
-@import "@base-ui-svelte/styles/css";
+@import '@base-ui-svelte/styles/css';
 ```
 
 ### Class names
@@ -55,7 +55,7 @@ const { popup, backdrop } = dialogVariants({ size: 'md' });
 ### Selective imports
 
 ```css
-@import "tailwindcss";
-@import "@base-ui-svelte/styles/components/button.css" layer(components);
-@import "@base-ui-svelte/styles/themes/default" layer(theme);
+@import 'tailwindcss';
+@import '@base-ui-svelte/styles/components/button.css' layer(components);
+@import '@base-ui-svelte/styles/themes/default' layer(theme);
 ```

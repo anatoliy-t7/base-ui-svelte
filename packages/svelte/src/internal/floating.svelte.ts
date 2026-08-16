@@ -5,7 +5,7 @@ import {
 	flip,
 	offset,
 	shift,
-	type Placement
+	type Placement,
 } from '@floating-ui/dom';
 
 export type Side = 'top' | 'right' | 'bottom' | 'left';
@@ -17,6 +17,8 @@ export type VirtualElement = {
 	contextElement?: Element;
 };
 
+export type PositionerStrategy = 'absolute' | 'fixed';
+
 export type PositionerOptions = {
 	readonly open: boolean;
 	readonly anchor: () => Element | VirtualElement | null | undefined;
@@ -26,6 +28,8 @@ export type PositionerOptions = {
 	readonly align?: Align;
 	readonly sideOffset?: number;
 	readonly collisionPadding?: number;
+	/** Floating UI strategy. Prefer `fixed` for pointer/virtual anchors. */
+	readonly strategy?: PositionerStrategy;
 };
 
 function toPlacement(side: Side = 'bottom', align: Align = 'center'): Placement {
@@ -55,13 +59,21 @@ export function createPositioner(options: PositionerOptions) {
 		const preferredAlign = options.align ?? 'center';
 		const sideOffset = options.sideOffset ?? 8;
 		const collisionPadding = options.collisionPadding ?? 8;
+		const strategy = options.strategy ?? 'absolute';
+
+		// Take out of document flow immediately so mount/focus cannot scroll the page.
+		Object.assign(floating.style, {
+			position: strategy,
+			left: '0',
+			top: '0',
+		});
 
 		const cleanup = autoUpdate(reference, floating, async () => {
 			const arrowElement = options.arrowEl?.() ?? null;
 			const middleware = [
 				offset(sideOffset),
 				flip({ padding: collisionPadding }),
-				shift({ padding: collisionPadding })
+				shift({ padding: collisionPadding }),
 			];
 
 			if (arrowElement) {
@@ -70,7 +82,8 @@ export function createPositioner(options: PositionerOptions) {
 
 			const result = await computePosition(reference, floating, {
 				placement: toPlacement(preferredSide, preferredAlign),
-				middleware
+				strategy,
+				middleware,
 			});
 
 			const placedSide = placedSideOf(result.placement);
@@ -78,7 +91,7 @@ export function createPositioner(options: PositionerOptions) {
 			Object.assign(floating.style, {
 				position: result.strategy,
 				left: `${result.x}px`,
-				top: `${result.y}px`
+				top: `${result.y}px`,
 			});
 			floating.dataset.side = placedSide;
 
@@ -92,8 +105,15 @@ export function createPositioner(options: PositionerOptions) {
 						top: 'bottom',
 						right: 'left',
 						bottom: 'top',
-						left: 'right'
+						left: 'right',
 					}[placedSide];
+
+					// Non-square carets (e.g. 12×6) keep layout size when rotated 90° for
+					// left/right, so the tip needs a larger inset than top/bottom.
+					const overlap = 2;
+					const { offsetWidth: w, offsetHeight: h } = arrowElement;
+					const inset =
+						placedSide === 'left' || placedSide === 'right' ? w / 2 + h / 2 - overlap : h - overlap;
 
 					Object.assign(arrowElement.style, {
 						position: 'absolute',
@@ -101,7 +121,7 @@ export function createPositioner(options: PositionerOptions) {
 						top: y != null ? `${y}px` : '',
 						right: '',
 						bottom: '',
-						[staticSide]: '-4px'
+						[staticSide]: `${-inset}px`,
 					});
 				}
 			}

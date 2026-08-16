@@ -1,6 +1,18 @@
-.field { @apply grid max-w-md gap-1.5; }
-.field-label { @apply text-sm font-medium text-foreground; }
-.field-description { @apply text-sm text-muted; }
-.field-error { @apply text-sm text-danger; }
-.field-control { @apply w-full; }
-.field-validity { @apply text-sm; }
+.field {
+	@apply grid w-full max-w-md gap-1.5;
+}
+.field-label {
+	@apply text-sm font-medium text-foreground;
+}
+.field-description {
+	@apply text-sm text-muted;
+}
+.field-error {
+	@apply text-sm text-danger;
+}
+.field-control {
+	@apply w-full;
+}
+.field-validity {
+	@apply text-sm;
+}

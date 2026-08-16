@@ -2,18 +2,13 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ComboboxChipsProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ComboboxChipsProps = $props();
+	let { class: className, style, children, ...rest }: ComboboxChipsProps = $props();
 
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			class: className,
-			style
-		})
+			style,
+		}),
 	);
 </script>
 

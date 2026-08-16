@@ -4,30 +4,26 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SelectContext, SelectValueProps } from './types.js';
 
-	let {
-		placeholder = '',
-		class: className,
-		style,
-		children,
-		...rest
-	}: SelectValueProps = $props();
+	let { placeholder = '', class: className, style, children, ...rest }: SelectValueProps = $props();
 
 	const ctx = getContext<SelectContext>(SELECT_CONTEXT);
 
-	const displayText = $derived(
-		ctx.value != null ? (ctx.getSelectedLabel() ?? '') : placeholder
-	);
+	const hasSelection = $derived(ctx.getSelectedValues().length > 0);
+	const displayText = $derived(hasSelection ? (ctx.getSelectedLabel() ?? '') : placeholder);
 
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			class: className,
 			style,
-			'data-placeholder': ctx.value == null ? '' : undefined
-		})
+			'data-placeholder': !hasSelection ? '' : undefined,
+		}),
 	);
 </script>
 
-<span {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+<span
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+>
 	{#if children}
 		{@render children(ctx.value)}
 	{:else}

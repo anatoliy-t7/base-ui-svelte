@@ -8,7 +8,7 @@
 	setContext(DIRECTION_CONTEXT, {
 		get direction() {
 			return direction;
-		}
+		},
 	} satisfies DirectionContext);
 </script>
 

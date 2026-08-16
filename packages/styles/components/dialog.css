@@ -10,7 +10,8 @@
 }
 
 .dialog-popup {
-	@apply fixed top-1/2 left-1/2 z-50 w-[min(24rem,calc(100vw-2rem))] -translate-x-1/2 -translate-y-1/2 rounded-xl border border-border bg-overlay p-5 text-overlay-foreground shadow-overlay outline-none;
+	@apply fixed top-1/2 left-1/2 z-50 w-[calc(100vw-2rem)] max-w-md rounded-xl border border-border bg-overlay p-5 text-overlay-foreground shadow-overlay outline-none;
+	transform: translate(-50%, -50%);
 	transition:
 		opacity 150ms var(--ease-smooth),
 		transform 150ms var(--ease-out-fluid);

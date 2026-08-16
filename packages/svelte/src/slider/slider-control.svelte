@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SliderContext, SliderControlProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: SliderControlProps = $props();
+	let { class: className, style, children, ...rest }: SliderControlProps = $props();
 
 	const ctx = getContext<SliderContext>(SLIDER_CONTEXT);
 
@@ -43,9 +38,8 @@
 		target.setPointerCapture(event.pointerId);
 		dragging = true;
 		const pointerValue = valueFromPointer(event.clientX, event.clientY);
-		const fromThumb = event.target instanceof Element
-			? event.target.closest('[role="slider"]')
-			: null;
+		const fromThumb =
+			event.target instanceof Element ? event.target.closest('[role="slider"]') : null;
 		const preferred =
 			fromThumb instanceof HTMLElement && fromThumb.dataset.index != null
 				? Number(fromThumb.dataset.index)
@@ -57,11 +51,7 @@
 
 	function onPointerMove(event: PointerEvent): void {
 		if (!dragging || ctx.disabled) return;
-		ctx.setValueFromPointer(
-			valueFromPointer(event.clientX, event.clientY),
-			event,
-			dragThumbIndex
-		);
+		ctx.setValueFromPointer(valueFromPointer(event.clientX, event.clientY), event, dragThumbIndex);
 	}
 
 	function onPointerUp(event: PointerEvent): void {
@@ -98,8 +88,8 @@
 			onpointerdown: onPointerDown,
 			onpointermove: onPointerMove,
 			onpointerup: onPointerUp,
-			onpointercancel: onPointerUp
-		})
+			onpointercancel: onPointerUp,
+		}),
 	);
 </script>
 

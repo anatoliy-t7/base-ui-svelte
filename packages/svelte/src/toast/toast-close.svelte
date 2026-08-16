@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ToastCloseProps, ToastContext } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ToastCloseProps = $props();
+	let { class: className, style, children, ...rest }: ToastCloseProps = $props();
 
 	const ctx = getContext<ToastContext>(TOAST_CONTEXT);
 
@@ -23,8 +18,8 @@
 				if (ctx.toast) {
 					ctx.close(ctx.toast.id);
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 

@@ -6,12 +6,18 @@ export type { PresenceOptions, PresenceStatus } from './presence.svelte.js';
 export { createHoverDelay } from './hover-delay.svelte.js';
 export { createDismiss } from './dismiss.svelte.js';
 export { createFocusTrap } from './focus-trap.svelte.js';
+export {
+	createScrollLock,
+	createAnchoredPopupScrollLock,
+	isCoarsePointer,
+} from './scroll-lock.svelte.js';
+export type { ScrollLockOptions, AnchoredPopupScrollLockOptions } from './scroll-lock.svelte.js';
 export { createPositioner } from './floating.svelte.js';
 export type { Side, Align, PositionerOptions, VirtualElement } from './floating.svelte.js';
 export {
 	useId,
 	createControllableOpen,
 	createControllableChecked,
-	createControllableNumber
+	createControllableNumber,
 } from './controllable.svelte.js';
 export type { OpenChangeReason } from './controllable.svelte.js';

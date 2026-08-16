@@ -1,17 +1,10 @@
 <script lang="ts">
 	import { getContext, setContext } from 'svelte';
 	import { useId } from '../internal/controllable.svelte.js';
-	import {
-		ACCORDION_CONTEXT,
-		ACCORDION_ITEM_CONTEXT
-	} from '../internal/context-keys.js';
+	import { ACCORDION_CONTEXT, ACCORDION_ITEM_CONTEXT } from '../internal/context-keys.js';
 	import { createPresence } from '../internal/presence.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type {
-		AccordionContext,
-		AccordionItemContext,
-		AccordionItemProps
-	} from './types.js';
+	import type { AccordionContext, AccordionItemContext, AccordionItemProps } from './types.js';
 
 	let {
 		value = useId('accordion-item'),
@@ -47,7 +40,7 @@
 		get panelId() {
 			return panelId;
 		},
-		presence
+		presence,
 	} satisfies AccordionItemContext);
 
 	const itemProps: Record<string, unknown> = $derived(
@@ -57,8 +50,8 @@
 			style,
 			'data-open': open ? '' : undefined,
 			'data-closed': !open ? '' : undefined,
-			'data-disabled': itemDisabled ? '' : undefined
-		})
+			'data-disabled': itemDisabled ? '' : undefined,
+		}),
 	);
 </script>
 

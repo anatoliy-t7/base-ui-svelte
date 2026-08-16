@@ -31,12 +31,12 @@
 		},
 		setCheckedProp: (next) => {
 			pressed = next;
-		}
+		},
 	});
 
 	const isDisabled = $derived(Boolean(disabled || group?.disabled));
 	const isPressed = $derived(
-		group && value !== undefined ? group.value.includes(value) : state.checked
+		group && value !== undefined ? group.value.includes(value) : state.checked,
 	);
 
 	function toggle(event: Event): void {
@@ -66,8 +66,8 @@
 					event.preventDefault();
 					toggle(event);
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 

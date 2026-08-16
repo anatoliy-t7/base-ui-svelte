@@ -28,8 +28,8 @@
 			onclick: (event: MouseEvent) => {
 				if (isDisabled) return;
 				ctx.decrement(event);
-			}
-		})
+			},
+		}),
 	);
 </script>
 

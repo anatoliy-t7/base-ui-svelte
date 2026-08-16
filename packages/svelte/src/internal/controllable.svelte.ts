@@ -21,9 +21,7 @@ export function useId(prefix = 'base-ui'): string {
 export function createControllableOpen(options: {
 	getOpen: () => boolean | undefined;
 	getDefaultOpen: () => boolean;
-	onOpenChange?:
-		| ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void)
-		| undefined;
+	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
 	setOpenProp?: ((open: boolean) => void) | undefined;
 }) {
 	let uncontrolled = $state(options.getDefaultOpen());
@@ -47,7 +45,7 @@ export function createControllableOpen(options: {
 		get isControlled() {
 			return isControlled;
 		},
-		setOpen
+		setOpen,
 	};
 }
 
@@ -75,7 +73,7 @@ export function createControllableChecked(options: {
 		get checked() {
 			return checked;
 		},
-		setChecked
+		setChecked,
 	};
 }
 
@@ -109,7 +107,7 @@ export function createControllableNumber(options: {
 		get isControlled() {
 			return isControlled;
 		},
-		setValue
+		setValue,
 	};
 }
 
@@ -152,6 +150,6 @@ export function createControllableSliderValue(options: {
 		get isControlled() {
 			return isControlled;
 		},
-		setValue
+		setValue,
 	};
 }

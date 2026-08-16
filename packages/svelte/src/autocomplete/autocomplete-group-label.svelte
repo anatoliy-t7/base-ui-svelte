@@ -31,8 +31,8 @@
 		mergeProps(rest, {
 			id,
 			class: className,
-			style
-		})
+			style,
+		}),
 	);
 </script>
 

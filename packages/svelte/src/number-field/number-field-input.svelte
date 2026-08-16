@@ -4,31 +4,27 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { NumberFieldContext, NumberFieldInputProps } from './types.js';
 
-	let {
-		disabled = false,
-		class: className,
-		style,
-		...rest
-	}: NumberFieldInputProps = $props();
+	let { disabled = false, class: className, style, ...rest }: NumberFieldInputProps = $props();
 
 	const ctx = getContext<NumberFieldContext>(NUMBER_FIELD_CONTEXT);
 
 	const isDisabled = $derived(Boolean(disabled || ctx.disabled));
+	const isReadOnly = $derived(Boolean(ctx.readOnly));
 
 	function onInput(event: Event): void {
-		if (isDisabled) return;
+		if (isDisabled || isReadOnly) return;
 		const target = event.currentTarget;
 		if (!(target instanceof HTMLInputElement)) return;
 		ctx.setInputValue(target.value, event);
 	}
 
 	function onBlur(event: FocusEvent): void {
-		if (isDisabled) return;
+		if (isDisabled || isReadOnly) return;
 		ctx.commitInput(event);
 	}
 
 	function onKeyDown(event: KeyboardEvent): void {
-		if (isDisabled) return;
+		if (isDisabled || isReadOnly) return;
 		if (event.key === 'ArrowUp') {
 			event.preventDefault();
 			ctx.increment(event);
@@ -49,6 +45,7 @@
 			class: className,
 			style,
 			disabled: isDisabled || undefined,
+			readonly: isReadOnly || undefined,
 			value: ctx.inputValue,
 			required: ctx.required || undefined,
 			autocomplete: 'off',
@@ -56,8 +53,10 @@
 			'aria-valuemax': ctx.max,
 			'aria-valuenow': ctx.value ?? undefined,
 			'aria-disabled': isDisabled || undefined,
+			'aria-readonly': isReadOnly || undefined,
 			'aria-required': ctx.required || undefined,
 			'data-disabled': isDisabled ? '' : undefined,
+			'data-readonly': isReadOnly ? '' : undefined,
 			oninput: onInput,
 			onblur: (event: FocusEvent) => {
 				ctx.setInputFocused(false);
@@ -66,8 +65,8 @@
 			onfocus: () => {
 				ctx.setInputFocused(true);
 			},
-			onkeydown: onKeyDown
-		})
+			onkeydown: onKeyDown,
+		}),
 	);
 </script>
 

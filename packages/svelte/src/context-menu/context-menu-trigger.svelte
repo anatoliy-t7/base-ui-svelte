@@ -79,8 +79,8 @@
 			},
 			ontouchcancel: () => {
 				clearLongPress();
-			}
-		})
+			},
+		}),
 	);
 </script>
 

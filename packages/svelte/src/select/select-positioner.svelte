@@ -3,6 +3,10 @@
 	import { SELECT_CONTEXT } from '../internal/context-keys.js';
 	import { createPositioner } from '../internal/floating.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
+	import {
+		createAnchoredPopupScrollLock,
+		isCoarsePointer,
+	} from '../internal/scroll-lock.svelte.js';
 	import type { SelectContext, SelectPositionerProps } from './types.js';
 
 	let {
@@ -43,7 +47,18 @@
 		},
 		get sideOffset() {
 			return sideOffset;
-		}
+		},
+	});
+
+	createAnchoredPopupScrollLock({
+		get enabled() {
+			return ctx.open && ctx.modal;
+		},
+		get touchOpen() {
+			return isCoarsePointer();
+		},
+		positioner: () => positionerEl,
+		reference: () => ctx.refs.trigger,
 	});
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -51,8 +66,8 @@
 			class: className,
 			style,
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

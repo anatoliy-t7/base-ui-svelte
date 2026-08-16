@@ -22,10 +22,7 @@ export type PresenceOptions = {
  * });
  * ```
  */
-export function createPresence(
-	getPresent: () => boolean,
-	options?: PresenceOptions
-) {
+export function createPresence(getPresent: () => boolean, options?: PresenceOptions) {
 	let status = $state<PresenceStatus>(getPresent() ? 'mounted' : 'unmounted');
 	let isStarting = $state(false);
 	let node: HTMLElement | null = null;
@@ -113,7 +110,7 @@ export function createPresence(
 			() => {
 				if (generation !== animationsGeneration || status !== 'hiding') return;
 				finishHide();
-			}
+			},
 		);
 	}
 
@@ -243,6 +240,6 @@ export function createPresence(
 		},
 		setNode,
 		onExitComplete,
-		forceMount
+		forceMount,
 	};
 }

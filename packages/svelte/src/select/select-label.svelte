@@ -5,13 +5,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SelectContext, SelectLabelProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		id: idProp,
-		children,
-		...rest
-	}: SelectLabelProps = $props();
+	let { class: className, style, id: idProp, children, ...rest }: SelectLabelProps = $props();
 
 	const ctx = getContext<SelectContext>(SELECT_CONTEXT);
 	const fallbackId = useId('select-label');
@@ -32,12 +26,15 @@
 			for: ctx.triggerId,
 			class: className,
 			style,
-			'data-disabled': ctx.disabled ? '' : undefined
-		})
+			'data-disabled': ctx.disabled ? '' : undefined,
+		}),
 	);
 </script>
 
-<label {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+<label
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+>
 	{#if children}
 		{@render children()}
 	{/if}

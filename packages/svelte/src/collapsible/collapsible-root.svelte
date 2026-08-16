@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { setContext } from 'svelte';
-	import {
-		createControllableOpen,
-		useId
-	} from '../internal/controllable.svelte.js';
+	import { createControllableOpen, useId } from '../internal/controllable.svelte.js';
 	import { COLLAPSIBLE_CONTEXT } from '../internal/context-keys.js';
 	import { createPresence } from '../internal/presence.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
@@ -29,7 +26,7 @@
 		},
 		setOpenProp: (next) => {
 			open = next;
-		}
+		},
 	});
 
 	const presence = createPresence(() => state.open);
@@ -47,7 +44,7 @@
 		},
 		triggerId,
 		panelId,
-		presence
+		presence,
 	} satisfies CollapsibleContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -57,8 +54,8 @@
 			style,
 			'data-open': state.open ? '' : undefined,
 			'data-closed': !state.open ? '' : undefined,
-			'data-disabled': disabled ? '' : undefined
-		})
+			'data-disabled': disabled ? '' : undefined,
+		}),
 	);
 </script>
 

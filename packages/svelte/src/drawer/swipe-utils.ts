@@ -7,11 +7,7 @@ const RUBBER_BAND = 0.15;
 
 export { DISMISS_PROGRESS, OPEN_PROGRESS, VELOCITY_THRESHOLD };
 
-export function axisDelta(
-	direction: DrawerSwipeDirection,
-	dx: number,
-	dy: number
-): number {
+export function axisDelta(direction: DrawerSwipeDirection, dx: number, dy: number): number {
 	switch (direction) {
 		case 'down':
 			return dy;
@@ -26,7 +22,7 @@ export function axisDelta(
 
 export function signedMovement(
 	direction: DrawerSwipeDirection,
-	delta: number
+	delta: number,
 ): { movementX: number; movementY: number } {
 	switch (direction) {
 		case 'down':
@@ -42,8 +38,7 @@ export function signedMovement(
 
 export function dismissSize(el: HTMLElement, direction: DrawerSwipeDirection): number {
 	const rect = el.getBoundingClientRect();
-	const size =
-		direction === 'left' || direction === 'right' ? rect.width : rect.height;
+	const size = direction === 'left' || direction === 'right' ? rect.width : rect.height;
 	return Math.max(size, 1);
 }
 
@@ -58,7 +53,7 @@ export function swipeStrength(progress: number): number {
  */
 export function applySwipeResistance(
 	rawDelta: number,
-	size: number
+	size: number,
 ): { delta: number; progress: number } {
 	if (rawDelta >= 0) {
 		const progress = Math.min(1, rawDelta / size);
@@ -66,7 +61,7 @@ export function applySwipeResistance(
 		const resisted = rawDelta * strength;
 		return {
 			delta: resisted,
-			progress: Math.min(1, resisted / size)
+			progress: Math.min(1, resisted / size),
 		};
 	}
 
@@ -75,10 +70,7 @@ export function applySwipeResistance(
 	return { delta: -band, progress: 0 };
 }
 
-export function resolveSnapFraction(
-	point: DrawerSnapPoint,
-	size: number
-): number {
+export function resolveSnapFraction(point: DrawerSnapPoint, size: number): number {
 	if (typeof point === 'number') {
 		if (point <= 1) {
 			return Math.min(1, Math.max(0, point));
@@ -125,14 +117,12 @@ export function resolveSnapFraction(
 
 export function resolveSnapFractions(
 	snapPoints: ReadonlyArray<DrawerSnapPoint> | undefined,
-	size: number
+	size: number,
 ): number[] {
 	if (!snapPoints || snapPoints.length === 0) {
 		return [];
 	}
-	return snapPoints
-		.map((point) => resolveSnapFraction(point, size))
-		.sort((a, b) => a - b);
+	return snapPoints.map((point) => resolveSnapFraction(point, size)).sort((a, b) => a - b);
 }
 
 export function nearestSnapIndex(fractions: number[], value: number): number {

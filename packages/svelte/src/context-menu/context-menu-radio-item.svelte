@@ -4,14 +4,14 @@
 	import {
 		CONTEXT_MENU_CONTEXT,
 		CONTEXT_MENU_RADIO_GROUP_CONTEXT,
-		CONTEXT_MENU_RADIO_ITEM_CONTEXT
+		CONTEXT_MENU_RADIO_ITEM_CONTEXT,
 	} from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type {
 		ContextMenuContext,
 		ContextMenuRadioGroupContext,
 		ContextMenuRadioItemContext,
-		ContextMenuRadioItemProps
+		ContextMenuRadioItemProps,
 	} from './types.js';
 
 	let {
@@ -48,7 +48,7 @@
 		},
 		get disabled() {
 			return isDisabled;
-		}
+		},
 	} satisfies ContextMenuRadioItemContext);
 
 	function closeSubmenuOnLeft(event: KeyboardEvent): void {
@@ -123,8 +123,8 @@
 						ctx.setOpen(false, 'imperative-action');
 						break;
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 

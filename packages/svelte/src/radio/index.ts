@@ -3,7 +3,7 @@ import Indicator from './radio-indicator.svelte';
 
 export const Radio = {
 	Root,
-	Indicator
+	Indicator,
 };
 
 export type { RadioRootProps, RadioIndicatorProps, RadioContext } from './types.js';

@@ -92,8 +92,8 @@
 			onclick: () => {
 				activate(value);
 			},
-			onkeydown: onKeyDown
-		})
+			onkeydown: onKeyDown,
+		}),
 	);
 </script>
 

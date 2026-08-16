@@ -20,7 +20,7 @@
 	let uncontrolled = $state<string | undefined>(undefined);
 	const isControlled = $derived(value !== undefined);
 	const currentValue = $derived(
-		isControlled ? String(value ?? '') : (uncontrolled ?? defaultValue)
+		isControlled ? String(value ?? '') : (uncontrolled ?? defaultValue),
 	);
 	const isDisabled = $derived(Boolean(disabled || ctx.disabled));
 
@@ -83,8 +83,8 @@
 				ctx.setFocused(false);
 				ctx.setTouched(true);
 				syncFromEvent(event);
-			}
-		})
+			},
+		}),
 	);
 </script>
 

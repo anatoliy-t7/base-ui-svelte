@@ -3,7 +3,7 @@ import Legend from './fieldset-legend.svelte';
 
 export const Fieldset = {
 	Root,
-	Legend
+	Legend,
 };
 
 export type { FieldsetRootProps, FieldsetLegendProps, FieldsetContext } from './types.js';

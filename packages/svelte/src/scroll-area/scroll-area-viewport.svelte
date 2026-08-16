@@ -5,12 +5,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ScrollAreaContext, ScrollAreaViewportProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ScrollAreaViewportProps = $props();
+	let { class: className, style, children, ...rest }: ScrollAreaViewportProps = $props();
 
 	const ctx = getContext<ScrollAreaContext>(SCROLL_AREA_CONTEXT);
 
@@ -47,11 +42,7 @@
 	}
 
 	const viewportStyle = $derived.by(() => {
-		const parts = [
-			'overflow:auto',
-			'scrollbar-width:none',
-			'-ms-overflow-style:none'
-		];
+		const parts = ['overflow:auto', 'scrollbar-width:none', '-ms-overflow-style:none'];
 		if (typeof style === 'string' && style.length > 0) {
 			parts.push(style);
 		} else if (typeof style === 'object' && style !== null) {
@@ -69,8 +60,8 @@
 			class: className,
 			style: viewportStyle,
 			'data-scrolling': ctx.scrolling ? '' : undefined,
-			onscroll: onScroll
-		})
+			onscroll: onScroll,
+		}),
 	);
 </script>
 

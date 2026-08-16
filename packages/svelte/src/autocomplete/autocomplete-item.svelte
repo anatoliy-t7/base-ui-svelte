@@ -5,7 +5,7 @@
 	import type {
 		AutocompleteContext,
 		AutocompleteItemContext,
-		AutocompleteItemProps
+		AutocompleteItemProps,
 	} from './types.js';
 
 	let {
@@ -39,7 +39,7 @@
 		},
 		get disabled() {
 			return isDisabled;
-		}
+		},
 	} satisfies AutocompleteItemContext);
 
 	function select(event: Event): void {
@@ -66,8 +66,8 @@
 			onpointermove: () => {
 				if (isDisabled || !visible) return;
 				ctx.setHighlighted(value);
-			}
-		})
+			},
+		}),
 	);
 </script>
 

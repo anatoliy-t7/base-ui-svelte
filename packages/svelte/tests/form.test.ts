@@ -37,7 +37,7 @@ describe('Form', () => {
 
 	it('surfaces server errors on Field.Error', () => {
 		render(FormTest, {
-			props: { errors: { username: 'Taken' } }
+			props: { errors: { username: 'Taken' } },
 		});
 		expect(screen.getByTestId('error')).toHaveTextContent('Taken');
 		expect(screen.getByTestId('field')).toHaveAttribute('data-invalid');

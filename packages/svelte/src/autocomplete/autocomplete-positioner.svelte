@@ -43,7 +43,7 @@
 		},
 		get sideOffset() {
 			return sideOffset;
-		}
+		},
 	});
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -51,8 +51,8 @@
 			class: className,
 			style,
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

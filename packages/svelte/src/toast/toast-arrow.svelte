@@ -9,12 +9,7 @@
 		setArrow(el: HTMLElement | null): void;
 	};
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: ToastArrowProps = $props();
+	let { class: className, style, children, ...rest }: ToastArrowProps = $props();
 
 	const ctx = getContext<ToastContext>(TOAST_CONTEXT);
 	const positioner = hasContext(TOAST_POSITIONER_CONTEXT)
@@ -36,8 +31,8 @@
 			style,
 			'aria-hidden': 'true',
 			'data-anchored': ctx.toast?.anchor ? '' : undefined,
-			'data-side': positioner?.side
-		})
+			'data-side': positioner?.side,
+		}),
 	);
 </script>
 

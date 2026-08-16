@@ -13,7 +13,7 @@ export const Slider = {
 	Control,
 	Track,
 	Indicator,
-	Thumb
+	Thumb,
 };
 
 export type {
@@ -26,5 +26,5 @@ export type {
 	SliderThumbProps,
 	SliderContext,
 	SliderOrientation,
-	SliderValue
+	SliderValue,
 } from './types.js';

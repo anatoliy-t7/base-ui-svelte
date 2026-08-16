@@ -3,23 +3,16 @@
 	import { useId } from '../internal/controllable.svelte.js';
 	import {
 		NAVIGATION_MENU_CONTEXT,
-		NAVIGATION_MENU_ITEM_CONTEXT
+		NAVIGATION_MENU_ITEM_CONTEXT,
 	} from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type {
 		NavigationMenuContext,
 		NavigationMenuItemContext,
-		NavigationMenuItemProps
+		NavigationMenuItemProps,
 	} from './types.js';
 
-	let {
-		value,
-		class: className,
-		style,
-		id,
-		children,
-		...rest
-	}: NavigationMenuItemProps = $props();
+	let { value, class: className, style, id, children, ...rest }: NavigationMenuItemProps = $props();
 
 	const root = getContext<NavigationMenuContext>(NAVIGATION_MENU_CONTEXT);
 
@@ -39,7 +32,7 @@
 		},
 		get contentId() {
 			return contentId;
-		}
+		},
 	} satisfies NavigationMenuItemContext);
 
 	const itemProps: Record<string, unknown> = $derived(
@@ -49,8 +42,8 @@
 			class: className,
 			style,
 			'data-open': open ? '' : undefined,
-			'data-closed': !open ? '' : undefined
-		})
+			'data-closed': !open ? '' : undefined,
+		}),
 	);
 </script>
 

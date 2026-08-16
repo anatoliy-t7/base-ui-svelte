@@ -32,12 +32,15 @@
 			onclick: (event: MouseEvent) => {
 				if (isDisabled || isEmpty) return;
 				ctx.clear(event);
-			}
-		})
+			},
+		}),
 	);
 </script>
 
-<button {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+<button
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+>
 	{#if children}
 		{@render children()}
 	{:else}

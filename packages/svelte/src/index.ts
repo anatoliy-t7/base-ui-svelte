@@ -8,7 +8,7 @@ export type {
 	AccordionContext,
 	AccordionItemContext,
 	AccordionOrientation,
-	AccordionValue
+	AccordionValue,
 } from './accordion/index.js';
 
 export { AlertDialog } from './alert-dialog/index.js';
@@ -22,7 +22,7 @@ export type {
 	AlertDialogTitleProps,
 	AlertDialogDescriptionProps,
 	AlertDialogCloseProps,
-	AlertDialogContext
+	AlertDialogContext,
 } from './alert-dialog/index.js';
 
 export { Autocomplete } from './autocomplete/index.js';
@@ -50,7 +50,7 @@ export type {
 	AutocompleteRowProps,
 	AutocompleteContext,
 	AutocompleteItemContext,
-	AutocompleteGroupContext
+	AutocompleteGroupContext,
 } from './autocomplete/index.js';
 
 export { Avatar } from './avatar/index.js';
@@ -59,7 +59,7 @@ export type {
 	AvatarImageProps,
 	AvatarFallbackProps,
 	AvatarContext,
-	ImageLoadingStatus
+	ImageLoadingStatus,
 } from './avatar/index.js';
 
 export { Button } from './button/index.js';
@@ -76,10 +76,10 @@ export type {
 	CollapsibleRootProps,
 	CollapsibleTriggerProps,
 	CollapsiblePanelProps,
-	CollapsibleContext
+	CollapsibleContext,
 } from './collapsible/index.js';
 
-export { Combobox } from './combobox/index.js';
+export { Combobox, useFilter } from './combobox/index.js';
 export type {
 	ComboboxRootProps,
 	ComboboxLabelProps,
@@ -113,7 +113,7 @@ export type {
 	ComboboxGroupContext,
 	ComboboxValue,
 	ComboboxCollectionItem,
-	ComboboxItemsProp
+	ComboboxItemsProp,
 } from './combobox/index.js';
 
 export { ContextMenu } from './context-menu/index.js';
@@ -127,7 +127,7 @@ export type {
 	ContextMenuSeparatorProps,
 	ContextMenuGroupProps,
 	ContextMenuGroupLabelProps,
-	ContextMenuContext
+	ContextMenuContext,
 } from './context-menu/index.js';
 
 export { CspProvider, useNonce } from './csp-provider/index.js';
@@ -144,14 +144,14 @@ export type {
 	DialogTitleProps,
 	DialogDescriptionProps,
 	DialogCloseProps,
-	DialogContext
+	DialogContext,
 } from './dialog/index.js';
 
 export { DirectionProvider, useDirection } from './direction-provider/index.js';
 export type {
 	TextDirection,
 	DirectionContext,
-	DirectionProviderProps
+	DirectionProviderProps,
 } from './direction-provider/index.js';
 
 export { Drawer } from './drawer/index.js';
@@ -178,7 +178,7 @@ export type {
 	DrawerProviderContext,
 	DrawerVirtualKeyboardContext,
 	DrawerSwipeVisual,
-	DrawerRefs
+	DrawerRefs,
 } from './drawer/index.js';
 
 export { Field } from './field/index.js';
@@ -196,7 +196,7 @@ export type {
 	FieldTransitionStatus,
 	FieldContext,
 	FieldItemContext,
-	FieldValidationMode
+	FieldValidationMode,
 } from './field/index.js';
 
 export { Fieldset } from './fieldset/index.js';
@@ -219,7 +219,7 @@ export type {
 	MenuSeparatorProps,
 	MenuGroupProps,
 	MenuGroupLabelProps,
-	MenuContext
+	MenuContext,
 } from './menu/index.js';
 
 export { Menubar } from './menubar/index.js';
@@ -235,7 +235,7 @@ export type {
 	MeterIndicatorProps,
 	MeterValueProps,
 	MeterContext,
-	MeterStatus
+	MeterStatus,
 } from './meter/index.js';
 
 export { NavigationMenu } from './navigation-menu/index.js';
@@ -255,7 +255,7 @@ export type {
 	NavigationMenuViewportProps,
 	NavigationMenuContext,
 	NavigationMenuItemContext,
-	NavigationMenuOrientation
+	NavigationMenuOrientation,
 } from './navigation-menu/index.js';
 
 export { NumberField } from './number-field/index.js';
@@ -267,7 +267,7 @@ export type {
 	NumberFieldIncrementProps,
 	NumberFieldScrubAreaProps,
 	NumberFieldScrubAreaCursorProps,
-	NumberFieldContext
+	NumberFieldContext,
 } from './number-field/index.js';
 
 export { OTPField } from './otp-field/index.js';
@@ -275,7 +275,7 @@ export type {
 	OtpFieldRootProps,
 	OtpFieldInputProps,
 	OtpFieldSeparatorProps,
-	OtpFieldContext
+	OtpFieldContext,
 } from './otp-field/index.js';
 
 export { Popover } from './popover/index.js';
@@ -289,7 +289,7 @@ export type {
 	PopoverTitleProps,
 	PopoverDescriptionProps,
 	PopoverCloseProps,
-	PopoverContext
+	PopoverContext,
 } from './popover/index.js';
 
 export { PreviewCard } from './preview-card/index.js';
@@ -302,7 +302,7 @@ export type {
 	PreviewCardPopupProps,
 	PreviewCardArrowProps,
 	PreviewCardViewportProps,
-	PreviewCardContext
+	PreviewCardContext,
 } from './preview-card/index.js';
 
 export { Progress } from './progress/index.js';
@@ -313,7 +313,7 @@ export type {
 	ProgressIndicatorProps,
 	ProgressValueProps,
 	ProgressContext,
-	ProgressStatus
+	ProgressStatus,
 } from './progress/index.js';
 
 export { Radio } from './radio/index.js';
@@ -332,7 +332,7 @@ export type {
 	ScrollAreaCornerProps,
 	ScrollAreaContext,
 	ScrollAreaMetrics,
-	ScrollAreaOrientation
+	ScrollAreaOrientation,
 } from './scroll-area/index.js';
 
 export { Select } from './select/index.js';
@@ -358,7 +358,7 @@ export type {
 	SelectScrollDownArrowProps,
 	SelectContext,
 	SelectItemContext,
-	SelectGroupContext
+	SelectGroupContext,
 } from './select/index.js';
 
 export { Separator } from './separator/index.js';
@@ -375,7 +375,7 @@ export type {
 	SliderThumbProps,
 	SliderContext,
 	SliderOrientation,
-	SliderValue
+	SliderValue,
 } from './slider/index.js';
 
 export { Switch } from './switch/index.js';
@@ -389,10 +389,10 @@ export type {
 	TabsPanelProps,
 	TabsIndicatorProps,
 	TabsContext,
-	TabsOrientation
+	TabsOrientation,
 } from './tabs/index.js';
 
-export { Toast, createToastManager } from './toast/index.js';
+export { Toast, createToastManager, useToastManager } from './toast/index.js';
 export type {
 	ToastProviderProps,
 	ToastPortalProps,
@@ -408,8 +408,13 @@ export type {
 	ToastContext,
 	ToastData,
 	ToastAddInput,
+	ToastUpdateInput,
 	ToastManager,
-	ToastActionPropsData
+	ToastManagerOptions,
+	ToastPromiseOptions,
+	ToastActionPropsData,
+	ToastSwipeDirection,
+	ToastTransitionStatus,
 } from './toast/index.js';
 
 export { Toggle } from './toggle/index.js';
@@ -419,7 +424,7 @@ export { ToggleGroup } from './toggle-group/index.js';
 export type {
 	ToggleGroupProps,
 	ToggleGroupContext,
-	ToggleGroupOrientation
+	ToggleGroupOrientation,
 } from './toggle-group/index.js';
 
 export { Toolbar } from './toolbar/index.js';
@@ -431,7 +436,7 @@ export type {
 	ToolbarGroupProps,
 	ToolbarInputProps,
 	ToolbarContext,
-	ToolbarOrientation
+	ToolbarOrientation,
 } from './toolbar/index.js';
 
 export { Tooltip } from './tooltip/index.js';
@@ -442,5 +447,5 @@ export type {
 	TooltipPositionerProps,
 	TooltipPopupProps,
 	TooltipArrowProps,
-	TooltipContext
+	TooltipContext,
 } from './tooltip/index.js';

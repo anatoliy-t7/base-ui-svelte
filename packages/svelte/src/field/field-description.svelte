@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { FieldContext, FieldDescriptionProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: FieldDescriptionProps = $props();
+	let { class: className, style, children, ...rest }: FieldDescriptionProps = $props();
 
 	const ctx = getContext<FieldContext>(FIELD_CONTEXT);
 
@@ -29,8 +24,8 @@
 			'data-dirty': ctx.dirty ? '' : undefined,
 			'data-touched': ctx.touched ? '' : undefined,
 			'data-filled': ctx.filled ? '' : undefined,
-			'data-focused': ctx.focused ? '' : undefined
-		})
+			'data-focused': ctx.focused ? '' : undefined,
+		}),
 	);
 </script>
 

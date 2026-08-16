@@ -12,21 +12,25 @@
 		onCheckedChange,
 		disabled = false,
 		required = false,
+		readOnly = false,
 		name,
 		value,
+		uncheckedValue,
+		form,
 		indeterminate = false,
+		parent = false,
 		class: className,
 		style,
 		id = useId('checkbox'),
 		children,
 		...rest
-	}: CheckboxRootProps & { indeterminate?: boolean } = $props();
+	}: CheckboxRootProps = $props();
 
 	const groupCtx = hasContext(CHECKBOX_GROUP_CONTEXT)
 		? getContext<CheckboxGroupContext>(CHECKBOX_GROUP_CONTEXT)
 		: undefined;
 
-	const group = $derived(groupCtx && value !== undefined ? groupCtx : undefined);
+	const group = $derived(groupCtx && (parent || value !== undefined) ? groupCtx : undefined);
 	const formValue = $derived(value ?? 'on');
 
 	const state = createControllableChecked({
@@ -37,13 +41,31 @@
 		},
 		setCheckedProp: (next) => {
 			checked = next;
-		}
+		},
 	});
 
 	const isDisabled = $derived(Boolean(disabled || group?.disabled));
-	const isChecked = $derived(
-		group && value !== undefined ? group.isChecked(value) : state.checked
+	const isReadOnly = $derived(Boolean(readOnly));
+
+	const parentAllValues = $derived(group?.allValues ?? []);
+	const parentChecked = $derived(
+		parent && group
+			? parentAllValues.length > 0 && parentAllValues.every((v) => group.isChecked(v))
+			: false,
 	);
+	const parentIndeterminate = $derived(
+		parent && group ? parentAllValues.some((v) => group.isChecked(v)) && !parentChecked : false,
+	);
+
+	const isChecked = $derived(
+		parent && group
+			? parentChecked
+			: group && value !== undefined
+				? group.isChecked(value)
+				: state.checked,
+	);
+
+	const resolvedIndeterminate = $derived(parent && group ? parentIndeterminate : indeterminate);
 
 	setContext(CHECKBOX_CONTEXT, {
 		get checked() {
@@ -53,12 +75,16 @@
 			return isDisabled;
 		},
 		get indeterminate() {
-			return indeterminate;
-		}
+			return resolvedIndeterminate;
+		},
 	} satisfies CheckboxContext);
 
 	function toggle(event: Event): void {
-		if (isDisabled) return;
+		if (isDisabled || isReadOnly) return;
+		if (parent && group) {
+			group.setAll(!parentChecked, event);
+			return;
+		}
 		if (group && value !== undefined) {
 			group.toggle(value, event);
 			return;
@@ -74,12 +100,14 @@
 			class: className,
 			style,
 			disabled: isDisabled || undefined,
-			'aria-checked': indeterminate ? 'mixed' : isChecked,
+			'aria-checked': resolvedIndeterminate ? 'mixed' : isChecked,
 			'aria-required': required || undefined,
+			'aria-readonly': isReadOnly || undefined,
 			'data-checked': isChecked ? '' : undefined,
-			'data-unchecked': !isChecked && !indeterminate ? '' : undefined,
-			'data-indeterminate': indeterminate ? '' : undefined,
+			'data-unchecked': !isChecked && !resolvedIndeterminate ? '' : undefined,
+			'data-indeterminate': resolvedIndeterminate ? '' : undefined,
 			'data-disabled': isDisabled ? '' : undefined,
+			'data-readonly': isReadOnly ? '' : undefined,
 			onclick: (event: MouseEvent) => {
 				toggle(event);
 			},
@@ -88,14 +116,18 @@
 					event.preventDefault();
 					toggle(event);
 				}
-			}
-		})
+			},
+		}),
 	);
 </script>
 
 <button {...buttonProps}>
 	{#if children}
-		{@render children({ checked: isChecked, disabled: isDisabled })}
+		{@render children({
+			checked: isChecked,
+			disabled: isDisabled,
+			indeterminate: resolvedIndeterminate,
+		})}
 	{/if}
 </button>
 
@@ -103,11 +135,16 @@
 	<input
 		type="checkbox"
 		{name}
+		{form}
 		value={formValue}
 		checked={isChecked}
 		{required}
+		readonly={isReadOnly || undefined}
 		tabindex="-1"
 		aria-hidden="true"
 		style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;"
 	/>
+	{#if uncheckedValue !== undefined && !isChecked}
+		<input type="hidden" {name} {form} value={uncheckedValue} tabindex="-1" aria-hidden="true" />
+	{/if}
 {/if}

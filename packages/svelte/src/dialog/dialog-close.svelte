@@ -21,8 +21,8 @@
 			style,
 			onclick: () => {
 				ctx.setOpen(false, 'close-press');
-			}
-		})
+			},
+		}),
 	);
 </script>
 

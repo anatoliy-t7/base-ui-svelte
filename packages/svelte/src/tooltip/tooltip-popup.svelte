@@ -5,13 +5,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { TooltipContext, TooltipPopupProps } from './types.js';
 
-	let {
-		render = 'div',
-		class: className,
-		style,
-		children,
-		...rest
-	}: TooltipPopupProps = $props();
+	let { render = 'div', class: className, style, children, ...rest }: TooltipPopupProps = $props();
 
 	const ctx = getContext<TooltipContext>(TOOLTIP_CONTEXT);
 
@@ -41,7 +35,7 @@
 			ctx.setOpen(false, 'escape-key');
 		},
 		dismissOnEscape: true,
-		dismissOnOutsidePress: false
+		dismissOnOutsidePress: false,
 	});
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -59,8 +53,8 @@
 			},
 			onpointerleave: () => {
 				ctx.closeWithDelay('trigger-hover');
-			}
-		})
+			},
+		}),
 	);
 </script>
 

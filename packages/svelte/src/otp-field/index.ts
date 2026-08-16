@@ -5,12 +5,12 @@ import Separator from './otp-field-separator.svelte';
 export const OTPField = {
 	Root,
 	Input,
-	Separator
+	Separator,
 };
 
 export type {
 	OtpFieldRootProps,
 	OtpFieldInputProps,
 	OtpFieldSeparatorProps,
-	OtpFieldContext
+	OtpFieldContext,
 } from './types.js';

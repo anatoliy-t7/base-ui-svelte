@@ -28,9 +28,7 @@
 	const elements: (HTMLInputElement | null)[] = [];
 
 	const isValueControlled = $derived(value !== undefined);
-	const currentValue = $derived(
-		value !== undefined ? value : (uncontrolledValue ?? defaultValue)
-	);
+	const currentValue = $derived(value !== undefined ? value : (uncontrolledValue ?? defaultValue));
 
 	const slots = $derived.by(() => {
 		const chars = currentValue.split('');
@@ -156,7 +154,7 @@
 		clearSlot,
 		focusSlot,
 		handlePaste,
-		registerElement
+		registerElement,
 	} satisfies OtpFieldContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -165,8 +163,8 @@
 			class: className,
 			style,
 			role: 'group',
-			'data-disabled': disabled ? '' : undefined
-		})
+			'data-disabled': disabled ? '' : undefined,
+		}),
 	);
 </script>
 

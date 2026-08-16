@@ -5,15 +5,10 @@
 	import { isFocusableField } from './swipe-utils.js';
 	import type {
 		DrawerVirtualKeyboardContext,
-		DrawerVirtualKeyboardProviderProps
+		DrawerVirtualKeyboardProviderProps,
 	} from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: DrawerVirtualKeyboardProviderProps = $props();
+	let { class: className, style, children, ...rest }: DrawerVirtualKeyboardProviderProps = $props();
 
 	let keyboardInset = $state(0);
 	let wrapperEl = $state<HTMLElement | null>(null);
@@ -84,7 +79,7 @@
 		},
 		get keyboardOpen() {
 			return keyboardOpen;
-		}
+		},
 	} satisfies DrawerVirtualKeyboardContext);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -92,14 +87,14 @@
 			class: className,
 			style: [
 				`--drawer-keyboard-inset:${keyboardInset}px`,
-				typeof style === 'string' ? style : undefined
+				typeof style === 'string' ? style : undefined,
 			]
 				.filter(Boolean)
 				.join(';'),
 			'data-keyboard-open': keyboardOpen ? '' : undefined,
 			onfocusin: onFocusIn,
-			onfocusout: onFocusOut
-		})
+			onfocusout: onFocusOut,
+		}),
 	);
 </script>
 

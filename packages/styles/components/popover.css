@@ -12,7 +12,18 @@
 		transform: translateY(-0.25rem) scale(0.96);
 	}
 }
-.popover-arrow { @apply fill-overlay stroke-border; }
-.popover-title { @apply m-0 text-sm font-semibold; }
-.popover-description { @apply mt-1 text-sm text-muted; }
-.popover-close { @apply absolute end-2 top-2; }
+.popover-backdrop {
+	@apply fixed inset-0 z-40 bg-backdrop;
+}
+.popover-arrow {
+	@apply fill-overlay stroke-border;
+}
+.popover-title {
+	@apply m-0 text-sm font-semibold;
+}
+.popover-description {
+	@apply mt-1 text-sm text-muted;
+}
+.popover-close {
+	@apply absolute end-2 top-2;
+}

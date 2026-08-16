@@ -7,7 +7,7 @@
 		<NavigationMenu.Item value="products">
 			<NavigationMenu.Trigger data-testid="products-trigger">
 				Products
-				<NavigationMenu.Icon data-testid="icon">▼</NavigationMenu.Icon>
+				<NavigationMenu.Icon data-testid="icon" />
 			</NavigationMenu.Trigger>
 			<NavigationMenu.Content>
 				<div data-testid="products-content">Products panel</div>

@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SelectContext, SelectListProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: SelectListProps = $props();
+	let { class: className, style, children, ...rest }: SelectListProps = $props();
 
 	const ctx = getContext<SelectContext>(SELECT_CONTEXT);
 
@@ -33,8 +28,8 @@
 			tabindex: -1,
 			'aria-labelledby': ctx.labelId ?? ctx.triggerId,
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

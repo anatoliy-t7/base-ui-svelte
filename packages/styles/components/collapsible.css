@@ -1,7 +1,28 @@
-.collapsible { @apply flex flex-col gap-1; }
-.collapsible-trigger {
-  @apply inline-flex appearance-none items-center gap-2 rounded-md border border-border bg-surface px-3 py-2 text-sm outline-none cursor-(--cursor-interactive);
-  &:hover { @apply bg-surface-hover; }
-  &:focus-visible, &[data-focus-visible="true"] { @apply status-focused; }
+.collapsible {
+	@apply flex flex-col gap-1;
 }
-.collapsible-panel { @apply px-3 py-2 text-sm text-muted outline-none; }
+.collapsible-trigger {
+	@apply inline-flex cursor-(--cursor-interactive) appearance-none items-center gap-2 rounded-md border border-border bg-surface px-3 py-2 text-sm outline-none;
+	&:hover {
+		@apply bg-surface-hover;
+	}
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply status-focused;
+	}
+}
+.collapsible-panel {
+	/* Keep vertical padding on .collapsible-content so height:0 can reach 0. */
+	@apply overflow-hidden text-sm text-muted outline-none;
+	height: var(--collapsible-panel-height, auto);
+	transition: height 150ms var(--ease-out-fluid);
+	@apply motion-reduce:transition-none;
+
+	&[data-starting-style],
+	&[data-ending-style] {
+		height: 0;
+	}
+}
+.collapsible-content {
+	@apply px-3 py-2;
+}

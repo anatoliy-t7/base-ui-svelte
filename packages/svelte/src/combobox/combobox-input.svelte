@@ -4,18 +4,14 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ComboboxContext, ComboboxInputProps } from './types.js';
 
-	let {
-		disabled = false,
-		class: className,
-		style,
-		...rest
-	}: ComboboxInputProps = $props();
+	let { disabled = false, class: className, style, ...rest }: ComboboxInputProps = $props();
 
 	const ctx = getContext<ComboboxContext>(COMBOBOX_CONTEXT);
 
 	let inputEl = $state<HTMLElement | null>(null);
 
 	const isDisabled = $derived(Boolean(disabled || ctx.disabled));
+	const isReadOnly = $derived(Boolean(ctx.readOnly));
 
 	$effect(() => {
 		ctx.refs.input = inputEl;
@@ -31,12 +27,18 @@
 		if (visible.length === 0) return;
 
 		const currentIndex = visible.findIndex((item) => item.value === ctx.highlighted);
-		const nextIndex =
-			currentIndex === -1
-				? delta > 0
-					? 0
-					: visible.length - 1
-				: (currentIndex + delta + visible.length) % visible.length;
+		if (currentIndex === -1) {
+			ctx.setHighlighted((delta > 0 ? visible[0] : visible[visible.length - 1])?.value ?? null);
+			return;
+		}
+
+		const nextIndex = currentIndex + delta;
+		if (ctx.loopFocus) {
+			const wrapped = (nextIndex + visible.length) % visible.length;
+			ctx.setHighlighted(visible[wrapped]?.value ?? null);
+			return;
+		}
+		if (nextIndex < 0 || nextIndex >= visible.length) return;
 		ctx.setHighlighted(visible[nextIndex]?.value ?? null);
 	}
 
@@ -70,7 +72,7 @@
 				break;
 			}
 			case 'Enter': {
-				if (ctx.open && ctx.highlighted != null) {
+				if (ctx.open && ctx.highlighted != null && !isReadOnly) {
 					event.preventDefault();
 					selectHighlighted(event);
 				}
@@ -104,7 +106,7 @@
 	}
 
 	const activeDescendant = $derived(
-		ctx.open && ctx.highlighted != null ? ctx.getItemId(ctx.highlighted) : undefined
+		ctx.open && ctx.highlighted != null ? ctx.getItemId(ctx.highlighted) : undefined,
 	);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -115,6 +117,8 @@
 			class: className,
 			style,
 			disabled: isDisabled || undefined,
+			readonly: isReadOnly || undefined,
+			required: ctx.required || undefined,
 			value: ctx.inputValue,
 			autocomplete: 'off',
 			'aria-expanded': ctx.open,
@@ -123,10 +127,14 @@
 			'aria-labelledby': ctx.labelId,
 			'aria-activedescendant': activeDescendant,
 			'aria-disabled': isDisabled || undefined,
+			'aria-readonly': isReadOnly || undefined,
+			'aria-required': ctx.required || undefined,
 			'data-open': ctx.open ? '' : undefined,
 			'data-closed': !ctx.open ? '' : undefined,
 			'data-disabled': isDisabled ? '' : undefined,
+			'data-readonly': isReadOnly ? '' : undefined,
 			oninput: (event: Event) => {
+				if (isReadOnly) return;
 				const target = event.currentTarget;
 				if (!(target instanceof HTMLInputElement)) return;
 				ctx.setInputValue(target.value, event);
@@ -140,12 +148,18 @@
 					}
 				}
 			},
+			onclick: () => {
+				if (isDisabled || !ctx.openOnInputClick) return;
+				if (!ctx.open) {
+					ctx.setOpen(true, 'trigger-press');
+				}
+			},
 			onfocus: () => {
-				if (isDisabled) return;
+				if (isDisabled || !ctx.openOnInputClick) return;
 				ctx.setOpen(true, 'trigger-focus');
 			},
-			onkeydown: onKeyDown
-		})
+			onkeydown: onKeyDown,
+		}),
 	);
 </script>
 

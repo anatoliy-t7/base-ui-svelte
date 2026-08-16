@@ -9,7 +9,7 @@ export const Accordion = {
 	Item,
 	Header,
 	Trigger,
-	Panel
+	Panel,
 };
 
 export type {
@@ -21,5 +21,5 @@ export type {
 	AccordionContext,
 	AccordionItemContext,
 	AccordionOrientation,
-	AccordionValue
+	AccordionValue,
 } from './types.js';

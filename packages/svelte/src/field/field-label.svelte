@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { FieldContext, FieldLabelProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: FieldLabelProps = $props();
+	let { class: className, style, children, ...rest }: FieldLabelProps = $props();
 
 	const ctx = getContext<FieldContext>(FIELD_CONTEXT);
 
@@ -25,12 +20,15 @@
 			'data-dirty': ctx.dirty ? '' : undefined,
 			'data-touched': ctx.touched ? '' : undefined,
 			'data-filled': ctx.filled ? '' : undefined,
-			'data-focused': ctx.focused ? '' : undefined
-		})
+			'data-focused': ctx.focused ? '' : undefined,
+		}),
 	);
 </script>
 
-<label {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+<label
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+>
 	{#if children}
 		{@render children()}
 	{/if}

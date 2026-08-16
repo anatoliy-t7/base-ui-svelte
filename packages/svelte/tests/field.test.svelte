@@ -2,14 +2,19 @@
 	import { Field } from '../src/field/index.js';
 
 	let {
-		mode = 'custom'
+		mode = 'custom',
 	}: {
 		mode?: 'custom' | 'required' | 'email' | 'match';
 	} = $props();
 </script>
 
 {#if mode === 'custom'}
-	<Field.Root data-testid="field" name="email" validationMode="onBlur" validate={(value) => (value ? null : 'Required')}>
+	<Field.Root
+		data-testid="field"
+		name="email"
+		validationMode="onBlur"
+		validate={(value) => (value ? null : 'Required')}
+	>
 		<Field.Item data-testid="item">
 			<Field.Label data-testid="label">Email</Field.Label>
 			<Field.Control data-testid="control" type="email" />
@@ -67,7 +72,9 @@
 	<Field.Root data-testid="field" name="username" validationMode="onBlur">
 		<Field.Label data-testid="label">Username</Field.Label>
 		<Field.Control data-testid="control" required />
-		<Field.Error data-testid="error-value-missing" match="valueMissing">Value is required</Field.Error>
+		<Field.Error data-testid="error-value-missing" match="valueMissing"
+			>Value is required</Field.Error
+		>
 		<Field.Error data-testid="error-custom" match="customError">Custom failed</Field.Error>
 	</Field.Root>
 {/if}

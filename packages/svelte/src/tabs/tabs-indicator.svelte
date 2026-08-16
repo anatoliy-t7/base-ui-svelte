@@ -15,12 +15,7 @@
 		getTabs: () => TabEntry[];
 	};
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: TabsIndicatorProps = $props();
+	let { class: className, style, children, ...rest }: TabsIndicatorProps = $props();
 
 	const ctx = getContext<TabsContextInternal>(TABS_CONTEXT);
 
@@ -86,13 +81,13 @@
 					`--active-tab-right: ${Math.max(0, (ctx.listElement?.scrollWidth ?? 0) - left - width)}px`,
 					`--active-tab-bottom: ${Math.max(0, (ctx.listElement?.scrollHeight ?? 0) - top - height)}px`,
 					`--active-tab-width: ${width}px`,
-					`--active-tab-height: ${height}px`
+					`--active-tab-height: ${height}px`,
 				].join('; ')
-			: ''
+			: '',
 	);
 
 	const mergedStyle = $derived(
-		[cssVars, typeof style === 'string' ? style : ''].filter(Boolean).join('; ') || undefined
+		[cssVars, typeof style === 'string' ? style : ''].filter(Boolean).join('; ') || undefined,
 	);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -101,8 +96,8 @@
 			class: className,
 			style: mergedStyle,
 			hidden: !ready ? true : undefined,
-			'data-orientation': ctx.orientation
-		})
+			'data-orientation': ctx.orientation,
+		}),
 	);
 </script>
 

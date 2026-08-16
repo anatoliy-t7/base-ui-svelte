@@ -13,6 +13,13 @@ import Title from './drawer-title.svelte';
 import Description from './drawer-description.svelte';
 import Close from './drawer-close.svelte';
 import VirtualKeyboardProvider from './drawer-virtual-keyboard-provider.svelte';
+import { createPopupHandle, PopupHandle } from '../internal/popup-handle.js';
+
+export function createHandle<Payload = unknown>() {
+	return createPopupHandle<Payload>();
+}
+
+export { PopupHandle as Handle };
 
 export const Drawer = {
 	Provider,
@@ -29,7 +36,8 @@ export const Drawer = {
 	Title,
 	Description,
 	Close,
-	VirtualKeyboardProvider
+	VirtualKeyboardProvider,
+	createHandle,
 };
 
 export type {
@@ -55,5 +63,6 @@ export type {
 	DrawerProviderContext,
 	DrawerVirtualKeyboardContext,
 	DrawerSwipeVisual,
-	DrawerRefs
+	DrawerRefs,
+	DrawerHandle,
 } from './types.js';

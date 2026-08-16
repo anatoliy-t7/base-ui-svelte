@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SliderContext, SliderTrackProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: SliderTrackProps = $props();
+	let { class: className, style, children, ...rest }: SliderTrackProps = $props();
 
 	const ctx = getContext<SliderContext>(SLIDER_CONTEXT);
 
@@ -18,8 +13,8 @@
 			class: className,
 			style,
 			'data-disabled': ctx.disabled ? '' : undefined,
-			'data-orientation': ctx.orientation
-		})
+			'data-orientation': ctx.orientation,
+		}),
 	);
 </script>
 

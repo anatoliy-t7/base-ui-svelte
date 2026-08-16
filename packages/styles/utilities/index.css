@@ -1,4 +1,4 @@
-@import "./backdrop.css";
+@import './backdrop.css';
 
 @utility focus-ring {
 	@apply ring-2 ring-focus ring-offset-0 ring-offset-background outline-none;
@@ -16,10 +16,10 @@
 
 	&:focus,
 	&:focus-visible,
-	&[data-focused="true"],
-	&[data-focus-visible="true"],
+	&[data-focused='true'],
+	&[data-focus-visible='true'],
 	&:focus-within,
-	&[data-focus-within="true"] {
+	&[data-focus-within='true'] {
 		@apply ring-2 ring-danger ring-offset-0;
 		--tw-ring-offset-width: 0px;
 	}

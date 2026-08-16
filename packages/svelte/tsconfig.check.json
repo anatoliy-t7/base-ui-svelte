@@ -5,6 +5,8 @@
 		"node_modules",
 		"src/**/*.test.ts",
 		"src/**/*.test.svelte",
-		"vitest-setup.ts"
+		"tests",
+		"vitest-setup.ts",
+		"vitest-axe.d.ts"
 	]
 }

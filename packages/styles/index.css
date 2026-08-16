@@ -2,16 +2,16 @@
 
 /* Base UI Svelte styles — layered theme architecture */
 
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
-@import "./base/base.css" layer(base);
-@import "./base/scrollbar.css" layer(base);
+@import './base/base.css' layer(base);
+@import './base/scrollbar.css' layer(base);
 
-@import "./components/index.css" layer(components);
+@import './components/index.css' layer(components);
 
-@import "./themes/default/index.css" layer(theme);
+@import './themes/default/index.css' layer(theme);
 
-@import "./utilities/index.css";
+@import './utilities/index.css';
 
-@import "./variants/index.css";
+@import './variants/index.css';

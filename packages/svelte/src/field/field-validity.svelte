@@ -13,7 +13,7 @@
 		errors: ctx.errors,
 		value: ctx.value,
 		error: ctx.errors[0] ?? '',
-		initialValue: ctx.initialValue
+		initialValue: ctx.initialValue,
 	});
 </script>
 

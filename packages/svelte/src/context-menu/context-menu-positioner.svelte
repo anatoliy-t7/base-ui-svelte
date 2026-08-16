@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import { CONTEXT_MENU_CONTEXT } from '../internal/context-keys.js';
-	import {
-		createPositioner,
-		type VirtualElement
-	} from '../internal/floating.svelte.js';
+	import { createPositioner, type VirtualElement } from '../internal/floating.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ContextMenuContext, ContextMenuPositionerProps } from './types.js';
 
@@ -46,7 +43,7 @@
 			const virtual: VirtualElement = {
 				getBoundingClientRect() {
 					return new DOMRect(x, y, 0, 0);
-				}
+				},
 			};
 			return virtual;
 		},
@@ -60,16 +57,20 @@
 		},
 		get sideOffset() {
 			return sideOffset;
-		}
+		},
+		// Match Base UI: context menus (pointer / virtual anchors) use fixed.
+		strategy: 'fixed',
 	});
 
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			class: className,
-			style,
+			style: ['position:fixed;left:0;top:0', typeof style === 'string' ? style : undefined]
+				.filter(Boolean)
+				.join(';'),
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
-		})
+			'data-closed': !ctx.open ? '' : undefined,
+		}),
 	);
 </script>
 

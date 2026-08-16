@@ -25,9 +25,7 @@
 
 	const formattedValue = $derived(new Intl.NumberFormat(locale, format).format(value));
 
-	const ariaValueText = $derived(
-		getAriaValueText?.(formattedValue, value) ?? formattedValue
-	);
+	const ariaValueText = $derived(getAriaValueText?.(formattedValue, value) ?? formattedValue);
 
 	setContext(METER_CONTEXT, {
 		get value() {
@@ -47,7 +45,7 @@
 		},
 		get labelId() {
 			return labelId;
-		}
+		},
 	} satisfies MeterContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -62,8 +60,8 @@
 			'aria-valuetext': ariaValueText,
 			'aria-labelledby': labelId,
 			'data-complete': status === 'complete' ? '' : undefined,
-			'data-progressing': status === 'progressing' ? '' : undefined
-		})
+			'data-progressing': status === 'progressing' ? '' : undefined,
+		}),
 	);
 </script>
 

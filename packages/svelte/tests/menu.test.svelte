@@ -6,7 +6,7 @@
 	let {
 		openOnHover = false,
 		delay = 0,
-		closeDelay = 0
+		closeDelay = 0,
 	}: {
 		openOnHover?: boolean;
 		delay?: number;
@@ -23,11 +23,7 @@
 				<Menu.Arrow data-testid="arrow" />
 				<Menu.Viewport data-testid="viewport">
 					<Menu.Item data-testid="item-1">Item 1</Menu.Item>
-					<Menu.CheckboxItem
-						data-testid="checkbox-item"
-						bind:checked
-						defaultChecked={false}
-					>
+					<Menu.CheckboxItem data-testid="checkbox-item" bind:checked defaultChecked={false}>
 						{#snippet children({ checked: isChecked })}
 							<Menu.CheckboxItemIndicator data-testid="checkbox-indicator" />
 							Checkbox ({isChecked ? 'on' : 'off'})

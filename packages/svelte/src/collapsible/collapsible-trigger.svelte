@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { CollapsibleContext, CollapsibleTriggerProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: CollapsibleTriggerProps = $props();
+	let { class: className, style, children, ...rest }: CollapsibleTriggerProps = $props();
 
 	const ctx = getContext<CollapsibleContext>(COLLAPSIBLE_CONTEXT);
 
@@ -27,8 +22,8 @@
 			onclick: () => {
 				if (ctx.disabled) return;
 				ctx.setOpen(!ctx.open, 'trigger-press');
-			}
-		})
+			},
+		}),
 	);
 </script>
 

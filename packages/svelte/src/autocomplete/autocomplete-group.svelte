@@ -5,15 +5,10 @@
 	import type {
 		AutocompleteContext,
 		AutocompleteGroupContext,
-		AutocompleteGroupProps
+		AutocompleteGroupProps,
 	} from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: AutocompleteGroupProps = $props();
+	let { class: className, style, children, ...rest }: AutocompleteGroupProps = $props();
 
 	getContext<AutocompleteContext>(AUTOCOMPLETE_CONTEXT);
 
@@ -25,7 +20,7 @@
 		},
 		setLabelId: (id) => {
 			labelId = id;
-		}
+		},
 	} satisfies AutocompleteGroupContext);
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -33,8 +28,8 @@
 			role: 'group',
 			class: className,
 			style,
-			'aria-labelledby': labelId
-		})
+			'aria-labelledby': labelId,
+		}),
 	);
 </script>
 

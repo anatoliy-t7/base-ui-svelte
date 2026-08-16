@@ -10,8 +10,8 @@ export const comboboxVariants = tv({
 		popup: 'combobox-popup',
 		item: 'combobox-item',
 		empty: 'combobox-empty',
-		groupLabel: 'combobox-group-label'
-	}
+		groupLabel: 'combobox-group-label',
+	},
 });
 
 export type ComboboxVariants = VariantProps<typeof comboboxVariants>;

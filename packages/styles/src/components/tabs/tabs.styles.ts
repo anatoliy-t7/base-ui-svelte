@@ -7,17 +7,17 @@ export const tabsVariants = tv({
 		list: 'tabs-list',
 		tab: 'tabs-tab',
 		panel: 'tabs-panel',
-		indicator: 'tabs-indicator'
+		indicator: 'tabs-indicator',
 	},
 	variants: {
 		variant: {
 			primary: { root: '' },
-			secondary: { root: 'tabs-secondary' }
-		}
+			secondary: { root: 'tabs-secondary' },
+		},
 	},
 	defaultVariants: {
-		variant: 'primary'
-	}
+		variant: 'primary',
+	},
 });
 
 export type TabsVariants = VariantProps<typeof tabsVariants>;

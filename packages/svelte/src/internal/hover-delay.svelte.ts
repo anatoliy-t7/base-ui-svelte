@@ -1,10 +1,7 @@
 /**
  * Shared open/close hover-intent timers for tooltip, menu, preview-card, etc.
  */
-export function createHoverDelay(
-	getOpenDelay: () => number,
-	getCloseDelay: () => number
-) {
+export function createHoverDelay(getOpenDelay: () => number, getCloseDelay: () => number) {
 	let openTimeout: ReturnType<typeof setTimeout> | null = null;
 	let closeTimeout: ReturnType<typeof setTimeout> | null = null;
 
@@ -63,6 +60,6 @@ export function createHoverDelay(
 		openWithDelay,
 		closeWithDelay,
 		cancel,
-		dispose
+		dispose,
 	};
 }

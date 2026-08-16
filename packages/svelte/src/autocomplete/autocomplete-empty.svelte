@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { AutocompleteContext, AutocompleteEmptyProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: AutocompleteEmptyProps = $props();
+	let { class: className, style, children, ...rest }: AutocompleteEmptyProps = $props();
 
 	const ctx = getContext<AutocompleteContext>(AUTOCOMPLETE_CONTEXT);
 
@@ -20,13 +15,16 @@
 			class: className,
 			style,
 			role: 'status',
-			'data-empty': isEmpty ? '' : undefined
-		})
+			'data-empty': isEmpty ? '' : undefined,
+		}),
 	);
 </script>
 
 {#if isEmpty}
-	<div {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+	<div
+		{...mergedProps}
+		style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+	>
 		{#if children}
 			{@render children()}
 		{:else}

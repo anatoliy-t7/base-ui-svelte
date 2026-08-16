@@ -1,15 +1,20 @@
 <script lang="ts">
-	import { setContext } from 'svelte';
+	import { getContext, hasContext, setContext } from 'svelte';
 	import {
 		createControllableOpen,
 		useId,
-		type OpenChangeReason
+		type OpenChangeReason,
 	} from '../internal/controllable.svelte.js';
-	import { TOOLTIP_CONTEXT } from '../internal/context-keys.js';
+	import { TOOLTIP_CONTEXT, TOOLTIP_PROVIDER_CONTEXT } from '../internal/context-keys.js';
 	import { createHoverDelay } from '../internal/hover-delay.svelte.js';
 	import { createPresence } from '../internal/presence.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type { TooltipContext, TooltipRefs, TooltipRootProps } from './types.js';
+	import type {
+		TooltipContext,
+		TooltipProviderContext,
+		TooltipRefs,
+		TooltipRootProps,
+	} from './types.js';
 
 	let {
 		open = $bindable(undefined),
@@ -17,7 +22,8 @@
 		onOpenChange,
 		delay,
 		openDelay,
-		closeDelay = 200,
+		closeDelay,
+		handle,
 		class: className,
 		style,
 		id = useId('tooltip'),
@@ -25,30 +31,39 @@
 		...rest
 	}: TooltipRootProps = $props();
 
-	const resolvedOpenDelay = $derived(openDelay ?? delay ?? 600);
+	const provider = hasContext(TOOLTIP_PROVIDER_CONTEXT)
+		? getContext<TooltipProviderContext>(TOOLTIP_PROVIDER_CONTEXT)
+		: undefined;
+
+	const resolvedOpenDelay = $derived(openDelay ?? delay ?? provider?.delay ?? 600);
+	const resolvedCloseDelay = $derived(closeDelay ?? provider?.closeDelay ?? 200);
 
 	const state = createControllableOpen({
 		getOpen: () => open,
 		getDefaultOpen: () => defaultOpen,
 		onOpenChange: (next, eventDetails) => {
 			onOpenChange?.(next, eventDetails);
+			if (!next) {
+				handle?.clearPayload();
+				provider?.markClosed();
+			}
 		},
 		setOpenProp: (next) => {
 			open = next;
-		}
+		},
 	});
 
 	const presence = createPresence(() => state.open);
 	const hover = createHoverDelay(
-		() => resolvedOpenDelay,
-		() => closeDelay
+		() => (provider?.shouldOpenInstantly() ? 0 : resolvedOpenDelay),
+		() => resolvedCloseDelay,
 	);
 
 	const refs: TooltipRefs = {
 		trigger: null,
 		popup: null,
 		arrow: null,
-		positioner: null
+		positioner: null,
 	};
 
 	const triggerId = useId('tooltip-trigger');
@@ -75,6 +90,14 @@
 	}
 
 	$effect(() => {
+		if (!handle) return;
+		return handle.attach({
+			setOpen: state.setOpen,
+			getOpen: () => state.open,
+		});
+	});
+
+	$effect(() => {
 		return () => {
 			hover.dispose();
 		};
@@ -96,8 +119,11 @@
 			return resolvedOpenDelay;
 		},
 		get closeDelay() {
-			return closeDelay;
-		}
+			return resolvedCloseDelay;
+		},
+		get payload() {
+			return handle?.payload;
+		},
 	} satisfies TooltipContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -106,13 +132,13 @@
 			class: className,
 			style,
 			'data-open': state.open ? '' : undefined,
-			'data-closed': !state.open ? '' : undefined
-		})
+			'data-closed': !state.open ? '' : undefined,
+		}),
 	);
 </script>
 
 <div {...rootProps} style={typeof rootProps.style === 'string' ? rootProps.style : undefined}>
 	{#if children}
-		{@render children({ open: state.open })}
+		{@render children({ open: state.open, payload: handle?.payload })}
 	{/if}
 </div>

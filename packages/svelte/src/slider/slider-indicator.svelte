@@ -4,12 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SliderContext, SliderIndicatorProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: SliderIndicatorProps = $props();
+	let { class: className, style, children, ...rest }: SliderIndicatorProps = $props();
 
 	const ctx = getContext<SliderContext>(SLIDER_CONTEXT);
 
@@ -44,8 +39,8 @@
 			class: className,
 			style: indicatorStyle,
 			'data-disabled': ctx.disabled ? '' : undefined,
-			'data-orientation': ctx.orientation
-		})
+			'data-orientation': ctx.orientation,
+		}),
 	);
 </script>
 

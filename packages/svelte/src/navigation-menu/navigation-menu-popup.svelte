@@ -5,12 +5,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { NavigationMenuContext, NavigationMenuPopupProps } from './types.js';
 
-	let {
-		class: className,
-		style,
-		children,
-		...rest
-	}: NavigationMenuPopupProps = $props();
+	let { class: className, style, children, ...rest }: NavigationMenuPopupProps = $props();
 
 	const ctx = getContext<NavigationMenuContext>(NAVIGATION_MENU_CONTEXT);
 
@@ -38,13 +33,13 @@
 			ctx.refs.popup,
 			ctx.refs.positioner,
 			ctx.refs.list,
-			...Array.from(ctx.refs.triggers.values())
+			...Array.from(ctx.refs.triggers.values()),
 		],
 		onDismiss: () => {
 			ctx.close();
 		},
 		dismissOnEscape: true,
-		dismissOnOutsidePress: true
+		dismissOnOutsidePress: true,
 	});
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -61,8 +56,8 @@
 			},
 			onpointerleave: () => {
 				ctx.closeWithDelay();
-			}
-		})
+			},
+		}),
 	);
 </script>
 

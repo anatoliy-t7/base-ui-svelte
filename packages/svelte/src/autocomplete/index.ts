@@ -5,6 +5,7 @@ import Input from './autocomplete-input.svelte';
 import Trigger from './autocomplete-trigger.svelte';
 import Icon from './autocomplete-icon.svelte';
 import Clear from './autocomplete-clear.svelte';
+import Value from './autocomplete-value.svelte';
 import Portal from './autocomplete-portal.svelte';
 import Backdrop from './autocomplete-backdrop.svelte';
 import Positioner from './autocomplete-positioner.svelte';
@@ -19,6 +20,10 @@ import Separator from './autocomplete-separator.svelte';
 import Group from './autocomplete-group.svelte';
 import GroupLabel from './autocomplete-group-label.svelte';
 import Row from './autocomplete-row.svelte';
+import Collection from './autocomplete-collection.svelte';
+import { useFilter } from '../internal/filter.js';
+
+export { useFilter };
 
 export const Autocomplete = {
 	Root,
@@ -28,6 +33,7 @@ export const Autocomplete = {
 	Trigger,
 	Icon,
 	Clear,
+	Value,
 	Portal,
 	Backdrop,
 	Positioner,
@@ -41,7 +47,9 @@ export const Autocomplete = {
 	Separator,
 	Group,
 	GroupLabel,
-	Row
+	Row,
+	Collection,
+	useFilter,
 };
 
 export type {
@@ -52,6 +60,7 @@ export type {
 	AutocompleteTriggerProps,
 	AutocompleteIconProps,
 	AutocompleteClearProps,
+	AutocompleteValueProps,
 	AutocompletePortalProps,
 	AutocompleteBackdropProps,
 	AutocompletePositionerProps,
@@ -66,7 +75,10 @@ export type {
 	AutocompleteGroupProps,
 	AutocompleteGroupLabelProps,
 	AutocompleteRowProps,
+	AutocompleteCollectionProps,
 	AutocompleteContext,
 	AutocompleteItemContext,
-	AutocompleteGroupContext
+	AutocompleteGroupContext,
+	AutocompleteCollectionItem,
+	AutocompleteItemsProp,
 } from './types.js';
