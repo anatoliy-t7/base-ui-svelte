@@ -6,8 +6,7 @@ Unofficial Svelte 5 port of [Base UI](https://base-ui.com). An unstyled UI com
 
 ## Documentation
 
-- Local docs site: `bun run dev` (from the monorepo root)
-- Source docs: [apps/docs](apps/docs)
+- Website: [https://base-ui-svelte.t7t.app](https://base-ui-svelte.t7t.app)
 
 ## Contributing
 
