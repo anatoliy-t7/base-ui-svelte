@@ -24,6 +24,8 @@ bun install
 bun run test          # packages/svelte vitest
 bun run check         # styles typecheck + svelte-check (library + docs)
 bun run build         # styles tsc + svelte-package → dist
+bun run docs:build    # static docs → apps/docs/build (set PUBLIC_SITE_ORIGIN)
+bun run publint       # validate publishable packages
 bun run fmt           # oxfmt (whole monorepo)
 bun run fmt:check     # oxfmt --check
 bun run lint          # oxlint (whole monorepo)
@@ -116,6 +118,12 @@ When writing or editing `.svelte` / `.svelte.ts` files:
 - New runtime dependencies (beyond `@floating-ui/dom` / peer `svelte`).
 - Publishing, version bumps, or changelog process changes.
 - Large refactors of `internal/` shared primitives.
+
+### Release notes
+
+- Docs are static (`@sveltejs/adapter-static`); deploy `apps/docs/build` or `apps/docs/Dockerfile` via Dokploy.
+- Set `PUBLIC_SITE_ORIGIN` at docs build time for absolute SEO / sitemap / llms.txt URLs.
+- Publish `base-ui-svelte` and `@base-ui-svelte/styles` from `packages/*` after `bun run build` + `bun run publint` (see root README).
 
 ### Never
 

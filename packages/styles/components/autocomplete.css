@@ -16,10 +16,8 @@
 		background: var(--field-hover);
 	}
 
-	&:focus,
 	&:focus-visible,
-	&[data-focus-visible='true'],
-	&[data-open] {
+	&[data-focus-visible='true'] {
 		@apply status-focused-field;
 		border-color: var(--field-border-focus);
 		background: var(--field-focus);
@@ -71,7 +69,8 @@
 }
 
 .autocomplete-popup {
-	@apply max-h-72 min-w-[var(--anchor-width,12rem)] overflow-auto rounded-xl border border-border bg-overlay p-1 text-sm shadow-overlay outline-none;
+	@apply max-h-72 min-w-(--anchor-width,12rem) origin-(--transform-origin,top) scroll-py-1 overflow-y-auto overscroll-contain bg-overlay p-1.5 text-sm shadow-overlay outline-none;
+	border-radius: min(32px, var(--radius-2xl));
 	transform-origin: var(--transform-origin, top center);
 	transition:
 		opacity 150ms var(--ease-smooth),
@@ -86,13 +85,38 @@
 }
 
 .autocomplete-item {
-	@apply flex w-full cursor-default appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none;
-	transition: background-color 100ms var(--ease-smooth);
+	@apply relative flex min-h-9 w-full appearance-none items-center justify-between gap-3 rounded-2xl border-0 bg-transparent px-2.5 py-1.5 text-left text-sm outline-none no-highlight;
+	cursor: var(--cursor-interactive);
+	transition:
+		transform 250ms var(--ease-out-quart),
+		background-color 150ms var(--ease-smooth),
+		box-shadow 150ms var(--ease-out);
+	@apply motion-reduce:transition-none;
 
-	&[data-highlighted],
-	&[data-selected],
-	&[data-focus] {
-		@apply bg-accent text-accent-foreground;
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply status-focused;
+	}
+
+	@media (hover: hover) {
+		&:hover,
+		&[data-hovered='true'] {
+			@apply bg-default;
+		}
+	}
+
+	&[data-highlighted] {
+		@apply bg-default;
+	}
+
+	&:active,
+	&[data-pressed='true'] {
+		transform: scale(0.98);
+	}
+
+	&[data-disabled],
+	&:disabled {
+		@apply status-disabled;
 	}
 }
 

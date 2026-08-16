@@ -1,5 +1,7 @@
 import { absoluteUrl } from '$lib/seo.js';
 
+export const prerender = true;
+
 const BODY = `# Allow search engines and AI citation crawlers.
 # Training-only bots (e.g. CCBot) are not blocked here; adjust if needed.
 User-agent: *

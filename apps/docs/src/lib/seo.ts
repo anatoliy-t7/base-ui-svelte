@@ -31,7 +31,15 @@ export function resolveDescription(
 export function absoluteUrl(origin: string, path: string): string {
 	const base = origin.replace(/\/$/, '');
 	if (path === '/' || path === '') return `${base}/`;
-	return `${base}${path.startsWith('/') ? path : `/${path}`}`;
+	const normalized = path.startsWith('/') ? path : `/${path}`;
+	return `${base}${normalized}`;
+}
+
+/** HTML doc paths always use a trailing slash (see `trailingSlash: 'always'`). */
+export function pageUrlPath(path: string): string {
+	if (path === '/' || path === '') return '/';
+	const normalized = path.startsWith('/') ? path : `/${path}`;
+	return normalized.endsWith('/') ? normalized : `${normalized}/`;
 }
 
 /** Escape `<` so JSON-LD cannot break out of a `<script>` tag. */

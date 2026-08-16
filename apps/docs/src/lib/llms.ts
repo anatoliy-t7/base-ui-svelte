@@ -114,6 +114,13 @@ export function markdownParamToPathname(param: string): string {
 	return `/${withoutExt}`;
 }
 
+/** Prerender entries for `/[...md].md` (param value without leading slash). */
+export function listMarkdownPrerenderEntries(): Array<{ md: string }> {
+	return [...pagesByPath.keys()].map((pathname) => ({
+		md: pageMarkdownPath(pathname).replace(/^\//, '')
+	}));
+}
+
 function absoluteUrl(origin: string, path: string): string {
 	return `${origin.replace(/\/$/, '')}${path}`;
 }

@@ -1,31 +1,51 @@
 .select-trigger {
-	@apply relative isolate inline-flex h-10 w-fit min-w-40 items-center justify-between gap-3 rounded-lg border border-border bg-field px-3 text-sm text-field-foreground shadow-field outline-none;
+	@apply relative isolate inline-flex min-h-9 w-fit min-w-40 items-center justify-between gap-3 rounded-field border bg-field px-3 py-2 text-sm text-field-foreground shadow-field outline-none select-none no-highlight;
 	cursor: var(--cursor-interactive);
 	border-width: var(--border-width-field);
+	border-color: var(--field-border);
 	transition:
 		background-color 150ms var(--ease-smooth),
-		border-color 150ms var(--ease-smooth);
+		border-color 150ms var(--ease-smooth),
+		box-shadow 150ms var(--ease-out);
 	@apply motion-reduce:transition-none;
 
-	&:hover {
-		border-color: var(--field-border-hover);
-		background: var(--field-hover);
+	&:has(.select-icon) {
+		@apply pe-7;
+	}
+
+	@media (hover: hover) {
+		&:hover,
+		&[data-hovered='true'] {
+			background: var(--field-hover);
+			border-color: var(--field-border-hover);
+		}
 	}
 
 	&:focus-visible,
-	&[data-focus-visible='true'],
-	&[data-open] {
+	&[data-focus-visible='true'] {
 		@apply status-focused-field;
 		border-color: var(--field-border-focus);
+		background-color: var(--field-focus);
+	}
+
+	&:disabled,
+	&[data-disabled],
+	&[aria-disabled='true'] {
+		@apply status-disabled;
 	}
 }
 
 .select-value {
-	@apply truncate;
+	@apply flex-1 truncate text-start text-sm text-current;
+
+	&[data-placeholder],
+	&[data-placeholder='true'] {
+		@apply text-field-placeholder;
+	}
 }
 
 .select-icon {
-	@apply inline-flex size-4 shrink-0 items-center justify-center text-muted transition-transform duration-150 ease-out;
+	@apply absolute inset-y-0 end-2 my-auto flex size-4 shrink-0 items-center justify-center text-field-placeholder transition duration-150;
 	@apply motion-reduce:transition-none;
 
 	& svg {
@@ -36,12 +56,12 @@
 	.select-trigger[data-open] &,
 	&[data-open] {
 		transform: rotate(180deg);
-		@apply text-foreground;
 	}
 }
 
 .select-popup {
-	@apply max-h-72 min-w-(--anchor-width,10rem) overflow-auto rounded-xl border border-border bg-overlay p-1 shadow-overlay outline-none;
+	@apply max-h-72 min-w-(--anchor-width,10rem) origin-(--transform-origin,top) scroll-py-1 overflow-y-auto overscroll-contain bg-overlay p-1.5 text-sm shadow-overlay outline-none;
+	border-radius: min(32px, var(--radius-2xl));
 	transform-origin: var(--transform-origin, top center);
 	transition:
 		opacity 150ms var(--ease-smooth),
@@ -56,18 +76,43 @@
 }
 
 .select-item {
-	@apply flex w-full cursor-default appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none;
-	transition: background-color 100ms var(--ease-smooth);
+	@apply relative flex min-h-9 w-full cursor-default appearance-none items-center justify-between gap-3 rounded-2xl border-0 bg-transparent px-2.5 py-1.5 text-left text-sm outline-none no-highlight;
+	cursor: var(--cursor-interactive);
+	transition:
+		transform 250ms var(--ease-out-quart),
+		background-color 150ms var(--ease-smooth),
+		box-shadow 150ms var(--ease-out);
+	@apply motion-reduce:transition-none;
 
-	&[data-highlighted],
-	&[data-selected],
-	&[data-focus] {
-		@apply bg-accent text-accent-foreground;
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply status-focused;
+	}
+
+	@media (hover: hover) {
+		&:hover,
+		&[data-hovered='true'] {
+			@apply bg-default;
+		}
+	}
+
+	&[data-highlighted] {
+		@apply bg-default;
+	}
+
+	&:active,
+	&[data-pressed='true'] {
+		transform: scale(0.98);
+	}
+
+	&[data-disabled],
+	&:disabled {
+		@apply status-disabled;
 	}
 }
 
 .select-item-indicator {
-	@apply size-4;
+	@apply size-4 shrink-0 text-default-foreground;
 }
 
 .select-group-label {

@@ -1,5 +1,7 @@
 import { navSections } from '$lib/nav.js';
-import { absoluteUrl } from '$lib/seo.js';
+import { absoluteUrl, pageUrlPath } from '$lib/seo.js';
+
+export const prerender = true;
 
 function escapeXml(value: string): string {
 	return value
@@ -15,7 +17,7 @@ function collectPaths(): string[] {
 	for (const section of navSections) {
 		for (const item of section.items) {
 			if (item.external) continue;
-			paths.add(item.href);
+			paths.add(pageUrlPath(item.href));
 		}
 	}
 	return [...paths].sort((a, b) => a.localeCompare(b));
