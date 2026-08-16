@@ -38,7 +38,9 @@
 			class: className,
 			style: viewportStyle || undefined,
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined,
+			'data-closed': !ctx.open || ctx.presence.isEnding ? '' : undefined,
+			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
+			'data-ending-style': ctx.presence.isEnding ? '' : undefined,
 			'data-swipe-direction': ctx.swipeDirection,
 			'data-keyboard-open': vk?.keyboardOpen ? '' : undefined
 		})

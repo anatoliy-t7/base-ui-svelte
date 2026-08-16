@@ -3,7 +3,7 @@ import { tick, untrack } from 'svelte';
 export type PresenceStatus = 'mounted' | 'unmounted' | 'hiding';
 
 export type PresenceOptions = {
-	/** Fallback unmount delay when no transition/animation ends (ms). @default 500 */
+	/** Fallback unmount delay when exit animations never finish (ms). @default 500 */
 	fallbackMs?: number;
 };
 
@@ -12,7 +12,8 @@ export type PresenceOptions = {
  * `data-open` / `data-closed` and `data-starting-style` / `data-ending-style`.
  *
  * Popup parts should register their host element so exit waits for
- * `transitionend` / `animationend`:
+ * running animations (via `getAnimations`), or `transitionend` /
+ * `animationend` when that API is unavailable:
  *
  * ```ts
  * $effect(() => {
@@ -32,8 +33,10 @@ export function createPresence(
 
 	let startRaf1 = 0;
 	let startRaf2 = 0;
+	let hideRaf = 0;
 	let hideTimeout: ReturnType<typeof setTimeout> | null = null;
 	let endListener: ((event: Event) => void) | null = null;
+	let animationsGeneration = 0;
 
 	function clearStartRafs(): void {
 		if (startRaf1 !== 0) {
@@ -43,6 +46,13 @@ export function createPresence(
 		if (startRaf2 !== 0) {
 			cancelAnimationFrame(startRaf2);
 			startRaf2 = 0;
+		}
+	}
+
+	function clearHideRaf(): void {
+		if (hideRaf !== 0) {
+			cancelAnimationFrame(hideRaf);
+			hideRaf = 0;
 		}
 	}
 
@@ -62,7 +72,9 @@ export function createPresence(
 	}
 
 	function clearHideSideEffects(): void {
+		animationsGeneration += 1;
 		clearHideTimer();
+		clearHideRaf();
 		detachEndListeners();
 	}
 
@@ -86,6 +98,53 @@ export function createPresence(
 		node.addEventListener('animationend', onEnd);
 	}
 
+	function waitForAnimations(el: HTMLElement, generation: number): void {
+		const animations = el.getAnimations();
+		if (animations.length === 0) {
+			finishHide();
+			return;
+		}
+
+		Promise.all(animations.map((animation) => animation.finished)).then(
+			() => {
+				if (generation !== animationsGeneration || status !== 'hiding') return;
+				finishHide();
+			},
+			() => {
+				if (generation !== animationsGeneration || status !== 'hiding') return;
+				finishHide();
+			}
+		);
+	}
+
+	/**
+	 * After `data-ending-style` is applied, wait one frame so CSS transitions
+	 * can start, then unmount immediately when nothing is running (Base UI
+	 * `getAnimations` behavior). Falls back to transition/animation events in
+	 * environments without `getAnimations` (e.g. happy-dom).
+	 */
+	function scheduleWaitForExit(): void {
+		clearHideRaf();
+		detachEndListeners();
+		if (!node || status !== 'hiding') return;
+
+		const el = node;
+		const generation = animationsGeneration;
+
+		if (typeof el.getAnimations !== 'function') {
+			attachEndListeners();
+			return;
+		}
+
+		hideRaf = requestAnimationFrame(() => {
+			hideRaf = 0;
+			if (generation !== animationsGeneration || status !== 'hiding' || node !== el) {
+				return;
+			}
+			waitForAnimations(el, generation);
+		});
+	}
+
 	function beginStarting(): void {
 		clearStartRafs();
 		isStarting = true;
@@ -103,7 +162,7 @@ export function createPresence(
 		clearStartRafs();
 		isStarting = false;
 		status = 'hiding';
-		attachEndListeners();
+		scheduleWaitForExit();
 		const ms = options?.fallbackMs ?? 500;
 		hideTimeout = setTimeout(() => {
 			hideTimeout = null;
@@ -150,7 +209,7 @@ export function createPresence(
 		detachEndListeners();
 		node = el;
 		if (status === 'hiding') {
-			attachEndListeners();
+			scheduleWaitForExit();
 		}
 	}
 

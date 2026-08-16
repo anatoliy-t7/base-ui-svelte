@@ -1,23 +1,29 @@
 {
 	"name": "playground",
-	"private": true,
 	"version": "0.0.0",
+	"private": true,
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"fmt": "oxfmt",
+		"fmt:check": "oxfmt --check"
 	},
 	"dependencies": {
+		"@base-ui-svelte/styles": "workspace:*",
 		"base-ui-svelte": "workspace:*"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.1.1",
 		"@sveltejs/kit": "^2.70.2",
 		"@sveltejs/vite-plugin-svelte": "^7.3.0",
+		"@tailwindcss/vite": "^4.3.3",
+		"oxfmt": "^0.63.0",
 		"svelte": "^5.56.9",
 		"svelte-check": "^4.7.6",
+		"tailwindcss": "^4.3.3",
 		"typescript": "^5.9.3",
 		"vite": "^7.3.6"
 	}

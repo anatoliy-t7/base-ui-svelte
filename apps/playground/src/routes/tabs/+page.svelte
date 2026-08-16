@@ -1,18 +1,33 @@
 <script lang="ts">
 	import { Tabs } from 'base-ui-svelte/tabs';
-	import '../demo.css';
 </script>
 
 <h1>Tabs</h1>
-<div class="demo">
-	<Tabs.Root defaultValue="overview">
-		<Tabs.List class="tablist">
-			<Tabs.Tab class="tab" value="overview">Overview</Tabs.Tab>
-			<Tabs.Tab class="tab" value="settings">Settings</Tabs.Tab>
-			<Tabs.Tab class="tab" value="billing">Billing</Tabs.Tab>
+
+<section class="demo">
+	<h2>Primary (animated pill)</h2>
+	<Tabs.Root class="tabs" defaultValue="overview">
+		<Tabs.List class="tabs-list">
+			<Tabs.Tab class="tabs-tab" value="overview">Overview</Tabs.Tab>
+			<Tabs.Tab class="tabs-tab" value="settings">Settings</Tabs.Tab>
+			<Tabs.Tab class="tabs-tab" value="billing">Billing</Tabs.Tab>
+			<Tabs.Indicator class="tabs-indicator" />
 		</Tabs.List>
-		<Tabs.Panel class="panel" value="overview">Overview content</Tabs.Panel>
-		<Tabs.Panel class="panel" value="settings">Settings content</Tabs.Panel>
-		<Tabs.Panel class="panel" value="billing">Billing content</Tabs.Panel>
+		<Tabs.Panel class="tabs-panel" value="overview">Overview content</Tabs.Panel>
+		<Tabs.Panel class="tabs-panel" value="settings">Settings content</Tabs.Panel>
+		<Tabs.Panel class="tabs-panel" value="billing">Billing content</Tabs.Panel>
 	</Tabs.Root>
-</div>
+
+	<h2>Secondary (animated underline)</h2>
+	<Tabs.Root class="tabs tabs-secondary" defaultValue="account">
+		<Tabs.List class="tabs-list">
+			<Tabs.Tab class="tabs-tab" value="account">Account</Tabs.Tab>
+			<Tabs.Tab class="tabs-tab" value="security">Security</Tabs.Tab>
+			<Tabs.Tab class="tabs-tab" value="notifications">Notifications</Tabs.Tab>
+			<Tabs.Indicator class="tabs-indicator" />
+		</Tabs.List>
+		<Tabs.Panel class="tabs-panel" value="account">Account settings</Tabs.Panel>
+		<Tabs.Panel class="tabs-panel" value="security">Security settings</Tabs.Panel>
+		<Tabs.Panel class="tabs-panel" value="notifications">Notification preferences</Tabs.Panel>
+	</Tabs.Root>
+</section>

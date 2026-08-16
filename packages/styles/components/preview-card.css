@@ -1,0 +1,15 @@
+.preview-card-popup {
+	@apply max-w-80 rounded-xl border border-border bg-overlay p-4 shadow-overlay outline-none;
+	transform-origin: var(--transform-origin, top center);
+	transition:
+		opacity 150ms var(--ease-smooth),
+		transform 150ms var(--ease-out-fluid);
+	@apply motion-reduce:transition-none;
+
+	&[data-starting-style],
+	&[data-ending-style] {
+		opacity: 0;
+		transform: translateY(-0.25rem) scale(0.96);
+	}
+}
+.preview-card-trigger { @apply font-semibold text-accent no-underline hover:underline; }

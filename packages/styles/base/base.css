@@ -1,0 +1,15 @@
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
+	border-color: var(--border, currentColor);
+}
+
+:root {
+	view-transition-name: none;
+}
+
+::view-transition {
+	pointer-events: none;
+}

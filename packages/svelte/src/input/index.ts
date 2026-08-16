@@ -1,7 +1,4 @@
-import Root from './input-root.svelte';
+import Input from './input-root.svelte';
 
-export const Input = {
-	Root
-};
-
-export type { InputRootProps } from './types.js';
+export { Input };
+export type { InputProps } from './types.js';

@@ -1,7 +1,4 @@
-import Root from './menubar-root.svelte';
+import Menubar from './menubar-root.svelte';
 
-export const Menubar = {
-	Root
-};
-
-export type { MenubarRootProps, MenubarContext, MenubarOrientation } from './types.js';
+export { Menubar };
+export type { MenubarProps, MenubarContext, MenubarOrientation } from './types.js';

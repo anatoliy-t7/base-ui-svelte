@@ -1,0 +1,96 @@
+.autocomplete-input-group {
+	@apply relative isolate inline-flex min-w-48 items-center;
+}
+
+.autocomplete-input {
+	@apply appearance-none w-full min-w-0 rounded-field border bg-field py-2 pe-9 ps-3 text-sm text-field-foreground outline-none shadow-field;
+	border-width: var(--border-width-field);
+	border-color: var(--field-border);
+
+	&::placeholder {
+		color: var(--field-placeholder);
+	}
+
+	&:hover:not(:disabled):not([data-disabled]) {
+		border-color: var(--field-border-hover);
+		background: var(--field-hover);
+	}
+
+	&:focus,
+	&:focus-visible,
+	&[data-focus-visible='true'],
+	&[data-open] {
+		@apply status-focused-field;
+		border-color: var(--field-border-focus);
+		background: var(--field-focus);
+	}
+
+	&:disabled,
+	&[data-disabled] {
+		@apply status-disabled;
+	}
+}
+
+.autocomplete-trigger {
+	@apply absolute end-0 top-1/2 z-10 flex h-full -translate-y-1/2 items-center justify-center border-0 bg-transparent pe-2.5 ps-1 text-muted outline-none no-highlight;
+	cursor: var(--cursor-interactive);
+	transition:
+		color 150ms var(--ease-smooth),
+		opacity 150ms var(--ease-smooth);
+	@apply motion-reduce:transition-none;
+
+	@media (hover: hover) {
+		&:hover:not(:disabled):not([data-disabled]) {
+			@apply text-foreground;
+		}
+	}
+
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply rounded-sm ring-2 ring-focus ring-offset-1;
+	}
+
+	&[data-open] {
+		@apply text-foreground;
+	}
+}
+
+.autocomplete-icon {
+	@apply inline-flex size-4 items-center justify-center transition-transform duration-150 ease-out;
+	@apply motion-reduce:transition-none;
+
+	.autocomplete-trigger[data-open] &,
+	&[data-open] {
+		transform: rotate(180deg);
+	}
+}
+
+.autocomplete-popup {
+	@apply max-h-72 min-w-[var(--anchor-width,12rem)] overflow-auto rounded-xl border border-border bg-overlay p-1 text-sm shadow-overlay outline-none;
+	transform-origin: var(--transform-origin, top center);
+	transition:
+		opacity 150ms var(--ease-smooth),
+		transform 150ms var(--ease-out-fluid);
+	@apply motion-reduce:transition-none;
+
+	&[data-starting-style],
+	&[data-ending-style] {
+		opacity: 0;
+		transform: translateY(-0.25rem) scale(0.96);
+	}
+}
+
+.autocomplete-item {
+	@apply flex w-full appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none cursor-default;
+	transition: background-color 100ms var(--ease-smooth);
+
+	&[data-highlighted],
+	&[data-selected],
+	&[data-focus] {
+		@apply bg-accent text-accent-foreground;
+	}
+}
+
+.autocomplete-empty {
+	@apply px-2.5 py-2 text-sm text-muted;
+}

@@ -6,7 +6,8 @@ Unofficial Svelte 5 port of [Base UI](https://base-ui.com). Unstyled, accessible
 
 | Path | Role |
 |------|------|
-| `packages/svelte` | Library (`base-ui-svelte`) — source of truth |
+| `packages/svelte` | Library (`base-ui-svelte`) — headless source of truth |
+| `packages/styles` | Optional styles (`@base-ui-svelte/styles`) — Tailwind CSS v4 + `tv` recipes |
 | `packages/svelte/src/<component>/` | One folder per component |
 | `packages/svelte/src/internal/` | Shared primitives (context keys, mergeProps, floating, presence, focus trap, dismiss, controllable state, portal) |
 | `packages/svelte/tests/` | Vitest + Testing Library (+ vitest-axe) |
@@ -21,8 +22,8 @@ Run from monorepo root:
 ```bash
 bun install
 bun run test          # packages/svelte vitest
-bun run check         # svelte-check (library + playground)
-bun run build         # svelte-package → packages/svelte/dist
+bun run check         # styles typecheck + svelte-check (library + playground)
+bun run build         # styles tsc + svelte-package → dist
 bun run dev           # playground
 ```
 
@@ -31,13 +32,17 @@ Scoped:
 ```bash
 bun run --filter base-ui-svelte test:watch
 bun run --filter base-ui-svelte check
+bun run --filter @base-ui-svelte/styles build
 ```
 
 After changing library APIs or exports, rebuild before relying on playground/consumers of `dist`.
 
 ## Component conventions
 
-Mirror Base UI compound namespaces:
+Mirror Base UI public APIs:
+
+- **Single-part** (Button, Input, Separator, Toggle, Form, CheckboxGroup, RadioGroup, ToggleGroup, Menubar, …): export the component directly — `<Button />`, not `<Button.Root>`.
+- **Compound**: namespace object with parts, including `Root`:
 
 ```ts
 // packages/svelte/src/popover/index.ts
@@ -48,7 +53,7 @@ Per component folder:
 
 - `*-root.svelte`, `*-trigger.svelte`, … — parts
 - `types.ts` — props + context types
-- `index.ts` — namespace object + re-exported types
+- `index.ts` — direct component export (single-part) or namespace object (compound) + re-exported types
 
 Also wire:
 
@@ -99,6 +104,7 @@ When writing or editing `.svelte` / `.svelte.ts` files:
 - Prefer matching Base UI part names, props, and data attributes.
 - Reuse `packages/svelte/src/internal/*` instead of reimplementing floating, dismiss, presence, or merge logic.
 - Update exports (`package.json` + root `index.ts`) when adding a component.
+- Put visual styles in `packages/styles` (`@base-ui-svelte/styles`), not in the headless package.
 
 ### Ask first
 
@@ -127,3 +133,4 @@ When adding or changing a component, copy structure from the closest existing pe
 | Collection | `tabs`, `toggle-group`, `select`, `combobox`, `autocomplete` |
 | Navigation | `menubar`, `navigation-menu`, `toolbar` |
 | Utilities | `direction-provider`, `csp-provider`, `merge-props` |
+| Styles | `packages/styles` (`btn btn-sm`, `{component}-{part}`, Tailwind v4 + `tv`) |

@@ -5,9 +5,9 @@
 	"packageManager": "bun@1.3.14",
 	"workspaces": ["packages/*", "apps/*"],
 	"scripts": {
-		"build": "bun run --filter base-ui-svelte build",
+		"build": "bun run --filter @base-ui-svelte/styles build && bun run --filter base-ui-svelte build",
 		"test": "bun run --filter base-ui-svelte test",
-		"check": "bun run --filter base-ui-svelte check && bun run --filter playground check",
+		"check": "bun run --filter @base-ui-svelte/styles check && bun run --filter base-ui-svelte check && bun run --filter playground check",
 		"dev": "bun run --filter playground dev",
 		"playground:build": "bun run --filter playground build"
 	},

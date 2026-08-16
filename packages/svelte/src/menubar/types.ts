@@ -28,7 +28,7 @@ export type MenubarContext = {
 	closeWithDelay(): void;
 };
 
-export type MenubarRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role'> & {
+export type MenubarProps = Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role'> & {
 	orientation?: MenubarOrientation;
 	/** Delay before closing after pointer leaves (ms). @default 150 */
 	closeDelay?: number;

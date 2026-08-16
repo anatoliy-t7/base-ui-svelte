@@ -3,7 +3,7 @@
 	import { useId } from '../internal/controllable.svelte.js';
 	import { RADIO_GROUP_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type { RadioEntry, RadioGroupContext, RadioGroupRootProps } from './types.js';
+	import type { RadioEntry, RadioGroupContext, RadioGroupProps } from './types.js';
 
 	let {
 		value = $bindable(undefined),
@@ -17,7 +17,7 @@
 		id = useId('radio-group'),
 		children,
 		...rest
-	}: RadioGroupRootProps = $props();
+	}: RadioGroupProps = $props();
 
 	let uncontrolled = $state<string | undefined>(undefined);
 	let radios = $state<RadioEntry[]>([]);

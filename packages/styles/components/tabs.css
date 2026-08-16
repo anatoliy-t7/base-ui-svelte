@@ -1,0 +1,106 @@
+/* Tabs — primary (pill) + secondary (underline) with sliding indicator */
+
+.tabs {
+	@apply flex gap-2;
+	&[data-orientation='horizontal'] {
+		@apply flex-col;
+	}
+	&[data-orientation='vertical'] {
+		@apply flex-row;
+	}
+}
+
+.tabs-list {
+	@apply relative inline-flex w-fit max-w-full items-center rounded-xl bg-default p-1;
+	&[data-orientation='horizontal'] {
+		@apply flex-row;
+	}
+	&[data-orientation='vertical'] {
+		@apply flex-col gap-1;
+	}
+}
+
+.tabs-tab {
+	@apply relative z-10 inline-flex h-8 shrink-0 items-center justify-center rounded-lg px-3.5 text-sm font-medium text-muted outline-none no-highlight;
+	cursor: var(--cursor-interactive);
+	transition:
+		color 150ms var(--ease-smooth),
+		opacity 150ms var(--ease-smooth);
+	@apply motion-reduce:transition-none;
+
+	&:hover:not([data-selected]):not([data-disabled]):not(:disabled) {
+		@apply opacity-70;
+	}
+
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply status-focused;
+	}
+
+	&[data-selected],
+	&[aria-selected='true'] {
+		@apply text-foreground;
+	}
+
+	&:disabled,
+	&[data-disabled] {
+		@apply status-disabled;
+	}
+}
+
+.tabs-indicator {
+	@apply pointer-events-none absolute start-0 top-0 z-0 rounded-lg bg-surface shadow-surface;
+	width: var(--active-tab-width);
+	height: var(--active-tab-height);
+	translate: var(--active-tab-left) var(--active-tab-top);
+	transition-property: translate, width, height;
+	transition-duration: 250ms;
+	transition-timing-function: var(--ease-out-fluid);
+	@apply motion-reduce:transition-none;
+}
+
+.tabs-panel {
+	@apply w-full outline-none;
+	&[data-orientation='horizontal'] {
+		@apply mt-3;
+	}
+	&[data-orientation='vertical'] {
+		@apply ms-3;
+	}
+}
+
+/* Secondary — underline indicator (HeroUI secondary) */
+.tabs-secondary {
+	.tabs-list {
+		@apply rounded-none bg-transparent p-0;
+	}
+
+	&[data-orientation='horizontal'] .tabs-list {
+		@apply border-b border-border;
+	}
+
+	&[data-orientation='vertical'] .tabs-list {
+		@apply border-s border-border;
+	}
+
+	.tabs-tab {
+		@apply rounded-none h-9;
+	}
+
+	.tabs-indicator {
+		@apply rounded-none bg-accent shadow-none;
+	}
+
+	&[data-orientation='horizontal'] .tabs-indicator {
+		top: auto;
+		bottom: 0;
+		height: 0.125rem;
+		translate: var(--active-tab-left) 0;
+	}
+
+	&[data-orientation='vertical'] .tabs-indicator {
+		inset-inline-start: 0;
+		width: 0.125rem;
+		translate: 0 var(--active-tab-top);
+	}
+}

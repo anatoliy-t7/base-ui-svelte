@@ -1,0 +1,56 @@
+/* Switch track (Root is the button / role=switch) */
+.switch {
+	@apply relative inline-flex h-6 w-11 shrink-0 items-center rounded-full p-0.5 outline-none no-highlight;
+	cursor: var(--cursor-interactive);
+	background-color: var(--default);
+	border: none;
+	transition: background-color 200ms var(--ease-smooth);
+	@apply motion-reduce:transition-none;
+
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply status-focused;
+	}
+
+	&:disabled,
+	&[data-disabled] {
+		@apply status-disabled;
+	}
+
+	@media (hover: hover) {
+		&:hover:not(:disabled):not([data-disabled]) {
+			background-color: var(--default-hover);
+		}
+	}
+
+	&[data-checked],
+	&[aria-checked='true'] {
+		background-color: var(--accent);
+
+		@media (hover: hover) {
+			&:hover:not(:disabled):not([data-disabled]) {
+				background-color: var(--accent-hover);
+			}
+		}
+	}
+}
+
+.switch-thumb {
+	@apply pointer-events-none block size-5 rounded-full bg-white shadow-field;
+	transform: translateX(0);
+	transition:
+		transform 250ms var(--ease-out-fluid),
+		background-color 150ms var(--ease-smooth);
+	@apply motion-reduce:transition-none;
+
+	.switch[data-checked] &,
+	.switch[aria-checked='true'] & {
+		transform: translateX(1.25rem);
+		background-color: var(--accent-foreground);
+	}
+}
+
+.switch-label {
+	@apply inline-flex items-center gap-3 text-sm font-medium text-foreground;
+	cursor: var(--cursor-interactive);
+}

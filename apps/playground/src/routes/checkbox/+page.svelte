@@ -1,12 +1,28 @@
 <script lang="ts">
 	import { Checkbox } from 'base-ui-svelte/checkbox';
-	import '../demo.css';
 </script>
 
 <h1>Checkbox</h1>
-<div class="demo">
-	<Checkbox.Root class="checkbox">
-		<Checkbox.Indicator />
+
+<section class="demo">
+	<label class="checkbox-label">
+		<Checkbox.Root class="checkbox">
+			<Checkbox.Indicator class="checkbox-indicator" />
+		</Checkbox.Root>
 		Accept terms
-	</Checkbox.Root>
-</div>
+	</label>
+
+	<label class="checkbox-label">
+		<Checkbox.Root class="checkbox" defaultChecked>
+			<Checkbox.Indicator class="checkbox-indicator" />
+		</Checkbox.Root>
+		Checked by default
+	</label>
+
+	<label class="checkbox-label">
+		<Checkbox.Root class="checkbox" disabled>
+			<Checkbox.Indicator class="checkbox-indicator" />
+		</Checkbox.Root>
+		Disabled
+	</label>
+</section>

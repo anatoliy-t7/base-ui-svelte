@@ -3,7 +3,7 @@
 	import { Menubar } from '../src/menubar/index.js';
 </script>
 
-<Menubar.Root data-testid="menubar">
+<Menubar data-testid="menubar">
 	<Menu.Root>
 		<Menu.Trigger data-testid="file-trigger">File</Menu.Trigger>
 		<Menu.Portal>
@@ -24,4 +24,4 @@
 			</Menu.Positioner>
 		</Menu.Portal>
 	</Menu.Root>
-</Menubar.Root>
+</Menubar>

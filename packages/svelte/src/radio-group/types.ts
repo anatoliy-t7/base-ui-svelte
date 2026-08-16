@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
 
-export type RadioGroupRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
+export type RadioGroupProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	value?: string | undefined;
 	defaultValue?: string;
 	onValueChange?: ((value: string, event: Event) => void) | undefined;

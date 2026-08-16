@@ -3,7 +3,7 @@
 	import { useId } from '../internal/controllable.svelte.js';
 	import { TOGGLE_GROUP_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type { ToggleGroupContext, ToggleGroupRootProps } from './types.js';
+	import type { ToggleGroupContext, ToggleGroupProps } from './types.js';
 
 	let {
 		value = $bindable(undefined),
@@ -17,7 +17,7 @@
 		id = useId('toggle-group'),
 		children,
 		...rest
-	}: ToggleGroupRootProps = $props();
+	}: ToggleGroupProps = $props();
 
 	let uncontrolled = $state<string[] | undefined>(undefined);
 

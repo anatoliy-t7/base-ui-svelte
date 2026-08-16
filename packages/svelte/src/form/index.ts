@@ -1,11 +1,8 @@
-import Root from './form-root.svelte';
+import Form from './form-root.svelte';
 
-export const Form = {
-	Root
-};
-
+export { Form };
 export type {
-	FormRootProps,
+	FormProps,
 	FormContext,
 	FormErrors,
 	FormFieldRegistration

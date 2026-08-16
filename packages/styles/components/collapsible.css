@@ -1,0 +1,7 @@
+.collapsible { @apply flex flex-col gap-1; }
+.collapsible-trigger {
+  @apply inline-flex appearance-none items-center gap-2 rounded-md border border-border bg-surface px-3 py-2 text-sm outline-none cursor-(--cursor-interactive);
+  &:hover { @apply bg-surface-hover; }
+  &:focus-visible, &[data-focus-visible="true"] { @apply status-focused; }
+}
+.collapsible-panel { @apply px-3 py-2 text-sm text-muted outline-none; }

@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLInputAttributes } from 'svelte/elements';
 
-export type InputRootProps = Omit<
+export type InputProps = Omit<
 	HTMLInputAttributes,
 	'children' | 'disabled' | 'value' | 'defaultValue'
 > & {

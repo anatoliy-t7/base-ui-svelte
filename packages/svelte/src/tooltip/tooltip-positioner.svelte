@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
-	import { TOOLTIP_CONTEXT } from '../internal/context-keys.js';
+	import { getContext, setContext } from 'svelte';
+	import { TOOLTIP_CONTEXT, TOOLTIP_POSITIONER_CONTEXT } from '../internal/context-keys.js';
 	import { createPositioner } from '../internal/floating.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { TooltipContext, TooltipPositionerProps } from './types.js';
@@ -18,6 +18,7 @@
 	const ctx = getContext<TooltipContext>(TOOLTIP_CONTEXT);
 
 	let positionerEl = $state<HTMLElement | null>(null);
+	let arrowEl = $state<HTMLElement | null>(null);
 
 	$effect(() => {
 		ctx.refs.positioner = positionerEl;
@@ -28,13 +29,22 @@
 		};
 	});
 
+	setContext(TOOLTIP_POSITIONER_CONTEXT, {
+		get side() {
+			return side;
+		},
+		setArrow(el: HTMLElement | null) {
+			arrowEl = el;
+		}
+	});
+
 	createPositioner({
 		get open() {
 			return ctx.open;
 		},
 		anchor: () => ctx.refs.trigger,
-		floating: () => ctx.refs.positioner,
-		arrowEl: () => ctx.refs.arrow,
+		floating: () => positionerEl,
+		arrowEl: () => arrowEl,
 		get side() {
 			return side;
 		},
@@ -50,8 +60,10 @@
 		mergeProps(rest, {
 			class: className,
 			style,
+			role: 'presentation',
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
+			'data-closed': !ctx.open ? '' : undefined,
+			'data-side': side
 		})
 	);
 </script>

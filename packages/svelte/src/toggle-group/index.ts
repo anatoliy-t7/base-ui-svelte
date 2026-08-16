@@ -1,11 +1,8 @@
-import Root from './toggle-group-root.svelte';
+import ToggleGroup from './toggle-group-root.svelte';
 
-export const ToggleGroup = {
-	Root
-};
-
+export { ToggleGroup };
 export type {
-	ToggleGroupRootProps,
+	ToggleGroupProps,
 	ToggleGroupContext,
 	ToggleGroupOrientation
 } from './types.js';

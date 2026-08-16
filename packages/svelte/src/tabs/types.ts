@@ -14,7 +14,9 @@ export type TabsRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 export type TabsContext = {
 	readonly value: string;
 	readonly orientation: TabsOrientation;
+	readonly listElement: HTMLElement | null;
 	registerTab(id: string, value: string, element: HTMLElement): () => void;
+	setListElement(element: HTMLElement | null): void;
 	setValue(next: string): void;
 	getTabId(value: string): string;
 	getPanelId(value: string): string;
@@ -32,5 +34,9 @@ export type TabsTabProps = Omit<HTMLButtonAttributes, 'children' | 'disabled' | 
 
 export type TabsPanelProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	value: string;
+	children?: Snippet;
+};
+
+export type TabsIndicatorProps = Omit<HTMLAttributes<HTMLSpanElement>, 'children'> & {
 	children?: Snippet;
 };

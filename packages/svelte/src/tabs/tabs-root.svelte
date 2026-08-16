@@ -31,6 +31,7 @@
 	};
 
 	let tabs = $state<TabEntry[]>([]);
+	let listElement = $state<HTMLElement | null>(null);
 
 	function setValue(next: string): void {
 		if (isControlled) {
@@ -57,6 +58,10 @@
 		};
 	}
 
+	function setListElement(element: HTMLElement | null): void {
+		listElement = element;
+	}
+
 	function getTabId(tabValue: string): string {
 		return `${id}-tab-${tabValue}`;
 	}
@@ -75,7 +80,11 @@
 		get orientation() {
 			return orientation;
 		},
+		get listElement() {
+			return listElement;
+		},
 		registerTab,
+		setListElement,
 		setValue,
 		getTabId,
 		getPanelId,

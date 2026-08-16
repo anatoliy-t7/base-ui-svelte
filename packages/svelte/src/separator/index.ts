@@ -1,7 +1,4 @@
-import Root from './separator-root.svelte';
+import Separator from './separator-root.svelte';
 
-export const Separator = {
-	Root
-};
-
-export type { SeparatorRootProps, SeparatorOrientation } from './types.js';
+export { Separator };
+export type { SeparatorProps, SeparatorOrientation } from './types.js';

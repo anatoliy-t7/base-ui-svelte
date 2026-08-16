@@ -3,7 +3,7 @@
 	import { useId } from '../internal/controllable.svelte.js';
 	import { CHECKBOX_GROUP_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type { CheckboxGroupContext, CheckboxGroupRootProps } from './types.js';
+	import type { CheckboxGroupContext, CheckboxGroupProps } from './types.js';
 
 	let {
 		value = $bindable(undefined),
@@ -16,7 +16,7 @@
 		id = useId('checkbox-group'),
 		children,
 		...rest
-	}: CheckboxGroupRootProps = $props();
+	}: CheckboxGroupProps = $props();
 
 	let uncontrolled = $state<string[] | undefined>(undefined);
 

@@ -1,0 +1,110 @@
+/* Radio control (Root is the role=radio button) */
+.radio {
+	@apply relative inline-flex size-[1.125rem] shrink-0 items-center justify-center overflow-hidden rounded-full border bg-field p-0 shadow-field outline-none no-highlight;
+	border-width: var(--border-width-field);
+	border-color: var(--field-border);
+	cursor: var(--cursor-interactive);
+	color: var(--accent-foreground);
+	transition:
+		background-color 150ms var(--ease-smooth),
+		border-color 150ms var(--ease-smooth),
+		box-shadow 150ms var(--ease-smooth),
+		transform 100ms var(--ease-out);
+	@apply motion-reduce:transition-none;
+
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply status-focused;
+	}
+
+	&:disabled,
+	&[data-disabled] {
+		@apply status-disabled;
+	}
+
+	@media (hover: hover) {
+		&:hover:not(:disabled):not([data-disabled]):not([data-checked]) {
+			border-color: var(--field-border-hover);
+			background: var(--field-hover);
+		}
+	}
+
+	&:active:not(:disabled):not([data-disabled]) {
+		transform: scale(0.94);
+	}
+
+	&[data-checked],
+	&[aria-checked='true'] {
+		border-color: transparent;
+		background-color: var(--accent);
+
+		@media (hover: hover) {
+			&:hover:not(:disabled):not([data-disabled]) {
+				background-color: var(--accent-hover);
+			}
+		}
+	}
+
+	&[data-invalid],
+	&[aria-invalid='true'] {
+		@apply status-invalid-field;
+	}
+
+	&[data-invalid][data-checked],
+	&[aria-invalid='true'][data-checked],
+	&[data-invalid][aria-checked='true'],
+	&[aria-invalid='true'][aria-checked='true'] {
+		border-color: transparent;
+		background-color: var(--danger);
+		color: var(--danger-foreground);
+	}
+}
+
+.radio-sm {
+	@apply size-4;
+}
+
+.radio-lg {
+	@apply size-5;
+}
+
+.radio-indicator {
+	@apply pointer-events-none flex size-full items-center justify-center text-current;
+	animation: radio-indicator-in 150ms var(--ease-out-fluid);
+	@apply motion-reduce:animate-none;
+
+	& svg {
+		@apply size-2.5;
+	}
+
+	.radio-sm & svg {
+		@apply size-2;
+	}
+
+	.radio-lg & svg {
+		@apply size-3;
+	}
+}
+
+@keyframes radio-indicator-in {
+	from {
+		opacity: 0;
+		transform: scale(0.25);
+		filter: blur(4px);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+		filter: blur(0);
+	}
+}
+
+.radio-label {
+	@apply inline-flex items-center gap-2.5 text-sm font-medium text-foreground select-none;
+	cursor: var(--cursor-interactive);
+
+	&:has(.radio:disabled),
+	&:has(.radio[data-disabled]) {
+		@apply status-disabled;
+	}
+}

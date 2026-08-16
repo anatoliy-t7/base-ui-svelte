@@ -1,7 +1,4 @@
-import Root from './button-root.svelte';
+import Button from './button-root.svelte';
 
-export const Button = {
-	Root
-};
-
-export type { ButtonRootProps } from './types.js';
+export { Button };
+export type { ButtonProps } from './types.js';

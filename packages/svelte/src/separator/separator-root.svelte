@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { mergeProps } from '../internal/merge-props.js';
-	import type { SeparatorRootProps } from './types.js';
+	import type { SeparatorProps } from './types.js';
 
 	let {
 		orientation = 'horizontal',
 		class: className,
 		style,
 		...rest
-	}: SeparatorRootProps = $props();
+	}: SeparatorProps = $props();
 
 	const rootProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {

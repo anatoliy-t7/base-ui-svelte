@@ -1,0 +1,42 @@
+.tooltip-popup {
+	@apply max-w-64 rounded-md bg-foreground px-2.5 py-1.5 text-xs text-background shadow-overlay outline-none;
+	transform-origin: var(--transform-origin, bottom center);
+	transition:
+		opacity 120ms var(--ease-smooth),
+		transform 120ms var(--ease-out-fluid);
+	@apply motion-reduce:transition-none;
+
+	&[data-starting-style],
+	&[data-ending-style] {
+		opacity: 0;
+		transform: scale(0.96);
+	}
+}
+
+.tooltip-arrow {
+	@apply pointer-events-none z-10 flex text-foreground;
+	width: 12px;
+	height: 6px;
+	overflow: clip;
+
+	/* Default caret points down; rotate so the tip faces the trigger. */
+	&[data-side='top'] {
+		rotate: 0deg;
+	}
+
+	&[data-side='bottom'] {
+		rotate: 180deg;
+	}
+
+	&[data-side='left'] {
+		rotate: -90deg;
+	}
+
+	&[data-side='right'] {
+		rotate: 90deg;
+	}
+
+	svg {
+		@apply block size-full fill-current;
+	}
+}

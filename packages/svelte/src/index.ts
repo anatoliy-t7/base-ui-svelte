@@ -63,13 +63,13 @@ export type {
 } from './avatar/index.js';
 
 export { Button } from './button/index.js';
-export type { ButtonRootProps } from './button/index.js';
+export type { ButtonProps } from './button/index.js';
 
 export { Checkbox } from './checkbox/index.js';
 export type { CheckboxRootProps, CheckboxContext } from './checkbox/index.js';
 
 export { CheckboxGroup } from './checkbox-group/index.js';
-export type { CheckboxGroupRootProps, CheckboxGroupContext } from './checkbox-group/index.js';
+export type { CheckboxGroupProps, CheckboxGroupContext } from './checkbox-group/index.js';
 
 export { Collapsible } from './collapsible/index.js';
 export type {
@@ -203,10 +203,10 @@ export { Fieldset } from './fieldset/index.js';
 export type { FieldsetRootProps, FieldsetLegendProps, FieldsetContext } from './fieldset/index.js';
 
 export { Form } from './form/index.js';
-export type { FormRootProps, FormContext, FormErrors, FormFieldRegistration } from './form/index.js';
+export type { FormProps, FormContext, FormErrors, FormFieldRegistration } from './form/index.js';
 
 export { Input } from './input/index.js';
-export type { InputRootProps } from './input/index.js';
+export type { InputProps } from './input/index.js';
 
 export { Menu } from './menu/index.js';
 export type {
@@ -223,7 +223,7 @@ export type {
 } from './menu/index.js';
 
 export { Menubar } from './menubar/index.js';
-export type { MenubarRootProps, MenubarContext, MenubarOrientation } from './menubar/index.js';
+export type { MenubarProps, MenubarContext, MenubarOrientation } from './menubar/index.js';
 
 export { mergeProps } from './merge-props/index.js';
 
@@ -320,7 +320,7 @@ export { Radio } from './radio/index.js';
 export type { RadioRootProps, RadioIndicatorProps, RadioContext } from './radio/index.js';
 
 export { RadioGroup } from './radio-group/index.js';
-export type { RadioGroupRootProps, RadioGroupContext, RadioEntry } from './radio-group/index.js';
+export type { RadioGroupProps, RadioGroupContext, RadioEntry } from './radio-group/index.js';
 
 export { ScrollArea } from './scroll-area/index.js';
 export type {
@@ -362,7 +362,7 @@ export type {
 } from './select/index.js';
 
 export { Separator } from './separator/index.js';
-export type { SeparatorRootProps, SeparatorOrientation } from './separator/index.js';
+export type { SeparatorProps, SeparatorOrientation } from './separator/index.js';
 
 export { Slider } from './slider/index.js';
 export type {
@@ -387,6 +387,7 @@ export type {
 	TabsListProps,
 	TabsTabProps,
 	TabsPanelProps,
+	TabsIndicatorProps,
 	TabsContext,
 	TabsOrientation
 } from './tabs/index.js';
@@ -412,11 +413,11 @@ export type {
 } from './toast/index.js';
 
 export { Toggle } from './toggle/index.js';
-export type { ToggleRootProps } from './toggle/index.js';
+export type { ToggleProps } from './toggle/index.js';
 
 export { ToggleGroup } from './toggle-group/index.js';
 export type {
-	ToggleGroupRootProps,
+	ToggleGroupProps,
 	ToggleGroupContext,
 	ToggleGroupOrientation
 } from './toggle-group/index.js';

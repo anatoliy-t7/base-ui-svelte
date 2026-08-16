@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'svelte/elements';
 
 export type ToggleGroupOrientation = 'horizontal' | 'vertical';
 
-export type ToggleGroupRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
+export type ToggleGroupProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	value?: string[] | undefined;
 	defaultValue?: string[];
 	onValueChange?: ((value: string[], event: Event) => void) | undefined;

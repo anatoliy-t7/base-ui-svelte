@@ -1,0 +1,18 @@
+.popover-popup {
+	@apply max-w-80 rounded-xl border border-border bg-overlay p-4 text-overlay-foreground shadow-overlay outline-none;
+	transform-origin: var(--transform-origin, top center);
+	transition:
+		opacity 150ms var(--ease-smooth),
+		transform 150ms var(--ease-out-fluid);
+	@apply motion-reduce:transition-none;
+
+	&[data-starting-style],
+	&[data-ending-style] {
+		opacity: 0;
+		transform: translateY(-0.25rem) scale(0.96);
+	}
+}
+.popover-arrow { @apply fill-overlay stroke-border; }
+.popover-title { @apply m-0 text-sm font-semibold; }
+.popover-description { @apply mt-1 text-sm text-muted; }
+.popover-close { @apply absolute end-2 top-2; }

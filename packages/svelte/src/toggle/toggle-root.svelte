@@ -4,7 +4,7 @@
 	import { TOGGLE_GROUP_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ToggleGroupContext } from '../toggle-group/types.js';
-	import type { ToggleRootProps } from './types.js';
+	import type { ToggleProps } from './types.js';
 
 	let {
 		pressed = $bindable(undefined),
@@ -17,7 +17,7 @@
 		id = useId('toggle'),
 		children,
 		...rest
-	}: ToggleRootProps = $props();
+	}: ToggleProps = $props();
 
 	const group = hasContext(TOGGLE_GROUP_CONTEXT)
 		? getContext<ToggleGroupContext>(TOGGLE_GROUP_CONTEXT)

@@ -10,10 +10,10 @@
 	} = $props();
 </script>
 
-<Button.Root
+<Button
 	data-testid="button"
 	{disabled}
 	{focusableWhenDisabled}
 >
 	Click me
-</Button.Root>
+</Button>

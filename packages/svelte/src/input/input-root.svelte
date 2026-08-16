@@ -4,7 +4,7 @@
 	import { FIELD_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { FieldContext } from '../field/types.js';
-	import type { InputRootProps } from './types.js';
+	import type { InputProps } from './types.js';
 
 	let {
 		disabled = false,
@@ -15,7 +15,7 @@
 		style,
 		id,
 		...rest
-	}: InputRootProps = $props();
+	}: InputProps = $props();
 
 	const field = hasContext(FIELD_CONTEXT) ? getContext<FieldContext>(FIELD_CONTEXT) : undefined;
 	const fallbackId = useId('input');

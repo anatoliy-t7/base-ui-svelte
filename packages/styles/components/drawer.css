@@ -1,0 +1,98 @@
+/* Drawer — side panels with enter/exit slide + swipe transforms */
+
+.drawer-backdrop {
+	@apply fixed inset-0 z-40 bg-backdrop;
+	transition: opacity 250ms var(--ease-out-fluid);
+	@apply motion-reduce:transition-none;
+
+	&[data-starting-style],
+	&[data-ending-style],
+	&[data-closed] {
+		opacity: 0;
+	}
+}
+
+.drawer-viewport {
+	@apply pointer-events-none fixed inset-0 z-50 flex;
+}
+
+.drawer-viewport[data-swipe-direction='right'] {
+	@apply justify-end;
+}
+
+.drawer-viewport[data-swipe-direction='left'] {
+	@apply justify-start;
+}
+
+.drawer-viewport[data-swipe-direction='down'] {
+	@apply flex-col items-stretch justify-end;
+}
+
+.drawer-viewport[data-swipe-direction='up'] {
+	@apply flex-col items-stretch justify-start;
+}
+
+.drawer-popup {
+	@apply relative pointer-events-auto overflow-auto border border-border bg-overlay p-5 text-overlay-foreground shadow-overlay outline-none;
+	--drawer-hidden-x: 0%;
+	--drawer-hidden-y: 0%;
+	--drawer-slide-x: var(--drawer-hidden-x);
+	--drawer-slide-y: var(--drawer-hidden-y);
+	transform: translate3d(
+		calc(var(--drawer-slide-x) + var(--drawer-swipe-movement-x, 0px)),
+		calc(var(--drawer-slide-y) + var(--drawer-swipe-movement-y, 0px)),
+		0
+	);
+	transition: transform 280ms var(--ease-out-fluid);
+	will-change: transform;
+	@apply motion-reduce:transition-none;
+
+	&[data-open]:not([data-starting-style]):not([data-ending-style]) {
+		--drawer-slide-x: 0%;
+		--drawer-slide-y: 0%;
+	}
+
+	&[data-swiping] {
+		transition: none;
+	}
+
+	&[data-ending-style] {
+		transition-duration: 220ms;
+	}
+}
+
+.drawer-popup-right {
+	@apply h-full w-80 max-w-[85vw] rounded-s-xl border-e-0;
+	--drawer-hidden-x: 100%;
+	--drawer-hidden-y: 0%;
+}
+
+.drawer-popup-left {
+	@apply h-full w-80 max-w-[85vw] rounded-e-xl border-s-0;
+	--drawer-hidden-x: -100%;
+	--drawer-hidden-y: 0%;
+}
+
+.drawer-popup-bottom {
+	@apply mt-0 h-auto max-h-[85vh] w-full max-w-none rounded-t-2xl border-b-0;
+	--drawer-hidden-x: 0%;
+	--drawer-hidden-y: 100%;
+}
+
+.drawer-popup-top {
+	@apply mb-0 h-auto max-h-[85vh] w-full max-w-none rounded-b-2xl border-t-0;
+	--drawer-hidden-x: 0%;
+	--drawer-hidden-y: -100%;
+}
+
+.drawer-title {
+	@apply m-0 text-base font-semibold;
+}
+
+.drawer-description {
+	@apply mt-2 text-sm text-muted;
+}
+
+.drawer-close {
+	@apply absolute end-3 top-3;
+}

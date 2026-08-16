@@ -2,7 +2,7 @@
 	import { Radio, RadioGroup } from '../src/index.js';
 </script>
 
-<RadioGroup.Root data-testid="radio-group" aria-label="Options">
+<RadioGroup data-testid="radio-group" aria-label="Options">
 	<Radio.Root data-testid="radio-a" value="a" aria-label="A">
 		{#snippet children()}
 			<Radio.Indicator data-testid="indicator-a" />
@@ -15,4 +15,4 @@
 			B
 		{/snippet}
 	</Radio.Root>
-</RadioGroup.Root>
+</RadioGroup>

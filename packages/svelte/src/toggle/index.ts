@@ -1,7 +1,4 @@
-import Root from './toggle-root.svelte';
+import Toggle from './toggle-root.svelte';
 
-export const Toggle = {
-	Root
-};
-
-export type { ToggleRootProps } from './types.js';
+export { Toggle };
+export type { ToggleProps } from './types.js';

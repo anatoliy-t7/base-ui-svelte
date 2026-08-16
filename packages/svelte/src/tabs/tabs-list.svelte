@@ -13,6 +13,17 @@
 
 	const ctx = getContext<TabsContext>(TABS_CONTEXT);
 
+	let listEl = $state<HTMLElement | null>(null);
+
+	$effect(() => {
+		ctx.setListElement(listEl);
+		return () => {
+			if (ctx.listElement === listEl) {
+				ctx.setListElement(null);
+			}
+		};
+	});
+
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			role: 'tablist',
@@ -24,7 +35,11 @@
 	);
 </script>
 
-<div {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+<div
+	{...mergedProps}
+	bind:this={listEl}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+>
 	{#if children}
 		{@render children()}
 	{/if}

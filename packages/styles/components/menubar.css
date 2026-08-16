@@ -1,0 +1,32 @@
+.menubar {
+	@apply flex flex-wrap items-center gap-1;
+}
+.menubar-trigger {
+	@apply relative isolate inline-flex h-8 w-fit items-center justify-center gap-2 rounded-lg px-3 text-xs font-medium whitespace-nowrap outline-none select-none no-highlight;
+	@apply transition-[transform,background-color,box-shadow,color,border-color] duration-150 ease-out;
+	cursor: var(--cursor-interactive);
+	background-color: transparent;
+	color: var(--foreground);
+	&:hover {
+		background-color: var(--default);
+	}
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply status-focused;
+	}
+	&[data-open],
+	&[data-popup-open] {
+		background-color: var(--default);
+	}
+}
+.menubar-popup {
+	@apply min-w-40 rounded-lg border border-border bg-overlay p-1 shadow-overlay outline-none;
+}
+.menubar-item {
+	@apply flex w-full appearance-none items-center justify-between gap-3 rounded-md border-0 bg-transparent px-2.5 py-2 text-left text-sm outline-none cursor-default;
+	&[data-highlighted],
+	&[data-selected],
+	&[data-focus] {
+		@apply bg-accent text-accent-foreground;
+	}
+}

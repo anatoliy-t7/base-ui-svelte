@@ -7,7 +7,7 @@
 	import type {
 		MenubarContext,
 		MenubarMenuEntry,
-		MenubarRootProps,
+		MenubarProps,
 		MenubarTriggerEntry
 	} from './types.js';
 
@@ -19,7 +19,7 @@
 		id = useId('menubar'),
 		children,
 		...rest
-	}: MenubarRootProps = $props();
+	}: MenubarProps = $props();
 
 	let menus = $state<MenubarMenuEntry[]>([]);
 	let triggers = $state<MenubarTriggerEntry[]>([]);

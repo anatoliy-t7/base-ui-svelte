@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { useId } from '../internal/controllable.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type { ButtonRootProps } from './types.js';
+	import type { ButtonProps } from './types.js';
 
 	let {
 		disabled = false,
@@ -13,7 +13,7 @@
 		id = useId('button'),
 		children,
 		...rest
-	}: ButtonRootProps = $props();
+	}: ButtonProps = $props();
 
 	const isNativeButton = $derived(render === 'button');
 	const useAriaDisabled = $derived(disabled && (focusableWhenDisabled || !isNativeButton));

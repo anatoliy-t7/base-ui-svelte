@@ -1,0 +1,23 @@
+.toolbar {
+	@apply flex flex-wrap items-center gap-1.5;
+}
+.toolbar-button {
+	@apply relative isolate inline-flex h-8 w-fit items-center justify-center gap-2 rounded-lg px-3 text-xs font-medium whitespace-nowrap outline-none select-none no-highlight;
+	cursor: var(--cursor-interactive);
+	background-color: transparent;
+	color: var(--foreground);
+	&:hover {
+		background-color: var(--default);
+	}
+	&:focus-visible,
+	&[data-focus-visible='true'] {
+		@apply status-focused;
+	}
+}
+.toolbar-separator {
+	@apply mx-1 shrink-0 self-stretch bg-separator;
+	width: 1px;
+}
+.toolbar-group {
+	@apply flex items-center gap-1;
+}

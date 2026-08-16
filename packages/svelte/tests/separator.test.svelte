@@ -2,5 +2,5 @@
 	import { Separator } from '../src/separator/index.js';
 </script>
 
-<Separator.Root data-testid="separator" />
-<Separator.Root orientation="vertical" data-testid="separator-vertical" />
+<Separator data-testid="separator" />
+<Separator orientation="vertical" data-testid="separator-vertical" />

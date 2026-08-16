@@ -1,0 +1,13 @@
+.input {
+  @apply appearance-none w-full rounded-field border bg-field px-3 py-2 text-sm text-field-foreground outline-none shadow-field;
+  border-width: var(--border-width-field);
+  border-color: var(--field-border);
+  &::placeholder { color: var(--field-placeholder); }
+  &:hover:not(:disabled):not([data-disabled]) { border-color: var(--field-border-hover); background: var(--field-hover); }
+  &:focus-visible, &[data-focus-visible="true"] { @apply status-focused-field; border-color: var(--field-border-focus); }
+  &:disabled, &[data-disabled] { @apply status-disabled; }
+  &[data-invalid], &[aria-invalid="true"] { @apply status-invalid-field; }
+}
+.input-sm { @apply h-8 px-2.5 text-xs; }
+.input-md { @apply h-10 px-3 text-sm; }
+.input-lg { @apply h-11 px-3.5 text-base; }

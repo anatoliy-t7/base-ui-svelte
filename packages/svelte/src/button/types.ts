@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
 
-export type ButtonRootProps = Omit<
+export type ButtonProps = Omit<
 	HTMLAttributes<HTMLElement>,
 	'children' | 'disabled' | 'type'
 > & {

@@ -1,7 +1,4 @@
-import Root from './radio-group-root.svelte';
+import RadioGroup from './radio-group-root.svelte';
 
-export const RadioGroup = {
-	Root
-};
-
-export type { RadioGroupRootProps, RadioGroupContext, RadioEntry } from './types.js';
+export { RadioGroup };
+export type { RadioGroupProps, RadioGroupContext, RadioEntry } from './types.js';

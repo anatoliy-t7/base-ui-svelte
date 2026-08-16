@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/svelte';
+import { render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
 import { describe, expect, it } from 'vitest';
@@ -19,6 +19,21 @@ describe('Tabs', () => {
 		screen.getByTestId('tab-two').focus();
 		await user.keyboard('{ArrowLeft}');
 		expect(screen.getByTestId('tab-one')).toHaveAttribute('aria-selected', 'true');
+	});
+
+	it('exposes active tab CSS variables on the indicator', async () => {
+		const user = userEvent.setup();
+		render(TabsTest);
+
+		const indicator = await waitFor(() => screen.getByTestId('indicator'));
+		await waitFor(() => {
+			expect(indicator.style.getPropertyValue('--active-tab-width')).toMatch(/px$/);
+		});
+
+		await user.click(screen.getByTestId('tab-two'));
+		await waitFor(() => {
+			expect(indicator.style.getPropertyValue('--active-tab-left')).toMatch(/px$/);
+		});
 	});
 
 	it('has no axe violations', async () => {

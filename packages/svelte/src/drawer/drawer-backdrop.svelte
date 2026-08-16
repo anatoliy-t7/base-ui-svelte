@@ -24,7 +24,9 @@
 				.filter(Boolean)
 				.join(';'),
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined,
+			'data-closed': !ctx.open || ctx.presence.isEnding ? '' : undefined,
+			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
+			'data-ending-style': ctx.presence.isEnding ? '' : undefined,
 			onclick: () => {
 				if (ctx.disablePointerDismissal) return;
 				ctx.setOpen(false, 'outside-press');

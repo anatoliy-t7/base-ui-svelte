@@ -7,7 +7,7 @@
 		FormContext,
 		FormErrors,
 		FormFieldRegistration,
-		FormRootProps
+		FormProps
 	} from './types.js';
 
 	let {
@@ -18,7 +18,7 @@
 		id = useId('form'),
 		children,
 		...rest
-	}: FormRootProps = $props();
+	}: FormProps = $props();
 
 	/** Maps field name → error signature that was dismissed by typing. */
 	let dismissed = $state<Record<string, string>>({});

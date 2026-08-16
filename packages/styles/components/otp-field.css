@@ -1,0 +1,8 @@
+.otp-field { @apply inline-flex items-center gap-1.5; }
+.otp-field-input {
+  @apply appearance-none size-11 rounded-field border bg-field text-center text-lg outline-none shadow-field;
+  border-width: var(--border-width-field);
+  border-color: var(--field-border);
+  &:focus-visible, &[data-focus-visible="true"] { @apply status-focused-field; border-color: var(--field-border-focus); }
+}
+.otp-field-separator { @apply text-muted; }

@@ -47,7 +47,9 @@
 			},
 			onfocus: () => {
 				if (disabled) return;
-				ctx.openWithDelay('trigger-focus');
+				ctx.cancelClose();
+				// Focus opens immediately (Base UI `instant: 'focus'`).
+				ctx.setOpen(true, 'trigger-focus');
 			},
 			onblur: () => {
 				if (disabled) return;

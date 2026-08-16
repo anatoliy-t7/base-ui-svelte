@@ -1,29 +1,36 @@
 <script lang="ts">
 	import { Radio } from 'base-ui-svelte/radio';
 	import { RadioGroup } from 'base-ui-svelte/radio-group';
-	import '../demo.css';
 </script>
 
 <h1>Radio</h1>
-<div class="demo">
-	<RadioGroup.Root class="stack" defaultValue="fuji" aria-label="Best apple">
-		<label class="field">
+
+<section class="demo">
+	<RadioGroup class="radio-group" defaultValue="fuji" aria-label="Best apple">
+		<span class="radio-group-label">Best apple</span>
+		<label class="radio-label">
 			<Radio.Root class="radio" value="fuji">
-				<Radio.Indicator />
+				<Radio.Indicator class="radio-indicator" />
 			</Radio.Root>
 			Fuji
 		</label>
-		<label class="field">
+		<label class="radio-label">
 			<Radio.Root class="radio" value="gala">
-				<Radio.Indicator />
+				<Radio.Indicator class="radio-indicator" />
 			</Radio.Root>
 			Gala
 		</label>
-		<label class="field">
+		<label class="radio-label">
 			<Radio.Root class="radio" value="granny">
-				<Radio.Indicator />
+				<Radio.Indicator class="radio-indicator" />
 			</Radio.Root>
 			Granny Smith
 		</label>
-	</RadioGroup.Root>
-</div>
+		<label class="radio-label">
+			<Radio.Root class="radio" value="honeycrisp" disabled>
+				<Radio.Indicator class="radio-indicator" />
+			</Radio.Root>
+			Honeycrisp (disabled)
+		</label>
+	</RadioGroup>
+</section>

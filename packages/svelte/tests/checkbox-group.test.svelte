@@ -2,7 +2,7 @@
 	import { Checkbox, CheckboxGroup } from '../src/index.js';
 </script>
 
-<CheckboxGroup.Root data-testid="checkbox-group">
+<CheckboxGroup data-testid="checkbox-group">
 	<Checkbox.Root data-testid="checkbox-a" value="a" aria-label="A">
 		{#snippet children()}
 			<Checkbox.Indicator />
@@ -15,4 +15,4 @@
 			B
 		{/snippet}
 	</Checkbox.Root>
-</CheckboxGroup.Root>
+</CheckboxGroup>

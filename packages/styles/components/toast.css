@@ -1,0 +1,24 @@
+.toast-viewport {
+	@apply fixed end-4 bottom-4 z-50 grid w-[min(22rem,calc(100vw-2rem))] gap-2;
+}
+.toast {
+	@apply relative rounded-xl border border-border bg-overlay p-3.5 shadow-overlay outline-none;
+}
+.toast-title {
+	@apply m-0 text-sm font-semibold;
+}
+.toast-description {
+	@apply mt-1 text-sm text-muted;
+}
+.toast-close {
+	@apply absolute end-2 top-2;
+}
+.toast-action {
+	@apply relative isolate mt-2 inline-flex h-8 w-fit items-center justify-center gap-2 rounded-lg px-3 text-xs font-medium outline-none;
+	cursor: var(--cursor-interactive);
+	background-color: var(--default);
+	color: var(--default-foreground);
+	&:hover {
+		background-color: var(--default-hover);
+	}
+}

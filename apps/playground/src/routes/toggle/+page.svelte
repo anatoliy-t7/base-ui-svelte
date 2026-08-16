@@ -1,16 +1,22 @@
 <script lang="ts">
 	import { Toggle } from 'base-ui-svelte/toggle';
 	import { ToggleGroup } from 'base-ui-svelte/toggle-group';
-	import '../demo.css';
 </script>
 
 <h1>Toggle</h1>
-<div class="demo">
-	<Toggle.Root class="toggle" aria-label="Favorite">★</Toggle.Root>
 
-	<ToggleGroup.Root class="toggle-group" defaultValue={['left']} aria-label="Text alignment">
-		<Toggle.Root class="toggle" value="left" aria-label="Align left">L</Toggle.Root>
-		<Toggle.Root class="toggle" value="center" aria-label="Align center">C</Toggle.Root>
-		<Toggle.Root class="toggle" value="right" aria-label="Align right">R</Toggle.Root>
-	</ToggleGroup.Root>
-</div>
+<section class="demo">
+	<h2>Sizes</h2>
+	<div class="row">
+		<Toggle class="toggle toggle-sm" aria-label="Favorite small">★</Toggle>
+		<Toggle class="toggle" aria-label="Favorite medium">★</Toggle>
+		<Toggle class="toggle toggle-lg" aria-label="Favorite large">★</Toggle>
+	</div>
+
+	<h2>Toggle group</h2>
+	<ToggleGroup class="toggle-group" defaultValue={['left']} aria-label="Text alignment">
+		<Toggle class="toggle" value="left" aria-label="Align left">L</Toggle>
+		<Toggle class="toggle" value="center" aria-label="Align center">C</Toggle>
+		<Toggle class="toggle" value="right" aria-label="Align right">R</Toggle>
+	</ToggleGroup>
+</section>

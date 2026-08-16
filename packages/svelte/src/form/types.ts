@@ -15,7 +15,7 @@ export type FormContext = {
 	unregisterField: (name: string) => void;
 };
 
-export type FormRootProps = Omit<HTMLFormAttributes, 'children' | 'onsubmit'> & {
+export type FormProps = Omit<HTMLFormAttributes, 'children' | 'onsubmit'> & {
 	errors?: FormErrors | undefined;
 	onFormSubmit?: ((formData: FormData, event: SubmitEvent) => void) | undefined;
 	children?: Snippet;

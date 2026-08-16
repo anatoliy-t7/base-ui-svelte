@@ -14,6 +14,7 @@ export const DRAWER_VIRTUAL_KEYBOARD_CONTEXT = Symbol(
 );
 export const POPOVER_CONTEXT = Symbol('base-ui-svelte.popover');
 export const TOOLTIP_CONTEXT = Symbol('base-ui-svelte.tooltip');
+export const TOOLTIP_POSITIONER_CONTEXT = Symbol('base-ui-svelte.tooltip-positioner');
 export const PREVIEW_CARD_CONTEXT = Symbol('base-ui-svelte.preview-card');
 export const COLLAPSIBLE_CONTEXT = Symbol('base-ui-svelte.collapsible');
 export const ACCORDION_CONTEXT = Symbol('base-ui-svelte.accordion');

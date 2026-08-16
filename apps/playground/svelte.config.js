@@ -5,11 +5,15 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
 	preprocess: vitePreprocess(),
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
 	},
 	compilerOptions: {
-		runes: true
-	}
+		runes: true,
+	},
+	vitePlugin: {
+		// https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/inspector.md
+		inspector: true,
+	},
 };
 
 export default config;
