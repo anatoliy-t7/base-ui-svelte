@@ -1,0 +1,12 @@
+# Docs static site — Dokploy Compose / local Docker
+# Build context MUST be the monorepo root (this directory).
+services:
+  docs:
+    build:
+      context: .
+      dockerfile: apps/docs/Dockerfile
+      args:
+        PUBLIC_SITE_ORIGIN: ${PUBLIC_SITE_ORIGIN:-https://docs.example.com}
+    ports:
+      - '3000:80'
+    restart: unless-stopped
