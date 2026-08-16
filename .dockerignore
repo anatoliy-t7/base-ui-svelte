@@ -9,6 +9,5 @@ node_modules
 coverage
 .env
 .env.*
-!.env.example
 .DS_Store
 apps/docs/build
