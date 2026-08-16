@@ -62,6 +62,44 @@ describe('Combobox', () => {
 		});
 	});
 
+	it('navigates and selects with keyboard', async () => {
+		const user = userEvent.setup();
+		render(ComboboxTest);
+
+		const input = screen.getByTestId('input');
+		await user.click(input);
+		await waitFor(() => {
+			expect(screen.getByTestId('popup')).toBeInTheDocument();
+		});
+
+		await user.keyboard('{ArrowDown}');
+		await waitFor(() => {
+			expect(screen.getByTestId('item-apple')).toHaveAttribute('data-highlighted');
+		});
+
+		await user.keyboard('{ArrowDown}');
+		expect(screen.getByTestId('item-banana')).toHaveAttribute('data-highlighted');
+
+		await user.keyboard('{Enter}');
+		await waitFor(() => {
+			expect(screen.queryByTestId('popup')).toBeNull();
+		});
+		expect(input).toHaveValue('Banana');
+	});
+
+	it('closes on Escape', async () => {
+		const user = userEvent.setup();
+		render(ComboboxTest);
+
+		await user.click(screen.getByTestId('input'));
+		expect(screen.getByTestId('popup')).toBeInTheDocument();
+
+		await user.keyboard('{Escape}');
+		await waitFor(() => {
+			expect(screen.queryByTestId('popup')).toBeNull();
+		});
+	});
+
 	it('has no axe violations when open', async () => {
 		const user = userEvent.setup();
 		const { container } = render(ComboboxTest);

@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/svelte';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
 import { describe, expect, it } from 'vitest';
 import ContextMenuTest from './context-menu.test.svelte';
@@ -35,6 +36,42 @@ describe('ContextMenu', () => {
 		expect(screen.getByTestId('arrow')).toBeInTheDocument();
 		expect(screen.getByTestId('checkbox-item')).toHaveAttribute('role', 'menuitemcheckbox');
 		expect(screen.getByTestId('checkbox-item')).toHaveAttribute('aria-checked', 'true');
+	});
+
+	it('closes on Escape', async () => {
+		const user = userEvent.setup();
+		render(ContextMenuTest);
+
+		await fireEvent.contextMenu(screen.getByTestId('trigger'), {
+			clientX: 40,
+			clientY: 60,
+		});
+		await waitFor(() => {
+			expect(screen.getByTestId('popup')).toBeInTheDocument();
+		});
+
+		await user.keyboard('{Escape}');
+		await waitFor(() => {
+			expect(screen.queryByTestId('popup')).toBeNull();
+		});
+	});
+
+	it('closes when an item is clicked', async () => {
+		const user = userEvent.setup();
+		render(ContextMenuTest);
+
+		await fireEvent.contextMenu(screen.getByTestId('trigger'), {
+			clientX: 40,
+			clientY: 60,
+		});
+		await waitFor(() => {
+			expect(screen.getByTestId('popup')).toBeInTheDocument();
+		});
+
+		await user.click(screen.getByTestId('item-1'));
+		await waitFor(() => {
+			expect(screen.queryByTestId('popup')).toBeNull();
+		});
 	});
 
 	it('has no axe violations when open', async () => {

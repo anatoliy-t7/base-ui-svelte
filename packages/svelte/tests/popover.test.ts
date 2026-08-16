@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import PopoverTest from './popover.test.svelte';
 
 describe('Popover', () => {
@@ -33,6 +33,38 @@ describe('Popover', () => {
 		await waitFor(() => {
 			expect(screen.queryByTestId('popup')).toBeNull();
 		});
+	});
+
+	it('closes when backdrop is clicked', async () => {
+		const user = userEvent.setup();
+		render(PopoverTest, { props: { modal: true } });
+
+		await user.click(screen.getByTestId('trigger'));
+		expect(screen.getByTestId('popup')).toBeInTheDocument();
+
+		await user.click(screen.getByTestId('backdrop'));
+		await waitFor(() => {
+			expect(screen.queryByTestId('popup')).toBeNull();
+		});
+	});
+
+	it('respects defaultOpen', () => {
+		render(PopoverTest, { props: { defaultOpen: true } });
+		expect(screen.getByTestId('popup')).toBeInTheDocument();
+		expect(screen.getByTestId('trigger')).toHaveAttribute('aria-expanded', 'true');
+	});
+
+	it('notifies onOpenChange when dismissed', async () => {
+		const user = userEvent.setup();
+		const onOpenChange = vi.fn();
+		render(PopoverTest, { props: { defaultOpen: true, onOpenChange } });
+
+		expect(screen.getByTestId('popup')).toBeInTheDocument();
+		await user.keyboard('{Escape}');
+		expect(onOpenChange).toHaveBeenCalledWith(
+			false,
+			expect.objectContaining({ reason: 'escape-key' }),
+		);
 	});
 
 	it('has no axe violations when open', async () => {

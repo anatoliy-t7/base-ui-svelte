@@ -97,6 +97,46 @@ describe('Menu', () => {
 		expect(screen.getByTestId('arrow')).toHaveAttribute('aria-hidden', 'true');
 	});
 
+	it('moves highlight with arrow keys', async () => {
+		const user = userEvent.setup();
+		render(MenuTest);
+
+		await user.click(screen.getByTestId('trigger'));
+		const first = screen.getByTestId('item-1');
+		const checkbox = screen.getByTestId('checkbox-item');
+
+		await waitFor(() => {
+			expect(first).toHaveFocus();
+		});
+
+		await user.keyboard('{ArrowDown}');
+		expect(checkbox).toHaveFocus();
+		expect(checkbox).toHaveAttribute('data-highlighted');
+
+		await user.keyboard('{ArrowUp}');
+		expect(first).toHaveFocus();
+		expect(first).toHaveAttribute('data-highlighted');
+	});
+
+	it('selects a radio item without closing', async () => {
+		const user = userEvent.setup();
+		render(MenuTest);
+
+		await user.click(screen.getByTestId('trigger'));
+		const radioA = screen.getByTestId('radio-a');
+		const radioB = screen.getByTestId('radio-b');
+
+		expect(radioA).toHaveAttribute('role', 'menuitemradio');
+		expect(radioA).toHaveAttribute('aria-checked', 'true');
+		expect(radioB).toHaveAttribute('aria-checked', 'false');
+
+		await user.click(radioB);
+		expect(radioB).toHaveAttribute('aria-checked', 'true');
+		expect(radioA).toHaveAttribute('aria-checked', 'false');
+		expect(screen.getByTestId('radio-indicator-b')).toBeInTheDocument();
+		expect(screen.getByTestId('popup')).toBeInTheDocument();
+	});
+
 	it('has no axe violations when open', async () => {
 		const user = userEvent.setup();
 		const { container } = render(MenuTest);

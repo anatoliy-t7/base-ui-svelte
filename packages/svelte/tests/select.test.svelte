@@ -1,8 +1,24 @@
 <script lang="ts">
 	import { Select } from '../src/select/index.js';
+
+	let {
+		disabled = false,
+		defaultValue,
+		defaultOpen = false,
+		value = undefined as string | null | undefined,
+		onValueChange,
+		onOpenChange,
+	}: {
+		disabled?: boolean;
+		defaultValue?: string | null;
+		defaultOpen?: boolean;
+		value?: string | null | undefined;
+		onValueChange?: (value: string | null | string[], event: Event) => void;
+		onOpenChange?: (open: boolean, eventDetails: unknown) => void;
+	} = $props();
 </script>
 
-<Select.Root>
+<Select.Root {disabled} {defaultValue} {defaultOpen} {value} {onValueChange} {onOpenChange}>
 	<Select.Label data-testid="label">Fruit</Select.Label>
 	<Select.Trigger data-testid="trigger">
 		<Select.Value data-testid="value" placeholder="Pick a fruit" />

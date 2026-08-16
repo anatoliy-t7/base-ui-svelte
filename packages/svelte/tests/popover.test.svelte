@@ -1,8 +1,20 @@
 <script lang="ts">
 	import { Popover } from '../src/index.js';
+
+	let {
+		modal = false as boolean | 'trap-focus',
+		defaultOpen = false,
+		open = undefined as boolean | undefined,
+		onOpenChange,
+	}: {
+		modal?: boolean | 'trap-focus';
+		defaultOpen?: boolean;
+		open?: boolean | undefined;
+		onOpenChange?: (open: boolean, eventDetails: unknown) => void;
+	} = $props();
 </script>
 
-<Popover.Root>
+<Popover.Root {modal} {defaultOpen} {open} {onOpenChange}>
 	<Popover.Trigger data-testid="trigger">Open</Popover.Trigger>
 	<Popover.Portal>
 		<Popover.Backdrop data-testid="backdrop" />

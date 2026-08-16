@@ -29,6 +29,20 @@
 							Checkbox ({isChecked ? 'on' : 'off'})
 						{/snippet}
 					</Menu.CheckboxItem>
+					<Menu.RadioGroup data-testid="radio-group" defaultValue="a">
+						<Menu.RadioItem data-testid="radio-a" value="a">
+							{#snippet children({ checked: isChecked })}
+								<Menu.RadioItemIndicator data-testid="radio-indicator-a" />
+								Option A ({isChecked ? 'on' : 'off'})
+							{/snippet}
+						</Menu.RadioItem>
+						<Menu.RadioItem data-testid="radio-b" value="b">
+							{#snippet children({ checked: isChecked })}
+								<Menu.RadioItemIndicator data-testid="radio-indicator-b" />
+								Option B ({isChecked ? 'on' : 'off'})
+							{/snippet}
+						</Menu.RadioItem>
+					</Menu.RadioGroup>
 					<Menu.Separator />
 					<Menu.SubmenuRoot>
 						<Menu.SubmenuTrigger data-testid="submenu-trigger">More</Menu.SubmenuTrigger>

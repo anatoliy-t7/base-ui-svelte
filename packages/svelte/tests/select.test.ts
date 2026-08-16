@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import SelectTest from './select.test.svelte';
 
 describe('Select', () => {
@@ -38,6 +38,80 @@ describe('Select', () => {
 		expect(screen.getByTestId('item-apple')).toHaveAttribute('aria-selected', 'true');
 		expect(screen.getByTestId('item-apple')).toHaveAttribute('data-selected');
 		expect(screen.getByTestId('indicator-apple')).toBeInTheDocument();
+	});
+
+	it('navigates and selects with keyboard', async () => {
+		const user = userEvent.setup();
+		render(SelectTest);
+
+		const trigger = screen.getByTestId('trigger');
+		trigger.focus();
+		await user.keyboard('{ArrowDown}');
+		await waitFor(() => {
+			expect(screen.getByTestId('popup')).toBeInTheDocument();
+		});
+
+		await user.keyboard('{ArrowDown}');
+		await waitFor(() => {
+			expect(screen.getByTestId('item-apple')).toHaveAttribute('data-highlighted');
+		});
+
+		await user.keyboard('{ArrowDown}');
+		expect(screen.getByTestId('item-banana')).toHaveAttribute('data-highlighted');
+
+		await user.keyboard('{End}');
+		expect(screen.getByTestId('item-cherry')).toHaveAttribute('data-highlighted');
+
+		await user.keyboard('{Home}');
+		expect(screen.getByTestId('item-apple')).toHaveAttribute('data-highlighted');
+
+		await user.keyboard('{Enter}');
+		await waitFor(() => {
+			expect(screen.queryByTestId('popup')).toBeNull();
+		});
+		expect(screen.getByTestId('value')).toHaveTextContent('Apple');
+	});
+
+	it('closes on Escape', async () => {
+		const user = userEvent.setup();
+		render(SelectTest);
+
+		await user.click(screen.getByTestId('trigger'));
+		expect(screen.getByTestId('popup')).toBeInTheDocument();
+
+		await user.keyboard('{Escape}');
+		await waitFor(() => {
+			expect(screen.queryByTestId('popup')).toBeNull();
+		});
+	});
+
+	it('respects defaultValue and defaultOpen', () => {
+		render(SelectTest, { props: { defaultValue: 'banana', defaultOpen: true } });
+
+		expect(screen.getByTestId('value')).toHaveTextContent('Banana');
+		expect(screen.getByTestId('popup')).toBeInTheDocument();
+		expect(screen.getByTestId('item-banana')).toHaveAttribute('aria-selected', 'true');
+	});
+
+	it('does not open when disabled', async () => {
+		const user = userEvent.setup();
+		render(SelectTest, { props: { disabled: true } });
+
+		const trigger = screen.getByTestId('trigger');
+		expect(trigger).toBeDisabled();
+		await user.click(trigger);
+		expect(screen.queryByTestId('popup')).toBeNull();
+	});
+
+	it('notifies onValueChange when an item is selected', async () => {
+		const user = userEvent.setup();
+		const onValueChange = vi.fn();
+		render(SelectTest, { props: { onValueChange } });
+
+		await user.click(screen.getByTestId('trigger'));
+		await user.click(screen.getByTestId('item-apple'));
+
+		expect(onValueChange).toHaveBeenCalledWith('apple', expect.any(Event));
 	});
 
 	it('has no axe violations when open', async () => {

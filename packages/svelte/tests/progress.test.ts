@@ -21,6 +21,25 @@ describe('Progress', () => {
 		expect(screen.getByTestId('indicator')).toHaveStyle({ width: '40%', height: '100%' });
 	});
 
+	it('exposes indeterminate state when value is null', () => {
+		render(ProgressTest, { props: { value: null } });
+
+		const root = screen.getByTestId('progress');
+		expect(root).toHaveAttribute('data-indeterminate');
+		expect(root).not.toHaveAttribute('aria-valuenow');
+		expect(root).not.toHaveAttribute('data-progressing');
+		expect(screen.getByTestId('indicator')).toHaveAttribute('data-indeterminate');
+	});
+
+	it('marks complete when value reaches max', () => {
+		render(ProgressTest, { props: { value: 100 } });
+
+		const root = screen.getByTestId('progress');
+		expect(root).toHaveAttribute('data-complete');
+		expect(root).toHaveAttribute('aria-valuenow', '100');
+		expect(root).not.toHaveAttribute('data-progressing');
+	});
+
 	it('has no axe violations', async () => {
 		const { container } = render(ProgressTest);
 		expect(await axe(container)).toHaveNoViolations();
