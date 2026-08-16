@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schema.railpack.com",
+	"exclude": [
+		"**/node_modules",
+		"**/dist",
+		"**/.svelte-kit",
+		".git",
+		"*.log",
+		"*.tgz",
+		"coverage",
+		".env",
+		".env.*",
+		".DS_Store"
+	]
+}

@@ -12,6 +12,7 @@
 		"check": "bun run --filter @base-ui-svelte/styles check && bun run --filter base-ui-svelte check && bun run --filter docs check",
 		"dev": "bun run --filter docs dev",
 		"docs:build": "bun run --filter docs build",
+		"docs:ci": "bun run build && bun run docs:build",
 		"docs:preview": "bun run --filter docs preview",
 		"publint": "bun run --filter base-ui-svelte publint && bun run --filter @base-ui-svelte/styles publint",
 		"release:pack": "bun run build && bun run publint && npm pack -w base-ui-svelte && npm pack -w @base-ui-svelte/styles",
