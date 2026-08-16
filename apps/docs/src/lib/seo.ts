@@ -1,11 +1,19 @@
 /** Site-wide SEO defaults for the docs app. */
 
+import { HOME_DESCRIPTION } from './home-seo.js';
+
 export const SITE_NAME = 'base-ui-svelte';
 
 export const SITE_TAGLINE = 'Unofficial Base UI port for Svelte 5';
 
+/** Browser tab / OG title for `/` (brand + positioning). */
+export const HOME_DOCUMENT_TITLE = `${SITE_NAME} · ${SITE_TAGLINE}`;
+
 export const DEFAULT_DESCRIPTION =
 	'Unofficial Svelte 5 port of Base UI — unstyled, accessible compound components. Not affiliated with MUI or the Base UI team.';
+
+/** Prefer the homepage-tuned blurb when no page description is set. */
+export { HOME_DESCRIPTION };
 
 export const GITHUB_URL = 'https://github.com/anatoliy-t7/base-ui-svelte';
 

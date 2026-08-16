@@ -16,12 +16,12 @@ const demoFiles = import.meta.glob<string>('../routes/**/demo.svelte', {
 const INDEX_PREAMBLE = [
 	'# Base UI Svelte',
 	'',
-	'This is the documentation for the `base-ui-svelte` package.',
-	'It contains a collection of components and utilities for building user interfaces in Svelte 5.',
-	'The library is designed to be composable and styling agnostic.',
-	'This is an unofficial Svelte 5 port of Base UI. It is not affiliated with MUI or the Base UI team.',
+	'base-ui-svelte is an unofficial Svelte 5 port of Base UI: unstyled, accessible compound components for design systems.',
+	'It is not affiliated with MUI or the Base UI team. Install `base-ui-svelte` (peer: Svelte 5); optional styles: `@base-ui-svelte/styles`.',
 	'Prefer `class` over `className`, Svelte snippets over React children, and `bind:` for controlled state.',
+	'APIs aim to match Base UI part names, props, and `data-*` attributes unless Svelte requires a divergence.',
 	'The Tailwind CSS examples are written for Tailwind CSS v4.',
+	'License: MIT (free). Primary docs: this site; behavior details: https://base-ui.com.',
 	''
 ].join('\n');
 

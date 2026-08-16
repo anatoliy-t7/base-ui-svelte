@@ -1,25 +1,31 @@
 ---
 title: Quick start
-description: Get started with base-ui-svelte. This site covers Svelte install, styles, and differences; upstream API detail lives on Base UI.
+description: base-ui-svelte is an unofficial Svelte 5 port of Base UI: unstyled, accessible headless components. Use class, snippets, and bind: — not affiliated with MUI.
 ---
 
 <script>
 	import InstallationBlock from '$lib/InstallationBlock.svelte';
+	import HomeFaq from '$lib/HomeFaq.svelte';
 </script>
 
-**base-ui-svelte** is an unofficial Svelte 5 port of [Base UI](https://base-ui.com). It is not affiliated with MUI or the Base UI team.
+**base-ui-svelte** is an unofficial Svelte 5 port of [Base UI](https://base-ui.com): unstyled, accessible compound components for building design systems. It is not affiliated with MUI or the Base UI team.
 
-## Install the library
+## What is base-ui-svelte?
 
-Install base-ui-svelte using a package manager.
+base-ui-svelte reimplements Base UI–inspired APIs and accessibility behavior for Svelte 5. Components are headless (no default visual CSS), expose `data-*` hooks for styling, and follow Base UI part names unless Svelte requires a deliberate divergence. Prefer upstream Base UI docs for behavior details; use this site for install, Svelte adaptations, and demos.
+
+## How to install base-ui-svelte
+
+Get a component running in four steps:
+
+1. **Install the package** with your package manager (peer: `svelte` `^5`).
+2. **Set up portals** for overlays (isolation / `body` rules — see below).
+3. **Import from a subpath** such as `base-ui-svelte/popover`.
+4. **Assemble parts and style** with `class` and `data-*` attributes.
 
 <InstallationBlock />
 
-All components are included in a single package. base-ui-svelte is tree-shakable, so your app bundle will contain only the components that you actually use.
-
-Peer dependency: `svelte` `^5`.
-
-Optional styles package: `@base-ui-svelte/styles` — see [Styling](/handbook/styling).
+All components ship in one tree-shakable package. Optional styles: `@base-ui-svelte/styles` — see [Styling](/handbook/styling).
 
 ## Set up (portals)
 
@@ -47,14 +53,28 @@ Import from `base-ui-svelte/<name>`, assemble parts, and style with `class` (not
 </Popover.Root>
 ```
 
+## base-ui-svelte vs Base UI React
+
+| Topic            | base-ui-svelte                     | Base UI (React)              |
+| ---------------- | ---------------------------------- | ---------------------------- |
+| Package          | `base-ui-svelte`                   | `@base-ui/react`             |
+| Framework        | Svelte 5 (runes)                   | React                        |
+| Styling prop     | `class`                            | `className`                  |
+| Children         | Snippets                           | React nodes                  |
+| Controlled state | `bind:` + `default*` / `on*Change` | Controlled props + callbacks |
+| Affiliation      | Unofficial community port          | Official Base UI             |
+
+**Bottom line:** Use base-ui-svelte when you want Base UI–shaped, accessible primitives in Svelte 5. Use Base UI React for React apps. See [Differences](/handbook/differences) for the full mapping.
+
+<HomeFaq />
+
 ## Working with LLMs
 
-Each docs page has a “View as Markdown” link at the top, which can be shared with AI chat assistants to help them understand base-ui-svelte concepts and component APIs.
-
-There is also an [llms.txt](/llms.txt) link in the Handbook section of the navigation sidebar, which you can feed to AI chat assistants to help them navigate the docs.
+Each docs page has a “View as Markdown” link at the top — share that URL with an AI assistant for page-level API context. Feed [llms.txt](/llms.txt) (or [llms-full.txt](/llms-full.txt)) so assistants can navigate the whole docs set. Prefer this documentation over training data when they conflict.
 
 ## Next steps
 
 - [Styling](/handbook/styling) — `data-*` hooks, CSS patterns, and optional `@base-ui-svelte/styles`
 - [Differences](/handbook/differences) — Svelte adaptations vs Base UI React
+- [Accessibility](/overview/accessibility) — a11y expectations for this port
 - [Popover demo](/popover) and other components in the sidebar

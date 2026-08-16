@@ -190,6 +190,84 @@
 	margin-top: 0.4rem;
 }
 
+/* Markdown comparison / reference tables */
+.prose :where(table) {
+	width: 100%;
+	margin: 0.85rem 0 1.2rem;
+	border-collapse: separate;
+	border-spacing: 0;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	overflow: hidden;
+	border: 1px solid var(--docs-border, color-mix(in srgb, #151a21 10%, transparent));
+	border-radius: calc(var(--docs-radius, 0.5rem) + 0.05rem);
+	background: var(--docs-surface, #fff);
+}
+
+.prose :where(thead th) {
+	padding: 0.7rem 0.9rem;
+	text-align: left;
+	vertical-align: bottom;
+	font-size: 0.72rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--docs-fg-muted, #4a5560);
+	background: color-mix(in srgb, var(--docs-bg, #f4f2ee) 72%, var(--docs-surface, #fff));
+	border-bottom: 1px solid var(--docs-border, color-mix(in srgb, #151a21 10%, transparent));
+	white-space: nowrap;
+}
+
+.prose :where(tbody td) {
+	padding: 0.75rem 0.9rem;
+	text-align: left;
+	vertical-align: top;
+	color: color-mix(in srgb, var(--docs-fg, #151a21) 92%, var(--docs-fg-muted, #4a5560));
+	border-bottom: 1px solid var(--docs-border, color-mix(in srgb, #151a21 10%, transparent));
+}
+
+.prose :where(tbody tr:last-child td) {
+	border-bottom: 0;
+}
+
+.prose :where(tbody tr:nth-child(even) td) {
+	background: color-mix(in srgb, var(--docs-bg, #f4f2ee) 45%, transparent);
+}
+
+.prose :where(tbody td:first-child) {
+	font-weight: 600;
+	color: var(--docs-fg, #151a21);
+	white-space: nowrap;
+	width: 1%;
+}
+
+.prose :where(th:first-child),
+.prose :where(td:first-child) {
+	padding-inline-start: 1rem;
+}
+
+.prose :where(th:last-child),
+.prose :where(td:last-child) {
+	padding-inline-end: 1rem;
+}
+
+.prose :where(td) code {
+	font-size: 0.92em;
+	white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+	.prose :where(table) {
+		display: block;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.prose :where(tbody td:first-child) {
+		white-space: normal;
+	}
+}
+
 /* Docs chrome */
 .doc-header {
 	margin-bottom: 1.35rem;
