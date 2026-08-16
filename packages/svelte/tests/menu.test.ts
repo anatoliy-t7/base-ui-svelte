@@ -1,10 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import MenuTest from './menu.test.svelte';
 
 describe('Menu', () => {
+	afterEach(() => {
+		vi.useRealTimers();
+	});
+
 	it('opens and closes on trigger', async () => {
 		const user = userEvent.setup();
 		render(MenuTest);
@@ -65,6 +69,23 @@ describe('Menu', () => {
 		});
 		expect(submenuTrigger).toHaveAttribute('aria-expanded', 'true');
 		expect(screen.getByTestId('submenu-item')).toBeInTheDocument();
+	});
+
+	it('opens on hover after delay when openOnHover is set', async () => {
+		vi.useFakeTimers({ shouldAdvanceTime: true });
+		const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+		render(MenuTest, { props: { openOnHover: true, delay: 200, closeDelay: 0 } });
+
+		await user.hover(screen.getByTestId('trigger'));
+		expect(screen.queryByTestId('popup')).toBeNull();
+
+		await vi.advanceTimersByTimeAsync(199);
+		expect(screen.queryByTestId('popup')).toBeNull();
+
+		await vi.advanceTimersByTimeAsync(1);
+		await waitFor(() => {
+			expect(screen.getByTestId('popup')).toBeInTheDocument();
+		});
 	});
 
 	it('renders arrow when open', async () => {

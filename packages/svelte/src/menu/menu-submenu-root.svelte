@@ -6,6 +6,7 @@
 		type OpenChangeReason
 	} from '../internal/controllable.svelte.js';
 	import { MENU_CONTEXT } from '../internal/context-keys.js';
+	import { createHoverDelay } from '../internal/hover-delay.svelte.js';
 	import { createPresence } from '../internal/presence.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type {
@@ -15,6 +16,9 @@
 		MenuSubmenuEntry,
 		MenuSubmenuRootProps
 	} from './types.js';
+
+	const SUBMENU_OPEN_DELAY = 100;
+	const SUBMENU_CLOSE_DELAY = 150;
 
 	let {
 		open = $bindable(undefined),
@@ -41,13 +45,39 @@
 		}
 	});
 
+	const hover = createHoverDelay(
+		() => SUBMENU_OPEN_DELAY,
+		() => SUBMENU_CLOSE_DELAY
+	);
+
 	function setOpen(next: boolean, reason: OpenChangeReason): void {
+		hover.cancel();
 		if (next) {
 			parentMenu.closeSubmenus(menuId);
 		} else {
 			closeSubmenus();
 		}
 		openState.setOpen(next, reason);
+	}
+
+	function openWithHoverDelay(reason: OpenChangeReason): void {
+		if (openState.open) {
+			hover.cancel();
+			return;
+		}
+		hover.openWithDelay(() => {
+			setOpen(true, reason);
+		});
+	}
+
+	function closeWithHoverDelay(reason: OpenChangeReason): void {
+		hover.closeWithDelay(() => {
+			setOpen(false, reason);
+		});
+	}
+
+	function cancelHover(): void {
+		hover.cancel();
 	}
 
 	const presence = createPresence(() => openState.open);
@@ -165,11 +195,29 @@
 		});
 	});
 
+	$effect(() => {
+		return () => {
+			hover.dispose();
+		};
+	});
+
 	setContext(MENU_CONTEXT, {
 		get open() {
 			return openState.open;
 		},
 		setOpen,
+		openWithHoverDelay,
+		closeWithHoverDelay,
+		cancelHover,
+		get openOnHover() {
+			return true;
+		},
+		get delay() {
+			return SUBMENU_OPEN_DELAY;
+		},
+		get closeDelay() {
+			return SUBMENU_CLOSE_DELAY;
+		},
 		menuId,
 		triggerId,
 		popupId,

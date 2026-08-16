@@ -16,6 +16,7 @@
 
 	const ctx = getContext<FieldContext>(FIELD_CONTEXT);
 
+	let inputEl = $state<HTMLInputElement | undefined>(undefined);
 	let uncontrolled = $state<string | undefined>(undefined);
 	const isControlled = $derived(value !== undefined);
 	const currentValue = $derived(
@@ -25,6 +26,13 @@
 
 	onMount(() => {
 		ctx.setValue(currentValue);
+		if (inputEl) {
+			ctx.registerControl(inputEl);
+			ctx.syncNativeValidity(inputEl);
+		}
+		return () => {
+			ctx.registerControl(null);
+		};
 	});
 
 	function commit(next: string, event: Event): void {
@@ -35,6 +43,11 @@
 		}
 		ctx.setValue(next, event);
 		onValueChange?.(next, event);
+	}
+
+	function syncFromEvent(event: Event): void {
+		const target = event.currentTarget as HTMLInputElement;
+		ctx.syncNativeValidity(target);
 	}
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -58,16 +71,25 @@
 				if (isDisabled) return;
 				const target = event.currentTarget as HTMLInputElement;
 				commit(target.value, event);
+				ctx.syncNativeValidity(target);
+			},
+			onchange: (event: Event) => {
+				syncFromEvent(event);
 			},
 			onfocus: () => {
 				ctx.setFocused(true);
 			},
-			onblur: () => {
+			onblur: (event: FocusEvent) => {
 				ctx.setFocused(false);
 				ctx.setTouched(true);
+				syncFromEvent(event);
 			}
 		})
 	);
 </script>
 
-<input {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined} />
+<input
+	bind:this={inputEl}
+	{...mergedProps}
+	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+/>

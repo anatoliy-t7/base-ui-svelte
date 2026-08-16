@@ -1,10 +1,18 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
-	import { DRAWER_CONTEXT } from '../internal/context-keys.js';
+	import { getContext, hasContext } from 'svelte';
+	import {
+		DRAWER_CONTEXT,
+		DRAWER_VIRTUAL_KEYBOARD_CONTEXT
+	} from '../internal/context-keys.js';
 	import { createDismiss } from '../internal/dismiss.svelte.js';
 	import { createFocusTrap } from '../internal/focus-trap.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type { DrawerContext, DrawerPopupProps, DrawerSwipeDirection } from './types.js';
+	import { dismissSize, resolveSnapFractions } from './swipe-utils.js';
+	import type {
+		DrawerContext,
+		DrawerPopupProps,
+		DrawerVirtualKeyboardContext
+	} from './types.js';
 
 	let {
 		render = 'div',
@@ -15,23 +23,12 @@
 	}: DrawerPopupProps = $props();
 
 	const ctx = getContext<DrawerContext>(DRAWER_CONTEXT);
+	const vk = hasContext(DRAWER_VIRTUAL_KEYBOARD_CONTEXT)
+		? getContext<DrawerVirtualKeyboardContext>(DRAWER_VIRTUAL_KEYBOARD_CONTEXT)
+		: undefined;
 
 	let popupEl = $state<HTMLElement | null>(null);
-	let swiping = $state(false);
-	let movementX = $state(0);
-	let movementY = $state(0);
-	let progress = $state(0);
-
-	let pointerId: number | null = null;
-	let startX = 0;
-	let startY = 0;
-	let lastX = 0;
-	let lastY = 0;
-	let lastTime = 0;
-	let velocity = 0;
-
-	const DISMISS_PROGRESS = 0.3;
-	const VELOCITY_THRESHOLD = 0.5;
+	let measuredHeight = $state(0);
 
 	$effect(() => {
 		ctx.refs.popup = popupEl;
@@ -40,6 +37,26 @@
 				ctx.refs.popup = null;
 			}
 		};
+	});
+
+	$effect(() => {
+		ctx.presence.setNode(popupEl);
+		return () => ctx.presence.setNode(null);
+	});
+
+	$effect(() => {
+		if (!popupEl) {
+			measuredHeight = 0;
+			return;
+		}
+		const update = () => {
+			if (!popupEl) return;
+			measuredHeight = popupEl.getBoundingClientRect().height;
+		};
+		update();
+		const observer = new ResizeObserver(update);
+		observer.observe(popupEl);
+		return () => observer.disconnect();
 	});
 
 	createFocusTrap({
@@ -64,108 +81,56 @@
 		dismissOnOutsidePress: false
 	});
 
-	function axisDelta(direction: DrawerSwipeDirection, dx: number, dy: number): number {
-		switch (direction) {
-			case 'down':
-				return Math.max(0, dy);
-			case 'up':
-				return Math.max(0, -dy);
-			case 'right':
-				return Math.max(0, dx);
-			case 'left':
-				return Math.max(0, -dx);
-		}
-	}
-
-	function dismissSize(el: HTMLElement, direction: DrawerSwipeDirection): number {
-		const rect = el.getBoundingClientRect();
-		const size =
-			direction === 'left' || direction === 'right' ? rect.width : rect.height;
-		return Math.max(size, 1);
-	}
-
-	function resetSwipe(): void {
-		swiping = false;
-		movementX = 0;
-		movementY = 0;
-		progress = 0;
-		pointerId = null;
-		velocity = 0;
-	}
-
 	function onPointerDown(event: PointerEvent): void {
 		if (event.button !== 0) return;
 		const target = event.target;
 		if (!(target instanceof Element)) return;
 		if (target.closest('[data-base-ui-swipe-ignore]')) return;
+		if (ctx.swiping) return;
 
-		pointerId = event.pointerId;
-		startX = event.clientX;
-		startY = event.clientY;
-		lastX = event.clientX;
-		lastY = event.clientY;
-		lastTime = event.timeStamp;
-		velocity = 0;
-		swiping = true;
-		movementX = 0;
-		movementY = 0;
-		progress = 0;
-
+		ctx.beginSwipe(event.pointerId, event.clientX, event.clientY, 'dismiss');
 		if (popupEl) {
 			popupEl.setPointerCapture(event.pointerId);
 		}
 	}
 
 	function onPointerMove(event: PointerEvent): void {
-		if (!swiping || event.pointerId !== pointerId || !popupEl) return;
-
-		const dx = event.clientX - startX;
-		const dy = event.clientY - startY;
-		const direction = ctx.swipeDirection;
-		const delta = axisDelta(direction, dx, dy);
-		const size = dismissSize(popupEl, direction);
-
-		const dt = event.timeStamp - lastTime;
-		if (dt > 0) {
-			const moveDelta = axisDelta(
-				direction,
-				event.clientX - lastX,
-				event.clientY - lastY
-			);
-			velocity = moveDelta / dt;
-		}
-		lastX = event.clientX;
-		lastY = event.clientY;
-		lastTime = event.timeStamp;
-
-		movementX = direction === 'left' || direction === 'right' ? (direction === 'left' ? -delta : delta) : 0;
-		movementY = direction === 'up' || direction === 'down' ? (direction === 'up' ? -delta : delta) : 0;
-		progress = Math.min(1, delta / size);
+		if (!ctx.swiping || ctx.swipeMode !== 'dismiss' || !popupEl) return;
+		const size = dismissSize(popupEl, ctx.swipeDirection);
+		ctx.updateSwipe(event.clientX, event.clientY, event.timeStamp, size);
 	}
 
 	function onPointerUp(event: PointerEvent): void {
-		if (!swiping || event.pointerId !== pointerId) return;
-
-		const shouldDismiss = progress > DISMISS_PROGRESS || velocity > VELOCITY_THRESHOLD;
-		if (shouldDismiss) {
-			resetSwipe();
-			ctx.setOpen(false, 'imperative-action');
-			return;
-		}
-
-		resetSwipe();
+		if (!ctx.swiping || ctx.swipeMode !== 'dismiss' || !popupEl) return;
+		const size = dismissSize(popupEl, ctx.swipeDirection);
+		ctx.endSwipe(size);
 	}
 
-	function onPointerCancel(event: PointerEvent): void {
-		if (event.pointerId !== pointerId) return;
-		resetSwipe();
+	function onPointerCancel(): void {
+		if (!ctx.swiping || ctx.swipeMode !== 'dismiss') return;
+		ctx.cancelSwipe();
 	}
+
+	const snapOffset = $derived.by(() => {
+		const points = ctx.snapPoints;
+		if (!points || points.length === 0 || measuredHeight <= 0) return 0;
+		const fractions = resolveSnapFractions(points, measuredHeight);
+		const index = Math.min(ctx.activeSnapPointIndex, Math.max(0, fractions.length - 1));
+		const fraction = fractions[index] ?? 1;
+		return measuredHeight * (1 - fraction);
+	});
 
 	const swipeStyle = $derived(
 		[
-			`--drawer-swipe-movement-x:${movementX}px`,
-			`--drawer-swipe-movement-y:${movementY}px`,
-			`--drawer-swipe-progress:${progress}`,
+			`--drawer-swipe-movement-x:${ctx.swipeMovementX}px`,
+			`--drawer-swipe-movement-y:${ctx.swipeMovementY}px`,
+			`--drawer-swipe-progress:${ctx.swipeProgress}`,
+			`--drawer-swipe-strength:${ctx.swipeStrength}`,
+			measuredHeight > 0 ? `--drawer-height:${measuredHeight}px` : undefined,
+			ctx.snapPoints && ctx.snapPoints.length > 0
+				? `--drawer-snap-point-offset:${snapOffset}px`
+				: undefined,
+			vk ? `--drawer-keyboard-inset:${vk.keyboardInset}px` : undefined,
 			typeof style === 'string' ? style : undefined
 		]
 			.filter(Boolean)
@@ -183,9 +148,13 @@
 			'aria-labelledby': ctx.titleId,
 			'aria-describedby': ctx.descriptionId,
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined,
+			'data-closed': !ctx.open || ctx.presence.isEnding ? '' : undefined,
+			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
+			'data-ending-style': ctx.presence.isEnding ? '' : undefined,
 			'data-swipe-direction': ctx.swipeDirection,
-			'data-swiping': swiping ? '' : undefined,
+			'data-swiping': ctx.swiping ? '' : undefined,
+			'data-swipe-snap':
+				!ctx.swiping && ctx.snapPoints && ctx.snapPoints.length > 0 ? '' : undefined,
 			onpointerdown: onPointerDown,
 			onpointermove: onPointerMove,
 			onpointerup: onPointerUp,

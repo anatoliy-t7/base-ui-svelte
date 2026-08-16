@@ -7,16 +7,14 @@
 
 	const ctx = getContext<FieldContext>(FIELD_CONTEXT);
 
-	const validity: FieldValidityState = $derived({
-		valid: ctx.valid,
+	const validityState: FieldValidityState = $derived({
+		validity: ctx.validity,
+		transitionStatus: ctx.valid === false ? 'idle' : undefined,
 		errors: ctx.errors,
-		error: ctx.errors[0],
 		value: ctx.value,
-		touched: ctx.touched,
-		dirty: ctx.dirty,
-		filled: ctx.filled,
-		focused: ctx.focused
+		error: ctx.errors[0] ?? '',
+		initialValue: ctx.initialValue
 	});
 </script>
 
-{@render children(validity)}
+{@render children(validityState)}

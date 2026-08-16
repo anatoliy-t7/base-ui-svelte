@@ -14,6 +14,12 @@ export type PopoverRefs = {
 export type PopoverContext = {
 	readonly open: boolean;
 	setOpen(open: boolean, reason: OpenChangeReason): void;
+	openWithHoverDelay(reason: OpenChangeReason): void;
+	closeWithHoverDelay(reason: OpenChangeReason): void;
+	cancelHover(): void;
+	readonly openOnHover: boolean;
+	readonly delay: number;
+	readonly closeDelay: number;
 	readonly triggerId: string;
 	readonly titleId: string;
 	readonly descriptionId: string;
@@ -28,12 +34,18 @@ export type PopoverRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> 
 	onOpenChange?:
 		| ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void)
 		| undefined;
+	openOnHover?: boolean;
+	/** Open delay when `openOnHover` is set (ms). @default 0 */
+	delay?: number;
+	/** Close delay when leaving under hover (ms). @default 0 */
+	closeDelay?: number;
 	children?: Snippet<[{ open: boolean }]>;
 };
 
 export type PopoverTriggerProps = Omit<HTMLButtonAttributes, 'children' | 'disabled'> & {
 	render?: string;
 	disabled?: boolean;
+	openOnHover?: boolean;
 	children?: Snippet;
 };
 

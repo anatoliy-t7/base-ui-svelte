@@ -4,4 +4,9 @@ export const Form = {
 	Root
 };
 
-export type { FormRootProps, FormContext, FormErrors } from './types.js';
+export type {
+	FormRootProps,
+	FormContext,
+	FormErrors,
+	FormFieldRegistration
+} from './types.js';

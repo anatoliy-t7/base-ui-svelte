@@ -2,10 +2,20 @@
 	import { Menu } from '../src/menu/index.js';
 
 	let checked = $state(false);
+
+	let {
+		openOnHover = false,
+		delay = 0,
+		closeDelay = 0
+	}: {
+		openOnHover?: boolean;
+		delay?: number;
+		closeDelay?: number;
+	} = $props();
 </script>
 
-<Menu.Root>
-	<Menu.Trigger data-testid="trigger">Open</Menu.Trigger>
+<Menu.Root {openOnHover} {delay} {closeDelay}>
+	<Menu.Trigger data-testid="trigger" {openOnHover}>Open</Menu.Trigger>
 	<Menu.Portal>
 		<Menu.Backdrop data-testid="backdrop" />
 		<Menu.Positioner>

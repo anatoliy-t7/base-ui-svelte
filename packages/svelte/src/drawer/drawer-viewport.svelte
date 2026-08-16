@@ -1,8 +1,15 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
-	import { DRAWER_CONTEXT } from '../internal/context-keys.js';
+	import { getContext, hasContext } from 'svelte';
+	import {
+		DRAWER_CONTEXT,
+		DRAWER_VIRTUAL_KEYBOARD_CONTEXT
+	} from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type { DrawerContext, DrawerViewportProps } from './types.js';
+	import type {
+		DrawerContext,
+		DrawerViewportProps,
+		DrawerVirtualKeyboardContext
+	} from './types.js';
 
 	let {
 		render = 'div',
@@ -13,14 +20,27 @@
 	}: DrawerViewportProps = $props();
 
 	const ctx = getContext<DrawerContext>(DRAWER_CONTEXT);
+	const vk = hasContext(DRAWER_VIRTUAL_KEYBOARD_CONTEXT)
+		? getContext<DrawerVirtualKeyboardContext>(DRAWER_VIRTUAL_KEYBOARD_CONTEXT)
+		: undefined;
+
+	const viewportStyle = $derived(
+		[
+			vk ? `--drawer-keyboard-inset:${vk.keyboardInset}px` : undefined,
+			typeof style === 'string' ? style : undefined
+		]
+			.filter(Boolean)
+			.join(';')
+	);
 
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			class: className,
-			style,
+			style: viewportStyle || undefined,
 			'data-open': ctx.open ? '' : undefined,
 			'data-closed': !ctx.open ? '' : undefined,
-			'data-swipe-direction': ctx.swipeDirection
+			'data-swipe-direction': ctx.swipeDirection,
+			'data-keyboard-open': vk?.keyboardOpen ? '' : undefined
 		})
 	);
 </script>

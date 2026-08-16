@@ -1,10 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import DrawerTest from './drawer.test.svelte';
 
 describe('Drawer', () => {
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
+
 	it('opens and closes with trigger, escape, and close button', async () => {
 		const user = userEvent.setup();
 		render(DrawerTest);
@@ -41,6 +45,55 @@ describe('Drawer', () => {
 		render(DrawerTest);
 		await user.click(screen.getByTestId('swipe-area'));
 		expect(screen.getByTestId('popup')).toBeInTheDocument();
+	});
+
+	it('renders with snapPoints without error', async () => {
+		const user = userEvent.setup();
+		render(DrawerTest, { snapPoints: [0.5, 1] });
+		await user.click(screen.getByTestId('trigger'));
+		const popup = screen.getByTestId('popup');
+		expect(popup).toBeInTheDocument();
+		expect(popup.style.getPropertyValue('--drawer-swipe-strength')).toBe('1');
+	});
+
+	it('VirtualKeyboardProvider sets --drawer-keyboard-inset from visualViewport', async () => {
+		const listeners = new Map<string, Set<EventListener>>();
+
+		const visualViewport = {
+			height: 500,
+			offsetTop: 0,
+			addEventListener: (type: string, listener: EventListener) => {
+				const set = listeners.get(type) ?? new Set();
+				set.add(listener);
+				listeners.set(type, set);
+			},
+			removeEventListener: (type: string, listener: EventListener) => {
+				listeners.get(type)?.delete(listener);
+			}
+		};
+
+		Object.defineProperty(window, 'visualViewport', {
+			configurable: true,
+			value: visualViewport
+		});
+		Object.defineProperty(window, 'innerHeight', {
+			configurable: true,
+			value: 800
+		});
+
+		const user = userEvent.setup();
+		render(DrawerTest, { withVirtualKeyboard: true });
+
+		const provider = screen.getByTestId('vk-provider');
+		expect(provider.style.getPropertyValue('--drawer-keyboard-inset')).toBe('300px');
+		expect(provider).toHaveAttribute('data-keyboard-open');
+
+		await user.click(screen.getByTestId('trigger'));
+		const popup = screen.getByTestId('popup');
+		expect(popup.style.getPropertyValue('--drawer-keyboard-inset')).toBe('300px');
+		expect(screen.getByTestId('viewport').style.getPropertyValue('--drawer-keyboard-inset')).toBe(
+			'300px'
+		);
 	});
 
 	it('has no axe violations when open', async () => {

@@ -20,6 +20,8 @@
 		? getContext<MenubarContext>(MENUBAR_CONTEXT)
 		: undefined;
 
+	const hoverEnabled = $derived(openOnHover || ctx.openOnHover || Boolean(menubar?.openOnHover));
+
 	let triggerEl = $state<HTMLElement | null>(null);
 
 	$effect(() => {
@@ -74,10 +76,17 @@
 			},
 			onkeydown: onKeyDown,
 			onpointerenter: () => {
-				if (disabled) return;
-				if (openOnHover || menubar?.openOnHover) {
+				if (disabled || !hoverEnabled) return;
+				if (menubar) {
+					menubar.cancelClose();
 					ctx.setOpen(true, 'trigger-hover');
+					return;
 				}
+				ctx.openWithHoverDelay('trigger-hover');
+			},
+			onpointerleave: () => {
+				if (disabled || !hoverEnabled) return;
+				ctx.closeWithHoverDelay('trigger-hover');
 			}
 		})
 	);

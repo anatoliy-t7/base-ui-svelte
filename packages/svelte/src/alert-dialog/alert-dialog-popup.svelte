@@ -27,6 +27,11 @@
 		};
 	});
 
+	$effect(() => {
+		ctx.presence.setNode(popupEl);
+		return () => ctx.presence.setNode(null);
+	});
+
 	createFocusTrap({
 		get enabled() {
 			return ctx.open;
@@ -59,7 +64,9 @@
 			'aria-labelledby': ctx.titleId,
 			'aria-describedby': ctx.descriptionId,
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
+			'data-closed': !ctx.open || ctx.presence.isEnding ? '' : undefined,
+			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
+			'data-ending-style': ctx.presence.isEnding ? '' : undefined
 		})
 	);
 </script>

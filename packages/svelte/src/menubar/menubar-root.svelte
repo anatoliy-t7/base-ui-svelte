@@ -2,6 +2,7 @@
 	import { setContext } from 'svelte';
 	import { useId } from '../internal/controllable.svelte.js';
 	import { MENUBAR_CONTEXT } from '../internal/context-keys.js';
+	import { createHoverDelay } from '../internal/hover-delay.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type {
 		MenubarContext,
@@ -12,6 +13,7 @@
 
 	let {
 		orientation = 'horizontal',
+		closeDelay = 150,
 		class: className,
 		style,
 		id = useId('menubar'),
@@ -24,6 +26,10 @@
 	let openMenuId = $state<string | null>(null);
 
 	const openOnHover = $derived(openMenuId != null);
+	const hover = createHoverDelay(
+		() => 0,
+		() => closeDelay
+	);
 
 	function registerMenu(entry: MenubarMenuEntry): () => void {
 		queueMicrotask(() => {
@@ -67,6 +73,7 @@
 
 	function onMenuOpenChange(menuId: string, open: boolean): void {
 		if (open) {
+			hover.cancel();
 			closeOthers(menuId);
 			openMenuId = menuId;
 			return;
@@ -76,6 +83,19 @@
 				? menus.find((menu) => menu.id !== menuId && menu.getOpen())?.id ?? null
 				: null;
 		}
+	}
+
+	function cancelClose(): void {
+		hover.cancel();
+	}
+
+	function closeWithDelay(): void {
+		hover.closeWithDelay(() => {
+			const idToClose = openMenuId;
+			if (idToClose == null) return;
+			const menu = menus.find((entry) => entry.id === idToClose);
+			menu?.setOpen(false, 'trigger-hover');
+		});
 	}
 
 	function moveFocus(fromMenuId: string, direction: 1 | -1): void {
@@ -88,6 +108,7 @@
 		if (!next) return;
 
 		const shouldOpen = openMenuId != null || menus.some((menu) => menu.getOpen());
+		hover.cancel();
 		closeOthers(next.menuId);
 		if (shouldOpen) {
 			const nextMenu = menus.find((menu) => menu.id === next.menuId);
@@ -99,6 +120,12 @@
 		next.element.focus();
 	}
 
+	$effect(() => {
+		return () => {
+			hover.dispose();
+		};
+	});
+
 	setContext(MENUBAR_CONTEXT, {
 		get orientation() {
 			return orientation;
@@ -106,11 +133,16 @@
 		get openOnHover() {
 			return openOnHover;
 		},
+		get closeDelay() {
+			return closeDelay;
+		},
 		registerMenu,
 		registerTrigger,
 		moveFocus,
 		onMenuOpenChange,
-		closeOthers
+		closeOthers,
+		cancelClose,
+		closeWithDelay
 	} satisfies MenubarContext);
 
 	const rootProps: Record<string, unknown> = $derived(

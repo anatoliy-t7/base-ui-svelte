@@ -22,10 +22,15 @@ export type {
 	FieldControlProps,
 	FieldDescriptionProps,
 	FieldErrorProps,
+	FieldErrorMatch,
 	FieldItemProps,
 	FieldValidityProps,
 	FieldContext,
 	FieldItemContext,
 	FieldValidityState,
+	FieldValidityFlags,
+	FieldTransitionStatus,
 	FieldValidationMode
 } from './types.js';
+
+export { DEFAULT_VALIDITY_FLAGS } from './types.js';

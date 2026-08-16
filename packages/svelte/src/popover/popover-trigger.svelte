@@ -7,6 +7,7 @@
 	let {
 		render = 'button',
 		disabled = false,
+		openOnHover = false,
 		class: className,
 		style,
 		children,
@@ -14,6 +15,7 @@
 	}: PopoverTriggerProps = $props();
 
 	const ctx = getContext<PopoverContext>(POPOVER_CONTEXT);
+	const hoverEnabled = $derived(openOnHover || ctx.openOnHover);
 
 	let triggerEl = $state<HTMLElement | null>(null);
 
@@ -42,6 +44,14 @@
 			onclick: () => {
 				if (disabled) return;
 				ctx.setOpen(!ctx.open, 'trigger-press');
+			},
+			onpointerenter: () => {
+				if (disabled || !hoverEnabled) return;
+				ctx.openWithHoverDelay('trigger-hover');
+			},
+			onpointerleave: () => {
+				if (disabled || !hoverEnabled) return;
+				ctx.closeWithHoverDelay('trigger-hover');
 			}
 		})
 	);

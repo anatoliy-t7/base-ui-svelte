@@ -14,16 +14,15 @@
 
 	const ctx = getContext<FieldContext>(FIELD_CONTEXT);
 
-	const errorMessage = $derived(ctx.errors[0]);
+	const errorMessage = $derived(ctx.errors[0] ?? '');
 
 	const shouldShow = $derived.by(() => {
 		if (match === true) return true;
 		if (match === false) return false;
 		if (typeof match === 'string') {
-			if (match === 'customError') return ctx.errors.length > 0;
-			return ctx.valid === false;
+			return Boolean(ctx.validity[match]);
 		}
-		return ctx.valid === false && (ctx.touched || ctx.errors.length > 0);
+		return ctx.valid === false;
 	});
 
 	const mergedProps: Record<string, unknown> = $derived(

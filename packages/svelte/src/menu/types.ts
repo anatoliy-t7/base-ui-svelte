@@ -31,6 +31,12 @@ export type MenuSubmenuEntry = {
 export type MenuContext = {
 	readonly open: boolean;
 	setOpen(open: boolean, reason: OpenChangeReason): void;
+	openWithHoverDelay(reason: OpenChangeReason): void;
+	closeWithHoverDelay(reason: OpenChangeReason): void;
+	cancelHover(): void;
+	readonly openOnHover: boolean;
+	readonly delay: number;
+	readonly closeDelay: number;
 	readonly menuId: string;
 	readonly triggerId: string;
 	readonly popupId: string;
@@ -78,6 +84,12 @@ export type MenuRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	onOpenChange?:
 		| ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void)
 		| undefined;
+	/** Open the menu when the pointer enters the trigger. */
+	openOnHover?: boolean;
+	/** Open delay when `openOnHover` is set (ms). @default 0 */
+	delay?: number;
+	/** Close delay when leaving trigger/popup under hover (ms). @default 0 */
+	closeDelay?: number;
 	children?: Snippet<[{ open: boolean }]>;
 };
 

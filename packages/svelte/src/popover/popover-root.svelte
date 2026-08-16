@@ -2,9 +2,11 @@
 	import { setContext } from 'svelte';
 	import {
 		createControllableOpen,
-		useId
+		useId,
+		type OpenChangeReason
 	} from '../internal/controllable.svelte.js';
 	import { POPOVER_CONTEXT } from '../internal/context-keys.js';
+	import { createHoverDelay } from '../internal/hover-delay.svelte.js';
 	import { createPresence } from '../internal/presence.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { PopoverContext, PopoverRefs, PopoverRootProps } from './types.js';
@@ -13,6 +15,9 @@
 		open = $bindable(undefined),
 		defaultOpen = false,
 		onOpenChange,
+		openOnHover = false,
+		delay = 0,
+		closeDelay = 0,
 		class: className,
 		style,
 		id = useId('popover'),
@@ -32,6 +37,10 @@
 	});
 
 	const presence = createPresence(() => state.open);
+	const hover = createHoverDelay(
+		() => delay,
+		() => closeDelay
+	);
 
 	const refs: PopoverRefs = {
 		trigger: null,
@@ -45,11 +54,54 @@
 	const descriptionId = useId('popover-description');
 	const popupId = useId('popover-popup');
 
+	function setOpen(next: boolean, reason: OpenChangeReason): void {
+		hover.cancel();
+		state.setOpen(next, reason);
+	}
+
+	function openWithHoverDelay(reason: OpenChangeReason): void {
+		if (state.open) {
+			hover.cancel();
+			return;
+		}
+		hover.openWithDelay(() => {
+			state.setOpen(true, reason);
+		});
+	}
+
+	function closeWithHoverDelay(reason: OpenChangeReason): void {
+		hover.closeWithDelay(() => {
+			state.setOpen(false, reason);
+		});
+	}
+
+	function cancelHover(): void {
+		hover.cancel();
+	}
+
+	$effect(() => {
+		return () => {
+			hover.dispose();
+		};
+	});
+
 	setContext(POPOVER_CONTEXT, {
 		get open() {
 			return state.open;
 		},
-		setOpen: state.setOpen,
+		setOpen,
+		openWithHoverDelay,
+		closeWithHoverDelay,
+		cancelHover,
+		get openOnHover() {
+			return openOnHover;
+		},
+		get delay() {
+			return delay;
+		},
+		get closeDelay() {
+			return closeDelay;
+		},
 		triggerId,
 		titleId,
 		descriptionId,

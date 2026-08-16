@@ -4,6 +4,7 @@
 	import { SvelteMap } from 'svelte/reactivity';
 	import { useId } from '../internal/controllable.svelte.js';
 	import { NAVIGATION_MENU_CONTEXT } from '../internal/context-keys.js';
+	import { createHoverDelay } from '../internal/hover-delay.svelte.js';
 	import { createPresence } from '../internal/presence.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type {
@@ -41,6 +42,10 @@
 
 	const open = $derived(currentValue != null);
 	const presence = createPresence(() => open);
+	const hover = createHoverDelay(
+		() => delay,
+		() => closeDelay
+	);
 
 	const refs: NavigationMenuRefs = {
 		list: null,
@@ -53,8 +58,6 @@
 	const popupId = useId('navigation-menu-popup');
 
 	const contents = new SvelteMap<string, Snippet>();
-	let openTimeout: ReturnType<typeof setTimeout> | null = null;
-	let closeTimeout: ReturnType<typeof setTimeout> | null = null;
 
 	function setValue(next: string | null): void {
 		if (isControlled) {
@@ -65,56 +68,35 @@
 		onValueChange?.(next);
 	}
 
-	function cancelOpen(): void {
-		if (openTimeout != null) {
-			clearTimeout(openTimeout);
-			openTimeout = null;
-		}
-	}
-
-	function cancelClose(): void {
-		if (closeTimeout != null) {
-			clearTimeout(closeTimeout);
-			closeTimeout = null;
-		}
-	}
-
 	function openItem(itemValue: string): void {
-		cancelClose();
-		cancelOpen();
+		hover.cancel();
 		setValue(itemValue);
 	}
 
 	function close(): void {
-		cancelOpen();
-		cancelClose();
+		hover.cancel();
 		setValue(null);
 	}
 
 	function openWithDelay(itemValue: string): void {
-		cancelClose();
-		cancelOpen();
-		if (open || delay <= 0) {
+		if (open) {
+			hover.cancel();
 			setValue(itemValue);
 			return;
 		}
-		openTimeout = setTimeout(() => {
-			openTimeout = null;
+		hover.openWithDelay(() => {
 			setValue(itemValue);
-		}, delay);
+		});
 	}
 
 	function closeWithDelay(): void {
-		cancelOpen();
-		cancelClose();
-		if (closeDelay <= 0) {
+		hover.closeWithDelay(() => {
 			setValue(null);
-			return;
-		}
-		closeTimeout = setTimeout(() => {
-			closeTimeout = null;
-			setValue(null);
-		}, closeDelay);
+		});
+	}
+
+	function cancelClose(): void {
+		hover.cancel();
 	}
 
 	function registerContent(itemValue: string, content: Snippet): () => void {
@@ -138,8 +120,7 @@
 	}
 
 	onDestroy(() => {
-		cancelOpen();
-		cancelClose();
+		hover.dispose();
 	});
 
 	setContext(NAVIGATION_MENU_CONTEXT, {

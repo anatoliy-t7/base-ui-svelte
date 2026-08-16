@@ -157,6 +157,8 @@ export type {
 export { Drawer } from './drawer/index.js';
 export type {
 	DrawerSwipeDirection,
+	DrawerSnapPoint,
+	DrawerSwipeMode,
 	DrawerRootProps,
 	DrawerTriggerProps,
 	DrawerPortalProps,
@@ -171,8 +173,12 @@ export type {
 	DrawerIndentProps,
 	DrawerIndentBackgroundProps,
 	DrawerSwipeAreaProps,
+	DrawerVirtualKeyboardProviderProps,
 	DrawerContext,
-	DrawerProviderContext
+	DrawerProviderContext,
+	DrawerVirtualKeyboardContext,
+	DrawerSwipeVisual,
+	DrawerRefs
 } from './drawer/index.js';
 
 export { Field } from './field/index.js';
@@ -182,9 +188,12 @@ export type {
 	FieldControlProps,
 	FieldDescriptionProps,
 	FieldErrorProps,
+	FieldErrorMatch,
 	FieldItemProps,
 	FieldValidityProps,
 	FieldValidityState,
+	FieldValidityFlags,
+	FieldTransitionStatus,
 	FieldContext,
 	FieldItemContext,
 	FieldValidationMode
@@ -194,7 +203,7 @@ export { Fieldset } from './fieldset/index.js';
 export type { FieldsetRootProps, FieldsetLegendProps, FieldsetContext } from './fieldset/index.js';
 
 export { Form } from './form/index.js';
-export type { FormRootProps, FormContext, FormErrors } from './form/index.js';
+export type { FormRootProps, FormContext, FormErrors, FormFieldRegistration } from './form/index.js';
 
 export { Input } from './input/index.js';
 export type { InputRootProps } from './input/index.js';

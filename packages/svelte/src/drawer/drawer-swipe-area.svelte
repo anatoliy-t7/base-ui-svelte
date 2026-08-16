@@ -45,10 +45,58 @@
 
 	const enabled = $derived(!disabled && !ctx.open);
 
+	let activePointerId: number | null = null;
+
+	function estimateSize(): number {
+		if (ctx.refs.popup) {
+			const rect = ctx.refs.popup.getBoundingClientRect();
+			return Math.max(
+				ctx.swipeDirection === 'left' || ctx.swipeDirection === 'right'
+					? rect.width
+					: rect.height,
+				1
+			);
+		}
+		if (typeof window === 'undefined') return 1;
+		return Math.max(
+			ctx.swipeDirection === 'left' || ctx.swipeDirection === 'right'
+				? window.innerWidth
+				: window.innerHeight,
+			1
+		);
+	}
+
 	function handlePointerDown(event: PointerEvent): void {
-		if (!enabled) return;
+		if (!enabled || event.button !== 0) return;
 		event.preventDefault();
-		ctx.setOpen(true, 'trigger-press');
+		activePointerId = event.pointerId;
+		const target = event.currentTarget;
+		if (target instanceof HTMLElement) {
+			target.setPointerCapture(event.pointerId);
+		}
+		ctx.beginSwipe(event.pointerId, event.clientX, event.clientY, 'open');
+	}
+
+	function handlePointerMove(event: PointerEvent): void {
+		if (activePointerId === null || event.pointerId !== activePointerId) return;
+		if (ctx.swipeMode !== 'open') return;
+		ctx.updateSwipe(event.clientX, event.clientY, event.timeStamp, estimateSize());
+	}
+
+	function handlePointerUp(event: PointerEvent): void {
+		if (activePointerId === null || event.pointerId !== activePointerId) return;
+		activePointerId = null;
+		if (ctx.swipeMode !== 'open') return;
+		ctx.endSwipe(estimateSize());
+	}
+
+	function handlePointerCancel(event: PointerEvent): void {
+		if (activePointerId === null || event.pointerId !== activePointerId) return;
+		activePointerId = null;
+		ctx.cancelSwipe();
+		if (ctx.open) {
+			ctx.setOpen(false, 'imperative-action');
+		}
 	}
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -62,17 +110,21 @@
 			'data-swipe-direction': openDirection,
 			'data-open': ctx.open ? '' : undefined,
 			'data-closed': !ctx.open ? '' : undefined,
-			'data-disabled': disabled ? '' : undefined
+			'data-disabled': disabled ? '' : undefined,
+			'data-swiping': ctx.swiping && ctx.swipeMode === 'open' ? '' : undefined,
+			onpointerdown: handlePointerDown,
+			onpointermove: handlePointerMove,
+			onpointerup: handlePointerUp,
+			onpointercancel: handlePointerCancel
 		})
 	);
 </script>
 
-{#if enabled}
+{#if enabled || (ctx.swiping && ctx.swipeMode === 'open')}
 	<svelte:element
 		this={render}
 		{...mergedProps}
 		style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
-		onpointerdown={handlePointerDown}
 	>
 		{#if children}
 			{@render children()}

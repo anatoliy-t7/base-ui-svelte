@@ -1,10 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import TooltipTest from './tooltip.test.svelte';
 
 describe('Tooltip', () => {
+	afterEach(() => {
+		vi.useRealTimers();
+	});
+
 	it('shows on hover and hides on escape', async () => {
 		const user = userEvent.setup();
 		render(TooltipTest);
@@ -31,6 +35,23 @@ describe('Tooltip', () => {
 
 		await user.tab();
 		expect(screen.getByTestId('trigger')).toHaveFocus();
+		await waitFor(() => {
+			expect(screen.getByTestId('popup')).toBeInTheDocument();
+		});
+	});
+
+	it('respects openDelay before opening', async () => {
+		vi.useFakeTimers({ shouldAdvanceTime: true });
+		const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+		render(TooltipTest, { props: { openDelay: 600, closeDelay: 0 } });
+
+		await user.hover(screen.getByTestId('trigger'));
+		expect(screen.queryByTestId('popup')).toBeNull();
+
+		await vi.advanceTimersByTimeAsync(599);
+		expect(screen.queryByTestId('popup')).toBeNull();
+
+		await vi.advanceTimersByTimeAsync(1);
 		await waitFor(() => {
 			expect(screen.getByTestId('popup')).toBeInTheDocument();
 		});

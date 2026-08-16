@@ -3,7 +3,12 @@
 	import { useId } from '../internal/controllable.svelte.js';
 	import { FORM_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
-	import type { FormContext, FormErrors, FormRootProps } from './types.js';
+	import type {
+		FormContext,
+		FormErrors,
+		FormFieldRegistration,
+		FormRootProps
+	} from './types.js';
 
 	let {
 		errors = {},
@@ -17,6 +22,7 @@
 
 	/** Maps field name → error signature that was dismissed by typing. */
 	let dismissed = $state<Record<string, string>>({});
+	const registeredFields = new Map<string, FormFieldRegistration>();
 
 	function errorSignature(value: string | string[] | undefined): string {
 		if (value === undefined) return '';
@@ -45,19 +51,42 @@
 		dismissed = { ...dismissed, [name]: errorSignature(value) };
 	}
 
+	function registerField(name: string, registration: FormFieldRegistration): void {
+		registeredFields.set(name, registration);
+	}
+
+	function unregisterField(name: string): void {
+		registeredFields.delete(name);
+	}
+
 	setContext(FORM_CONTEXT, {
 		get errors() {
 			return visibleErrors;
 		},
 		getFieldError,
-		clearFieldError
+		clearFieldError,
+		registerField,
+		unregisterField
 	} satisfies FormContext);
 
-	function handleSubmit(event: SubmitEvent): void {
-		if (onFormSubmit) {
+	async function handleSubmit(event: SubmitEvent): Promise<void> {
+		const formEl = event.currentTarget as HTMLFormElement;
+		const fields = Array.from(registeredFields.values());
+		const shouldIntercept = fields.length > 0 || Boolean(onFormSubmit);
+
+		if (shouldIntercept) {
 			event.preventDefault();
-			const form = event.currentTarget as HTMLFormElement;
-			onFormSubmit(new FormData(form), event);
+		}
+
+		if (fields.length > 0) {
+			const results = await Promise.all(fields.map((field) => field.validate()));
+			if (results.some((ok) => !ok)) {
+				return;
+			}
+		}
+
+		if (onFormSubmit) {
+			onFormSubmit(new FormData(formEl), event);
 		}
 	}
 

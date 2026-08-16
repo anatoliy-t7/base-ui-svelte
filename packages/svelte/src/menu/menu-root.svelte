@@ -6,6 +6,7 @@
 		type OpenChangeReason
 	} from '../internal/controllable.svelte.js';
 	import { MENU_CONTEXT, MENUBAR_CONTEXT } from '../internal/context-keys.js';
+	import { createHoverDelay } from '../internal/hover-delay.svelte.js';
 	import { createPresence } from '../internal/presence.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { MenubarContext } from '../menubar/types.js';
@@ -21,6 +22,9 @@
 		open = $bindable(undefined),
 		defaultOpen = false,
 		onOpenChange,
+		openOnHover = false,
+		delay = 0,
+		closeDelay = 0,
 		class: className,
 		style,
 		id = useId('menu'),
@@ -45,7 +49,13 @@
 		}
 	});
 
+	const hover = createHoverDelay(
+		() => delay,
+		() => (menubar ? menubar.closeDelay : closeDelay)
+	);
+
 	function setOpen(next: boolean, reason: OpenChangeReason): void {
+		hover.cancel();
 		if (next && menubar) {
 			menubar.closeOthers(menuId);
 		}
@@ -54,6 +64,32 @@
 		}
 		openState.setOpen(next, reason);
 		menubar?.onMenuOpenChange(menuId, next);
+	}
+
+	function openWithHoverDelay(reason: OpenChangeReason): void {
+		if (openState.open) {
+			hover.cancel();
+			menubar?.cancelClose();
+			return;
+		}
+		hover.openWithDelay(() => {
+			setOpen(true, reason);
+		});
+	}
+
+	function closeWithHoverDelay(reason: OpenChangeReason): void {
+		if (menubar) {
+			menubar.closeWithDelay();
+			return;
+		}
+		hover.closeWithDelay(() => {
+			setOpen(false, reason);
+		});
+	}
+
+	function cancelHover(): void {
+		hover.cancel();
+		menubar?.cancelClose();
 	}
 
 	const presence = createPresence(() => openState.open);
@@ -171,11 +207,29 @@
 		});
 	});
 
+	$effect(() => {
+		return () => {
+			hover.dispose();
+		};
+	});
+
 	setContext(MENU_CONTEXT, {
 		get open() {
 			return openState.open;
 		},
 		setOpen,
+		openWithHoverDelay,
+		closeWithHoverDelay,
+		cancelHover,
+		get openOnHover() {
+			return openOnHover;
+		},
+		get delay() {
+			return delay;
+		},
+		get closeDelay() {
+			return closeDelay;
+		},
 		menuId,
 		triggerId,
 		popupId,

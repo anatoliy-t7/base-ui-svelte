@@ -12,6 +12,7 @@ import Content from './drawer-content.svelte';
 import Title from './drawer-title.svelte';
 import Description from './drawer-description.svelte';
 import Close from './drawer-close.svelte';
+import VirtualKeyboardProvider from './drawer-virtual-keyboard-provider.svelte';
 
 export const Drawer = {
 	Provider,
@@ -27,11 +28,14 @@ export const Drawer = {
 	Content,
 	Title,
 	Description,
-	Close
+	Close,
+	VirtualKeyboardProvider
 };
 
 export type {
 	DrawerSwipeDirection,
+	DrawerSnapPoint,
+	DrawerSwipeMode,
 	DrawerRootProps,
 	DrawerTriggerProps,
 	DrawerPortalProps,
@@ -46,6 +50,10 @@ export type {
 	DrawerIndentProps,
 	DrawerIndentBackgroundProps,
 	DrawerSwipeAreaProps,
+	DrawerVirtualKeyboardProviderProps,
 	DrawerContext,
-	DrawerProviderContext
+	DrawerProviderContext,
+	DrawerVirtualKeyboardContext,
+	DrawerSwipeVisual,
+	DrawerRefs
 } from './types.js';

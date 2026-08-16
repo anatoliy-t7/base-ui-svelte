@@ -6,6 +6,7 @@
 		type OpenChangeReason
 	} from '../internal/controllable.svelte.js';
 	import { PREVIEW_CARD_CONTEXT } from '../internal/context-keys.js';
+	import { createHoverDelay } from '../internal/hover-delay.svelte.js';
 	import { createPresence } from '../internal/presence.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { PreviewCardContext, PreviewCardRefs, PreviewCardRootProps } from './types.js';
@@ -35,6 +36,10 @@
 	});
 
 	const presence = createPresence(() => state.open);
+	const hover = createHoverDelay(
+		() => openDelay,
+		() => closeDelay
+	);
 
 	const refs: PreviewCardRefs = {
 		trigger: null,
@@ -46,53 +51,29 @@
 	const triggerId = useId('preview-card-trigger');
 	const popupId = useId('preview-card-popup');
 
-	let openTimeout: ReturnType<typeof setTimeout> | null = null;
-	let closeTimeout: ReturnType<typeof setTimeout> | null = null;
-
-	function cancelOpen(): void {
-		if (openTimeout != null) {
-			clearTimeout(openTimeout);
-			openTimeout = null;
-		}
-	}
-
-	function cancelClose(): void {
-		if (closeTimeout != null) {
-			clearTimeout(closeTimeout);
-			closeTimeout = null;
-		}
-	}
-
 	function openWithDelay(reason: OpenChangeReason): void {
-		cancelClose();
-		cancelOpen();
-		if (openDelay <= 0) {
-			state.setOpen(true, reason);
+		if (state.open) {
+			hover.cancel();
 			return;
 		}
-		openTimeout = setTimeout(() => {
-			openTimeout = null;
+		hover.openWithDelay(() => {
 			state.setOpen(true, reason);
-		}, openDelay);
+		});
 	}
 
 	function closeWithDelay(reason: OpenChangeReason): void {
-		cancelOpen();
-		cancelClose();
-		if (closeDelay <= 0) {
+		hover.closeWithDelay(() => {
 			state.setOpen(false, reason);
-			return;
-		}
-		closeTimeout = setTimeout(() => {
-			closeTimeout = null;
-			state.setOpen(false, reason);
-		}, closeDelay);
+		});
+	}
+
+	function cancelClose(): void {
+		hover.cancel();
 	}
 
 	$effect(() => {
 		return () => {
-			cancelOpen();
-			cancelClose();
+			hover.dispose();
 		};
 	});
 

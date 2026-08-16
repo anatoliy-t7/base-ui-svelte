@@ -3,10 +3,16 @@ import type { HTMLFormAttributes } from 'svelte/elements';
 
 export type FormErrors = Record<string, string | string[]>;
 
+export type FormFieldRegistration = {
+	validate: () => Promise<boolean>;
+};
+
 export type FormContext = {
 	readonly errors: FormErrors;
 	getFieldError: (name: string) => string | undefined;
 	clearFieldError: (name: string) => void;
+	registerField: (name: string, registration: FormFieldRegistration) => void;
+	unregisterField: (name: string) => void;
 };
 
 export type FormRootProps = Omit<HTMLFormAttributes, 'children' | 'onsubmit'> & {

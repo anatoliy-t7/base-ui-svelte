@@ -5,9 +5,20 @@ import type { createPresence } from '../internal/presence.svelte.js';
 
 export type DrawerSwipeDirection = 'up' | 'down' | 'left' | 'right';
 
+export type DrawerSnapPoint = number | string;
+
+export type DrawerSwipeMode = 'open' | 'dismiss';
+
 export type DrawerRefs = {
 	trigger: HTMLElement | null;
 	popup: HTMLElement | null;
+};
+
+export type DrawerSwipeVisual = {
+	progress: number;
+	movementX: number;
+	movementY: number;
+	strength: number;
 };
 
 export type DrawerContext = {
@@ -16,6 +27,30 @@ export type DrawerContext = {
 	readonly swipeDirection: DrawerSwipeDirection;
 	readonly modal: boolean;
 	readonly disablePointerDismissal: boolean;
+	readonly snapPoints: ReadonlyArray<DrawerSnapPoint> | undefined;
+	readonly activeSnapPointIndex: number;
+	setActiveSnapPointIndex(index: number): void;
+	readonly swipeProgress: number;
+	readonly swipeMovementX: number;
+	readonly swipeMovementY: number;
+	readonly swipeStrength: number;
+	readonly swiping: boolean;
+	readonly swipeMode: DrawerSwipeMode | null;
+	setSwipeVisual(visual: DrawerSwipeVisual | null): void;
+	beginSwipe(
+		pointerId: number,
+		startX: number,
+		startY: number,
+		mode: DrawerSwipeMode
+	): void;
+	updateSwipe(
+		clientX: number,
+		clientY: number,
+		timeStamp: number,
+		size: number
+	): void;
+	endSwipe(size: number): void;
+	cancelSwipe(): void;
 	readonly triggerId: string;
 	readonly titleId: string;
 	readonly descriptionId: string;
@@ -33,6 +68,7 @@ export type DrawerRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
 	swipeDirection?: DrawerSwipeDirection;
 	modal?: boolean;
 	disablePointerDismissal?: boolean;
+	snapPoints?: ReadonlyArray<DrawerSnapPoint>;
 	children?: Snippet<[{ open: boolean }]>;
 };
 
@@ -104,5 +140,17 @@ export type DrawerSwipeAreaProps = Omit<HTMLAttributes<HTMLDivElement>, 'childre
 	render?: string;
 	disabled?: boolean;
 	swipeDirection?: DrawerSwipeDirection;
+	children?: Snippet;
+};
+
+export type DrawerVirtualKeyboardContext = {
+	readonly keyboardInset: number;
+	readonly keyboardOpen: boolean;
+};
+
+export type DrawerVirtualKeyboardProviderProps = Omit<
+	HTMLAttributes<HTMLDivElement>,
+	'children'
+> & {
 	children?: Snippet;
 };

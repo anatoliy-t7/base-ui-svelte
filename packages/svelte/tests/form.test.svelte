@@ -4,17 +4,19 @@
 
 	let {
 		errors = {},
-		onFormSubmit
+		onFormSubmit,
+		requireUsername = false
 	}: {
 		errors?: Record<string, string | string[]>;
 		onFormSubmit?: (formData: FormData, event: SubmitEvent) => void;
+		requireUsername?: boolean;
 	} = $props();
 </script>
 
 <Form.Root data-testid="form" {errors} {onFormSubmit}>
 	<Field.Root name="username" data-testid="field">
 		<Field.Label>Username</Field.Label>
-		<Field.Control data-testid="control" />
+		<Field.Control data-testid="control" required={requireUsername || undefined} />
 		<Field.Error data-testid="error" match={true} />
 	</Field.Root>
 	<button type="submit">Submit</button>

@@ -21,6 +21,7 @@ export type TooltipContext = {
 	readonly popupId: string;
 	readonly refs: TooltipRefs;
 	readonly presence: ReturnType<typeof createPresence>;
+	readonly openDelay: number;
 	readonly closeDelay: number;
 };
 
@@ -30,6 +31,10 @@ export type TooltipRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> 
 	onOpenChange?:
 		| ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void)
 		| undefined;
+	/** Alias for `openDelay` (Base UI name). @default 600 */
+	delay?: number;
+	/** How long to wait before opening on hover (ms). @default 600 */
+	openDelay?: number;
 	closeDelay?: number;
 	children?: Snippet<[{ open: boolean }]>;
 };

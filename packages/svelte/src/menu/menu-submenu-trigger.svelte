@@ -38,6 +38,10 @@
 	function openSubmenu(reason: 'trigger-hover' | 'trigger-press' | 'imperative-action'): void {
 		if (disabled || !parentMenu) return;
 		parentMenu.closeSubmenus(ctx.menuId);
+		if (reason === 'trigger-hover') {
+			ctx.openWithHoverDelay(reason);
+			return;
+		}
 		ctx.setOpen(true, reason);
 	}
 
@@ -62,6 +66,10 @@
 			},
 			onpointerenter: () => {
 				openSubmenu('trigger-hover');
+			},
+			onpointerleave: () => {
+				if (disabled) return;
+				ctx.closeWithHoverDelay('trigger-hover');
 			},
 			onclick: (event: MouseEvent) => {
 				if (disabled) {

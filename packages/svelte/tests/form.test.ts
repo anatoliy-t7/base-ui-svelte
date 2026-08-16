@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/svelte';
+import { render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
 import { describe, expect, it, vi } from 'vitest';
@@ -14,9 +14,25 @@ describe('Form', () => {
 		await user.type(control, 'ada');
 		await user.click(screen.getByRole('button', { name: 'Submit' }));
 
-		expect(onFormSubmit).toHaveBeenCalledTimes(1);
+		await waitFor(() => {
+			expect(onFormSubmit).toHaveBeenCalledTimes(1);
+		});
 		const formData = onFormSubmit.mock.calls[0]?.[0] as FormData;
 		expect(formData.get('username')).toBe('ada');
+	});
+
+	it('runs field validation on submit and blocks onFormSubmit when invalid', async () => {
+		const user = userEvent.setup();
+		const onFormSubmit = vi.fn();
+		render(FormTest, { props: { onFormSubmit, requireUsername: true } });
+
+		await user.click(screen.getByRole('button', { name: 'Submit' }));
+
+		await waitFor(() => {
+			expect(screen.getByTestId('field')).toHaveAttribute('data-invalid');
+		});
+		expect(onFormSubmit).not.toHaveBeenCalled();
+		expect(screen.getByTestId('error')).toBeInTheDocument();
 	});
 
 	it('surfaces server errors on Field.Error', () => {

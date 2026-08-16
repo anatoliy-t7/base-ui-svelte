@@ -9,6 +9,9 @@ export const DIALOG_CONTEXT = Symbol('base-ui-svelte.dialog');
 export const ALERT_DIALOG_CONTEXT = Symbol('base-ui-svelte.alert-dialog');
 export const DRAWER_CONTEXT = Symbol('base-ui-svelte.drawer');
 export const DRAWER_PROVIDER_CONTEXT = Symbol('base-ui-svelte.drawer-provider');
+export const DRAWER_VIRTUAL_KEYBOARD_CONTEXT = Symbol(
+	'base-ui-svelte.drawer-virtual-keyboard'
+);
 export const POPOVER_CONTEXT = Symbol('base-ui-svelte.popover');
 export const TOOLTIP_CONTEXT = Symbol('base-ui-svelte.tooltip');
 export const PREVIEW_CARD_CONTEXT = Symbol('base-ui-svelte.preview-card');

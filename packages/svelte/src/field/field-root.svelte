@@ -4,7 +4,12 @@
 	import { FIELD_CONTEXT, FORM_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { FormContext } from '../form/types.js';
-	import type { FieldContext, FieldRootProps } from './types.js';
+	import {
+		DEFAULT_VALIDITY_FLAGS,
+		type FieldContext,
+		type FieldRootProps,
+		type FieldValidityFlags
+	} from './types.js';
 
 	let {
 		name,
@@ -27,7 +32,7 @@
 	const errorId = useId('field-error');
 
 	let value = $state('');
-	let initialValue = $state('');
+	let initialValue = $state<unknown>('');
 	let initialized = $state(false);
 	let touched = $state(false);
 	let dirty = $state(false);
@@ -35,6 +40,8 @@
 	let validationErrors = $state<string[]>([]);
 	let hasValidated = $state(false);
 	let hasDescription = $state(false);
+	let controlEl = $state<HTMLInputElement | null>(null);
+	let nativeFlags = $state<FieldValidityFlags>({ ...DEFAULT_VALIDITY_FLAGS });
 
 	const formError = $derived(name && form ? form.getFieldError(name) : undefined);
 
@@ -48,29 +55,127 @@
 
 	const filled = $derived(value.length > 0);
 
-	const valid = $derived.by(() => {
-		if (invalid === true) return false;
-		if (errors.length > 0) return false;
-		if (invalid === false) return true;
-		if (!hasValidated && !formError) return null;
-		return true;
+	const validity = $derived.by((): FieldValidityFlags => {
+		const hasExternalInvalid = invalid === true || Boolean(formError);
+
+		if (!hasValidated && !hasExternalInvalid) {
+			return {
+				...DEFAULT_VALIDITY_FLAGS,
+				valid: invalid === false ? true : null
+			};
+		}
+
+		const flags: FieldValidityFlags = { ...nativeFlags };
+		if (hasExternalInvalid) {
+			flags.valid = false;
+		} else if (invalid === false && flags.valid !== false) {
+			flags.valid = true;
+		} else if (!hasValidated) {
+			flags.valid = false;
+		}
+		return flags;
 	});
+
+	const valid = $derived(validity.valid);
+
+	function readNativeFlags(element: HTMLInputElement): FieldValidityFlags {
+		const { validity: v } = element;
+		return {
+			badInput: v.badInput,
+			customError: v.customError,
+			patternMismatch: v.patternMismatch,
+			rangeOverflow: v.rangeOverflow,
+			rangeUnderflow: v.rangeUnderflow,
+			stepMismatch: v.stepMismatch,
+			tooLong: v.tooLong,
+			tooShort: v.tooShort,
+			typeMismatch: v.typeMismatch,
+			valueMissing: v.valueMissing,
+			valid: v.valid
+		};
+	}
+
+	function syncNativeValidity(element: HTMLInputElement): void {
+		nativeFlags = readNativeFlags(element);
+	}
+
+	function setCustomValidity(message: string): void {
+		if (!controlEl) return;
+		controlEl.setCustomValidity(message);
+		nativeFlags = readNativeFlags(controlEl);
+	}
+
+	function registerControl(element: HTMLInputElement | null): void {
+		controlEl = element;
+		if (element) {
+			syncNativeValidity(element);
+		} else {
+			nativeFlags = { ...DEFAULT_VALIDITY_FLAGS };
+		}
+	}
 
 	async function runValidate(): Promise<boolean> {
 		hasValidated = true;
-		if (!validate) {
-			validationErrors = [];
-			return invalid !== true && !formError;
-		}
-		const result = await validate(value);
-		if (result === null || result === undefined) {
-			validationErrors = [];
-		} else if (Array.isArray(result)) {
-			validationErrors = result;
+		const nextErrors: string[] = [];
+
+		if (controlEl) {
+			// Clear previous custom validity from our validate prop before re-checking native.
+			controlEl.setCustomValidity('');
+			controlEl.checkValidity();
+			const flags = readNativeFlags(controlEl);
+			nativeFlags = flags;
+			if (!flags.valid) {
+				const message = controlEl.validationMessage;
+				if (message) {
+					nextErrors.push(message);
+				}
+			}
 		} else {
-			validationErrors = [result];
+			nativeFlags = { ...DEFAULT_VALIDITY_FLAGS, valid: true };
 		}
-		return validationErrors.length === 0 && !formError && invalid !== true;
+
+		const nativeInvalid = nativeFlags.valid === false;
+
+		if (validate && !nativeInvalid) {
+			const result = await validate(value);
+			const customMessages =
+				result === null || result === undefined
+					? []
+					: Array.isArray(result)
+						? result.filter(Boolean)
+						: [result];
+
+			if (customMessages.length > 0) {
+				nextErrors.push(...customMessages);
+				const message = customMessages.join('\n');
+				if (controlEl) {
+					controlEl.setCustomValidity(message);
+					nativeFlags = {
+						...readNativeFlags(controlEl),
+						customError: true,
+						valid: false
+					};
+				} else {
+					nativeFlags = {
+						...DEFAULT_VALIDITY_FLAGS,
+						customError: true,
+						valid: false
+					};
+				}
+			} else if (controlEl) {
+				controlEl.setCustomValidity('');
+				nativeFlags = readNativeFlags(controlEl);
+			}
+		}
+
+		validationErrors = nextErrors;
+
+		const ok =
+			validationErrors.length === 0 &&
+			!formError &&
+			invalid !== true &&
+			nativeFlags.valid !== false;
+		return ok;
 	}
 
 	function setValue(next: string, event?: Event): void {
@@ -112,6 +217,14 @@
 		return ids.length > 0 ? ids.join(' ') : undefined;
 	}
 
+	$effect(() => {
+		if (!form || !name) return;
+		form.registerField(name, { validate: runValidate });
+		return () => {
+			form.unregisterField(name);
+		};
+	});
+
 	setContext(FIELD_CONTEXT, {
 		get name() {
 			return name;
@@ -134,6 +247,9 @@
 		get value() {
 			return value;
 		},
+		get initialValue() {
+			return initialValue;
+		},
 		get touched() {
 			return touched;
 		},
@@ -152,6 +268,9 @@
 		get errors() {
 			return errors;
 		},
+		get validity() {
+			return validity;
+		},
 		get validationMode() {
 			return validationMode;
 		},
@@ -159,6 +278,9 @@
 		setTouched,
 		setFocused,
 		setDirty,
+		registerControl,
+		syncNativeValidity,
+		setCustomValidity,
 		validate: runValidate,
 		getDescribedBy,
 		setHasDescription: (next: boolean) => {

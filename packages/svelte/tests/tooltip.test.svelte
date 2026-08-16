@@ -1,8 +1,16 @@
 <script lang="ts">
 	import { Tooltip } from '../src/index.js';
+
+	let {
+		openDelay = 0,
+		closeDelay = 0
+	}: {
+		openDelay?: number;
+		closeDelay?: number;
+	} = $props();
 </script>
 
-<Tooltip.Root>
+<Tooltip.Root {openDelay} {closeDelay}>
 	<Tooltip.Trigger data-testid="trigger">Hover me</Tooltip.Trigger>
 	<Tooltip.Portal>
 		<Tooltip.Positioner>

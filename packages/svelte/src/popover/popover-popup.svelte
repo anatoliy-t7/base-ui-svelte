@@ -26,6 +26,11 @@
 		};
 	});
 
+	$effect(() => {
+		ctx.presence.setNode(popupEl);
+		return () => ctx.presence.setNode(null);
+	});
+
 	createDismiss({
 		get enabled() {
 			return ctx.open;
@@ -33,6 +38,7 @@
 		refs: () => [ctx.refs.popup, ctx.refs.trigger, ctx.refs.positioner],
 		onDismiss: (event) => {
 			const reason = event instanceof KeyboardEvent ? 'escape-key' : 'outside-press';
+			ctx.cancelHover();
 			ctx.setOpen(false, reason);
 		},
 		dismissOnEscape: true,
@@ -49,7 +55,17 @@
 			'aria-labelledby': ctx.titleId,
 			'aria-describedby': ctx.descriptionId,
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined
+			'data-closed': !ctx.open || ctx.presence.isEnding ? '' : undefined,
+			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
+			'data-ending-style': ctx.presence.isEnding ? '' : undefined,
+			onpointerenter: () => {
+				ctx.cancelHover();
+			},
+			onpointerleave: () => {
+				if (ctx.openOnHover) {
+					ctx.closeWithHoverDelay('trigger-hover');
+				}
+			}
 		})
 	);
 </script>

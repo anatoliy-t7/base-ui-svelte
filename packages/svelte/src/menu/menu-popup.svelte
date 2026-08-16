@@ -28,6 +28,11 @@
 	});
 
 	$effect(() => {
+		ctx.presence.setNode(popupEl);
+		return () => ctx.presence.setNode(null);
+	});
+
+	$effect(() => {
 		if (!ctx.open) {
 			focusedOnOpen = false;
 			return;
@@ -54,6 +59,7 @@
 		refs: () => [ctx.refs.popup, ctx.refs.trigger, ctx.refs.positioner],
 		onDismiss: (event) => {
 			const reason = event instanceof KeyboardEvent ? 'escape-key' : 'outside-press';
+			ctx.cancelHover();
 			ctx.setOpen(false, reason);
 		},
 		dismissOnEscape: true,
@@ -102,8 +108,21 @@
 			style,
 			tabindex: -1,
 			'data-open': ctx.open ? '' : undefined,
-			'data-closed': !ctx.open ? '' : undefined,
-			onkeydown: onKeyDown
+			'data-closed': !ctx.open || ctx.presence.isEnding ? '' : undefined,
+			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
+			'data-ending-style': ctx.presence.isEnding ? '' : undefined,
+			onkeydown: onKeyDown,
+			onpointerenter: () => {
+				ctx.cancelHover();
+				if (ctx.isSubmenu) {
+					ctx.parentMenu?.cancelHover();
+				}
+			},
+			onpointerleave: () => {
+				if (ctx.openOnHover || ctx.isSubmenu) {
+					ctx.closeWithHoverDelay('trigger-hover');
+				}
+			}
 		})
 	);
 </script>

@@ -6,6 +6,7 @@
 		type OpenChangeReason
 	} from '../internal/controllable.svelte.js';
 	import { TOOLTIP_CONTEXT } from '../internal/context-keys.js';
+	import { createHoverDelay } from '../internal/hover-delay.svelte.js';
 	import { createPresence } from '../internal/presence.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { TooltipContext, TooltipRefs, TooltipRootProps } from './types.js';
@@ -14,6 +15,8 @@
 		open = $bindable(undefined),
 		defaultOpen = false,
 		onOpenChange,
+		delay,
+		openDelay,
 		closeDelay = 200,
 		class: className,
 		style,
@@ -21,6 +24,8 @@
 		children,
 		...rest
 	}: TooltipRootProps = $props();
+
+	const resolvedOpenDelay = $derived(openDelay ?? delay ?? 600);
 
 	const state = createControllableOpen({
 		getOpen: () => open,
@@ -34,6 +39,10 @@
 	});
 
 	const presence = createPresence(() => state.open);
+	const hover = createHoverDelay(
+		() => resolvedOpenDelay,
+		() => closeDelay
+	);
 
 	const refs: TooltipRefs = {
 		trigger: null,
@@ -45,31 +54,29 @@
 	const triggerId = useId('tooltip-trigger');
 	const popupId = useId('tooltip-popup');
 
-	let closeTimeout: ReturnType<typeof setTimeout> | null = null;
-
-	function cancelClose(): void {
-		if (closeTimeout != null) {
-			clearTimeout(closeTimeout);
-			closeTimeout = null;
-		}
-	}
-
 	function openWithDelay(reason: OpenChangeReason): void {
-		cancelClose();
-		state.setOpen(true, reason);
+		if (state.open) {
+			hover.cancel();
+			return;
+		}
+		hover.openWithDelay(() => {
+			state.setOpen(true, reason);
+		});
 	}
 
 	function closeWithDelay(reason: OpenChangeReason): void {
-		cancelClose();
-		closeTimeout = setTimeout(() => {
-			closeTimeout = null;
+		hover.closeWithDelay(() => {
 			state.setOpen(false, reason);
-		}, closeDelay);
+		});
+	}
+
+	function cancelClose(): void {
+		hover.cancel();
 	}
 
 	$effect(() => {
 		return () => {
-			cancelClose();
+			hover.dispose();
 		};
 	});
 
@@ -85,6 +92,9 @@
 		popupId,
 		refs,
 		presence,
+		get openDelay() {
+			return resolvedOpenDelay;
+		},
 		get closeDelay() {
 			return closeDelay;
 		}
