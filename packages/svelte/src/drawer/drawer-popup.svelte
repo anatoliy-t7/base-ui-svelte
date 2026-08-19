@@ -33,17 +33,17 @@
 	});
 
 	$effect(() => {
-		if (!popupEl) {
+		const el = popupEl;
+		if (!el) {
 			measuredHeight = 0;
 			return;
 		}
 		const update = () => {
-			if (!popupEl) return;
-			measuredHeight = popupEl.getBoundingClientRect().height;
+			measuredHeight = el.getBoundingClientRect().height;
 		};
 		update();
 		const observer = new ResizeObserver(update);
-		observer.observe(popupEl);
+		observer.observe(el);
 		return () => observer.disconnect();
 	});
 

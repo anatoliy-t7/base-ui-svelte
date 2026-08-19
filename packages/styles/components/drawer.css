@@ -1,8 +1,8 @@
-/* Drawer — side panels with enter/exit slide + swipe transforms */
+/* Drawer — Base UI / shadcn enter/exit slide + swipe transforms */
 
 .drawer-backdrop {
 	@apply fixed inset-0 z-40 bg-backdrop;
-	transition: opacity 250ms var(--ease-out-fluid);
+	transition: opacity 450ms var(--ease-out-fluid);
 	@apply motion-reduce:transition-none;
 
 	&[data-starting-style],
@@ -10,10 +10,19 @@
 	&[data-closed] {
 		opacity: 0;
 	}
+
+	&[data-ending-style] {
+		pointer-events: none;
+		transition-duration: calc(var(--drawer-swipe-strength, 1) * 400ms);
+	}
+
+	&[data-swiping] {
+		transition-duration: 0ms;
+	}
 }
 
 .drawer-viewport {
-	@apply pointer-events-none fixed inset-0 z-50 flex;
+	@apply pointer-events-none fixed inset-0 z-50 flex p-2;
 }
 
 .drawer-viewport[data-swipe-direction='right'] {
@@ -33,56 +42,59 @@
 }
 
 .drawer-popup {
-	@apply pointer-events-auto relative overflow-auto border border-border bg-overlay p-5 text-overlay-foreground shadow-overlay outline-none;
-	--drawer-hidden-x: 0%;
-	--drawer-hidden-y: 0%;
-	--drawer-slide-x: var(--drawer-hidden-x);
-	--drawer-slide-y: var(--drawer-hidden-y);
+	@apply pointer-events-auto relative overflow-auto rounded-xl border border-border bg-overlay p-5 text-overlay-foreground shadow-overlay outline-none;
+	--drawer-inset: 0px;
+	--drawer-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	--closed-transform: translate3d(0, 0, 0);
 	transform: translate3d(
-		calc(var(--drawer-slide-x) + var(--drawer-swipe-movement-x, 0px)),
-		calc(var(--drawer-slide-y) + var(--drawer-swipe-movement-y, 0px)),
+		var(--drawer-swipe-movement-x, 0px),
+		calc(var(--drawer-snap-point-offset, 0px) + var(--drawer-swipe-movement-y, 0px)),
 		0
 	);
-	transition: transform 280ms var(--ease-out-fluid);
+	transition:
+		transform 450ms var(--drawer-ease),
+		height 450ms var(--drawer-ease),
+		opacity 450ms var(--drawer-ease);
 	will-change: transform;
 	@apply motion-reduce:transition-none;
 
-	&[data-open]:not([data-starting-style]):not([data-ending-style]) {
-		--drawer-slide-x: 0%;
-		--drawer-slide-y: 0%;
-	}
-
-	&[data-swiping] {
-		transition: none;
+	&[data-starting-style],
+	&[data-ending-style] {
+		transform: var(--closed-transform);
 	}
 
 	&[data-ending-style] {
-		transition-duration: 220ms;
+		opacity: 0.9999;
+		transition-duration: calc(var(--drawer-swipe-strength, 1) * 400ms);
 	}
-}
 
-.drawer-popup-right {
-	@apply h-full w-80 max-w-[85vw] rounded-s-xl border-e-0;
-	--drawer-hidden-x: 100%;
-	--drawer-hidden-y: 0%;
-}
+	&[data-swiping] {
+		transition-duration: 0ms;
+	}
 
-.drawer-popup-left {
-	@apply h-full w-80 max-w-[85vw] rounded-e-xl border-s-0;
-	--drawer-hidden-x: -100%;
-	--drawer-hidden-y: 0%;
-}
+	&[data-ending-style][data-swiping] {
+		transition-duration: calc(var(--drawer-swipe-strength, 1) * 400ms);
+	}
 
-.drawer-popup-bottom {
-	@apply mt-0 h-auto max-h-[85vh] w-full max-w-none rounded-t-2xl border-b-0;
-	--drawer-hidden-x: 0%;
-	--drawer-hidden-y: 100%;
-}
+	&[data-swipe-direction='right'] {
+		@apply h-full max-w-[85vw] min-w-96;
+		--closed-transform: translate3d(calc(100% + var(--drawer-inset) + 2px), 0, 0);
+	}
 
-.drawer-popup-top {
-	@apply mb-0 h-auto max-h-[85vh] w-full max-w-none rounded-b-2xl border-t-0;
-	--drawer-hidden-x: 0%;
-	--drawer-hidden-y: -100%;
+	&[data-swipe-direction='left'] {
+		@apply h-full max-w-[85vw] min-w-96;
+		--closed-transform: translate3d(calc(-100% - var(--drawer-inset) - 2px), 0, 0);
+	}
+
+	&[data-swipe-direction='down'] {
+		@apply mt-0 h-auto max-h-[85vh] min-h-96 w-full max-w-none;
+		--closed-transform: translate3d(0, calc(100% + var(--drawer-inset) + 2px), 0);
+	}
+
+	&[data-swipe-direction='up'] {
+		@apply mb-0 h-auto max-h-[85vh] min-h-96 w-full max-w-none;
+		--closed-transform: translate3d(0, calc(-100% - var(--drawer-inset) - 2px), 0);
+	}
 }
 
 .drawer-title {
@@ -94,5 +106,5 @@
 }
 
 .drawer-close {
-	@apply absolute end-3 top-3;
+	@apply absolute inset-e-3 top-3;
 }

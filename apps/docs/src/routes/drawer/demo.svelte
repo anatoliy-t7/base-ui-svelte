@@ -9,7 +9,7 @@
 		<Drawer.Portal>
 			<Drawer.Backdrop class="drawer-backdrop" />
 			<Drawer.Viewport class="drawer-viewport">
-				<Drawer.Popup class="drawer-popup drawer-popup-right">
+				<Drawer.Popup class="drawer-popup">
 					<Drawer.Content>
 						<Drawer.Title class="drawer-title">Right</Drawer.Title>
 						<Drawer.Description class="drawer-description"
@@ -26,7 +26,7 @@
 		<Drawer.Portal>
 			<Drawer.Backdrop class="drawer-backdrop" />
 			<Drawer.Viewport class="drawer-viewport">
-				<Drawer.Popup class="drawer-popup drawer-popup-left">
+				<Drawer.Popup class="drawer-popup">
 					<Drawer.Content>
 						<Drawer.Title class="drawer-title">Left</Drawer.Title>
 						<Drawer.Description class="drawer-description"
@@ -43,7 +43,7 @@
 		<Drawer.Portal>
 			<Drawer.Backdrop class="drawer-backdrop" />
 			<Drawer.Viewport class="drawer-viewport">
-				<Drawer.Popup class="drawer-popup drawer-popup-bottom">
+				<Drawer.Popup class="drawer-popup">
 					<Drawer.Content>
 						<Drawer.Title class="drawer-title">Bottom</Drawer.Title>
 						<Drawer.Description class="drawer-description"
@@ -60,7 +60,7 @@
 		<Drawer.Portal>
 			<Drawer.Backdrop class="drawer-backdrop" />
 			<Drawer.Viewport class="drawer-viewport">
-				<Drawer.Popup class="drawer-popup drawer-popup-top">
+				<Drawer.Popup class="drawer-popup">
 					<Drawer.Content>
 						<Drawer.Title class="drawer-title">Top</Drawer.Title>
 						<Drawer.Description class="drawer-description"
