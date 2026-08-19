@@ -15,6 +15,7 @@
 		"docs:ci": "bun run build && bun run docs:build",
 		"docs:preview": "bun run --filter docs preview",
 		"publint": "bun run --filter base-ui-svelte publint && bun run --filter @base-ui-svelte/styles publint",
+		"release": "bun scripts/release.ts",
 		"release:pack": "bun run build && bun run publint && npm pack -w base-ui-svelte && npm pack -w @base-ui-svelte/styles",
 		"fmt": "oxfmt",
 		"fmt:check": "oxfmt --check",
@@ -25,6 +26,7 @@
 		"@types/node": "^26.2.0"
 	},
 	"devDependencies": {
+		"@types/bun": "^1.3.14",
 		"oxfmt": "^0.63.0",
 		"oxlint": "^1.78.0"
 	},
