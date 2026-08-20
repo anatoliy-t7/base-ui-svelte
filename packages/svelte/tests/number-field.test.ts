@@ -63,6 +63,56 @@ describe('NumberField', () => {
 		expect(hidden).toHaveValue('5');
 	});
 
+	it('keeps the value when blurring a currency-formatted input', async () => {
+		const user = userEvent.setup();
+		const format: Intl.NumberFormatOptions = { style: 'currency', currency: 'USD' };
+		const formatted = new Intl.NumberFormat('en-US', format).format(1234.5);
+
+		render(NumberFieldTest, {
+			props: {
+				defaultValue: 1234.5,
+				min: 0,
+				max: 10000,
+				locale: 'en-US',
+				format,
+				allowOutOfRange: true,
+				snapOnStep: false,
+			},
+		});
+
+		const input = screen.getByTestId('input');
+		expect(input).toHaveValue(formatted);
+
+		await user.click(input);
+		await user.tab();
+
+		expect(input).toHaveValue(formatted);
+		const hidden = document.querySelector('input[type="hidden"][name="qty"]');
+		expect(hidden).toHaveValue('1234.5');
+	});
+
+	it('parses de-DE comma decimals on commit instead of clearing', async () => {
+		const user = userEvent.setup();
+		render(NumberFieldTest, {
+			props: {
+				defaultValue: null,
+				min: 0,
+				max: 100,
+				locale: 'de-DE',
+				allowOutOfRange: true,
+				snapOnStep: false,
+			},
+		});
+
+		const input = screen.getByTestId('input');
+		await user.click(input);
+		await user.type(input, '1,5');
+		await user.tab();
+
+		const hidden = document.querySelector('input[type="hidden"][name="qty"]');
+		expect(hidden).toHaveValue('1.5');
+	});
+
 	it('has no axe violations', async () => {
 		const { container } = render(NumberFieldTest);
 		expect(await axe(container)).toHaveNoViolations();

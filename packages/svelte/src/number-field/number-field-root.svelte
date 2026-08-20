@@ -3,6 +3,7 @@
 	import { useId } from '../internal/controllable.svelte.js';
 	import { NUMBER_FIELD_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
+	import { isIncompleteNumberInput, parseNumberInput } from './parse-number.js';
 	import type { NumberFieldContext, NumberFieldRootProps } from './types.js';
 
 	let {
@@ -68,12 +69,7 @@
 	}
 
 	function parseNumber(raw: string): number | null {
-		const trimmed = raw.trim();
-		if (trimmed === '' || trimmed === '-' || trimmed === '+' || trimmed === '.') {
-			return null;
-		}
-		const parsed = Number(trimmed);
-		return Number.isFinite(parsed) ? parsed : null;
+		return parseNumberInput(raw, locale, format);
 	}
 
 	function formatDisplay(next: number | null): string {
@@ -106,13 +102,12 @@
 		if (disabled || readOnly) return;
 		inputValue = next;
 		if (!event) return;
-		const trimmed = next.trim();
-		if (trimmed === '' || trimmed === '-' || trimmed === '+' || trimmed === '.') {
+		if (isIncompleteNumberInput(next, locale, format)) {
 			writeValue(null, event, false);
 			return;
 		}
-		const parsed = Number(trimmed);
-		if (Number.isFinite(parsed)) {
+		const parsed = parseNumber(next);
+		if (parsed != null) {
 			writeValue(parsed, event, false);
 		}
 	}
