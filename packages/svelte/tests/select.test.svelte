@@ -21,7 +21,15 @@
 </script>
 
 <form data-testid="form">
-	<Select.Root {disabled} {defaultValue} {defaultOpen} {value} {name} {onValueChange} {onOpenChange}>
+	<Select.Root
+		{disabled}
+		{defaultValue}
+		{defaultOpen}
+		{value}
+		{name}
+		{onValueChange}
+		{onOpenChange}
+	>
 		<Select.Label data-testid="label">Fruit</Select.Label>
 		<Select.Trigger data-testid="trigger">
 			<Select.Value data-testid="value" placeholder="Pick a fruit" />

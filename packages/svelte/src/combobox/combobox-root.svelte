@@ -372,13 +372,7 @@
 				<input type="hidden" {name} {form} value={selectedValue} />
 			{/each}
 		{:else}
-			<input
-				type="hidden"
-				{name}
-				{form}
-				value={serializedValue}
-				required={required || undefined}
-			/>
+			<input type="hidden" {name} {form} value={serializedValue} required={required || undefined} />
 		{/if}
 	{/if}
 </div>
