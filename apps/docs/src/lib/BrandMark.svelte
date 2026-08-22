@@ -13,7 +13,7 @@
 		y="24"
 		text-anchor="middle"
 		fill="currentColor"
-		font-family="IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
+		font-family="Inter, ui-sans-serif, system-ui, sans-serif"
 		font-size="26"
 		font-weight="700"
 		letter-spacing="-0.04em"
