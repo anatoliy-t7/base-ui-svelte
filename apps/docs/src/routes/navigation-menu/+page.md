@@ -1,6 +1,6 @@
 ---
 title: Navigation Menu
-description: "A collection of links for site navigation."
+description: 'A collection of links for site navigation.'
 ---
 
 <script>

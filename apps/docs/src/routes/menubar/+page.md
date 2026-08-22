@@ -1,6 +1,6 @@
 ---
 title: Menubar
-description: "A horizontal menu bar of menus."
+description: 'A horizontal menu bar of menus.'
 ---
 
 <script>

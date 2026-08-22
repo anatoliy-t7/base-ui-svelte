@@ -1,6 +1,6 @@
 ---
 title: Number Field
-description: "An input for numeric values with increment and decrement controls."
+description: 'An input for numeric values with increment and decrement controls.'
 ---
 
 <script>

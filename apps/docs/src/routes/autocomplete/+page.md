@@ -1,6 +1,6 @@
 ---
 title: Autocomplete
-description: "An input that suggests values as the user types."
+description: 'An input that suggests values as the user types.'
 ---
 
 <script>

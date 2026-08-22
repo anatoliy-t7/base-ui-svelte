@@ -1,0 +1,8 @@
+/* Motion-specific design tokens (yui540 motion #50) */
+
+:root {
+	--ease-yui540-smooth: ease-in-out;
+
+	--btn-motion-size: 3.75rem;
+	--btn-motion-float: 8px;
+}

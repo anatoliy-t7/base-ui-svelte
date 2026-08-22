@@ -4,13 +4,13 @@
  */
 export function mergeProps(
 	...propsList: Array<object | null | undefined>
-): Record<string, unknown> {
-	const result: Record<string, unknown> = {};
+): Record<string | symbol, unknown> {
+	const result: Record<string | symbol, unknown> = {};
 
 	for (const props of propsList) {
 		if (!props) continue;
 
-		const record = props as Record<string, unknown>;
+		const record = props as Record<string | symbol, unknown>;
 		for (const key of Object.keys(record)) {
 			const value = record[key];
 			const existing = result[key];
@@ -40,6 +40,13 @@ export function mergeProps(
 			}
 
 			result[key] = value;
+		}
+
+		for (const key of Object.getOwnPropertySymbols(record)) {
+			const value = record[key];
+			if (value !== undefined) {
+				result[key] = value;
+			}
 		}
 	}
 

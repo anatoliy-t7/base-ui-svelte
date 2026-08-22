@@ -1,6 +1,6 @@
 ---
 title: Scroll Area
-description: "Augments native scroll functionality for custom styling."
+description: 'Augments native scroll functionality for custom styling.'
 ---
 
 <script>

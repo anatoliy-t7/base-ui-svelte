@@ -8,7 +8,7 @@
 		count += 1;
 		toaster.add({
 			title: `Toast ${count} created`,
-			description: 'This is a toast notification.',
+			description: 'This is a toast notification.'
 		});
 	}
 
@@ -20,8 +20,8 @@
 			{
 				loading: 'Saving…',
 				success: 'Saved',
-				error: 'Failed to save',
-			},
+				error: 'Failed to save'
+			}
 		);
 	}
 </script>

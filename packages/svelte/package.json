@@ -11,18 +11,15 @@
 		"svelte5",
 		"unstyled"
 	],
-	"license": "MIT",
 	"homepage": "https://github.com/anatoliy-t7/base-ui-svelte#readme",
 	"bugs": {
 		"url": "https://github.com/anatoliy-t7/base-ui-svelte/issues"
 	},
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/anatoliy-t7/base-ui-svelte.git",
 		"directory": "packages/svelte"
-	},
-	"publishConfig": {
-		"access": "public"
 	},
 	"files": [
 		"dist",
@@ -246,6 +243,9 @@
 		},
 		"./package.json": "./package.json"
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
 		"build": "svelte-package -i src -o dist",
 		"check": "svelte-check --tsconfig ./tsconfig.check.json",
@@ -255,9 +255,6 @@
 		"publint": "publint",
 		"test": "vitest run",
 		"test:watch": "vitest"
-	},
-	"engines": {
-		"node": ">=22"
 	},
 	"dependencies": {
 		"@floating-ui/dom": "^1.8.0"
@@ -282,5 +279,8 @@
 	},
 	"peerDependencies": {
 		"svelte": "^5.0.0"
+	},
+	"engines": {
+		"node": ">=22"
 	}
 }

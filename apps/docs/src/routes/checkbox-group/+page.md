@@ -1,6 +1,6 @@
 ---
 title: Checkbox Group
-description: "A set of checkboxes for selecting multiple options."
+description: 'A set of checkboxes for selecting multiple options.'
 ---
 
 <script>

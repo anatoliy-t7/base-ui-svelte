@@ -1,6 +1,6 @@
 ---
 title: Toast
-description: "A succinct message that is displayed temporarily."
+description: 'A succinct message that is displayed temporarily.'
 ---
 
 <script>

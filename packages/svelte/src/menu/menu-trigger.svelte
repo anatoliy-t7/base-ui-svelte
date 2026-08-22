@@ -19,9 +19,7 @@
 		...rest
 	}: MenuTriggerProps = $props();
 
-	const ctx = hasContext(MENU_CONTEXT)
-		? getContext<MenuContext>(MENU_CONTEXT)
-		: undefined;
+	const ctx = hasContext(MENU_CONTEXT) ? getContext<MenuContext>(MENU_CONTEXT) : undefined;
 	const menubar = hasContext(MENUBAR_CONTEXT)
 		? getContext<MenubarContext>(MENUBAR_CONTEXT)
 		: undefined;
@@ -29,9 +27,7 @@
 	const fallbackId = useId('menu-trigger');
 	const resolvedId = $derived(id ?? ctx?.triggerId ?? fallbackId);
 
-	const hoverEnabled = $derived(
-		openOnHover || ctx?.openOnHover || Boolean(menubar?.openOnHover),
-	);
+	const hoverEnabled = $derived(openOnHover || ctx?.openOnHover || Boolean(menubar?.openOnHover));
 	const isDisabled = $derived(Boolean(disabled || ctx?.disabled));
 
 	let triggerEl = $state<HTMLElement | null>(null);

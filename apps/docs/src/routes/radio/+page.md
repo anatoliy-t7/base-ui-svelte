@@ -1,6 +1,6 @@
 ---
 title: Radio
-description: "A set of checkable buttons where only one can be checked at a time."
+description: 'A set of checkable buttons where only one can be checked at a time.'
 ---
 
 <script>

@@ -1,6 +1,6 @@
 ---
 title: Select
-description: "Displays a list of options for the user to pick from."
+description: 'Displays a list of options for the user to pick from.'
 ---
 
 <script>

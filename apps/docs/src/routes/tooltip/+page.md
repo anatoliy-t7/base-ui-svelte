@@ -1,6 +1,6 @@
 ---
 title: Tooltip
-description: "A popup that displays information related to an element when hovered or focused."
+description: 'A popup that displays information related to an element when hovered or focused.'
 ---
 
 <script>

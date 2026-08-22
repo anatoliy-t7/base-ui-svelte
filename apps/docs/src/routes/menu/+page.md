@@ -1,6 +1,6 @@
 ---
 title: Menu
-description: "A menu of actions or links triggered by a button."
+description: 'A menu of actions or links triggered by a button.'
 ---
 
 <script>

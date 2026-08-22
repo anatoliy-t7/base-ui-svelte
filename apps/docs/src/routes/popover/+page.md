@@ -1,6 +1,6 @@
 ---
 title: Popover
-description: "Displays rich content in a portal, triggered by a button."
+description: 'Displays rich content in a portal, triggered by a button.'
 ---
 
 <script>

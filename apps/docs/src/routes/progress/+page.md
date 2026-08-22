@@ -1,6 +1,6 @@
 ---
 title: Progress
-description: "Displays an indicator showing the completion progress of a task."
+description: 'Displays an indicator showing the completion progress of a task.'
 ---
 
 <script>

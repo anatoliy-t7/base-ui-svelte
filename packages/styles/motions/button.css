@@ -1,0 +1,191 @@
+/* yui540 motion #50 — interactive press / release (two-layer: shadow base + floating face) */
+
+.btn-motion-stage {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1.875rem;
+}
+
+.btn-motion-press {
+	--btn-motion-base: color-mix(in oklch, var(--btn-bg) 80%, black);
+	--btn-motion-face: color-mix(in oklch, var(--btn-bg) 88%, white);
+
+	position: relative;
+	overflow: visible;
+	padding-bottom: var(--btn-motion-float);
+	background-color: transparent;
+	border-color: transparent;
+	box-shadow: none;
+	transition: none;
+
+	@media (hover: hover) {
+		&:hover:not(:disabled):not([data-disabled]),
+		&[data-hovered='true'] {
+			background-color: transparent;
+		}
+	}
+
+	&[data-pressed='true'] {
+		transform: none;
+	}
+
+	&.btn[data-pressed],
+	&[data-pressed='true'] {
+		border-color: transparent;
+		box-shadow: none;
+	}
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		width: 100%;
+		height: calc(100% - var(--btn-motion-float));
+		border-radius: inherit;
+		pointer-events: none;
+	}
+
+	&::before {
+		z-index: 0;
+		transform: translate(-50%, 0);
+		background-color: var(--btn-motion-base);
+	}
+
+	&::after {
+		z-index: 1;
+		transform: translate(-50%, calc(var(--btn-motion-float) * -1));
+		background-color: var(--btn-motion-face);
+		transform-origin: center bottom;
+		box-shadow: none;
+	}
+
+	/* Text buttons: sizer sets width; label overlays the face (same box as __icon) */
+	&:not(.btn-icon) {
+		display: inline-grid;
+	}
+
+	&.btn-icon {
+		width: var(--btn-motion-size);
+		height: calc(var(--btn-motion-size) + var(--btn-motion-float));
+		padding: 0;
+		padding-bottom: var(--btn-motion-float);
+	}
+}
+
+/* Plus — press */
+.btn-motion-press-plus[data-motion-phase='press']::after {
+	animation:
+		motion-btn-plus-press 0.7s var(--ease-yui540-smooth) forwards,
+		motion-btn-shadow-press 0.7s var(--ease-yui540-smooth) forwards;
+	@apply motion-reduce:animate-none;
+}
+
+/* Plus — release */
+.btn-motion-press-plus[data-motion-phase='release']::after {
+	animation:
+		motion-btn-plus-bounce 0.6s var(--ease-yui540-smooth) forwards,
+		motion-btn-shadow-release 0.3s var(--ease-yui540-smooth) forwards;
+	@apply motion-reduce:animate-none;
+}
+
+/* Icon layer — bottom-anchored, moves with face */
+.btn-motion-press__icon {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	z-index: 2;
+	width: 100%;
+	height: calc(100% - var(--btn-motion-float));
+	transform: translate(-50%, calc(var(--btn-motion-float) * -1));
+	transform-origin: center bottom;
+	pointer-events: none;
+}
+
+/* In-flow sizer — reserves width; not exposed to assistive tech */
+.btn-motion-press__sizer {
+	grid-area: 1 / 1;
+	visibility: hidden;
+	white-space: nowrap;
+	pointer-events: none;
+}
+
+/* Text label — centered on the floating face (matches __icon geometry) */
+.btn-motion-press__label {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: calc(100% - var(--btn-motion-float));
+	transform: translate(-50%, calc(var(--btn-motion-float) * -1));
+	transform-origin: center bottom;
+	pointer-events: none;
+	color: var(--btn-fg);
+	line-height: 1;
+	white-space: nowrap;
+}
+
+.btn-motion-press__icon-plus::before,
+.btn-motion-press__icon-plus::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 46%;
+	height: 18%;
+	transform: translate(-50%, -50%);
+	border-radius: 999px;
+	background-color: var(--btn-fg);
+}
+
+.btn-motion-press__icon-plus::after {
+	transform: translate(-50%, -50%) rotate(90deg);
+}
+
+/* Plus icon — press / release */
+.btn-motion-press-plus[data-motion-phase='press'] .btn-motion-press__icon {
+	animation: motion-btn-plus-press 0.7s var(--ease-yui540-smooth) forwards;
+	@apply motion-reduce:animate-none;
+}
+
+.btn-motion-press-plus[data-motion-phase='release'] .btn-motion-press__icon {
+	animation: motion-btn-plus-bounce 0.6s var(--ease-yui540-smooth) forwards;
+	@apply motion-reduce:animate-none;
+}
+
+/* Plus label — press / release */
+.btn-motion-press-plus[data-motion-phase='press'] .btn-motion-press__label {
+	animation: motion-btn-plus-press-label 0.7s var(--ease-yui540-smooth) forwards;
+	@apply motion-reduce:animate-none;
+}
+
+.btn-motion-press-plus[data-motion-phase='release'] .btn-motion-press__label {
+	animation: motion-btn-plus-bounce-label 0.6s var(--ease-yui540-smooth) forwards;
+	@apply motion-reduce:animate-none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.btn-motion-press-plus[data-motion-phase='press']::after,
+	.btn-motion-press-plus[data-motion-phase='release']::after,
+	.btn-motion-press-plus[data-motion-phase='press'] .btn-motion-press__icon,
+	.btn-motion-press-plus[data-motion-phase='release'] .btn-motion-press__icon,
+	.btn-motion-press-plus[data-motion-phase='press'] .btn-motion-press__label,
+	.btn-motion-press-plus[data-motion-phase='release'] .btn-motion-press__label {
+		animation: none;
+	}
+
+	.btn-motion-press-plus[data-motion-phase='release']::after,
+	.btn-motion-press-plus[data-motion-phase='release'] .btn-motion-press__icon,
+	.btn-motion-press-plus[data-motion-phase='release'] .btn-motion-press__label,
+	.btn-motion-press-plus[data-motion-phase='press'] .btn-motion-press__icon,
+	.btn-motion-press-plus[data-motion-phase='press'] .btn-motion-press__label {
+		transform: translate(-50%, calc(var(--btn-motion-float) * -1));
+		box-shadow: none;
+	}
+}

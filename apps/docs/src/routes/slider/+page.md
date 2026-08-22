@@ -1,6 +1,6 @@
 ---
 title: Slider
-description: "An input where the user selects a value from a range."
+description: 'An input where the user selects a value from a range.'
 ---
 
 <script>

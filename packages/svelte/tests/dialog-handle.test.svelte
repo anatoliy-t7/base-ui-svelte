@@ -5,7 +5,9 @@
 </script>
 
 <button type="button" data-testid="outside-open" onclick={() => handle.open()}>Open outside</button>
-<button type="button" data-testid="outside-close" onclick={() => handle.close()}>Close outside</button>
+<button type="button" data-testid="outside-close" onclick={() => handle.close()}
+	>Close outside</button
+>
 
 <Dialog.Root data-testid="dialog-root" {handle}>
 	<Dialog.Portal>

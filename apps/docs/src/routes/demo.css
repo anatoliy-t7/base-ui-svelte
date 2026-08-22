@@ -15,7 +15,7 @@
 	--docs-focus: #0052cc;
 	--docs-overlay: color-mix(in srgb, #151a21 40%, transparent);
 	--docs-shadow: color-mix(in srgb, #151a21 12%, transparent);
-	--docs-code-inline-bg: color-mix(in srgb, #151a21 6%, #fff);
+	--docs-code-inline-bg: color-mix(in srgb, #151a21 12%, #fff);
 	--docs-hover-bg: color-mix(in srgb, #151a21 5%, transparent);
 	--docs-demo-bg: color-mix(in srgb, var(--docs-bg) 55%, #fff);
 	--docs-radius: 0.5rem;

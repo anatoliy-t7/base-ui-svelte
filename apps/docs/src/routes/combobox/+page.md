@@ -1,6 +1,6 @@
 ---
 title: Combobox
-description: "An input combined with a listbox of selectable options."
+description: 'An input combined with a listbox of selectable options.'
 ---
 
 <script>

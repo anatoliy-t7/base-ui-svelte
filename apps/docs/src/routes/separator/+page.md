@@ -1,6 +1,6 @@
 ---
 title: Separator
-description: "Visually or semantically separates content."
+description: 'Visually or semantically separates content.'
 ---
 
 <script>

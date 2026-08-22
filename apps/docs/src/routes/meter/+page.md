@@ -1,6 +1,6 @@
 ---
 title: Meter
-description: "A graphical display of a numeric value within a range."
+description: 'A graphical display of a numeric value within a range.'
 ---
 
 <script>

@@ -1,6 +1,6 @@
 ---
 title: Toggle
-description: "A two-state button that can be either on or off."
+description: 'A two-state button that can be either on or off.'
 ---
 
 <script>

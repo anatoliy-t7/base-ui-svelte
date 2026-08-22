@@ -1,6 +1,6 @@
 ---
 title: OTP Field
-description: "A segmented input for one-time passcodes."
+description: 'A segmented input for one-time passcodes.'
 ---
 
 <script>

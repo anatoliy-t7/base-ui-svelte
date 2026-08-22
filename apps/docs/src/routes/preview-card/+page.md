@@ -1,6 +1,6 @@
 ---
 title: Preview Card
-description: "A popup that appears when a link or element is hovered or focused."
+description: 'A popup that appears when a link or element is hovered or focused.'
 ---
 
 <script>

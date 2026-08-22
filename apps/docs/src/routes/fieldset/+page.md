@@ -1,6 +1,6 @@
 ---
 title: Fieldset
-description: "A group of related form fields with a legend."
+description: 'A group of related form fields with a legend.'
 ---
 
 <script>

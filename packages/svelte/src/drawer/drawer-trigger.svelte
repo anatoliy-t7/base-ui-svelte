@@ -17,9 +17,7 @@
 		...rest
 	}: DrawerTriggerProps = $props();
 
-	const ctx = hasContext(DRAWER_CONTEXT)
-		? getContext<DrawerContext>(DRAWER_CONTEXT)
-		: undefined;
+	const ctx = hasContext(DRAWER_CONTEXT) ? getContext<DrawerContext>(DRAWER_CONTEXT) : undefined;
 
 	const fallbackId = useId('drawer-trigger');
 	const resolvedId = $derived(id ?? ctx?.triggerId ?? fallbackId);

@@ -25,6 +25,7 @@
 		"index.css",
 		"base",
 		"components",
+		"motions",
 		"themes",
 		"utilities",
 		"variants"
@@ -47,6 +48,11 @@
 			"default": "./index.css"
 		},
 		"./components/*": "./components/*",
+		"./motions": {
+			"style": "./motions/index.css",
+			"default": "./motions/index.css"
+		},
+		"./motions/*": "./motions/*",
 		"./themes/*": "./themes/*",
 		"./package.json": "./package.json"
 	},

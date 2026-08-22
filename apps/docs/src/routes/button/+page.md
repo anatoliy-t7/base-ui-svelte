@@ -1,6 +1,6 @@
 ---
 title: Button
-description: "A clickable button that supports native and polymorphic rendering."
+description: 'A clickable button that supports native and polymorphic rendering.'
 ---
 
 <script>

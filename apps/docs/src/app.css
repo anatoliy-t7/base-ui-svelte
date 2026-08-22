@@ -1,2 +1,3 @@
 @import '@base-ui-svelte/styles';
+@import '@base-ui-svelte/styles/motions';
 @import './routes/demo.css';

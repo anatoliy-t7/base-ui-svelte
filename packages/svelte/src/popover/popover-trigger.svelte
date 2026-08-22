@@ -18,9 +18,7 @@
 		...rest
 	}: PopoverTriggerProps = $props();
 
-	const ctx = hasContext(POPOVER_CONTEXT)
-		? getContext<PopoverContext>(POPOVER_CONTEXT)
-		: undefined;
+	const ctx = hasContext(POPOVER_CONTEXT) ? getContext<PopoverContext>(POPOVER_CONTEXT) : undefined;
 
 	const fallbackId = useId('popover-trigger');
 	const resolvedId = $derived(id ?? ctx?.triggerId ?? fallbackId);

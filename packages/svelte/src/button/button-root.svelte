@@ -40,31 +40,50 @@
 		}
 	}
 
-	const mergedProps: Record<string, unknown> = $derived(
-		mergeProps(rest, {
-			id,
-			class: className,
-			style,
-			type: isNativeButton ? type : undefined,
-			role: isNativeButton ? undefined : 'button',
-			disabled: nativeDisabled || undefined,
-			'aria-disabled': useAriaDisabled ? true : undefined,
-			tabindex: disabled && !focusableWhenDisabled && !isNativeButton ? -1 : undefined,
-			'data-disabled': disabled ? '' : undefined,
-			onclick: (event: MouseEvent) => {
-				activate(event);
+	const overrideProps: Record<string, unknown> = $derived(
+		mergeProps(
+			{
+				onclick: (rest as Record<string, unknown>).onclick,
+				onkeydown: (rest as Record<string, unknown>).onkeydown,
 			},
-			onkeydown: onKeyDown,
-		}),
+			{
+				id,
+				class: className,
+				style,
+				type: isNativeButton ? type : undefined,
+				role: isNativeButton ? undefined : 'button',
+				disabled: nativeDisabled || undefined,
+				'aria-disabled': useAriaDisabled ? true : undefined,
+				tabindex: disabled && !focusableWhenDisabled && !isNativeButton ? -1 : undefined,
+				'data-disabled': disabled ? '' : undefined,
+				onclick: (event: MouseEvent) => {
+					activate(event);
+				},
+				onkeydown: onKeyDown,
+			},
+		),
 	);
 </script>
 
-<svelte:element
-	this={render}
-	{...mergedProps}
-	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
->
-	{#if children}
-		{@render children({ disabled })}
-	{/if}
-</svelte:element>
+{#if isNativeButton}
+	<button
+		{...rest}
+		{...overrideProps}
+		style={typeof overrideProps.style === 'string' ? overrideProps.style : undefined}
+	>
+		{#if children}
+			{@render children({ disabled })}
+		{/if}
+	</button>
+{:else}
+	<svelte:element
+		this={render}
+		{...rest}
+		{...overrideProps}
+		style={typeof overrideProps.style === 'string' ? overrideProps.style : undefined}
+	>
+		{#if children}
+			{@render children({ disabled })}
+		{/if}
+	</svelte:element>
+{/if}

@@ -17,9 +17,7 @@
 		...rest
 	}: TooltipTriggerProps = $props();
 
-	const ctx = hasContext(TOOLTIP_CONTEXT)
-		? getContext<TooltipContext>(TOOLTIP_CONTEXT)
-		: undefined;
+	const ctx = hasContext(TOOLTIP_CONTEXT) ? getContext<TooltipContext>(TOOLTIP_CONTEXT) : undefined;
 
 	const fallbackId = useId('tooltip-trigger');
 	const resolvedId = $derived(id ?? ctx?.triggerId ?? fallbackId);

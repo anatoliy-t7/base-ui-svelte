@@ -31,4 +31,12 @@ describe('mergeProps', () => {
 		expect(merged.id).toBe('b');
 		expect(merged['data-x']).toBe('1');
 	});
+
+	it('preserves symbol keys such as attachments', () => {
+		const attachmentKey = Symbol('attachment');
+		const first = () => {};
+		const second = () => {};
+		const merged = mergeProps({ [attachmentKey]: first }, { [attachmentKey]: second });
+		expect(merged[attachmentKey]).toBe(second);
+	});
 });

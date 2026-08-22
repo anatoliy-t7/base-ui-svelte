@@ -17,8 +17,6 @@ describe('useFilter', () => {
 		const filter = useFilter();
 
 		expect(filter.contains({ label: 'Apple' }, 'app')).toBe(true);
-		expect(
-			filter.contains({ id: 1 }, 'pear', (item) => (item.id === 1 ? 'pear' : '')),
-		).toBe(true);
+		expect(filter.contains({ id: 1 }, 'pear', (item) => (item.id === 1 ? 'pear' : ''))).toBe(true);
 	});
 });

@@ -1,6 +1,6 @@
 ---
 title: Input
-description: "A text input control."
+description: 'A text input control.'
 ---
 
 <script>

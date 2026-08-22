@@ -1,6 +1,6 @@
 ---
 title: Tabs
-description: "A set of layered sections of content that display one panel at a time."
+description: 'A set of layered sections of content that display one panel at a time.'
 ---
 
 <script>

@@ -1,6 +1,6 @@
 ---
 title: Dialog
-description: "A window overlaid on the primary content for focused tasks."
+description: 'A window overlaid on the primary content for focused tasks.'
 ---
 
 <script>

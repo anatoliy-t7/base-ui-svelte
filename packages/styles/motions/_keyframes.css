@@ -1,0 +1,76 @@
+/* Keyframes from yui540 motion #50 — https://yui540.com/motions/50 */
+
+@keyframes motion-btn-plus-press {
+	0% {
+		transform: translate(-50%, calc(var(--btn-motion-float) * -1));
+	}
+	50% {
+		transform: translate(-50%, 0) scaleY(0.9);
+	}
+	100% {
+		transform: translate(-50%, 0);
+	}
+}
+
+@keyframes motion-btn-plus-bounce {
+	0% {
+		transform: translate(-50%, 0);
+	}
+	50% {
+		transform: translate(-50%, -13px);
+	}
+	75% {
+		transform: translate(-50%, -5px);
+	}
+	100% {
+		transform: translate(-50%, calc(var(--btn-motion-float) * -1));
+	}
+}
+
+@keyframes motion-btn-plus-press-label {
+	0% {
+		transform: translate(-50%, calc(var(--btn-motion-float) * -1));
+	}
+	50% {
+		transform: translate(-50%, 0) scaleY(0.9);
+	}
+	100% {
+		transform: translate(-50%, 0);
+	}
+}
+
+@keyframes motion-btn-plus-bounce-label {
+	0% {
+		transform: translate(-50%, 0);
+	}
+	50% {
+		transform: translate(-50%, calc(var(--btn-motion-float) * -1 - 5px));
+	}
+	75% {
+		transform: translate(-50%, calc(var(--btn-motion-float) * -1 + 3px));
+	}
+	100% {
+		transform: translate(-50%, calc(var(--btn-motion-float) * -1));
+	}
+}
+
+@keyframes motion-btn-shadow-press {
+	0% {
+		box-shadow: inset 0 0 0 0 var(--btn-motion-base);
+	}
+	60% {
+		box-shadow: inset 0 10px 8px 0 var(--btn-motion-base);
+	}
+	100% {
+		box-shadow: inset 0 6px 6px 0 var(--btn-motion-base);
+	}
+}
+
+@keyframes motion-btn-shadow-release {
+	0% {
+		box-shadow: inset 0 6px 6px 0 var(--btn-motion-base);
+	}
+	100% {
+		box-shadow: inset 0 0 0 0 var(--btn-motion-base);
+	}
+}

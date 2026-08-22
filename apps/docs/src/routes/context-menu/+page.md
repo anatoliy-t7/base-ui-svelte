@@ -1,6 +1,6 @@
 ---
 title: Context Menu
-description: "Displays a menu located at the pointer, triggered by a right-click or long-press."
+description: 'Displays a menu located at the pointer, triggered by a right-click or long-press.'
 ---
 
 <script>

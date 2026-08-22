@@ -1,6 +1,6 @@
 ---
 title: Field
-description: "A form control with label, description, and validation messaging."
+description: 'A form control with label, description, and validation messaging.'
 ---
 
 <script>

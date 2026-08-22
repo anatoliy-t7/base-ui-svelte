@@ -1,6 +1,6 @@
 ---
 title: Form
-description: "A form root that coordinates field validation and submit handling."
+description: 'A form root that coordinates field validation and submit handling.'
 ---
 
 <script>

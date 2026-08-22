@@ -17,9 +17,7 @@
 		...rest
 	}: DialogTriggerProps = $props();
 
-	const ctx = hasContext(DIALOG_CONTEXT)
-		? getContext<DialogContext>(DIALOG_CONTEXT)
-		: undefined;
+	const ctx = hasContext(DIALOG_CONTEXT) ? getContext<DialogContext>(DIALOG_CONTEXT) : undefined;
 
 	const fallbackId = useId('dialog-trigger');
 	const resolvedId = $derived(id ?? ctx?.triggerId ?? fallbackId);
