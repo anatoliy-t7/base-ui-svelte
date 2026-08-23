@@ -120,4 +120,20 @@ describe('Select', () => {
 		await user.click(screen.getByTestId('trigger'));
 		expect(await axe(container)).toHaveNoViolations();
 	});
+
+	it('submits the selected value while the popup is closed', async () => {
+		const user = userEvent.setup();
+		render(SelectTest, { props: { name: 'fruit', defaultValue: 'apple' } });
+
+		expect(screen.queryByTestId('popup')).toBeNull();
+		const form = screen.getByTestId('form') as HTMLFormElement;
+		expect(new FormData(form).get('fruit')).toBe('apple');
+
+		await user.click(screen.getByTestId('trigger'));
+		await user.click(screen.getByTestId('item-banana'));
+		await waitFor(() => {
+			expect(screen.queryByTestId('popup')).toBeNull();
+		});
+		expect(new FormData(form).get('fruit')).toBe('banana');
+	});
 });

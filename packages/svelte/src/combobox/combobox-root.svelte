@@ -352,7 +352,8 @@
 		}),
 	);
 
-	const selectedSet = $derived(new Set(getSelectedValues()));
+	const selectedValues = $derived(getSelectedValues());
+	const serializedValue = $derived((currentValue as string | null) ?? '');
 </script>
 
 <div {...rootProps} style={typeof rootProps.style === 'string' ? rootProps.style : undefined}>
@@ -366,31 +367,12 @@
 	{/if}
 
 	{#if name && !disabled}
-		<select
-			{name}
-			{form}
-			multiple={multiple || undefined}
-			required={required || undefined}
-			value={multiple ? undefined : ((currentValue as string | null) ?? '')}
-			tabindex="-1"
-			aria-hidden="true"
-			style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;"
-		>
-			{#if !multiple}
-				<option value=""></option>
-			{/if}
-			{#each items as item (item.id)}
-				<option value={item.value} selected={selectedSet.has(item.value)}>
-					{item.label}
-				</option>
+		{#if multiple}
+			{#each selectedValues as selectedValue (selectedValue)}
+				<input type="hidden" {name} {form} value={selectedValue} />
 			{/each}
-			{#each collectionItems as item (item.value)}
-				{#if !items.some((entry) => entry.value === item.value)}
-					<option value={item.value} selected={selectedSet.has(item.value)}>
-						{item.label}
-					</option>
-				{/if}
-			{/each}
-		</select>
+		{:else}
+			<input type="hidden" {name} {form} value={serializedValue} required={required || undefined} />
+		{/if}
 	{/if}
 </div>

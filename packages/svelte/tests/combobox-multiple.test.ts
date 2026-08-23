@@ -27,5 +27,8 @@ describe('Combobox multiple', () => {
 		});
 		expect(screen.getByTestId('chip-banana')).toBeInTheDocument();
 		expect(screen.getByTestId('value')).toHaveTextContent('banana');
+		expect(new FormData(screen.getByTestId('form') as HTMLFormElement).getAll('fruit')).toEqual([
+			'banana',
+		]);
 	});
 });
