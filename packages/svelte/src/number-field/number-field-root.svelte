@@ -2,7 +2,9 @@
 	import { setContext } from 'svelte';
 	import { useId } from '../internal/controllable.svelte.js';
 	import { NUMBER_FIELD_CONTEXT } from '../internal/context-keys.js';
+	import { formatNumber } from '../internal/format-number.js';
 	import { mergeProps } from '../internal/merge-props.js';
+	import { parseNumber } from './utils/parse.js';
 	import type { NumberFieldContext, NumberFieldRootProps } from './types.js';
 
 	let {
@@ -45,11 +47,6 @@
 
 	const inputId = useId('number-field-input');
 
-	const formatter = $derived.by(() => {
-		if (format == null && locale == null) return null;
-		return new Intl.NumberFormat(locale, format);
-	});
-
 	function clamp(next: number): number {
 		let result = next;
 		if (!allowOutOfRange) {
@@ -67,22 +64,8 @@
 		return result;
 	}
 
-	function parseNumber(raw: string): number | null {
-		const trimmed = raw.trim();
-		if (trimmed === '' || trimmed === '-' || trimmed === '+' || trimmed === '.') {
-			return null;
-		}
-		const parsed = Number(trimmed);
-		return Number.isFinite(parsed) ? parsed : null;
-	}
-
-	function formatDisplay(next: number | null): string {
-		if (next == null) return '';
-		return formatter ? formatter.format(next) : String(next);
-	}
-
 	function syncInputFromValue(next: number | null): void {
-		inputValue = formatDisplay(next);
+		inputValue = formatNumber(next, locale, format);
 	}
 
 	function writeValue(next: number | null, event: Event, syncInput: boolean): void {
@@ -106,23 +89,27 @@
 		if (disabled || readOnly) return;
 		inputValue = next;
 		if (!event) return;
-		const trimmed = next.trim();
-		if (trimmed === '' || trimmed === '-' || trimmed === '+' || trimmed === '.') {
+		if (next.trim() === '') {
 			writeValue(null, event, false);
 			return;
 		}
-		const parsed = Number(trimmed);
-		if (Number.isFinite(parsed)) {
+		const parsed = parseNumber(next, locale, format);
+		if (parsed != null) {
 			writeValue(parsed, event, false);
 		}
 	}
 
 	function commitInput(event: Event): void {
 		if (disabled || readOnly) return;
-		const parsed = parseNumber(inputValue);
-		if (parsed == null) {
+		if (inputValue.trim() === '') {
 			writeValue(null, event, true);
 			onValueCommitted?.(null, event);
+			return;
+		}
+		const parsed = parseNumber(inputValue, locale, format);
+		if (parsed == null) {
+			// Match Base UI: invalid text on blur keeps the committed value and restores display.
+			syncInputFromValue(currentValue);
 			return;
 		}
 		const next = clamp(parsed);
@@ -197,7 +184,7 @@
 	$effect(() => {
 		if (inputFocused) return;
 		const next = currentValue;
-		const display = formatDisplay(next);
+		const display = formatNumber(next, locale, format);
 		if (inputValue !== display) {
 			inputValue = display;
 		}
