@@ -6,7 +6,7 @@ import type {
 	HTMLLabelAttributes,
 } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
-import type { Align, Side } from '../internal/floating.svelte.js';
+import type { Align, SharedPositionerProps, Side } from '../internal/floating.svelte.js';
 import type { createPresence } from '../internal/presence.svelte.js';
 
 export type AutocompleteCollectionItem = {
@@ -45,7 +45,7 @@ export type AutocompleteContext = {
 	setOpen(open: boolean, reason: OpenChangeReason): void;
 	registerItem(id: string, value: string, label: string, element: HTMLElement): () => void;
 	readonly highlighted: string | null;
-	setHighlighted(value: string | null): void;
+	setHighlighted(value: string | null, reason?: 'none' | 'keyboard' | 'pointer' | 'filter'): void;
 	readonly items: AutocompleteItemEntry[];
 	getVisibleItems(): AutocompleteItemEntry[];
 	isItemVisible(value: string): boolean;
@@ -58,7 +58,10 @@ export type AutocompleteContext = {
 	readonly refs: AutocompleteRefs;
 	readonly presence: ReturnType<typeof createPresence>;
 	readonly disabled: boolean;
-	readonly filter: boolean;
+	readonly loopFocus: boolean;
+	readonly filter: AutocompleteFilter;
+	readonly highlightItemOnHover: boolean;
+	readonly autoHighlight: boolean;
 	readonly collectionItems: ReadonlyArray<AutocompleteCollectionItem>;
 	selectItem(value: string, label: string, event: Event): void;
 };
@@ -86,7 +89,26 @@ export type AutocompleteRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'childr
 	defaultOpen?: boolean;
 	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
 	disabled?: boolean;
-	filter?: boolean;
+	onOpenChangeComplete?: ((open: boolean) => void) | undefined;
+	loopFocus?: boolean;
+	filter?: AutocompleteFilter;
+	/** Externally filtered item values; when set, skips internal filtering. */
+	filteredItems?: ReadonlyArray<string> | undefined;
+	/** Max visible items (-1 = no limit). @default -1 */
+	limit?: number;
+	/** Locale for default string filtering. */
+	locale?: string | undefined;
+	/** Highlight the first matching item while filtering. @default false */
+	autoHighlight?: boolean;
+	/** Highlight items on pointer move. @default true */
+	highlightItemOnHover?: boolean;
+	onItemHighlighted?:
+		| ((value: string | null, eventDetails: { reason: 'none' | 'keyboard' | 'pointer' | 'filter' }) => void)
+		| undefined;
+	itemToStringLabel?: ((itemValue: string) => string) | undefined;
+	itemToStringValue?: ((itemValue: string) => string) | undefined;
+	isItemEqualToValue?: ((itemValue: string, value: string) => boolean) | undefined;
+
 	items?: AutocompleteItemsProp | undefined;
 	children?: Snippet<
 		[{ value: string | null; inputValue: string; open: boolean; disabled: boolean }]
@@ -132,6 +154,8 @@ export type AutocompleteCollectionProps = {
 };
 
 export type AutocompletePortalProps = {
+	container?: HTMLElement | string | null;
+	keepMounted?: boolean;
 	children?: Snippet;
 };
 
@@ -140,10 +164,8 @@ export type AutocompleteBackdropProps = Omit<HTMLAttributes<HTMLDivElement>, 'ch
 	children?: Snippet;
 };
 
-export type AutocompletePositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
-	side?: Side;
-	align?: Align;
-	sideOffset?: number;
+export type AutocompletePositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
+	SharedPositionerProps & {
 	children?: Snippet;
 };
 
@@ -180,6 +202,11 @@ export type AutocompleteEmptyProps = Omit<HTMLAttributes<HTMLDivElement>, 'child
 };
 
 export type AutocompleteSeparatorProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+
+export type AutocompleteFilter =
+	| boolean
+	| ((itemValue: string, query: string, itemLabel: string) => boolean);
+
 
 export type AutocompleteGroupProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	children?: Snippet;

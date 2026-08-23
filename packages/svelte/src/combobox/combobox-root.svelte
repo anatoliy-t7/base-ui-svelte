@@ -30,6 +30,15 @@
 		name,
 		form,
 		filter = true,
+		filteredItems,
+		limit = -1,
+		locale,
+		autoHighlight = false,
+		highlightItemOnHover = true,
+		onItemHighlighted,
+		itemToStringLabel,
+		itemToStringValue,
+		isItemEqualToValue,
 		multiple = false,
 		loopFocus = true,
 		modal = false,
@@ -133,7 +142,7 @@
 	}
 
 	function isSelected(itemValue: string): boolean {
-		return getSelectedValues().includes(itemValue);
+		return getSelectedValues().some((entry) => valuesEqual(entry, itemValue));
 	}
 
 	function setValue(next: ComboboxValue, event: Event): void {
@@ -191,21 +200,65 @@
 		return `${listId}-option-${itemValue}`;
 	}
 
-	function matchesFilter(label: string): boolean {
-		if (!filter) return true;
-		const query = currentInputValue.trim().toLowerCase();
+	function resolveLabel(itemValue: string, fallbackLabel?: string): string {
+		if (itemToStringLabel) return itemToStringLabel(itemValue);
+		if (fallbackLabel) return fallbackLabel;
+		const registered = items.find((item) => item.value === itemValue);
+		if (registered) return registered.label;
+		const collection = collectionItems.find((item) => item.value === itemValue);
+		if (collection) return collection.label;
+		return itemValue;
+	}
+
+	function matchesFilter(itemValue: string, label: string): boolean {
+		if (filter === false) return true;
+		const query = currentInputValue.trim();
 		if (!query) return true;
-		return label.toLowerCase().includes(query);
+		if (typeof filter === 'function') {
+			return filter(itemValue, query, label);
+		}
+		const normalizedQuery = locale
+			? query.toLocaleLowerCase(locale)
+			: query.toLowerCase();
+		const normalizedLabel = locale ? label.toLocaleLowerCase(locale) : label.toLowerCase();
+		return normalizedLabel.includes(normalizedQuery);
+	}
+
+	function valuesEqual(a: string, b: string): boolean {
+		if (isItemEqualToValue) return isItemEqualToValue(a, b);
+		return Object.is(a, b);
 	}
 
 	function getVisibleItems(): ComboboxItemEntry[] {
-		return items.filter((item) => matchesFilter(item.label));
+		let visible = items;
+		if (filteredItems) {
+			const allowed = new Set(filteredItems);
+			visible = items.filter((item) => allowed.has(item.value));
+		} else {
+			visible = items.filter((item) => matchesFilter(item.value, item.label));
+		}
+		if (limit >= 0) {
+			visible = visible.slice(0, limit);
+		}
+		return visible;
 	}
+
+
+	$effect(() => {
+		if (!autoHighlight || !openState.open) return;
+		const query = currentInputValue.trim();
+		if (!query) return;
+		const next = getVisibleItems()[0]?.value ?? null;
+		if (highlighted !== next) {
+			highlighted = next;
+			onItemHighlighted?.(next, { reason: 'filter' });
+		}
+	});
 
 	function isItemVisible(itemValue: string): boolean {
 		const entry = items.find((item) => item.value === itemValue);
 		if (!entry) return true;
-		return matchesFilter(entry.label);
+		return getVisibleItems().some((item) => item.value === itemValue);
 	}
 
 	function getLabelForValue(itemValue: string): string {
@@ -280,8 +333,9 @@
 		get highlighted() {
 			return highlighted;
 		},
-		setHighlighted: (next) => {
+		setHighlighted: (next, reason: 'none' | 'keyboard' | 'pointer' | 'filter' = 'none') => {
 			highlighted = next;
+			onItemHighlighted?.(next, { reason });
 		},
 		get items() {
 			return items;
@@ -317,6 +371,12 @@
 		},
 		get filter() {
 			return filter;
+		},
+		get highlightItemOnHover() {
+			return highlightItemOnHover;
+		},
+		get autoHighlight() {
+			return autoHighlight;
 		},
 		get multiple() {
 			return multiple;

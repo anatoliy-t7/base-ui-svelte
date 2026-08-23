@@ -41,3 +41,20 @@ Export shapes follow Base UI: single-part components are used directly (`<Button
 ## TypeScript
 
 Props extend Svelte HTML attribute types. See [TypeScript](/handbook/typescript) for this port’s patterns.
+
+## Prop placement (same behavior, different parent)
+
+Some props live on a different part than in Base UI React so the Svelte tree stays ergonomic:
+
+- **Popover / Tooltip open delays** — configured on `Root` (React often documents them on `Trigger`).
+- **OTP complete callback** — `onComplete` on `OTPField.Root` (React may use `onValueComplete`).
+
+## Imperative APIs
+
+- Prefer `bind:this` over React `ref` / `inputRef`.
+- Prefer `handle` / `createHandle` over React `actionsRef` where the port exposes imperative control.
+
+## Still diverging / deferred
+
+- **List virtualization** (`virtualized` / virtualized collections on Combobox & Autocomplete) is not ported yet — highest risk; use external virtualizers with `filteredItems` / `limit` for now.
+- Combobox / Select **object values** are supported via `itemToStringLabel`, `itemToStringValue`, and `isItemEqualToValue` while the public `value` remains string-based for form serialization.

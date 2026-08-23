@@ -4,7 +4,15 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { SliderContext, SliderThumbProps } from './types.js';
 
-	let { index: indexProp, class: className, style, children, ...rest }: SliderThumbProps = $props();
+	let {
+		index: indexProp,
+		getAriaLabel,
+		getAriaValueText,
+		class: className,
+		style,
+		children,
+		...rest
+	}: SliderThumbProps = $props();
 
 	const ctx = getContext<SliderContext>(SLIDER_CONTEXT);
 	// Claim once for the thumb lifetime; explicit `index` supports SSR for range sliders.
@@ -33,9 +41,9 @@
 		} else if (event.key === 'End') {
 			next = ctx.max;
 		} else if (event.key === 'PageUp') {
-			next = current + ctx.step * 10;
+			next = current + ctx.largeStep;
 		} else if (event.key === 'PageDown') {
-			next = current - ctx.step * 10;
+			next = current - ctx.largeStep;
 		} else {
 			return;
 		}
@@ -43,6 +51,22 @@
 		event.preventDefault();
 		ctx.setActiveThumbIndex(index);
 		ctx.setThumbValue(index, next, event);
+	}
+
+	function onKeyUp(event: KeyboardEvent): void {
+		if (ctx.disabled) return;
+		const commitKeys = new Set([
+			'ArrowLeft',
+			'ArrowRight',
+			'ArrowUp',
+			'ArrowDown',
+			'Home',
+			'End',
+			'PageUp',
+			'PageDown',
+		]);
+		if (!commitKeys.has(event.key)) return;
+		ctx.commitValue(event);
 	}
 
 	const thumbPercentage = $derived(ctx.percentages[index] ?? 0);
@@ -80,8 +104,16 @@
 			'aria-valuemin': ctx.min,
 			'aria-valuemax': ctx.max,
 			'aria-valuenow': ctx.values[index] ?? ctx.min,
+			'aria-valuetext': getAriaValueText
+				? getAriaValueText(
+						ctx.formattedValues[index] ?? String(ctx.values[index] ?? ctx.min),
+						ctx.values[index] ?? ctx.min,
+						index,
+					)
+				: undefined,
+			'aria-label': getAriaLabel ? getAriaLabel(index) : undefined,
 			'aria-orientation': ctx.orientation,
-			'aria-labelledby': ctx.labelId,
+			'aria-labelledby': getAriaLabel ? undefined : ctx.labelId,
 			'aria-disabled': ctx.disabled ? true : undefined,
 			'data-disabled': ctx.disabled ? '' : undefined,
 			'data-orientation': ctx.orientation,
@@ -90,6 +122,7 @@
 				ctx.setActiveThumbIndex(index);
 			},
 			onkeydown: onKeyDown,
+			onkeyup: onKeyUp,
 		}),
 	);
 </script>

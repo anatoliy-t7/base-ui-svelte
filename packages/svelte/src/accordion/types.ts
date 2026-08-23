@@ -40,6 +40,7 @@ export type AccordionRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'
 export type AccordionItemProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	value?: string;
 	disabled?: boolean;
+	onOpenChange?: ((open: boolean, eventDetails: { reason: 'trigger-press' | 'imperative' }) => void) | undefined;
 	children?: Snippet<[{ open: boolean; disabled: boolean }]>;
 };
 
@@ -54,6 +55,8 @@ export type AccordionTriggerProps = Omit<HTMLButtonAttributes, 'children' | 'dis
 
 export type AccordionPanelProps = Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role'> & {
 	keepMounted?: boolean;
+	/** Use the `hidden="until-found"` attribute when collapsed. @default false */
+	hiddenUntilFound?: boolean;
 	role?: string | undefined;
 	children?: Snippet;
 };

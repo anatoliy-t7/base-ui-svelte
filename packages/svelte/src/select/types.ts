@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
-import type { HTMLAttributes, HTMLButtonAttributes, HTMLLabelAttributes } from 'svelte/elements';
+import type { HTMLAttributes, HTMLButtonAttributes, HTMLInputAttributes, HTMLLabelAttributes } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
-import type { Align, Side } from '../internal/floating.svelte.js';
+import type { Align, SharedPositionerProps, Side } from '../internal/floating.svelte.js';
 import type { createPresence } from '../internal/presence.svelte.js';
 
 export type SelectValue = string | string[] | null;
@@ -50,6 +50,10 @@ export type SelectContext = {
 	readonly refs: SelectRefs;
 	readonly presence: ReturnType<typeof createPresence>;
 	readonly disabled: boolean;
+	readonly readOnly: boolean;
+	readonly required: boolean;
+	readonly form: string | undefined;
+	readonly highlightItemOnHover: boolean;
 	readonly name: string | undefined;
 	readonly multiple: boolean;
 	readonly modal: boolean;
@@ -90,6 +94,15 @@ export type SelectRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
 	 * @default true
 	 */
 	modal?: boolean;
+	onOpenChangeComplete?: ((open: boolean) => void) | undefined;
+	form?: string | undefined;
+	readOnly?: boolean;
+	required?: boolean;
+	autoComplete?: HTMLInputAttributes['autocomplete'];
+	highlightItemOnHover?: boolean;
+	itemToStringLabel?: ((itemValue: string) => string) | undefined;
+	itemToStringValue?: ((itemValue: string) => string) | undefined;
+	isItemEqualToValue?: ((itemValue: string, value: string) => boolean) | undefined;
 	items?: SelectItemsProp | undefined;
 	children?: Snippet<[{ value: SelectValue; open: boolean; disabled: boolean }]>;
 };
@@ -114,6 +127,8 @@ export type SelectIconProps = Omit<HTMLAttributes<HTMLSpanElement>, 'children'> 
 };
 
 export type SelectPortalProps = {
+	container?: HTMLElement | string | null;
+	keepMounted?: boolean;
 	children?: Snippet;
 };
 
@@ -122,10 +137,9 @@ export type SelectBackdropProps = Omit<HTMLAttributes<HTMLDivElement>, 'children
 	children?: Snippet;
 };
 
-export type SelectPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
-	side?: Side;
-	align?: Align;
-	sideOffset?: number;
+export type SelectPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
+	SharedPositionerProps & {
+	alignItemWithTrigger?: boolean;
 	children?: Snippet;
 };
 

@@ -56,10 +56,22 @@
 
 		if (event.key === prevKey) {
 			event.preventDefault();
-			nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+			if (ctx.loopFocus) {
+				nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+			} else if (currentIndex > 0) {
+				nextIndex = currentIndex - 1;
+			} else {
+				return;
+			}
 		} else if (event.key === nextKey) {
 			event.preventDefault();
-			nextIndex = (currentIndex + 1) % tabs.length;
+			if (ctx.loopFocus) {
+				nextIndex = (currentIndex + 1) % tabs.length;
+			} else if (currentIndex < tabs.length - 1) {
+				nextIndex = currentIndex + 1;
+			} else {
+				return;
+			}
 		} else if (event.key === 'Home') {
 			event.preventDefault();
 			nextIndex = 0;
@@ -91,6 +103,9 @@
 			'data-orientation': ctx.orientation,
 			onclick: () => {
 				activate(value);
+			},
+			onfocus: () => {
+				if (ctx.activateOnFocus) activate(value);
 			},
 			onkeydown: onKeyDown,
 		}),

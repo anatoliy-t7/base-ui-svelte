@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
-import type { Align, Side } from '../internal/floating.svelte.js';
+import type { Align, SharedPositionerProps, Side } from '../internal/floating.svelte.js';
 import type { PopupHandle } from '../internal/popup-handle.js';
 import type { createPresence } from '../internal/presence.svelte.js';
 
@@ -54,6 +54,7 @@ export type TooltipRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> 
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
 	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
+	onOpenChangeComplete?: ((open: boolean) => void) | undefined;
 	/** Alias for `openDelay` (Base UI name). @default 600 */
 	delay?: number;
 	/** How long to wait before opening on hover (ms). @default 600 */
@@ -81,10 +82,8 @@ export type TooltipPortalProps = {
 	children?: Snippet;
 };
 
-export type TooltipPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
-	side?: Side;
-	align?: Align;
-	sideOffset?: number;
+export type TooltipPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
+	SharedPositionerProps & {
 	children?: Snippet;
 };
 

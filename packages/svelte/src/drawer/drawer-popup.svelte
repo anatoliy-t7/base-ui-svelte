@@ -8,7 +8,15 @@
 	import { dismissSize, resolveSnapFractions } from './swipe-utils.js';
 	import type { DrawerContext, DrawerPopupProps, DrawerVirtualKeyboardContext } from './types.js';
 
-	let { render = 'div', class: className, style, children, ...rest }: DrawerPopupProps = $props();
+	let {
+		render = 'div',
+		class: className,
+		style,
+		initialFocus,
+		finalFocus,
+		children,
+		...rest
+	}: DrawerPopupProps = $props();
 
 	const ctx = getContext<DrawerContext>(DRAWER_CONTEXT);
 	const vk = hasContext(DRAWER_VIRTUAL_KEYBOARD_CONTEXT)
@@ -53,6 +61,12 @@
 		},
 		container: () => ctx.refs.popup,
 		restoreFocus: true,
+		get initialFocus() {
+			return initialFocus;
+		},
+		get finalFocus() {
+			return finalFocus;
+		},
 	});
 
 	createScrollLock({

@@ -4,13 +4,18 @@
 	import { portal } from '../internal/portal.js';
 	import type { MenuContext, MenuPortalProps } from './types.js';
 
-	let { children }: MenuPortalProps = $props();
+	let { container, keepMounted = false, children }: MenuPortalProps = $props();
 
 	const ctx = getContext<MenuContext>(MENU_CONTEXT);
+
+	const shouldRender = $derived(keepMounted || ctx.presence.isPresent);
 </script>
 
-{#if ctx.presence.isPresent}
-	<div {@attach portal()}>
+{#if shouldRender}
+	<div
+		{@attach portal(container)}
+		hidden={keepMounted && !ctx.presence.isPresent ? true : undefined}
+	>
 		{#if children}
 			{@render children()}
 		{/if}

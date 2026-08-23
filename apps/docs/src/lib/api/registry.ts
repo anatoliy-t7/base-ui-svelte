@@ -30,9046 +30,11269 @@ export type ComponentApi = {
 };
 
 export const apiRegistry: Record<string, ComponentApi> = {
-	accordion: {
-		slug: 'accordion',
-		exportName: 'Accordion',
-		kind: 'compound',
-		parts: [
+	"accordion": {
+		"slug": "accordion",
+		"exportName": "Accordion",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'Accordion.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "Accordion.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'value',
-						type: 'AccordionValue | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "value",
+						"type": "AccordionValue | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultValue',
-						type: 'AccordionValue',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
+						"name": "defaultValue",
+						"type": "AccordionValue",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onValueChange',
-						type: '((value: AccordionValue) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
+						"name": "onValueChange",
+						"type": "((value: AccordionValue) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'multiple',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "multiple",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'orientation',
-						type: 'AccordionOrientation',
-						optional: true,
-						description: '',
-						defaultValue: "'horizontal'"
+						"name": "orientation",
+						"type": "AccordionOrientation",
+						"optional": true,
+						"description": "",
+						"defaultValue": "'horizontal'"
 					},
 					{
-						name: 'children',
-						type: 'Snippet<[{ openValues: string[] }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet<[{ openValues: string[] }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "data-orientation",
+						"description": "The orientation of the component."
 					}
 				]
 			},
 			{
-				name: 'Header',
-				heading: 'Accordion.Header',
-				extendsNote: 'Extends HTML element attributes.',
-				props: [
+				"name": "Header",
+				"heading": "Accordion.Header",
+				"extendsNote": "Extends HTML element attributes.",
+				"props": [
 					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: []
+				"dataAttributes": []
 			},
 			{
-				name: 'Item',
-				heading: 'Accordion.Item',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Item",
+				"heading": "Accordion.Item",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'value',
-						type: 'string',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "value",
+						"type": "string",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'children',
-						type: 'Snippet<[{ open: boolean; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: 'trigger-press' | 'imperative' }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ open: boolean; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Panel',
-				heading: 'Accordion.Panel',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Panel",
+				"heading": "Accordion.Panel",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'keepMounted',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'role',
-						type: 'string | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "hiddenUntilFound",
+						"type": "boolean",
+						"optional": true,
+						"description": "Use the `hidden=\"until-found\"` attribute when collapsed.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "role",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					},
 					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
 					}
 				]
 			},
 			{
-				name: 'Trigger',
-				heading: 'Accordion.Trigger',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
+				"name": "Trigger",
+				"heading": "Accordion.Trigger",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-panel-open',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			}
-		]
-	},
-	'alert-dialog': {
-		slug: 'alert-dialog',
-		exportName: 'AlertDialog',
-		kind: 'compound',
-		parts: [
-			{
-				name: 'Root',
-				heading: 'AlertDialog.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ open: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Backdrop',
-				heading: 'AlertDialog.Backdrop',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Close',
-				heading: 'AlertDialog.Close',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Description',
-				heading: 'AlertDialog.Description',
-				extendsNote: 'Extends paragraph HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Popup',
-				heading: 'AlertDialog.Popup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
-					}
-				]
-			},
-			{
-				name: 'Portal',
-				heading: 'AlertDialog.Portal',
-				extendsNote: '',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Title',
-				heading: 'AlertDialog.Title',
-				extendsNote: 'Extends heading HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Trigger',
-				heading: 'AlertDialog.Trigger',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Viewport',
-				heading: 'AlertDialog.Viewport',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-panel-open",
+						"description": "Present on the element when applicable."
 					}
 				]
 			}
 		]
 	},
-	autocomplete: {
-		slug: 'autocomplete',
-		exportName: 'Autocomplete',
-		kind: 'compound',
-		parts: [
+	"alert-dialog": {
+		"slug": "alert-dialog",
+		"exportName": "AlertDialog",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'Autocomplete.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "AlertDialog.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'value',
-						type: 'string | null | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultValue',
-						type: 'string | null',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onValueChange',
-						type: '((value: string | null, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'inputValue',
-						type: 'string | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "modal",
+						"type": "AlertDialogModal",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultInputValue',
-						type: 'string',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "disablePointerDismissal",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onInputChange',
-						type: '((value: string, event?: Event) => void) | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "onOpenChangeComplete",
+						"type": "((open: boolean) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
+						"name": "handle",
+						"type": "AlertDialogHandle | undefined",
+						"optional": true,
+						"description": "Imperative handle from .",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'filter',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet< [{ value: string | null; inputValue: string; open: boolean; disabled: boolean }] >',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Arrow',
-				heading: 'Autocomplete.Arrow',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Backdrop",
+				"heading": "AlertDialog.Backdrop",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "forceRender",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
 					}
 				]
 			},
 			{
-				name: 'Backdrop',
-				heading: 'Autocomplete.Backdrop',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Close",
+				"heading": "AlertDialog.Close",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
 					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "Description",
+				"heading": "AlertDialog.Description",
+				"extendsNote": "Extends paragraph HTML attributes.",
+				"props": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Popup",
+				"heading": "AlertDialog.Popup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "initialFocus",
+						"type": "FocusTarget",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "finalFocus",
+						"type": "FocusTarget",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
 					}
 				]
 			},
 			{
-				name: 'Clear',
-				heading: 'Autocomplete.Clear',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
+				"name": "Portal",
+				"heading": "AlertDialog.Portal",
+				"extendsNote": "",
+				"props": [
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "container",
+						"type": "HTMLElement | string | null",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "Title",
+				"heading": "AlertDialog.Title",
+				"extendsNote": "Extends heading HTML attributes.",
+				"props": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Trigger",
+				"heading": "AlertDialog.Trigger",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-empty',
-						description: 'Present on the element when applicable.'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'data-hidden',
-						description: 'Present on the element when applicable.'
+						"name": "id",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "handle",
+						"type": "AlertDialogHandle | undefined",
+						"optional": true,
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "payload",
+						"type": "unknown",
+						"optional": true,
+						"description": "Optional payload associated when opening via this trigger.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Empty',
-				heading: 'Autocomplete.Empty',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Viewport",
+				"heading": "AlertDialog.Viewport",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-empty',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
-			{
-				name: 'Group',
-				heading: 'Autocomplete.Group',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'GroupLabel',
-				heading: 'Autocomplete.GroupLabel',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Icon',
-				heading: 'Autocomplete.Icon',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Input',
-				heading: 'Autocomplete.Input',
-				extendsNote: 'Extends input HTML attributes.',
-				props: [
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'InputGroup',
-				heading: 'Autocomplete.InputGroup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Item',
-				heading: 'Autocomplete.Item',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'value',
-						type: 'string',
-						optional: false,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'label',
-						type: 'string',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ selected: boolean; highlighted: boolean; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
-					},
-					{
-						name: 'data-selected',
-						description: 'Present when the item is selected.'
-					}
-				]
-			},
-			{
-				name: 'ItemIndicator',
-				heading: 'Autocomplete.ItemIndicator',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-selected',
-						description: 'Present when the item is selected.'
-					}
-				]
-			},
-			{
-				name: 'Label',
-				heading: 'Autocomplete.Label',
-				extendsNote: 'Extends label HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					}
-				]
-			},
-			{
-				name: 'List',
-				heading: 'Autocomplete.List',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Popup',
-				heading: 'Autocomplete.Popup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
-					}
-				]
-			},
-			{
-				name: 'Portal',
-				heading: 'Autocomplete.Portal',
-				extendsNote: '',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Positioner',
-				heading: 'Autocomplete.Positioner',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'side',
-						type: 'Side',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'align',
-						type: 'Align',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'sideOffset',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Row',
-				heading: 'Autocomplete.Row',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Separator',
-				heading: 'Autocomplete.Separator',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [],
-				dataAttributes: []
-			},
-			{
-				name: 'Status',
-				heading: 'Autocomplete.Status',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Trigger',
-				heading: 'Autocomplete.Trigger',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			}
 		]
 	},
-	avatar: {
-		slug: 'avatar',
-		exportName: 'Avatar',
-		kind: 'compound',
-		parts: [
+	"autocomplete": {
+		"slug": "autocomplete",
+		"exportName": "Autocomplete",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'Avatar.Root',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "Autocomplete.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Fallback',
-				heading: 'Avatar.Fallback',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'delay',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "value",
+						"type": "string | null | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "defaultValue",
+						"type": "string | null",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueChange",
+						"type": "((value: string | null, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "inputValue",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultInputValue",
+						"type": "string",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onInputChange",
+						"type": "((value: string, event?: Event) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "onOpenChangeComplete",
+						"type": "((open: boolean) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "loopFocus",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "filter",
+						"type": "AutocompleteFilter",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "filteredItems",
+						"type": "ReadonlyArray<string> | undefined",
+						"optional": true,
+						"description": "Externally filtered item values; when set, skips internal filtering.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "limit",
+						"type": "number",
+						"optional": true,
+						"description": "Max visible items (-1 = no limit).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "locale",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Locale for default string filtering.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "autoHighlight",
+						"type": "boolean",
+						"optional": true,
+						"description": "Highlight the first matching item while filtering.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "highlightItemOnHover",
+						"type": "boolean",
+						"optional": true,
+						"description": "Highlight items on pointer move.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onItemHighlighted",
+						"type": "| ((value: string | null, eventDetails: { reason: 'none' | 'keyboard' | 'pointer' | 'filter' }) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "itemToStringLabel",
+						"type": "((itemValue: string) => string) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "itemToStringValue",
+						"type": "((itemValue: string) => string) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "isItemEqualToValue",
+						"type": "((itemValue: string, value: string) => boolean) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "items",
+						"type": "AutocompleteItemsProp | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet< [{ value: string | null; inputValue: string; open: boolean; disabled: boolean }] >",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: []
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
 			},
 			{
-				name: 'Image',
-				heading: 'Avatar.Image',
-				extendsNote: 'Also accepts native HTML attributes for the rendered element.',
-				props: [
+				"name": "Arrow",
+				"heading": "Autocomplete.Arrow",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'onLoadingStatusChange',
-						type: '((status: ImageLoadingStatus) => void) | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: []
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Backdrop",
+				"heading": "Autocomplete.Backdrop",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Clear",
+				"heading": "Autocomplete.Clear",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-empty",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-hidden",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Collection",
+				"heading": "Autocomplete.Collection",
+				"extendsNote": "",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet<[AutocompleteCollectionItem]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Empty",
+				"heading": "Autocomplete.Empty",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-empty",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Group",
+				"heading": "Autocomplete.Group",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "GroupLabel",
+				"heading": "Autocomplete.GroupLabel",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Icon",
+				"heading": "Autocomplete.Icon",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Input",
+				"heading": "Autocomplete.Input",
+				"extendsNote": "Extends input HTML attributes.",
+				"props": [
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "InputGroup",
+				"heading": "Autocomplete.InputGroup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Item",
+				"heading": "Autocomplete.Item",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "string",
+						"optional": false,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "label",
+						"type": "string",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ selected: boolean; highlighted: boolean; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
+					},
+					{
+						"name": "data-selected",
+						"description": "Present when the item is selected."
+					}
+				]
+			},
+			{
+				"name": "ItemIndicator",
+				"heading": "Autocomplete.ItemIndicator",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-selected",
+						"description": "Present when the item is selected."
+					}
+				]
+			},
+			{
+				"name": "Label",
+				"heading": "Autocomplete.Label",
+				"extendsNote": "Extends label HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					}
+				]
+			},
+			{
+				"name": "List",
+				"heading": "Autocomplete.List",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Popup",
+				"heading": "Autocomplete.Popup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
+					}
+				]
+			},
+			{
+				"name": "Portal",
+				"heading": "Autocomplete.Portal",
+				"extendsNote": "",
+				"props": [
+					{
+						"name": "container",
+						"type": "HTMLElement | string | null",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Positioner",
+				"heading": "Autocomplete.Positioner",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "side",
+						"type": "null",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "align",
+						"type": "HTML",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sideOffset",
+						"type": "popup",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "alignOffset",
+						"type": "ull;",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionPadding",
+						"type": "t | null; list: HTMLElement | null;",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionBoundary",
+						"type": "ll; }; export",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionAvoidance",
+						"type": "= { readonly val",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "arrowPadding",
+						"type": "setV",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sticky",
+						"type": "string",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "positionMethod",
+						"type": "string, event?: Ev",
+						"optional": true,
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "strategy",
+						"type": "penChangeReason):",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "anchor",
+						"type": "): () => void; readonly highli",
+						"optional": true,
+						"description": "Override the positioning anchor (element or virtual element).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disableAnchorTracking",
+						"type": "Entry[]",
+						"optional": true,
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Row",
+				"heading": "Autocomplete.Row",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Separator",
+				"heading": "Autocomplete.Separator",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [],
+				"dataAttributes": []
+			},
+			{
+				"name": "Status",
+				"heading": "Autocomplete.Status",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Trigger",
+				"heading": "Autocomplete.Trigger",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Value",
+				"heading": "Autocomplete.Value",
+				"extendsNote": "",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet<[string | null]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
 			}
 		]
 	},
-	button: {
-		slug: 'button',
-		exportName: 'Button',
-		kind: 'single',
-		parts: [
+	"avatar": {
+		"slug": "avatar",
+		"exportName": "Avatar",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Button',
-				heading: 'Button',
-				extendsNote: 'Extends HTML element attributes.',
-				props: [
+				"name": "Root",
+				"heading": "Avatar.Root",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'focusableWhenDisabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control remains focusable when disabled.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render. Defaults to `button`.',
-						defaultValue: '—'
-					},
-					{
-						name: 'type',
-						type: "'button' | 'submit' | 'reset' | undefined",
-						optional: true,
-						description: 'Defaults to `button`. Set `submit` explicitly for form submit buttons.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "Fallback",
+				"heading": "Avatar.Fallback",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "delay",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
-				]
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Image",
+				"heading": "Avatar.Image",
+				"extendsNote": "Also accepts native HTML attributes for the rendered element.",
+				"props": [
+					{
+						"name": "onLoadingStatusChange",
+						"type": "((status: ImageLoadingStatus) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
 			}
 		]
 	},
-	checkbox: {
-		slug: 'checkbox',
-		exportName: 'Checkbox',
-		kind: 'compound',
-		parts: [
+	"button": {
+		"slug": "button",
+		"exportName": "Button",
+		"kind": "single",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'Checkbox.Root',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
+				"name": "Button",
+				"heading": "Button",
+				"extendsNote": "Extends HTML element attributes.",
+				"props": [
 					{
-						name: 'checked',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Controlled checked state.',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'defaultChecked',
-						type: 'boolean',
-						optional: true,
-						description: 'Uncontrolled initial checked state.',
-						defaultValue: '—'
+						"name": "focusableWhenDisabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control remains focusable when disabled.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'onCheckedChange',
-						type: '((checked: boolean, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the checked state changes.',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render. Defaults to `button`.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "type",
+						"type": "'button' | 'submit' | 'reset' | undefined",
+						"optional": true,
+						"description": "Defaults to `button`. Set `submit` explicitly for form submit buttons.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'required',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'name',
-						type: 'string | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'value',
-						type: 'string | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ checked: boolean; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet<[{ disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-indeterminate',
-						description: 'Present when the checkbox is indeterminate.'
-					},
-					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
-					}
-				]
-			},
-			{
-				name: 'Indicator',
-				heading: 'Checkbox.Indicator',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-indeterminate',
-						description: 'Present when the checkbox is indeterminate.'
-					},
-					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
-					}
-				]
-			}
-		]
-	},
-	'checkbox-group': {
-		slug: 'checkbox-group',
-		exportName: 'CheckboxGroup',
-		kind: 'single',
-		parts: [
-			{
-				name: 'CheckboxGroup',
-				heading: 'CheckboxGroup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'value',
-						type: 'string[] | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultValue',
-						type: 'string[]',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'onValueChange',
-						type: '((value: string[], event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'allValues',
-						type: 'string[] | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ value: string[]; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					}
-				]
-			}
-		]
-	},
-	collapsible: {
-		slug: 'collapsible',
-		exportName: 'Collapsible',
-		kind: 'compound',
-		parts: [
-			{
-				name: 'Root',
-				heading: 'Collapsible.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ open: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Panel',
-				heading: 'Collapsible.Panel',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'keepMounted',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'role',
-						type: 'string | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
-					}
-				]
-			},
-			{
-				name: 'Trigger',
-				heading: 'Collapsible.Trigger',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-panel-open',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			}
-		]
-	},
-	combobox: {
-		slug: 'combobox',
-		exportName: 'Combobox',
-		kind: 'compound',
-		parts: [
-			{
-				name: 'Root',
-				heading: 'Combobox.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'value',
-						type: 'ComboboxValue | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultValue',
-						type: 'ComboboxValue',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'onValueChange',
-						type: '((value: ComboboxValue, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'inputValue',
-						type: 'string | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultInputValue',
-						type: 'string',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'onInputChange',
-						type: '((value: string, event?: Event) => void) | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'filter',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'multiple',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'items',
-						type: 'ComboboxItemsProp | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet< [{ value: ComboboxValue; inputValue: string; open: boolean; disabled: boolean }] >',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Arrow',
-				heading: 'Combobox.Arrow',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Backdrop',
-				heading: 'Combobox.Backdrop',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Chip',
-				heading: 'Combobox.Chip',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'value',
-						type: 'string',
-						optional: false,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					}
-				]
-			},
-			{
-				name: 'ChipRemove',
-				heading: 'Combobox.ChipRemove',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					}
-				]
-			},
-			{
-				name: 'Chips',
-				heading: 'Combobox.Chips',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Clear',
-				heading: 'Combobox.Clear',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-empty',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-hidden',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
-			{
-				name: 'Collection',
-				heading: 'Combobox.Collection',
-				extendsNote: '',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet<[ComboboxCollectionItem]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Empty',
-				heading: 'Combobox.Empty',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-empty',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
-			{
-				name: 'Group',
-				heading: 'Combobox.Group',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'GroupLabel',
-				heading: 'Combobox.GroupLabel',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Icon',
-				heading: 'Combobox.Icon',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Input',
-				heading: 'Combobox.Input',
-				extendsNote: 'Extends input HTML attributes.',
-				props: [
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'InputGroup',
-				heading: 'Combobox.InputGroup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Item',
-				heading: 'Combobox.Item',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'value',
-						type: 'string',
-						optional: false,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'label',
-						type: 'string',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ selected: boolean; highlighted: boolean; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
-					},
-					{
-						name: 'data-selected',
-						description: 'Present when the item is selected.'
-					}
-				]
-			},
-			{
-				name: 'ItemIndicator',
-				heading: 'Combobox.ItemIndicator',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-selected',
-						description: 'Present when the item is selected.'
-					}
-				]
-			},
-			{
-				name: 'Label',
-				heading: 'Combobox.Label',
-				extendsNote: 'Extends label HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					}
-				]
-			},
-			{
-				name: 'List',
-				heading: 'Combobox.List',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Popup',
-				heading: 'Combobox.Popup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
-					}
-				]
-			},
-			{
-				name: 'Portal',
-				heading: 'Combobox.Portal',
-				extendsNote: '',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Positioner',
-				heading: 'Combobox.Positioner',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'side',
-						type: 'Side',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'align',
-						type: 'Align',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'sideOffset',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Row',
-				heading: 'Combobox.Row',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Separator',
-				heading: 'Combobox.Separator',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [],
-				dataAttributes: []
-			},
-			{
-				name: 'Status',
-				heading: 'Combobox.Status',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Trigger',
-				heading: 'Combobox.Trigger',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Value',
-				heading: 'Combobox.Value',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'placeholder',
-						type: 'string',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[ComboboxValue]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-placeholder',
-						description: 'Present when showing placeholder content.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					}
 				]
 			}
 		]
 	},
-	'context-menu': {
-		slug: 'context-menu',
-		exportName: 'ContextMenu',
-		kind: 'compound',
-		parts: [
+	"checkbox": {
+		"slug": "checkbox",
+		"exportName": "Checkbox",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'ContextMenu.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "Checkbox.Root",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
 					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
+						"name": "checked",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Controlled checked state.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
+						"name": "defaultChecked",
+						"type": "boolean",
+						"optional": true,
+						"description": "Uncontrolled initial checked state.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
+						"name": "onCheckedChange",
+						"type": "((checked: boolean, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the checked state changes.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet<[{ open: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "required",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "readOnly",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "name",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "value",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "uncheckedValue",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Submitted when the checkbox is unchecked (native form pattern).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "form",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Form id association for the hidden input.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "indeterminate",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "parent",
+						"type": "boolean",
+						"optional": true,
+						"description": "When true inside a CheckboxGroup with `allValues`, this checkbox controls selecting / clearing the whole group (parent checkbox).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ checked: boolean; disabled: boolean; indeterminate: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-checked",
+						"description": "Present when the part is checked."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-indeterminate",
+						"description": "Present when the checkbox is indeterminate."
+					},
+					{
+						"name": "data-readonly",
+						"description": "Present when the control is read-only."
+					},
+					{
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
 					}
 				]
 			},
 			{
-				name: 'Arrow',
-				heading: 'ContextMenu.Arrow',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Indicator",
+				"heading": "Checkbox.Indicator",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-checked",
+						"description": "Present when the part is checked."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Backdrop',
-				heading: 'ContextMenu.Backdrop',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'dismissible',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'CheckboxItem',
-				heading: 'ContextMenu.CheckboxItem',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'checked',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Controlled checked state.',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultChecked',
-						type: 'boolean',
-						optional: true,
-						description: 'Uncontrolled initial checked state.',
-						defaultValue: '—'
-					},
-					{
-						name: 'onCheckedChange',
-						type: '((checked: boolean, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the checked state changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ checked: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
-					},
-					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
-					}
-				]
-			},
-			{
-				name: 'CheckboxItemIndicator',
-				heading: 'ContextMenu.CheckboxItemIndicator',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
-					}
-				]
-			},
-			{
-				name: 'Group',
-				heading: 'ContextMenu.Group',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'GroupLabel',
-				heading: 'ContextMenu.GroupLabel',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Item',
-				heading: 'ContextMenu.Item',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'onClick',
-						type: '((event: MouseEvent) => void) | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
-					}
-				]
-			},
-			{
-				name: 'LinkItem',
-				heading: 'ContextMenu.LinkItem',
-				extendsNote: 'Extends anchor HTML attributes.',
-				props: [
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
-					}
-				]
-			},
-			{
-				name: 'Popup',
-				heading: 'ContextMenu.Popup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
-					}
-				]
-			},
-			{
-				name: 'Portal',
-				heading: 'ContextMenu.Portal',
-				extendsNote: '',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Positioner',
-				heading: 'ContextMenu.Positioner',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'side',
-						type: 'Side',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'align',
-						type: 'Align',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'sideOffset',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'RadioGroup',
-				heading: 'ContextMenu.RadioGroup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'value',
-						type: 'string | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultValue',
-						type: 'string',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'onValueChange',
-						type: '((value: string, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ value: string }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					}
-				]
-			},
-			{
-				name: 'RadioItem',
-				heading: 'ContextMenu.RadioItem',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'value',
-						type: 'string',
-						optional: false,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ checked: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
-					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
-					},
-					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
-					}
-				]
-			},
-			{
-				name: 'RadioItemIndicator',
-				heading: 'ContextMenu.RadioItemIndicator',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
-					}
-				]
-			},
-			{
-				name: 'Separator',
-				heading: 'ContextMenu.Separator',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [],
-				dataAttributes: []
-			},
-			{
-				name: 'SubmenuRoot',
-				heading: 'ContextMenu.SubmenuRoot',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ open: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'SubmenuTrigger',
-				heading: 'ContextMenu.SubmenuTrigger',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Trigger',
-				heading: 'ContextMenu.Trigger',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Viewport',
-				heading: 'ContextMenu.Viewport',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			}
-		]
-	},
-	dialog: {
-		slug: 'dialog',
-		exportName: 'Dialog',
-		kind: 'compound',
-		parts: [
-			{
-				name: 'Root',
-				heading: 'Dialog.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ open: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Backdrop',
-				heading: 'Dialog.Backdrop',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Close',
-				heading: 'Dialog.Close',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Description',
-				heading: 'Dialog.Description',
-				extendsNote: 'Extends paragraph HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Popup',
-				heading: 'Dialog.Popup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
-					}
-				]
-			},
-			{
-				name: 'Portal',
-				heading: 'Dialog.Portal',
-				extendsNote: '',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Title',
-				heading: 'Dialog.Title',
-				extendsNote: 'Extends heading HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Trigger',
-				heading: 'Dialog.Trigger',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Viewport',
-				heading: 'Dialog.Viewport',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-indeterminate",
+						"description": "Present when the checkbox is indeterminate."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
 					}
 				]
 			}
 		]
 	},
-	drawer: {
-		slug: 'drawer',
-		exportName: 'Drawer',
-		kind: 'compound',
-		parts: [
+	"checkbox-group": {
+		"slug": "checkbox-group",
+		"exportName": "CheckboxGroup",
+		"kind": "single",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'Drawer.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "CheckboxGroup",
+				"heading": "CheckboxGroup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
+						"name": "value",
+						"type": "string[] | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
+						"name": "defaultValue",
+						"type": "string[]",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
+						"name": "onValueChange",
+						"type": "((value: string[], event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'swipeDirection',
-						type: 'DrawerSwipeDirection',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'modal',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "allValues",
+						"type": "string[] | undefined",
+						"optional": true,
+						"description": "Values controlled by a parent checkbox (`parent` on Checkbox.Root).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'disablePointerDismissal',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'snapPoints',
-						type: 'ReadonlyArray<DrawerSnapPoint>',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ open: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet<[{ value: string[]; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-swipe-direction',
-						description: 'Direction of an active toast swipe.'
-					},
-					{
-						name: 'data-swiping',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
-			{
-				name: 'Provider',
-				heading: 'Drawer.Provider',
-				extendsNote: '',
-				props: [
-					{
-						name: 'swipeDirection',
-						type: 'DrawerSwipeDirection',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Backdrop',
-				heading: 'Drawer.Backdrop',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
-					}
-				]
-			},
-			{
-				name: 'Close',
-				heading: 'Drawer.Close',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Content',
-				heading: 'Drawer.Content',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Description',
-				heading: 'Drawer.Description',
-				extendsNote: 'Extends paragraph HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Indent',
-				heading: 'Drawer.Indent',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-active',
-						description: 'Present when the item is active.'
-					},
-					{
-						name: 'data-inactive',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-swipe-direction',
-						description: 'Direction of an active toast swipe.'
-					}
-				]
-			},
-			{
-				name: 'IndentBackground',
-				heading: 'Drawer.IndentBackground',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-active',
-						description: 'Present when the item is active.'
-					},
-					{
-						name: 'data-inactive',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-swipe-direction',
-						description: 'Direction of an active toast swipe.'
-					}
-				]
-			},
-			{
-				name: 'Popup',
-				heading: 'Drawer.Popup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
-					},
-					{
-						name: 'data-swipe-direction',
-						description: 'Direction of an active toast swipe.'
-					},
-					{
-						name: 'data-swipe-snap',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-swiping',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
-			{
-				name: 'Portal',
-				heading: 'Drawer.Portal',
-				extendsNote: '',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'SwipeArea',
-				heading: 'Drawer.SwipeArea',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'swipeDirection',
-						type: 'DrawerSwipeDirection',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-swipe-direction',
-						description: 'Direction of an active toast swipe.'
-					},
-					{
-						name: 'data-swiping',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
-			{
-				name: 'Title',
-				heading: 'Drawer.Title',
-				extendsNote: 'Extends heading HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Trigger',
-				heading: 'Drawer.Trigger',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Viewport',
-				heading: 'Drawer.Viewport',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-keyboard-open',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
-					},
-					{
-						name: 'data-swipe-direction',
-						description: 'Direction of an active toast swipe.'
-					}
-				]
-			},
-			{
-				name: 'VirtualKeyboardProvider',
-				heading: 'Drawer.VirtualKeyboardProvider',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-keyboard-open',
-						description: 'Present on the element when applicable.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					}
 				]
 			}
 		]
 	},
-	field: {
-		slug: 'field',
-		exportName: 'Field',
-		kind: 'compound',
-		parts: [
+	"collapsible": {
+		"slug": "collapsible",
+		"exportName": "Collapsible",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'Field.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "Collapsible.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'name',
-						type: 'string | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'invalid',
-						type: 'boolean | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'validate',
-						type: '| ((value: string) => string | string[] | null | Promise<string | string[] | null>) | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'validationMode',
-						type: 'FieldValidationMode',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet< [ { disabled: boolean; touched: boolean; dirty: boolean; focused: boolean; filled: boolean; valid: boolean | null; }, ] >',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet<[{ open: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-dirty',
-						description: 'Present when the field value has changed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-filled',
-						description: 'Present when the field has a value.'
-					},
-					{
-						name: 'data-focused',
-						description: 'Present when the field is focused.'
-					},
-					{
-						name: 'data-invalid',
-						description: 'Present when the field is invalid.'
-					},
-					{
-						name: 'data-touched',
-						description: 'Present when the field has been touched.'
-					},
-					{
-						name: 'data-valid',
-						description: 'Present when the field is valid.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Control',
-				heading: 'Field.Control',
-				extendsNote: 'Extends input HTML attributes.',
-				props: [
+				"name": "Panel",
+				"heading": "Collapsible.Panel",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'disabled',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'value',
-						type: 'string | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "role",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultValue',
-						type: 'string',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'onValueChange',
-						type: '((value: string, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-dirty',
-						description: 'Present when the field value has changed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
 					},
 					{
-						name: 'data-filled',
-						description: 'Present when the field has a value.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					},
 					{
-						name: 'data-focused',
-						description: 'Present when the field is focused.'
-					},
-					{
-						name: 'data-invalid',
-						description: 'Present when the field is invalid.'
-					},
-					{
-						name: 'data-touched',
-						description: 'Present when the field has been touched.'
-					},
-					{
-						name: 'data-valid',
-						description: 'Present when the field is valid.'
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
 					}
 				]
 			},
 			{
-				name: 'Description',
-				heading: 'Field.Description',
-				extendsNote: 'Extends paragraph HTML attributes.',
-				props: [
+				"name": "Trigger",
+				"heading": "Collapsible.Trigger",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-dirty',
-						description: 'Present when the field value has changed.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-filled',
-						description: 'Present when the field has a value.'
-					},
-					{
-						name: 'data-focused',
-						description: 'Present when the field is focused.'
-					},
-					{
-						name: 'data-invalid',
-						description: 'Present when the field is invalid.'
-					},
-					{
-						name: 'data-touched',
-						description: 'Present when the field has been touched.'
-					},
-					{
-						name: 'data-valid',
-						description: 'Present when the field is valid.'
-					}
-				]
-			},
-			{
-				name: 'Error',
-				heading: 'Field.Error',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'match',
-						type: 'FieldErrorMatch | undefined',
-						optional: true,
-						description:
-							'When `true`, always show. When a `ValidityState` key, show when that flag is true. When omitted, show when the field is invalid (or has a form error).',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ error: string }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-dirty',
-						description: 'Present when the field value has changed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-filled',
-						description: 'Present when the field has a value.'
-					},
-					{
-						name: 'data-focused',
-						description: 'Present when the field is focused.'
-					},
-					{
-						name: 'data-invalid',
-						description: 'Present when the field is invalid.'
-					},
-					{
-						name: 'data-touched',
-						description: 'Present when the field has been touched.'
-					},
-					{
-						name: 'data-valid',
-						description: 'Present when the field is valid.'
-					}
-				]
-			},
-			{
-				name: 'Item',
-				heading: 'Field.Item',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-dirty',
-						description: 'Present when the field value has changed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-filled',
-						description: 'Present when the field has a value.'
-					},
-					{
-						name: 'data-focused',
-						description: 'Present when the field is focused.'
-					},
-					{
-						name: 'data-invalid',
-						description: 'Present when the field is invalid.'
-					},
-					{
-						name: 'data-touched',
-						description: 'Present when the field has been touched.'
-					},
-					{
-						name: 'data-valid',
-						description: 'Present when the field is valid.'
-					}
-				]
-			},
-			{
-				name: 'Label',
-				heading: 'Field.Label',
-				extendsNote: 'Extends label HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-dirty',
-						description: 'Present when the field value has changed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-filled',
-						description: 'Present when the field has a value.'
-					},
-					{
-						name: 'data-focused',
-						description: 'Present when the field is focused.'
-					},
-					{
-						name: 'data-invalid',
-						description: 'Present when the field is invalid.'
-					},
-					{
-						name: 'data-touched',
-						description: 'Present when the field has been touched.'
-					},
-					{
-						name: 'data-valid',
-						description: 'Present when the field is valid.'
-					}
-				]
-			},
-			{
-				name: 'Validity',
-				heading: 'Field.Validity',
-				extendsNote: '',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet<[FieldValidityState]>',
-						optional: false,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			}
-		]
-	},
-	fieldset: {
-		slug: 'fieldset',
-		exportName: 'Fieldset',
-		kind: 'compound',
-		parts: [
-			{
-				name: 'Root',
-				heading: 'Fieldset.Root',
-				extendsNote: 'Extends fieldset HTML attributes.',
-				props: [
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					}
-				]
-			},
-			{
-				name: 'Legend',
-				heading: 'Fieldset.Legend',
-				extendsNote: 'Extends HTML attributes for the rendered element.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-panel-open",
+						"description": "Present on the element when applicable."
 					}
 				]
 			}
 		]
 	},
-	form: {
-		slug: 'form',
-		exportName: 'Form',
-		kind: 'single',
-		parts: [
+	"combobox": {
+		"slug": "combobox",
+		"exportName": "Combobox",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Form',
-				heading: 'Form',
-				extendsNote: 'Extends form HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "Combobox.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'errors',
-						type: 'FormErrors | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "value",
+						"type": "ComboboxValue | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onFormSubmit',
-						type: '((formData: FormData, event: SubmitEvent) => void) | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "defaultValue",
+						"type": "ComboboxValue",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "onValueChange",
+						"type": "((value: ComboboxValue, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "inputValue",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultInputValue",
+						"type": "string",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onInputChange",
+						"type": "((value: string, event?: Event) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onOpenChangeComplete",
+						"type": "((open: boolean) => void) | undefined",
+						"optional": true,
+						"description": "Called after open/close animations complete.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "readOnly",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "required",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "name",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "form",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "filter",
+						"type": "ComboboxFilter",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "filteredItems",
+						"type": "ReadonlyArray<string> | undefined",
+						"optional": true,
+						"description": "Externally filtered item values; when set, skips internal filtering.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "limit",
+						"type": "number",
+						"optional": true,
+						"description": "Max visible items (-1 = no limit).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "locale",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Locale for default string filtering.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "autoHighlight",
+						"type": "boolean",
+						"optional": true,
+						"description": "Highlight the first matching item while filtering.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "highlightItemOnHover",
+						"type": "boolean",
+						"optional": true,
+						"description": "Highlight items on pointer move.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onItemHighlighted",
+						"type": "| ((value: string | null, eventDetails: { reason: 'none' | 'keyboard' | 'pointer' | 'filter' }) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "itemToStringLabel",
+						"type": "((itemValue: string) => string) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "itemToStringValue",
+						"type": "((itemValue: string) => string) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "isItemEqualToValue",
+						"type": "((itemValue: string, value: string) => boolean) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "multiple",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "loopFocus",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether highlight wraps at list ends.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "modal",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the popup behaves as a modal layer.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "openOnInputClick",
+						"type": "boolean",
+						"optional": true,
+						"description": "Open the popup when the input is clicked.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "items",
+						"type": "ComboboxItemsProp | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet< [{ value: ComboboxValue; inputValue: string; open: boolean; disabled: boolean }] >",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: []
-			}
-		]
-	},
-	input: {
-		slug: 'input',
-		exportName: 'Input',
-		kind: 'single',
-		parts: [
-			{
-				name: 'Input',
-				heading: 'Input',
-				extendsNote: 'Extends input HTML attributes.',
-				props: [
+				"dataAttributes": [
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'value',
-						type: 'string | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'defaultValue',
-						type: 'string',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					},
 					{
-						name: 'onValueChange',
-						type: '((value: string, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-dirty',
-						description: 'Present when the field value has changed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-filled',
-						description: 'Present when the field has a value.'
-					},
-					{
-						name: 'data-focused',
-						description: 'Present when the field is focused.'
-					},
-					{
-						name: 'data-invalid',
-						description: 'Present when the field is invalid.'
-					},
-					{
-						name: 'data-touched',
-						description: 'Present when the field has been touched.'
-					},
-					{
-						name: 'data-valid',
-						description: 'Present when the field is valid.'
-					}
-				]
-			}
-		]
-	},
-	menu: {
-		slug: 'menu',
-		exportName: 'Menu',
-		kind: 'compound',
-		parts: [
-			{
-				name: 'Root',
-				heading: 'Menu.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'openOnHover',
-						type: 'boolean',
-						optional: true,
-						description: 'Open the menu when the pointer enters the trigger.',
-						defaultValue: '—'
-					},
-					{
-						name: 'delay',
-						type: 'number',
-						optional: true,
-						description: 'Open delay when `openOnHover` is set (ms).',
-						defaultValue: '—'
-					},
-					{
-						name: 'closeDelay',
-						type: 'number',
-						optional: true,
-						description: 'Close delay when leaving trigger/popup under hover (ms).',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ open: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Arrow',
-				heading: 'Menu.Arrow',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Backdrop',
-				heading: 'Menu.Backdrop',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'dismissible',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'CheckboxItem',
-				heading: 'Menu.CheckboxItem',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'checked',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Controlled checked state.',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultChecked',
-						type: 'boolean',
-						optional: true,
-						description: 'Uncontrolled initial checked state.',
-						defaultValue: '—'
-					},
-					{
-						name: 'onCheckedChange',
-						type: '((checked: boolean, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the checked state changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ checked: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
-					},
-					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
+						"name": "data-readonly",
+						"description": "Present when the control is read-only."
 					}
 				]
 			},
 			{
-				name: 'CheckboxItemIndicator',
-				heading: 'Menu.CheckboxItemIndicator',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Arrow",
+				"heading": "Combobox.Arrow",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Group',
-				heading: 'Menu.Group',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Backdrop",
+				"heading": "Combobox.Backdrop",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'GroupLabel',
-				heading: 'Menu.GroupLabel',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Item',
-				heading: 'Menu.Item',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onClick',
-						type: '((event: MouseEvent) => void) | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'LinkItem',
-				heading: 'Menu.LinkItem',
-				extendsNote: 'Extends anchor HTML attributes.',
-				props: [
+				"name": "Chip",
+				"heading": "Combobox.Chip",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "value",
+						"type": "string",
+						"optional": false,
+						"description": "Controlled value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					}
 				]
 			},
 			{
-				name: 'Popup',
-				heading: 'Menu.Popup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "ChipRemove",
+				"heading": "Combobox.ChipRemove",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
 					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					}
 				]
 			},
 			{
-				name: 'Portal',
-				heading: 'Menu.Portal',
-				extendsNote: '',
-				props: [
+				"name": "Chips",
+				"heading": "Combobox.Chips",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: []
+				"dataAttributes": []
 			},
 			{
-				name: 'Positioner',
-				heading: 'Menu.Positioner',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Clear",
+				"heading": "Combobox.Clear",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
 					{
-						name: 'side',
-						type: 'Side',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'align',
-						type: 'Align',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'sideOffset',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-empty",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-hidden",
+						"description": "Present on the element when applicable."
 					}
 				]
 			},
 			{
-				name: 'RadioGroup',
-				heading: 'Menu.RadioGroup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Collection",
+				"heading": "Combobox.Collection",
+				"extendsNote": "",
+				"props": [
 					{
-						name: 'value',
-						type: 'string | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultValue',
-						type: 'string',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'onValueChange',
-						type: '((value: string, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ value: string }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet<[ComboboxCollectionItem]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "Empty",
+				"heading": "Combobox.Empty",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-empty",
+						"description": "Present on the element when applicable."
 					}
 				]
 			},
 			{
-				name: 'RadioItem',
-				heading: 'Menu.RadioItem',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Group",
+				"heading": "Combobox.Group",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'value',
-						type: 'string',
-						optional: false,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ checked: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "GroupLabel",
+				"heading": "Combobox.GroupLabel",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Icon",
+				"heading": "Combobox.Icon",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
-					},
-					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'RadioItemIndicator',
-				heading: 'Menu.RadioItemIndicator',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Input",
+				"heading": "Combobox.Input",
+				"extendsNote": "Extends input HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-readonly",
+						"description": "Present when the control is read-only."
 					}
 				]
 			},
 			{
-				name: 'Separator',
-				heading: 'Menu.Separator',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [],
-				dataAttributes: []
-			},
-			{
-				name: 'SubmenuRoot',
-				heading: 'Menu.SubmenuRoot',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "InputGroup",
+				"heading": "Combobox.InputGroup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ open: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'SubmenuTrigger',
-				heading: 'Menu.SubmenuTrigger',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Item",
+				"heading": "Combobox.Item",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "value",
+						"type": "string",
+						"optional": false,
+						"description": "Controlled value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "label",
+						"type": "string",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ selected: boolean; highlighted: boolean; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
 					},
 					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-selected",
+						"description": "Present when the item is selected."
 					}
 				]
 			},
 			{
-				name: 'Trigger',
-				heading: 'Menu.Trigger',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
+				"name": "ItemIndicator",
+				"heading": "Combobox.ItemIndicator",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'openOnHover',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-selected",
+						"description": "Present when the item is selected."
 					}
 				]
 			},
 			{
-				name: 'Viewport',
-				heading: 'Menu.Viewport',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Label",
+				"heading": "Combobox.Label",
+				"extendsNote": "Extends label HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: []
-			}
-		]
-	},
-	menubar: {
-		slug: 'menubar',
-		exportName: 'Menubar',
-		kind: 'single',
-		parts: [
-			{
-				name: 'Menubar',
-				heading: 'Menubar',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"dataAttributes": [
 					{
-						name: 'orientation',
-						type: 'MenubarOrientation',
-						optional: true,
-						description: '',
-						defaultValue: "'horizontal'"
-					},
-					{
-						name: 'closeDelay',
-						type: 'number',
-						optional: true,
-						description: 'Delay before closing after pointer leaves (ms).',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
-					}
-				]
-			}
-		]
-	},
-	meter: {
-		slug: 'meter',
-		exportName: 'Meter',
-		kind: 'compound',
-		parts: [
-			{
-				name: 'Root',
-				heading: 'Meter.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'value',
-						type: 'number',
-						optional: false,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'min',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'max',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'format',
-						type: 'Intl.NumberFormatOptions | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'getAriaValueText',
-						type: '((formattedValue: string, value: number) => string | undefined) | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'locale',
-						type: 'Intl.LocalesArgument | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-complete',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-progressing',
-						description: 'Present on the element when applicable.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					}
 				]
 			},
 			{
-				name: 'Indicator',
-				heading: 'Meter.Indicator',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "List",
+				"heading": "Combobox.List",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-complete',
-						description: 'Present on the element when applicable.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-progressing',
-						description: 'Present on the element when applicable.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Label',
-				heading: 'Meter.Label',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Popup",
+				"heading": "Combobox.Popup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-complete',
-						description: 'Present on the element when applicable.'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-progressing',
-						description: 'Present on the element when applicable.'
+						"name": "initialFocus",
+						"type": "FocusTarget",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "finalFocus",
+						"type": "FocusTarget",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
 					}
 				]
 			},
 			{
-				name: 'Track',
-				heading: 'Meter.Track',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Portal",
+				"heading": "Combobox.Portal",
+				"extendsNote": "",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-complete',
-						description: 'Present on the element when applicable.'
+						"name": "container",
+						"type": "HTMLElement | string | null",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-progressing',
-						description: 'Present on the element when applicable.'
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Positioner",
+				"heading": "Combobox.Positioner",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "side",
+						"type": "ring",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "align",
+						"type": "labe",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sideOffset",
+						"type": "expor",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "alignOffset",
+						"type": "emEntr",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionPadding",
+						"type": "ring; readonly value: string; label:",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionBoundary",
+						"type": "ent: HTMLElemen",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionAvoidance",
+						"type": "boxRefs = { input",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "arrowPadding",
+						"type": "ll; t",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sticky",
+						"type": "Element",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "positionMethod",
+						"type": "Element | null; a",
+						"optional": true,
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "strategy",
+						"type": "Value(value: Combo",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "anchor",
+						"type": "string, event?: Event): void;",
+						"optional": true,
+						"description": "Override the positioning anchor (element or virtual element).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disableAnchorTracking",
+						"type": "d; rea",
+						"optional": true,
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Value',
-				heading: 'Meter.Value',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Row",
+				"heading": "Combobox.Row",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet<[formattedValue: string, value: number]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "Separator",
+				"heading": "Combobox.Separator",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [],
+				"dataAttributes": []
+			},
+			{
+				"name": "Status",
+				"heading": "Combobox.Status",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'data-complete',
-						description: 'Present on the element when applicable.'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-progressing',
-						description: 'Present on the element when applicable.'
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Trigger",
+				"heading": "Combobox.Trigger",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Value",
+				"heading": "Combobox.Value",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "placeholder",
+						"type": "string",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[ComboboxValue]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-placeholder",
+						"description": "Present when showing placeholder content."
 					}
 				]
 			}
 		]
 	},
-	'navigation-menu': {
-		slug: 'navigation-menu',
-		exportName: 'NavigationMenu',
-		kind: 'compound',
-		parts: [
+	"context-menu": {
+		"slug": "context-menu",
+		"exportName": "ContextMenu",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'NavigationMenu.Root',
-				extendsNote: 'Extends HTML element attributes.',
-				props: [
+				"name": "Root",
+				"heading": "ContextMenu.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'value',
-						type: 'string | null | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultValue',
-						type: 'string | null',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onValueChange',
-						type: '((value: string | null) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'orientation',
-						type: 'NavigationMenuOrientation',
-						optional: true,
-						description: '',
-						defaultValue: "'horizontal'"
-					},
-					{
-						name: 'delay',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'closeDelay',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ value: string | null; open: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet<[{ open: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Arrow',
-				heading: 'NavigationMenu.Arrow',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Arrow",
+				"heading": "ContextMenu.Arrow",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Backdrop',
-				heading: 'NavigationMenu.Backdrop',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Backdrop",
+				"heading": "ContextMenu.Backdrop",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "dismissible",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Content',
-				heading: 'NavigationMenu.Content',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "CheckboxItem",
+				"heading": "ContextMenu.CheckboxItem",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Icon',
-				heading: 'NavigationMenu.Icon',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "checked",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Controlled checked state.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "defaultChecked",
+						"type": "boolean",
+						"optional": true,
+						"description": "Uncontrolled initial checked state.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onCheckedChange",
+						"type": "((checked: boolean, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the checked state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ checked: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-checked",
+						"description": "Present when the part is checked."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
+					},
+					{
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
 					}
 				]
 			},
 			{
-				name: 'Item',
-				heading: 'NavigationMenu.Item',
-				extendsNote: 'Extends HTML attributes for the rendered element.',
-				props: [
+				"name": "CheckboxItemIndicator",
+				"heading": "ContextMenu.CheckboxItemIndicator",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'value',
-						type: 'string',
-						optional: false,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ open: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-checked",
+						"description": "Present when the part is checked."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
 					}
 				]
 			},
 			{
-				name: 'Link',
-				heading: 'NavigationMenu.Link',
-				extendsNote: 'Extends anchor HTML attributes.',
-				props: [
+				"name": "Group",
+				"heading": "ContextMenu.Group",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: []
+				"dataAttributes": []
 			},
 			{
-				name: 'List',
-				heading: 'NavigationMenu.List',
-				extendsNote: 'Extends HTML attributes for the rendered element.',
-				props: [
+				"name": "GroupLabel",
+				"heading": "ContextMenu.GroupLabel",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "Item",
+				"heading": "ContextMenu.Item",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "onClick",
+						"type": "((event: MouseEvent) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
 					}
 				]
 			},
 			{
-				name: 'Popup',
-				heading: 'NavigationMenu.Popup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "LinkItem",
+				"heading": "ContextMenu.LinkItem",
+				"extendsNote": "Extends anchor HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
 					}
 				]
 			},
 			{
-				name: 'Portal',
-				heading: 'NavigationMenu.Portal',
-				extendsNote: '',
-				props: [
+				"name": "Popup",
+				"heading": "ContextMenu.Popup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: []
-			},
-			{
-				name: 'Positioner',
-				heading: 'NavigationMenu.Positioner',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"dataAttributes": [
 					{
-						name: 'side',
-						type: 'Side',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'align',
-						type: 'Align',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
 					},
 					{
-						name: 'sideOffset',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
 					}
 				]
 			},
 			{
-				name: 'Trigger',
-				heading: 'NavigationMenu.Trigger',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
+				"name": "Portal",
+				"heading": "ContextMenu.Portal",
+				"extendsNote": "",
+				"props": [
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "container",
+						"type": "HTMLElement | string | null",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "Positioner",
+				"heading": "ContextMenu.Positioner",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "side",
+						"type": "=> v",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "align",
+						"type": "en: (",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "sideOffset",
+						"type": "expo",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "alignOffset",
+						"type": "nuCont",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionPadding",
+						"type": ": boolean; setOpen(open: boolean, rea",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionBoundary",
+						"type": "void; readonl",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionAvoidance",
+						"type": "nly triggerId: str",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "arrowPadding",
+						"type": "upId:",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sticky",
+						"type": "donly r",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "positionMethod",
+						"type": "donly anchorPoint:",
+						"optional": true,
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "strategy",
+						"type": "only highlightedId",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "anchor",
+						"type": "g, element: HTMLElement, disabl",
+						"optional": true,
+						"description": "Override the positioning anchor (element or virtual element).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disableAnchorTracking",
+						"type": "donly i",
+						"optional": true,
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Viewport',
-				heading: 'NavigationMenu.Viewport',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "RadioGroup",
+				"heading": "ContextMenu.RadioGroup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "value",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "defaultValue",
+						"type": "string",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueChange",
+						"type": "((value: string, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ value: string }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					}
+				]
+			},
+			{
+				"name": "RadioItem",
+				"heading": "ContextMenu.RadioItem",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "string",
+						"optional": false,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ checked: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-checked",
+						"description": "Present when the part is checked."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
+					},
+					{
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
+					}
+				]
+			},
+			{
+				"name": "RadioItemIndicator",
+				"heading": "ContextMenu.RadioItemIndicator",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-checked",
+						"description": "Present when the part is checked."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
+					}
+				]
+			},
+			{
+				"name": "Separator",
+				"heading": "ContextMenu.Separator",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [],
+				"dataAttributes": []
+			},
+			{
+				"name": "SubmenuRoot",
+				"heading": "ContextMenu.SubmenuRoot",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ open: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "SubmenuTrigger",
+				"heading": "ContextMenu.SubmenuTrigger",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Trigger",
+				"heading": "ContextMenu.Trigger",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Viewport",
+				"heading": "ContextMenu.Viewport",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			}
+		]
+	},
+	"dialog": {
+		"slug": "dialog",
+		"exportName": "Dialog",
+		"kind": "compound",
+		"parts": [
+			{
+				"name": "Root",
+				"heading": "Dialog.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "modal",
+						"type": "DialogModal",
+						"optional": true,
+						"description": "Whether the dialog enters a modal state when open. - `true`: focus trap, `aria-modal`, document scroll locked, page interaction limited - `false`: no focus trap / aria-modal / scroll lock - `'trap-focus'`: focus trap without `aria-modal` or scroll lock",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disablePointerDismissal",
+						"type": "boolean",
+						"optional": true,
+						"description": "Prevents closing on outside presses (and backdrop click).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onOpenChangeComplete",
+						"type": "((open: boolean) => void) | undefined",
+						"optional": true,
+						"description": "Called after open/close animations complete.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "handle",
+						"type": "DialogHandle | undefined",
+						"optional": true,
+						"description": "Imperative handle from .",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Backdrop",
+				"heading": "Dialog.Backdrop",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "forceRender",
+						"type": "boolean",
+						"optional": true,
+						"description": "Keep the backdrop mounted while closed (for exit animations).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
+					}
+				]
+			},
+			{
+				"name": "Close",
+				"heading": "Dialog.Close",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Description",
+				"heading": "Dialog.Description",
+				"extendsNote": "Extends paragraph HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Popup",
+				"heading": "Dialog.Popup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "initialFocus",
+						"type": "FocusTarget",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "finalFocus",
+						"type": "FocusTarget",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
+					}
+				]
+			},
+			{
+				"name": "Portal",
+				"heading": "Dialog.Portal",
+				"extendsNote": "",
+				"props": [
+					{
+						"name": "container",
+						"type": "HTMLElement | string | null",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Title",
+				"heading": "Dialog.Title",
+				"extendsNote": "Extends heading HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Trigger",
+				"heading": "Dialog.Trigger",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "id",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "handle",
+						"type": "DialogHandle | undefined",
+						"optional": true,
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "payload",
+						"type": "unknown",
+						"optional": true,
+						"description": "Optional payload associated when opening via this trigger.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Viewport",
+				"heading": "Dialog.Viewport",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			}
 		]
 	},
-	'number-field': {
-		slug: 'number-field',
-		exportName: 'NumberField',
-		kind: 'compound',
-		parts: [
+	"drawer": {
+		"slug": "drawer",
+		"exportName": "Drawer",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'NumberField.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "Drawer.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'value',
-						type: 'number | null | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultValue',
-						type: 'number | null',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onValueChange',
-						type: '((value: number | null, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'min',
-						type: 'number | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "onOpenChangeComplete",
+						"type": "((open: boolean) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'max',
-						type: 'number | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "swipeDirection",
+						"type": "DrawerSwipeDirection",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'step',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "modal",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the drawer enters a modal state when open. When `true`, focus is trapped, document scroll is locked, and outside pointer interaction is limited.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "disablePointerDismissal",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'name',
-						type: 'string | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "snapPoints",
+						"type": "ReadonlyArray<DrawerSnapPoint>",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'required',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "snapPoint",
+						"type": "DrawerSnapPoint | null | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet<[{ value: number | null; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "defaultSnapPoint",
+						"type": "DrawerSnapPoint | null",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onSnapPointChange",
+						"type": "((snapPoint: DrawerSnapPoint | null) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "snapToSequentialPoints",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "handle",
+						"type": "DrawerHandle | undefined",
+						"optional": true,
+						"description": "Imperative handle from .",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-scrubbing',
-						description: 'Present on the element when applicable.'
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-swipe-direction",
+						"description": "Direction of an active toast swipe."
+					},
+					{
+						"name": "data-swiping",
+						"description": "Present on the element when applicable."
 					}
 				]
 			},
 			{
-				name: 'Decrement',
-				heading: 'NumberField.Decrement',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
+				"name": "Provider",
+				"heading": "Drawer.Provider",
+				"extendsNote": "",
+				"props": [
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "swipeDirection",
+						"type": "DrawerSwipeDirection",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "Backdrop",
+				"heading": "Drawer.Backdrop",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "forceRender",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
 					}
 				]
 			},
 			{
-				name: 'Group',
-				heading: 'NumberField.Group',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Close",
+				"heading": "Drawer.Close",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "Content",
+				"heading": "Drawer.Content",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-base-ui-drawer-content",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Increment',
-				heading: 'NumberField.Increment',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
+				"name": "Description",
+				"heading": "Drawer.Description",
+				"extendsNote": "Extends paragraph HTML attributes.",
+				"props": [
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "Indent",
+				"heading": "Drawer.Indent",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-active",
+						"description": "Present when the item is active."
+					},
+					{
+						"name": "data-inactive",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-swipe-direction",
+						"description": "Direction of an active toast swipe."
 					}
 				]
 			},
 			{
-				name: 'Input',
-				heading: 'NumberField.Input',
-				extendsNote: 'Extends input HTML attributes.',
-				props: [
+				"name": "IndentBackground",
+				"heading": "Drawer.IndentBackground",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-active",
+						"description": "Present when the item is active."
+					},
+					{
+						"name": "data-inactive",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-swipe-direction",
+						"description": "Direction of an active toast swipe."
 					}
 				]
 			},
 			{
-				name: 'ScrubArea',
-				heading: 'NumberField.ScrubArea',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Popup",
+				"heading": "Drawer.Popup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'pixelSensitivity',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "initialFocus",
+						"type": "FocusTarget",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "finalFocus",
+						"type": "FocusTarget",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-scrubbing',
-						description: 'Present on the element when applicable.'
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
+					},
+					{
+						"name": "data-swipe-direction",
+						"description": "Direction of an active toast swipe."
+					},
+					{
+						"name": "data-swipe-snap",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-swiping",
+						"description": "Present on the element when applicable."
 					}
 				]
 			},
 			{
-				name: 'ScrubAreaCursor',
-				heading: 'NumberField.ScrubAreaCursor',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Portal",
+				"heading": "Drawer.Portal",
+				"extendsNote": "",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "container",
+						"type": "HTMLElement | string | null",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
-					{
-						name: 'data-scrubbing',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			}
-		]
-	},
-	'otp-field': {
-		slug: 'otp-field',
-		exportName: 'OTPField',
-		kind: 'compound',
-		parts: [
+				"dataAttributes": []
+			},
 			{
-				name: 'Root',
-				heading: 'OTPField.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "SwipeArea",
+				"heading": "Drawer.SwipeArea",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'length',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'value',
-						type: 'string | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'defaultValue',
-						type: 'string',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
+						"name": "swipeDirection",
+						"type": "DrawerSwipeDirection",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onValueChange',
-						type: '((value: string, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'onComplete',
-						type: '((value: string) => void) | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'type',
-						type: "'text' | 'password'",
-						optional: true,
-						description: 'Native control type when rendering a native element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'pattern',
-						type: 'string | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'autoFocus',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'name',
-						type: 'string | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ value: string; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-swipe-direction",
+						"description": "Direction of an active toast swipe."
+					},
+					{
+						"name": "data-swiping",
+						"description": "Present on the element when applicable."
 					}
 				]
 			},
 			{
-				name: 'Input',
-				heading: 'OTPField.Input',
-				extendsNote: 'Extends input HTML attributes.',
-				props: [
+				"name": "Title",
+				"heading": "Drawer.Title",
+				"extendsNote": "Extends heading HTML attributes.",
+				"props": [
 					{
-						name: 'index',
-						type: 'number | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "Trigger",
+				"heading": "Drawer.Trigger",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-index',
-						description: 'Index of the item within a collection.'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "id",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "handle",
+						"type": "DrawerHandle | undefined",
+						"optional": true,
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "payload",
+						"type": "unknown",
+						"optional": true,
+						"description": "Optional payload associated when opening via this trigger.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Separator',
-				heading: 'OTPField.Separator',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Viewport",
+				"heading": "Drawer.Viewport",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: []
-			}
-		]
-	},
-	popover: {
-		slug: 'popover',
-		exportName: 'Popover',
-		kind: 'compound',
-		parts: [
-			{
-				name: 'Root',
-				heading: 'Popover.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"dataAttributes": [
 					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
 					},
 					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
+						"name": "data-keyboard-open",
+						"description": "Present on the element when applicable."
 					},
 					{
-						name: 'openOnHover',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					},
 					{
-						name: 'delay',
-						type: 'number',
-						optional: true,
-						description: 'Open delay when `openOnHover` is set (ms).',
-						defaultValue: '—'
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
 					},
 					{
-						name: 'closeDelay',
-						type: 'number',
-						optional: true,
-						description: 'Close delay when leaving under hover (ms).',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ open: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-swipe-direction",
+						"description": "Direction of an active toast swipe."
 					}
 				]
 			},
 			{
-				name: 'Arrow',
-				heading: 'Popover.Arrow',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "VirtualKeyboardProvider",
+				"heading": "Drawer.VirtualKeyboardProvider",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Close',
-				heading: 'Popover.Close',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Description',
-				heading: 'Popover.Description',
-				extendsNote: 'Extends paragraph HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Popup',
-				heading: 'Popover.Popup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
-					}
-				]
-			},
-			{
-				name: 'Portal',
-				heading: 'Popover.Portal',
-				extendsNote: '',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Positioner',
-				heading: 'Popover.Positioner',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'side',
-						type: 'Side',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'align',
-						type: 'Align',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'sideOffset',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Title',
-				heading: 'Popover.Title',
-				extendsNote: 'Extends heading HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Trigger',
-				heading: 'Popover.Trigger',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'openOnHover',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-keyboard-open",
+						"description": "Present on the element when applicable."
 					}
 				]
 			}
 		]
 	},
-	'preview-card': {
-		slug: 'preview-card',
-		exportName: 'PreviewCard',
-		kind: 'compound',
-		parts: [
+	"field": {
+		"slug": "field",
+		"exportName": "Field",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'PreviewCard.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "Field.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
+						"name": "name",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
+						"name": "invalid",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'openDelay',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "validate",
+						"type": "| ((value: string) => string | string[] | null | Promise<string | string[] | null>) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'closeDelay',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "validationMode",
+						"type": "FieldValidationMode",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet<[{ open: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "validationDebounceTime",
+						"type": "number",
+						"optional": true,
+						"description": "Debounce (ms) before running `validate` on change.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "dirty",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultDirty",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onDirtyChange",
+						"type": "((dirty: boolean) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "touched",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultTouched",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onTouchedChange",
+						"type": "((touched: boolean) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet< [ { disabled: boolean; touched: boolean; dirty: boolean; focused: boolean; filled: boolean; valid: boolean | null; }, ] >",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-dirty",
+						"description": "Present when the field value has changed."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-filled",
+						"description": "Present when the field has a value."
+					},
+					{
+						"name": "data-focused",
+						"description": "Present when the field is focused."
+					},
+					{
+						"name": "data-invalid",
+						"description": "Present when the field is invalid."
+					},
+					{
+						"name": "data-touched",
+						"description": "Present when the field has been touched."
+					},
+					{
+						"name": "data-valid",
+						"description": "Present when the field is valid."
 					}
 				]
 			},
 			{
-				name: 'Arrow',
-				heading: 'PreviewCard.Arrow',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Control",
+				"heading": "Field.Control",
+				"extendsNote": "Extends input HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "disabled",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "value",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultValue",
+						"type": "string",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueChange",
+						"type": "((value: string, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-dirty",
+						"description": "Present when the field value has changed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-filled",
+						"description": "Present when the field has a value."
+					},
+					{
+						"name": "data-focused",
+						"description": "Present when the field is focused."
+					},
+					{
+						"name": "data-invalid",
+						"description": "Present when the field is invalid."
+					},
+					{
+						"name": "data-touched",
+						"description": "Present when the field has been touched."
+					},
+					{
+						"name": "data-valid",
+						"description": "Present when the field is valid."
 					}
 				]
 			},
 			{
-				name: 'Backdrop',
-				heading: 'PreviewCard.Backdrop',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Description",
+				"heading": "Field.Description",
+				"extendsNote": "Extends paragraph HTML attributes.",
+				"props": [
 					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-dirty",
+						"description": "Present when the field value has changed."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-filled",
+						"description": "Present when the field has a value."
+					},
+					{
+						"name": "data-focused",
+						"description": "Present when the field is focused."
+					},
+					{
+						"name": "data-invalid",
+						"description": "Present when the field is invalid."
+					},
+					{
+						"name": "data-touched",
+						"description": "Present when the field has been touched."
+					},
+					{
+						"name": "data-valid",
+						"description": "Present when the field is valid."
 					}
 				]
 			},
 			{
-				name: 'Popup',
-				heading: 'PreviewCard.Popup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Error",
+				"heading": "Field.Error",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
+						"name": "match",
+						"type": "FieldErrorMatch | undefined",
+						"optional": true,
+						"description": "When `true`, always show. When a `ValidityState` key, show when that flag is true. When omitted, show when the field is invalid (or has a form error).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet<[{ error: string }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-dirty",
+						"description": "Present when the field value has changed."
 					},
 					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-filled",
+						"description": "Present when the field has a value."
 					},
 					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
+						"name": "data-focused",
+						"description": "Present when the field is focused."
+					},
+					{
+						"name": "data-invalid",
+						"description": "Present when the field is invalid."
+					},
+					{
+						"name": "data-touched",
+						"description": "Present when the field has been touched."
+					},
+					{
+						"name": "data-valid",
+						"description": "Present when the field is valid."
 					}
 				]
 			},
 			{
-				name: 'Portal',
-				heading: 'PreviewCard.Portal',
-				extendsNote: '',
-				props: [
+				"name": "Item",
+				"heading": "Field.Item",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: []
-			},
-			{
-				name: 'Positioner',
-				heading: 'PreviewCard.Positioner',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"dataAttributes": [
 					{
-						name: 'side',
-						type: 'Side',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "data-dirty",
+						"description": "Present when the field value has changed."
 					},
 					{
-						name: 'align',
-						type: 'Align',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'sideOffset',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "data-filled",
+						"description": "Present when the field has a value."
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-focused",
+						"description": "Present when the field is focused."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-invalid",
+						"description": "Present when the field is invalid."
+					},
+					{
+						"name": "data-touched",
+						"description": "Present when the field has been touched."
+					},
+					{
+						"name": "data-valid",
+						"description": "Present when the field is valid."
 					}
 				]
 			},
 			{
-				name: 'Trigger',
-				heading: 'PreviewCard.Trigger',
-				extendsNote: 'Extends anchor HTML attributes.',
-				props: [
+				"name": "Label",
+				"heading": "Field.Label",
+				"extendsNote": "Extends label HTML attributes.",
+				"props": [
 					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
+						"name": "nativeLabel",
+						"type": "boolean",
+						"optional": true,
+						"description": "When false, render a `span` instead of a native `label`.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-dirty",
+						"description": "Present when the field value has changed."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-filled",
+						"description": "Present when the field has a value."
+					},
+					{
+						"name": "data-focused",
+						"description": "Present when the field is focused."
+					},
+					{
+						"name": "data-invalid",
+						"description": "Present when the field is invalid."
+					},
+					{
+						"name": "data-touched",
+						"description": "Present when the field has been touched."
+					},
+					{
+						"name": "data-valid",
+						"description": "Present when the field is valid."
 					}
 				]
 			},
 			{
-				name: 'Viewport',
-				heading: 'PreviewCard.Viewport',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Validity",
+				"heading": "Field.Validity",
+				"extendsNote": "",
+				"props": [
 					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet<[FieldValidityState]>",
+						"optional": false,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			}
+		]
+	},
+	"fieldset": {
+		"slug": "fieldset",
+		"exportName": "Fieldset",
+		"kind": "compound",
+		"parts": [
+			{
+				"name": "Root",
+				"heading": "Fieldset.Root",
+				"extendsNote": "Extends fieldset HTML attributes.",
+				"props": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "children",
+						"type": "Snippet<[{ disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					}
+				]
+			},
+			{
+				"name": "Legend",
+				"heading": "Fieldset.Legend",
+				"extendsNote": "Extends HTML attributes for the rendered element.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					}
 				]
 			}
 		]
 	},
-	progress: {
-		slug: 'progress',
-		exportName: 'Progress',
-		kind: 'compound',
-		parts: [
+	"form": {
+		"slug": "form",
+		"exportName": "Form",
+		"kind": "single",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'Progress.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Form",
+				"heading": "Form",
+				"extendsNote": "Extends form HTML attributes.",
+				"props": [
 					{
-						name: 'value',
-						type: 'number | null',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "errors",
+						"type": "FormErrors | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'min',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "onFormSubmit",
+						"type": "((formData: FormData, event: SubmitEvent) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'max',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'format',
-						type: 'Intl.NumberFormatOptions | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'getAriaValueText',
-						type: '| ((formattedValue: string | null, value: number | null) => string | undefined) | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'locale',
-						type: 'Intl.LocalesArgument | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
-					{
-						name: 'data-complete',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-indeterminate',
-						description: 'Present when the checkbox is indeterminate.'
-					},
-					{
-						name: 'data-progressing',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
+				"dataAttributes": []
+			}
+		]
+	},
+	"input": {
+		"slug": "input",
+		"exportName": "Input",
+		"kind": "single",
+		"parts": [
 			{
-				name: 'Indicator',
-				heading: 'Progress.Indicator',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Input",
+				"heading": "Input",
+				"extendsNote": "Extends input HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "value",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultValue",
+						"type": "string",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueChange",
+						"type": "((value: string, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-complete',
-						description: 'Present on the element when applicable.'
+						"name": "data-dirty",
+						"description": "Present when the field value has changed."
 					},
 					{
-						name: 'data-indeterminate',
-						description: 'Present when the checkbox is indeterminate.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-progressing',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
-			{
-				name: 'Label',
-				heading: 'Progress.Label',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-complete',
-						description: 'Present on the element when applicable.'
+						"name": "data-filled",
+						"description": "Present when the field has a value."
 					},
 					{
-						name: 'data-indeterminate',
-						description: 'Present when the checkbox is indeterminate.'
+						"name": "data-focused",
+						"description": "Present when the field is focused."
 					},
 					{
-						name: 'data-progressing',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
-			{
-				name: 'Track',
-				heading: 'Progress.Track',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-complete',
-						description: 'Present on the element when applicable.'
+						"name": "data-invalid",
+						"description": "Present when the field is invalid."
 					},
 					{
-						name: 'data-indeterminate',
-						description: 'Present when the checkbox is indeterminate.'
+						"name": "data-touched",
+						"description": "Present when the field has been touched."
 					},
 					{
-						name: 'data-progressing',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
-			{
-				name: 'Value',
-				heading: 'Progress.Value',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet<[formattedValue: string | null, value: number | null]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-complete',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-indeterminate',
-						description: 'Present when the checkbox is indeterminate.'
-					},
-					{
-						name: 'data-progressing',
-						description: 'Present on the element when applicable.'
+						"name": "data-valid",
+						"description": "Present when the field is valid."
 					}
 				]
 			}
 		]
 	},
-	radio: {
-		slug: 'radio',
-		exportName: 'Radio',
-		kind: 'compound',
-		parts: [
+	"menu": {
+		"slug": "menu",
+		"exportName": "Menu",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'Radio.Root',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "Menu.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'value',
-						type: 'string',
-						optional: false,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet<[{ checked: boolean; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onOpenChangeComplete",
+						"type": "((open: boolean) => void) | undefined",
+						"optional": true,
+						"description": "Called after open/close animations complete.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "modal",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the menu enters a modal state when open.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "orientation",
+						"type": "'horizontal' | 'vertical'",
+						"optional": true,
+						"description": "",
+						"defaultValue": "'horizontal'"
+					},
+					{
+						"name": "loopFocus",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether highlight wraps at list ends.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "openOnHover",
+						"type": "boolean",
+						"optional": true,
+						"description": "Open the menu when the pointer enters the trigger.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "delay",
+						"type": "number",
+						"optional": true,
+						"description": "Open delay when `openOnHover` is set (ms).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "closeDelay",
+						"type": "number",
+						"optional": true,
+						"description": "Close delay when leaving trigger/popup under hover (ms).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "handle",
+						"type": "MenuHandle | undefined",
+						"optional": true,
+						"description": "Imperative handle from .",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
 					}
 				]
 			},
 			{
-				name: 'Indicator',
-				heading: 'Radio.Indicator',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Arrow",
+				"heading": "Menu.Arrow",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'RadioGroup',
-				heading: 'RadioGroup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Backdrop",
+				"heading": "Menu.Backdrop",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'value',
-						type: 'string | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultValue',
-						type: 'string',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
+						"name": "dismissible",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onValueChange',
-						type: '((value: string, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'name',
-						type: 'string | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'required',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ value: string; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "CheckboxItem",
+				"heading": "Menu.CheckboxItem",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "checked",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Controlled checked state.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultChecked",
+						"type": "boolean",
+						"optional": true,
+						"description": "Uncontrolled initial checked state.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onCheckedChange",
+						"type": "((checked: boolean, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the checked state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ checked: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-checked",
+						"description": "Present when the part is checked."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
+					},
+					{
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
+					}
+				]
+			},
+			{
+				"name": "CheckboxItemIndicator",
+				"heading": "Menu.CheckboxItemIndicator",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-checked",
+						"description": "Present when the part is checked."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
+					}
+				]
+			},
+			{
+				"name": "Group",
+				"heading": "Menu.Group",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "GroupLabel",
+				"heading": "Menu.GroupLabel",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Item",
+				"heading": "Menu.Item",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "onClick",
+						"type": "((event: MouseEvent) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
+					}
+				]
+			},
+			{
+				"name": "LinkItem",
+				"heading": "Menu.LinkItem",
+				"extendsNote": "Extends anchor HTML attributes.",
+				"props": [
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
+					}
+				]
+			},
+			{
+				"name": "Popup",
+				"heading": "Menu.Popup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
+					}
+				]
+			},
+			{
+				"name": "Portal",
+				"heading": "Menu.Portal",
+				"extendsNote": "",
+				"props": [
+					{
+						"name": "container",
+						"type": "HTMLElement | string | null",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Positioner",
+				"heading": "Menu.Positioner",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "side",
+						"type": "rId:",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "align",
+						"type": "etOpe",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sideOffset",
+						"type": "n, rea",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "alignOffset",
+						"type": "ason)",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionPadding",
+						"type": "=> boolean; }; export type MenuContex",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionBoundary",
+						"type": "oolean; setOpe",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionAvoidance",
+						"type": "OpenChangeReason)",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "arrowPadding",
+						"type": "overDe",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sticky",
+						"type": "OpenCha",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "positionMethod",
+						"type": "ver(): void; read",
+						"optional": true,
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "strategy",
+						"type": "ed: boolean; read",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "anchor",
+						"type": "oopFocus: boolean; readonly me",
+						"optional": true,
+						"description": "Override the positioning anchor (element or virtual element).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disableAnchorTracking",
+						"type": "n | nul",
+						"optional": true,
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "RadioGroup",
+				"heading": "Menu.RadioGroup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultValue",
+						"type": "string",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueChange",
+						"type": "((value: string, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ value: string }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					}
+				]
+			},
+			{
+				"name": "RadioItem",
+				"heading": "Menu.RadioItem",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "string",
+						"optional": false,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ checked: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-checked",
+						"description": "Present when the part is checked."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
+					},
+					{
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
+					}
+				]
+			},
+			{
+				"name": "RadioItemIndicator",
+				"heading": "Menu.RadioItemIndicator",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-checked",
+						"description": "Present when the part is checked."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
+					}
+				]
+			},
+			{
+				"name": "Separator",
+				"heading": "Menu.Separator",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [],
+				"dataAttributes": []
+			},
+			{
+				"name": "SubmenuRoot",
+				"heading": "Menu.SubmenuRoot",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ open: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "SubmenuTrigger",
+				"heading": "Menu.SubmenuTrigger",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Trigger",
+				"heading": "Menu.Trigger",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "id",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "handle",
+						"type": "MenuHandle | undefined",
+						"optional": true,
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "payload",
+						"type": "unknown",
+						"optional": true,
+						"description": "Optional payload associated when opening via this trigger.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "openOnHover",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Viewport",
+				"heading": "Menu.Viewport",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			}
+		]
+	},
+	"menubar": {
+		"slug": "menubar",
+		"exportName": "Menubar",
+		"kind": "single",
+		"parts": [
+			{
+				"name": "Menubar",
+				"heading": "Menubar",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "orientation",
+						"type": "MenubarOrientation",
+						"optional": true,
+						"description": "",
+						"defaultValue": "'horizontal'"
+					},
+					{
+						"name": "openOnHover",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Force open-on-hover even when no menu is open. When omitted, follows open menu state.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "closeDelay",
+						"type": "number",
+						"optional": true,
+						"description": "Delay before closing after pointer leaves (ms).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "modal",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether menus in this menubar lock document scroll when open.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
 					}
 				]
 			}
 		]
 	},
-	'scroll-area': {
-		slug: 'scroll-area',
-		exportName: 'ScrollArea',
-		kind: 'compound',
-		parts: [
+	"meter": {
+		"slug": "meter",
+		"exportName": "Meter",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'ScrollArea.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "Meter.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "value",
+						"type": "number",
+						"optional": false,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "min",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "max",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "format",
+						"type": "Intl.NumberFormatOptions | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "getAriaValueText",
+						"type": "((formattedValue: string, value: number) => string | undefined) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "locale",
+						"type": "Intl.LocalesArgument | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-scrolling',
-						description: 'Present on the element when applicable.'
+						"name": "data-complete",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-progressing",
+						"description": "Present on the element when applicable."
 					}
 				]
 			},
 			{
-				name: 'Content',
-				heading: 'ScrollArea.Content',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Indicator",
+				"heading": "Meter.Indicator",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-scrolling',
-						description: 'Present on the element when applicable.'
+						"name": "data-complete",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-progressing",
+						"description": "Present on the element when applicable."
 					}
 				]
 			},
 			{
-				name: 'Corner',
-				heading: 'ScrollArea.Corner',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Label",
+				"heading": "Meter.Label",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-scrolling',
-						description: 'Present on the element when applicable.'
+						"name": "data-complete",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-progressing",
+						"description": "Present on the element when applicable."
 					}
 				]
 			},
 			{
-				name: 'Scrollbar',
-				heading: 'ScrollArea.Scrollbar',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Track",
+				"heading": "Meter.Track",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'orientation',
-						type: 'ScrollAreaOrientation',
-						optional: true,
-						description: '',
-						defaultValue: "'horizontal'"
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "data-complete",
+						"description": "Present on the element when applicable."
 					},
 					{
-						name: 'data-scrolling',
-						description: 'Present on the element when applicable.'
+						"name": "data-progressing",
+						"description": "Present on the element when applicable."
 					}
 				]
 			},
 			{
-				name: 'Thumb',
-				heading: 'ScrollArea.Thumb',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Value",
+				"heading": "Meter.Value",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet<[formattedValue: string, value: number]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "data-complete",
+						"description": "Present on the element when applicable."
 					},
 					{
-						name: 'data-scrolling',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-slot',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
-			{
-				name: 'Viewport',
-				heading: 'ScrollArea.Viewport',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-scrolling',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			}
-		]
-	},
-	select: {
-		slug: 'select',
-		exportName: 'Select',
-		kind: 'compound',
-		parts: [
-			{
-				name: 'Root',
-				heading: 'Select.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'value',
-						type: 'string | null | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultValue',
-						type: 'string | null',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'onValueChange',
-						type: '((value: string | null, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
-					},
-					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'name',
-						type: 'string | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ value: string | null; open: boolean; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Arrow',
-				heading: 'Select.Arrow',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Backdrop',
-				heading: 'Select.Backdrop',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Group',
-				heading: 'Select.Group',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'GroupLabel',
-				heading: 'Select.GroupLabel',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Icon',
-				heading: 'Select.Icon',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Item',
-				heading: 'Select.Item',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'value',
-						type: 'string',
-						optional: false,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ selected: boolean; highlighted: boolean; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
-					},
-					{
-						name: 'data-selected',
-						description: 'Present when the item is selected.'
-					}
-				]
-			},
-			{
-				name: 'ItemIndicator',
-				heading: 'Select.ItemIndicator',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-selected',
-						description: 'Present when the item is selected.'
-					}
-				]
-			},
-			{
-				name: 'ItemText',
-				heading: 'Select.ItemText',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-highlighted',
-						description: 'Present when the item is highlighted.'
-					},
-					{
-						name: 'data-select-item-text',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-selected',
-						description: 'Present when the item is selected.'
-					}
-				]
-			},
-			{
-				name: 'Label',
-				heading: 'Select.Label',
-				extendsNote: 'Extends label HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					}
-				]
-			},
-			{
-				name: 'List',
-				heading: 'Select.List',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Popup',
-				heading: 'Select.Popup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
-					}
-				]
-			},
-			{
-				name: 'Portal',
-				heading: 'Select.Portal',
-				extendsNote: '',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Positioner',
-				heading: 'Select.Positioner',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'side',
-						type: 'Side',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'align',
-						type: 'Align',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'sideOffset',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'ScrollDownArrow',
-				heading: 'Select.ScrollDownArrow',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-direction',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-hidden',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
-			{
-				name: 'ScrollUpArrow',
-				heading: 'Select.ScrollUpArrow',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-direction',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-hidden',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
-			{
-				name: 'Separator',
-				heading: 'Select.Separator',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [],
-				dataAttributes: []
-			},
-			{
-				name: 'Trigger',
-				heading: 'Select.Trigger',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					}
-				]
-			},
-			{
-				name: 'Value',
-				heading: 'Select.Value',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'placeholder',
-						type: 'string',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[string | null]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-placeholder',
-						description: 'Present when showing placeholder content.'
+						"name": "data-progressing",
+						"description": "Present on the element when applicable."
 					}
 				]
 			}
 		]
 	},
-	separator: {
-		slug: 'separator',
-		exportName: 'Separator',
-		kind: 'single',
-		parts: [
+	"navigation-menu": {
+		"slug": "navigation-menu",
+		"exportName": "NavigationMenu",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Separator',
-				heading: 'Separator',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "NavigationMenu.Root",
+				"extendsNote": "Extends HTML element attributes.",
+				"props": [
 					{
-						name: 'orientation',
-						type: 'SeparatorOrientation',
-						optional: true,
-						description: '',
-						defaultValue: "'horizontal'"
+						"name": "value",
+						"type": "string | null | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultValue",
+						"type": "string | null",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueChange",
+						"type": "((value: string | null) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "orientation",
+						"type": "NavigationMenuOrientation",
+						"optional": true,
+						"description": "",
+						"defaultValue": "'horizontal'"
+					},
+					{
+						"name": "delay",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "closeDelay",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ value: string | null; open: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "Arrow",
+				"heading": "NavigationMenu.Arrow",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Backdrop",
+				"heading": "NavigationMenu.Backdrop",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Content",
+				"heading": "NavigationMenu.Content",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Icon",
+				"heading": "NavigationMenu.Icon",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Item",
+				"heading": "NavigationMenu.Item",
+				"extendsNote": "Extends HTML attributes for the rendered element.",
+				"props": [
+					{
+						"name": "value",
+						"type": "string",
+						"optional": false,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ open: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Link",
+				"heading": "NavigationMenu.Link",
+				"extendsNote": "Extends anchor HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "List",
+				"heading": "NavigationMenu.List",
+				"extendsNote": "Extends HTML attributes for the rendered element.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "Popup",
+				"heading": "NavigationMenu.Popup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
+					}
+				]
+			},
+			{
+				"name": "Portal",
+				"heading": "NavigationMenu.Portal",
+				"extendsNote": "",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Positioner",
+				"heading": "NavigationMenu.Positioner",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "side",
+						"type": "re",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "align",
+						"type": ": Nav",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sideOffset",
+						"type": "read",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "alignOffset",
+						"type": "ng; r",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionPadding",
+						"type": "g; registerContent(itemValue: string,",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionBoundary",
+						"type": "=> void; getCo",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionAvoidance",
+						"type": ": Snippet | undefi",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "arrowPadding",
+						"type": "ger(it",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sticky",
+						"type": "ing, el",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "positionMethod",
+						"type": "id; readonly open",
+						"optional": true,
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "strategy",
+						"type": "lay(): void; canc",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "anchor",
+						"type": "ring; readonly open: boolean;",
+						"optional": true,
+						"description": "Override the positioning anchor (element or virtual element).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disableAnchorTracking",
+						"type": "e?: str",
+						"optional": true,
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Trigger",
+				"heading": "NavigationMenu.Trigger",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Viewport",
+				"heading": "NavigationMenu.Viewport",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			}
 		]
 	},
-	slider: {
-		slug: 'slider',
-		exportName: 'Slider',
-		kind: 'compound',
-		parts: [
+	"number-field": {
+		"slug": "number-field",
+		"exportName": "NumberField",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'Slider.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "NumberField.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'value',
-						type: 'SliderValue | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "value",
+						"type": "number | null | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultValue',
-						type: 'SliderValue',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
+						"name": "defaultValue",
+						"type": "number | null",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'min',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "onValueChange",
+						"type": "((value: number | null, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'max',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "onValueCommitted",
+						"type": "((value: number | null, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Called when the value is committed (blur, Enter, scrub end).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'step',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "min",
+						"type": "number | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "max",
+						"type": "number | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'orientation',
-						type: 'SliderOrientation',
-						optional: true,
-						description: '',
-						defaultValue: "'horizontal'"
+						"name": "step",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'name',
-						type: 'string | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "smallStep",
+						"type": "number",
+						"optional": true,
+						"description": "Step used with Alt.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'format',
-						type: 'Intl.NumberFormatOptions | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "largeStep",
+						"type": "number",
+						"optional": true,
+						"description": "Step used with Shift.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'locale',
-						type: 'Intl.LocalesArgument | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "allowOutOfRange",
+						"type": "boolean",
+						"optional": true,
+						"description": "When true, skip min/max clamping.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onValueChange',
-						type: '((value: SliderValue, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
+						"name": "snapOnStep",
+						"type": "boolean",
+						"optional": true,
+						"description": "When true, snap to step from min.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "allowWheelScrub",
+						"type": "boolean",
+						"optional": true,
+						"description": "When true, focused input responds to mouse wheel.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "locale",
+						"type": "Intl.LocalesArgument | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "format",
+						"type": "Intl.NumberFormatOptions | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "readOnly",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "name",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "form",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "required",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ value: number | null; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "data-readonly",
+						"description": "Present when the control is read-only."
+					},
+					{
+						"name": "data-scrubbing",
+						"description": "Present on the element when applicable."
 					}
 				]
 			},
 			{
-				name: 'Control',
-				heading: 'Slider.Control',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Decrement",
+				"heading": "NumberField.Decrement",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					}
 				]
 			},
 			{
-				name: 'Indicator',
-				heading: 'Slider.Indicator',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Group",
+				"heading": "NumberField.Group",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					}
 				]
 			},
 			{
-				name: 'Label',
-				heading: 'Slider.Label',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Increment",
+				"heading": "NumberField.Increment",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					}
 				]
 			},
 			{
-				name: 'Thumb',
-				heading: 'Slider.Thumb',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Input",
+				"heading": "NumberField.Input",
+				"extendsNote": "Extends input HTML attributes.",
+				"props": [
 					{
-						name: 'index',
-						type: 'number | undefined',
-						optional: true,
-						description: 'Index into the value array for range sliders (recommended for SSR).',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "readOnly",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-index',
-						description: 'Index of the item within a collection.'
-					},
-					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "data-readonly",
+						"description": "Present when the control is read-only."
 					}
 				]
 			},
 			{
-				name: 'Track',
-				heading: 'Slider.Track',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "ScrubArea",
+				"heading": "NumberField.ScrubArea",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "pixelSensitivity",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "direction",
+						"type": "'horizontal' | 'vertical'",
+						"optional": true,
+						"description": "Cursor movement direction.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "teleportDistance",
+						"type": "number | undefined",
+						"optional": true,
+						"description": "Reset scrub origin when pointer travels farther than this distance from the start point.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-scrubbing",
+						"description": "Present on the element when applicable."
 					}
 				]
 			},
 			{
-				name: 'Value',
-				heading: 'Slider.Value',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "ScrubAreaCursor",
+				"heading": "NumberField.ScrubAreaCursor",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet<[formattedValue: string, value: SliderValue]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-scrubbing",
+						"description": "Present on the element when applicable."
 					}
 				]
 			}
 		]
 	},
-	switch: {
-		slug: 'switch',
-		exportName: 'Switch',
-		kind: 'compound',
-		parts: [
+	"otp-field": {
+		"slug": "otp-field",
+		"exportName": "OTPField",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'Switch.Root',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "OTPField.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'checked',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Controlled checked state.',
-						defaultValue: '—'
+						"name": "length",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultChecked',
-						type: 'boolean',
-						optional: true,
-						description: 'Uncontrolled initial checked state.',
-						defaultValue: '—'
+						"name": "value",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onCheckedChange',
-						type: '((checked: boolean, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the checked state changes.',
-						defaultValue: '—'
+						"name": "defaultValue",
+						"type": "string",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "onValueChange",
+						"type": "((value: string, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'required',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "onComplete",
+						"type": "((value: string) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'name',
-						type: 'string | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					},
 					{
-						name: 'value',
-						type: 'string | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "type",
+						"type": "'text' | 'password'",
+						"optional": true,
+						"description": "Native control type when rendering a native element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet<[{ checked: boolean; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "pattern",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "autoSubmit",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "mask",
+						"type": "boolean | string",
+						"optional": true,
+						"description": "When true, inputs use `type=\"password\"`. A string sets a display mask character via CSS hooks.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "validationType",
+						"type": "'numeric' | 'alphanumeric' | 'none'",
+						"optional": true,
+						"description": "Built-in character validation. Overrides default digit-only when set.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "normalizeValue",
+						"type": "((value: string) => string) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueInvalid",
+						"type": "((details: { value: string; reason: 'pattern' | 'validation-type' }) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "readOnly",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "required",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "form",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "autoFocus",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "name",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ value: string; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
-					},
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					}
 				]
 			},
 			{
-				name: 'Thumb',
-				heading: 'Switch.Thumb',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Input",
+				"heading": "OTPField.Input",
+				"extendsNote": "Extends input HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "index",
+						"type": "number | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-checked',
-						description: 'Present when the part is checked.'
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-index",
+						"description": "Index of the item within a collection."
 					},
 					{
-						name: 'data-unchecked',
-						description: 'Present when the part is unchecked.'
-					}
-				]
-			}
-		]
-	},
-	tabs: {
-		slug: 'tabs',
-		exportName: 'Tabs',
-		kind: 'compound',
-		parts: [
-			{
-				name: 'Root',
-				heading: 'Tabs.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'value',
-						type: 'string | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
+						"name": "data-mask",
+						"description": "Present on the element when applicable."
 					},
 					{
-						name: 'defaultValue',
-						type: 'string',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'onValueChange',
-						type: '((value: string) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'orientation',
-						type: 'TabsOrientation',
-						optional: true,
-						description: '',
-						defaultValue: "'horizontal'"
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ value: string; orientation: TabsOrientation }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "data-readonly",
+						"description": "Present when the control is read-only."
 					}
 				]
 			},
 			{
-				name: 'Indicator',
-				heading: 'Tabs.Indicator',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Separator",
+				"heading": "OTPField.Separator",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "orientation",
+						"type": "'horizontal' | 'vertical'",
+						"optional": true,
+						"description": "",
+						"defaultValue": "'horizontal'"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
-					}
-				]
-			},
-			{
-				name: 'List',
-				heading: 'Tabs.List',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
-					}
-				]
-			},
-			{
-				name: 'Panel',
-				heading: 'Tabs.Panel',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'value',
-						type: 'string',
-						optional: false,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
-					},
-					{
-						name: 'data-selected',
-						description: 'Present when the item is selected.'
-					}
-				]
-			},
-			{
-				name: 'Tab',
-				heading: 'Tabs.Tab',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'value',
-						type: 'string',
-						optional: false,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ selected: boolean; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
-					},
-					{
-						name: 'data-selected',
-						description: 'Present when the item is selected.'
+						"name": "data-orientation",
+						"description": "The orientation of the component."
 					}
 				]
 			}
 		]
 	},
-	toast: {
-		slug: 'toast',
-		exportName: 'Toast',
-		kind: 'compound',
-		parts: [
+	"popover": {
+		"slug": "popover",
+		"exportName": "Popover",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'Toast.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "Popover.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'toast',
-						type: 'ToastData',
-						optional: false,
-						description: '',
-						defaultValue: '—'
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'swipeDirection',
-						type: 'ToastSwipeDirection | ToastSwipeDirection[] | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onOpenChangeComplete",
+						"type": "((open: boolean) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "openOnHover",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "delay",
+						"type": "number",
+						"optional": true,
+						"description": "Open delay when `openOnHover` is set (ms).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "closeDelay",
+						"type": "number",
+						"optional": true,
+						"description": "Close delay when leaving under hover (ms).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "modal",
+						"type": "PopoverModal",
+						"optional": true,
+						"description": "Whether the popover enters a modal state when open. - `true`: document scroll locked (except hover-open), outside interaction limited - `false`: no scroll lock - `'trap-focus'`: focus trap without scroll lock",
+						"defaultValue": "—"
+					},
+					{
+						"name": "handle",
+						"type": "PopoverHandle | undefined",
+						"optional": true,
+						"description": "Imperative handle from .",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-expanded',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-limited',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
-					},
-					{
-						name: 'data-swipe-direction',
-						description: 'Direction of an active toast swipe.'
-					},
-					{
-						name: 'data-swiping',
-						description: 'Present on the element when applicable.'
-					},
-					{
-						name: 'data-type',
-						description: 'Present on the element when applicable.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Provider',
-				heading: 'Toast.Provider',
-				extendsNote: '',
-				props: [
+				"name": "Arrow",
+				"heading": "Popover.Arrow",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'toaster',
-						type: 'ToastManager | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'timeout',
-						type: 'number | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'limit',
-						type: 'number | undefined',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: []
-			},
-			{
-				name: 'Action',
-				heading: 'Toast.Action',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
+				"dataAttributes": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Arrow',
-				heading: 'Toast.Arrow',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-anchored',
-						description: 'Present on the element when applicable.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-side',
-						description: 'The side the popup is placed on.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Close',
-				heading: 'Toast.Close',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
+				"name": "Backdrop",
+				"heading": "Popover.Backdrop",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: []
-			},
-			{
-				name: 'Content',
-				heading: 'Toast.Content',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-behind',
-						description: 'Present on the element when applicable.'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-expanded',
-						description: 'Present on the element when applicable.'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
 					}
 				]
 			},
 			{
-				name: 'Description',
-				heading: 'Toast.Description',
-				extendsNote: 'Extends paragraph HTML attributes.',
-				props: [
+				"name": "Close",
+				"heading": "Popover.Close",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "Description",
+				"heading": "Popover.Description",
+				"extendsNote": "Extends paragraph HTML attributes.",
+				"props": [
 					{
-						name: 'data-type',
-						description: 'Present on the element when applicable.'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Popup",
+				"heading": "Popover.Popup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "initialFocus",
+						"type": "FocusTarget",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "finalFocus",
+						"type": "FocusTarget",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
 					}
 				]
 			},
 			{
-				name: 'Portal',
-				heading: 'Toast.Portal',
-				extendsNote: '',
-				props: [
+				"name": "Portal",
+				"heading": "Popover.Portal",
+				"extendsNote": "",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "container",
+						"type": "HTMLElement | string | null",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: []
+				"dataAttributes": []
 			},
 			{
-				name: 'Positioner',
-				heading: 'Toast.Positioner',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Positioner",
+				"heading": "Popover.Positioner",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'side',
-						type: "'top' | 'right' | 'bottom' | 'left'",
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "side",
+						"type": "ly o",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'align',
-						type: "'start' | 'center' | 'end'",
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "align",
+						"type": "n; s",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'sideOffset',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "sideOffset",
+						"type": "lean,",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "alignOffset",
+						"type": "eReaso",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionPadding",
+						"type": "erDelay(reason: OpenChangeReason): voi",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionBoundary",
+						"type": "(reason: OpenCh",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionAvoidance",
+						"type": "elHover(): void;",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "arrowPadding",
+						"type": "er: bo",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sticky",
+						"type": "only de",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "positionMethod",
+						"type": "ly lastOpenChangeR",
+						"optional": true,
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "strategy",
+						"type": "descriptionId: str",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "anchor",
+						"type": "eturnType<typeof createPresence",
+						"optional": true,
+						"description": "Override the positioning anchor (element or virtual element).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disableAnchorTracking",
+						"type": "olean,",
+						"optional": true,
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-anchored',
-						description: 'Present on the element when applicable.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-side',
-						description: 'The side the popup is placed on.'
-					}
-				]
-			},
-			{
-				name: 'Title',
-				heading: 'Toast.Title',
-				extendsNote: 'Extends heading HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-type',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			},
-			{
-				name: 'Viewport',
-				heading: 'Toast.Viewport',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-expanded',
-						description: 'Present on the element when applicable.'
-					}
-				]
-			}
-		]
-	},
-	toggle: {
-		slug: 'toggle',
-		exportName: 'Toggle',
-		kind: 'single',
-		parts: [
-			{
-				name: 'Toggle',
-				heading: 'Toggle',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
-					{
-						name: 'pressed',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Controlled pressed state.',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultPressed',
-						type: 'boolean',
-						optional: true,
-						description: 'Uncontrolled initial pressed state.',
-						defaultValue: '—'
-					},
-					{
-						name: 'onPressedChange',
-						type: '((pressed: boolean, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the pressed state changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'value',
-						type: 'string | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ pressed: boolean; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-pressed',
-						description: 'Present when the toggle is pressed.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'ToggleGroup',
-				heading: 'ToggleGroup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Title",
+				"heading": "Popover.Title",
+				"extendsNote": "Extends heading HTML attributes.",
+				"props": [
 					{
-						name: 'value',
-						type: 'string[] | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultValue',
-						type: 'string[]',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'onValueChange',
-						type: '((value: string[], event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'multiple',
-						type: 'boolean',
-						optional: true,
-						description: '',
-						defaultValue: '—'
-					},
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'orientation',
-						type: 'ToggleGroupOrientation',
-						optional: true,
-						description: '',
-						defaultValue: "'horizontal'"
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ value: string[]; disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
-					}
-				]
-			}
-		]
-	},
-	toolbar: {
-		slug: 'toolbar',
-		exportName: 'Toolbar',
-		kind: 'compound',
-		parts: [
+				"dataAttributes": []
+			},
 			{
-				name: 'Root',
-				heading: 'Toolbar.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Trigger",
+				"heading": "Popover.Trigger",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
 					{
-						name: 'orientation',
-						type: 'ToolbarOrientation',
-						optional: true,
-						description: '',
-						defaultValue: "'horizontal'"
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet<[{ orientation: ToolbarOrientation }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "id",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "handle",
+						"type": "PopoverHandle | undefined",
+						"optional": true,
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "payload",
+						"type": "unknown",
+						"optional": true,
+						"description": "Optional payload associated when opening via this trigger.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "openOnHover",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Button',
-				heading: 'Toolbar.Button',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
+				"name": "Viewport",
+				"heading": "Popover.Viewport",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'focusableWhenDisabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control remains focusable when disabled.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'type',
-						type: "'button' | 'submit' | 'reset' | undefined",
-						optional: true,
-						description: 'Native control type when rendering a native element.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet<[{ disabled: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
-					}
-				]
-			},
-			{
-				name: 'Group',
-				heading: 'Toolbar.Group',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
-					}
-				]
-			},
-			{
-				name: 'Input',
-				heading: 'Toolbar.Input',
-				extendsNote: 'Extends input HTML attributes.',
-				props: [
-					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'focusableWhenDisabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control remains focusable when disabled.',
-						defaultValue: 'false'
-					},
-					{
-						name: 'value',
-						type: 'string | undefined',
-						optional: true,
-						description: 'Controlled value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'defaultValue',
-						type: 'string',
-						optional: true,
-						description: 'Uncontrolled initial value.',
-						defaultValue: '—'
-					},
-					{
-						name: 'onValueChange',
-						type: '((value: string, event: Event) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the value changes.',
-						defaultValue: '—'
-					},
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
-					},
-					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
-					}
-				]
-			},
-			{
-				name: 'Link',
-				heading: 'Toolbar.Link',
-				extendsNote: 'Extends anchor HTML attributes.',
-				props: [
-					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
-					}
-				]
-			},
-			{
-				name: 'Separator',
-				heading: 'Toolbar.Separator',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
-					{
-						name: 'orientation',
-						type: 'ToolbarOrientation | undefined',
-						optional: true,
-						description: '',
-						defaultValue: "'horizontal'"
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-orientation',
-						description: 'The orientation of the component.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			}
 		]
 	},
-	tooltip: {
-		slug: 'tooltip',
-		exportName: 'Tooltip',
-		kind: 'compound',
-		parts: [
+	"preview-card": {
+		"slug": "preview-card",
+		"exportName": "PreviewCard",
+		"kind": "compound",
+		"parts": [
 			{
-				name: 'Root',
-				heading: 'Tooltip.Root',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Root",
+				"heading": "PreviewCard.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'open',
-						type: 'boolean | undefined',
-						optional: true,
-						description: 'Whether the component is open (controlled).',
-						defaultValue: '—'
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'defaultOpen',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the component is initially open (uncontrolled).',
-						defaultValue: '—'
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
 					},
 					{
-						name: 'onOpenChange',
-						type: '((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined',
-						optional: true,
-						description: 'Event handler called when the open state changes.',
-						defaultValue: '—'
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'delay',
-						type: 'number',
-						optional: true,
-						description: 'Alias for `openDelay` (Base UI name).',
-						defaultValue: '—'
+						"name": "onOpenChangeComplete",
+						"type": "((open: boolean) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'openDelay',
-						type: 'number',
-						optional: true,
-						description: 'How long to wait before opening on hover (ms).',
-						defaultValue: '—'
+						"name": "openDelay",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'closeDelay',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "closeDelay",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet<[{ open: boolean }]>',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "handle",
+						"type": "PreviewCardHandle | undefined",
+						"optional": true,
+						"description": "Imperative handle from .",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Arrow',
-				heading: 'Tooltip.Arrow',
-				extendsNote: 'Extends span HTML attributes.',
-				props: [
+				"name": "Arrow",
+				"heading": "PreviewCard.Arrow",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Popup',
-				heading: 'Tooltip.Popup',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"name": "Backdrop",
+				"heading": "PreviewCard.Backdrop",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'data-ending-style',
-						description: 'Present while the exit animation can run.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-starting-style',
-						description: 'Present while the enter animation can run.'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			},
 			{
-				name: 'Portal',
-				heading: 'Tooltip.Portal',
-				extendsNote: '',
-				props: [
+				"name": "Popup",
+				"heading": "PreviewCard.Popup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: []
-			},
-			{
-				name: 'Positioner',
-				heading: 'Tooltip.Positioner',
-				extendsNote: 'Extends div HTML attributes.',
-				props: [
+				"dataAttributes": [
 					{
-						name: 'side',
-						type: 'Side',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "data-closed",
+						"description": "Present when the part is closed."
 					},
 					{
-						name: 'align',
-						type: 'Align',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
 					},
 					{
-						name: 'sideOffset',
-						type: 'number',
-						optional: true,
-						description: '',
-						defaultValue: '—'
+						"name": "data-open",
+						"description": "Present when the part is open."
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
-					}
-				],
-				dataAttributes: [
-					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
-					},
-					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
-					},
-					{
-						name: 'data-side',
-						description: 'The side the popup is placed on.'
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
 					}
 				]
 			},
 			{
-				name: 'Trigger',
-				heading: 'Tooltip.Trigger',
-				extendsNote: 'Extends button HTML attributes.',
-				props: [
+				"name": "Portal",
+				"heading": "PreviewCard.Portal",
+				"extendsNote": "",
+				"props": [
 					{
-						name: 'render',
-						type: 'string',
-						optional: true,
-						description: 'HTML element tag to render instead of the default host element.',
-						defaultValue: '—'
+						"name": "container",
+						"type": "HTMLElement | string | null",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'disabled',
-						type: 'boolean',
-						optional: true,
-						description: 'Whether the control ignores user interaction.',
-						defaultValue: 'false'
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'children',
-						type: 'Snippet',
-						optional: true,
-						description: 'Content rendered inside the part.',
-						defaultValue: '—'
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
 					}
 				],
-				dataAttributes: [
+				"dataAttributes": []
+			},
+			{
+				"name": "Positioner",
+				"heading": "PreviewCard.Positioner",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
 					{
-						name: 'data-closed',
-						description: 'Present when the part is closed.'
+						"name": "side",
+						"type": "easo",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-disabled',
-						description: 'Present when the part is disabled.'
+						"name": "align",
+						"type": "close",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
 					},
 					{
-						name: 'data-open',
-						description: 'Present when the part is open.'
+						"name": "sideOffset",
+						"type": ": Open",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "alignOffset",
+						"type": "id; c",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionPadding",
+						"type": "eadonly triggerId: string; readonly p",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionBoundary",
+						"type": "ly refs: Previe",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionAvoidance",
+						"type": "sence: ReturnType<",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "arrowPadding",
+						"type": "nce>;",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sticky",
+						"type": "enDelay",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "positionMethod",
+						"type": "pe PreviewCardRoot",
+						"optional": true,
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "strategy",
+						"type": "Open?: boolean; o",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "anchor",
+						"type": ") | undefined; onOpenChangeCom",
+						"optional": true,
+						"description": "Override the positioning anchor (element or virtual element).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disableAnchorTracking",
+						"type": "ippet<[",
+						"optional": true,
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Trigger",
+				"heading": "PreviewCard.Trigger",
+				"extendsNote": "Extends anchor HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "id",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "handle",
+						"type": "PreviewCardHandle | undefined",
+						"optional": true,
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "payload",
+						"type": "unknown",
+						"optional": true,
+						"description": "Optional payload associated when opening via this trigger.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Viewport",
+				"heading": "PreviewCard.Viewport",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			}
+		]
+	},
+	"progress": {
+		"slug": "progress",
+		"exportName": "Progress",
+		"kind": "compound",
+		"parts": [
+			{
+				"name": "Root",
+				"heading": "Progress.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "number | null",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "min",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "max",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "format",
+						"type": "Intl.NumberFormatOptions | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "getAriaValueText",
+						"type": "| ((formattedValue: string | null, value: number | null) => string | undefined) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "locale",
+						"type": "Intl.LocalesArgument | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-complete",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-indeterminate",
+						"description": "Present when the checkbox is indeterminate."
+					},
+					{
+						"name": "data-progressing",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Indicator",
+				"heading": "Progress.Indicator",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-complete",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-indeterminate",
+						"description": "Present when the checkbox is indeterminate."
+					},
+					{
+						"name": "data-progressing",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Label",
+				"heading": "Progress.Label",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-complete",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-indeterminate",
+						"description": "Present when the checkbox is indeterminate."
+					},
+					{
+						"name": "data-progressing",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Track",
+				"heading": "Progress.Track",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-complete",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-indeterminate",
+						"description": "Present when the checkbox is indeterminate."
+					},
+					{
+						"name": "data-progressing",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Value",
+				"heading": "Progress.Value",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet<[formattedValue: string | null, value: number | null]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-complete",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-indeterminate",
+						"description": "Present when the checkbox is indeterminate."
+					},
+					{
+						"name": "data-progressing",
+						"description": "Present on the element when applicable."
+					}
+				]
+			}
+		]
+	},
+	"radio": {
+		"slug": "radio",
+		"exportName": "Radio",
+		"kind": "compound",
+		"parts": [
+			{
+				"name": "Root",
+				"heading": "Radio.Root",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "string",
+						"optional": false,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ checked: boolean; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-checked",
+						"description": "Present when the part is checked."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
+					}
+				]
+			},
+			{
+				"name": "Indicator",
+				"heading": "Radio.Indicator",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-checked",
+						"description": "Present when the part is checked."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
+					}
+				]
+			},
+			{
+				"name": "RadioGroup",
+				"heading": "RadioGroup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultValue",
+						"type": "string",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueChange",
+						"type": "((value: string, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "name",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "required",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ value: string; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					}
+				]
+			}
+		]
+	},
+	"scroll-area": {
+		"slug": "scroll-area",
+		"exportName": "ScrollArea",
+		"kind": "compound",
+		"parts": [
+			{
+				"name": "Root",
+				"heading": "ScrollArea.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "overflowEdgeThreshold",
+						"type": "number | { top?: number; right?: number; bottom?: number; left?: number }",
+						"optional": true,
+						"description": "Distance from an edge (px) at which overflow data attributes become active.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-overflow-bottom",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-overflow-left",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-overflow-right",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-overflow-top",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-overflow-x",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-overflow-y",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-scrolling",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Content",
+				"heading": "ScrollArea.Content",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-scrolling",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Corner",
+				"heading": "ScrollArea.Corner",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-scrolling",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Scrollbar",
+				"heading": "ScrollArea.Scrollbar",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "orientation",
+						"type": "ScrollAreaOrientation",
+						"optional": true,
+						"description": "",
+						"defaultValue": "'horizontal'"
+					},
+					{
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					},
+					{
+						"name": "data-scrolling",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Thumb",
+				"heading": "ScrollArea.Thumb",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					},
+					{
+						"name": "data-scrolling",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-slot",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Viewport",
+				"heading": "ScrollArea.Viewport",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-scrolling",
+						"description": "Present on the element when applicable."
+					}
+				]
+			}
+		]
+	},
+	"select": {
+		"slug": "select",
+		"exportName": "Select",
+		"kind": "compound",
+		"parts": [
+			{
+				"name": "Root",
+				"heading": "Select.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "SelectValue | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultValue",
+						"type": "SelectValue",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueChange",
+						"type": "((value: SelectValue, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "name",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "multiple",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "modal",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the select enters a modal state when open. When `true`, document scroll is locked while open.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onOpenChangeComplete",
+						"type": "((open: boolean) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "form",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "readOnly",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "required",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "autoComplete",
+						"type": "HTMLInputAttributes['autocomplete']",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "highlightItemOnHover",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "itemToStringLabel",
+						"type": "((itemValue: string) => string) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "itemToStringValue",
+						"type": "((itemValue: string) => string) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "isItemEqualToValue",
+						"type": "((itemValue: string, value: string) => boolean) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "items",
+						"type": "SelectItemsProp | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ value: SelectValue; open: boolean; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Arrow",
+				"heading": "Select.Arrow",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Backdrop",
+				"heading": "Select.Backdrop",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Group",
+				"heading": "Select.Group",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "GroupLabel",
+				"heading": "Select.GroupLabel",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Icon",
+				"heading": "Select.Icon",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Item",
+				"heading": "Select.Item",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "string",
+						"optional": false,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ selected: boolean; highlighted: boolean; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
+					},
+					{
+						"name": "data-selected",
+						"description": "Present when the item is selected."
+					}
+				]
+			},
+			{
+				"name": "ItemIndicator",
+				"heading": "Select.ItemIndicator",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-selected",
+						"description": "Present when the item is selected."
+					}
+				]
+			},
+			{
+				"name": "ItemText",
+				"heading": "Select.ItemText",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-highlighted",
+						"description": "Present when the item is highlighted."
+					},
+					{
+						"name": "data-select-item-text",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-selected",
+						"description": "Present when the item is selected."
+					}
+				]
+			},
+			{
+				"name": "Label",
+				"heading": "Select.Label",
+				"extendsNote": "Extends label HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					}
+				]
+			},
+			{
+				"name": "List",
+				"heading": "Select.List",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Popup",
+				"heading": "Select.Popup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
+					}
+				]
+			},
+			{
+				"name": "Portal",
+				"heading": "Select.Portal",
+				"extendsNote": "",
+				"props": [
+					{
+						"name": "container",
+						"type": "HTMLElement | string | null",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Positioner",
+				"heading": "Select.Positioner",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "side",
+						"type": "{ t",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "align",
+						"type": "LElem",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sideOffset",
+						"type": "up: HT",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "alignOffset",
+						"type": "posi",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionPadding",
+						"type": "null; list: HTMLElement | null; arro",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionBoundary",
+						"type": "}; export type",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionAvoidance",
+						"type": "only value: Select",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "arrowPadding",
+						"type": "alue:",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sticky",
+						"type": "event:",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "positionMethod",
+						"type": "eReason): void; r",
+						"optional": true,
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "strategy",
+						"type": "ing, label: string",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "anchor",
+						"type": "l): void; readonly items: Sele",
+						"optional": true,
+						"description": "Override the positioning anchor (element or virtual element).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disableAnchorTracking",
+						"type": "string",
+						"optional": true,
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "alignItemWithTrigger",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "ScrollDownArrow",
+				"heading": "Select.ScrollDownArrow",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-direction",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-hidden",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "ScrollUpArrow",
+				"heading": "Select.ScrollUpArrow",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-direction",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-hidden",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Separator",
+				"heading": "Select.Separator",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [],
+				"dataAttributes": []
+			},
+			{
+				"name": "Trigger",
+				"heading": "Select.Trigger",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Value",
+				"heading": "Select.Value",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "placeholder",
+						"type": "string",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[SelectValue]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-placeholder",
+						"description": "Present when showing placeholder content."
+					}
+				]
+			}
+		]
+	},
+	"separator": {
+		"slug": "separator",
+		"exportName": "Separator",
+		"kind": "single",
+		"parts": [
+			{
+				"name": "Separator",
+				"heading": "Separator",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "orientation",
+						"type": "SeparatorOrientation",
+						"optional": true,
+						"description": "",
+						"defaultValue": "'horizontal'"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			}
+		]
+	},
+	"slider": {
+		"slug": "slider",
+		"exportName": "Slider",
+		"kind": "compound",
+		"parts": [
+			{
+				"name": "Root",
+				"heading": "Slider.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "SliderValue | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultValue",
+						"type": "SliderValue",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "min",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "max",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "step",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "orientation",
+						"type": "SliderOrientation",
+						"optional": true,
+						"description": "",
+						"defaultValue": "'horizontal'"
+					},
+					{
+						"name": "name",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "format",
+						"type": "Intl.NumberFormatOptions | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "locale",
+						"type": "Intl.LocalesArgument | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueChange",
+						"type": "((value: SliderValue, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueCommitted",
+						"type": "((value: SliderValue, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Called when the value is committed (pointer up / key up).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "largeStep",
+						"type": "number",
+						"optional": true,
+						"description": "Step used with Page Up/Down.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "minStepsBetweenValues",
+						"type": "number",
+						"optional": true,
+						"description": "Minimum steps between adjacent thumbs in a range.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "thumbAlignment",
+						"type": "'center' | 'edge' | 'edge-client-only'",
+						"optional": true,
+						"description": "How thumbs align to the control edge.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "thumbCollisionBehavior",
+						"type": "'push' | 'swap' | 'none'",
+						"optional": true,
+						"description": "Behavior when thumbs collide.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "form",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					},
+					{
+						"name": "data-thumb-alignment",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Control",
+				"heading": "Slider.Control",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "Indicator",
+				"heading": "Slider.Indicator",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "Label",
+				"heading": "Slider.Label",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					}
+				]
+			},
+			{
+				"name": "Thumb",
+				"heading": "Slider.Thumb",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "index",
+						"type": "number | undefined",
+						"optional": true,
+						"description": "Index into the value array for range sliders (recommended for SSR).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "getAriaLabel",
+						"type": "((index: number) => string) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "getAriaValueText",
+						"type": "((formattedValue: string, value: number, index: number) => string) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-index",
+						"description": "Index of the item within a collection."
+					},
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "Track",
+				"heading": "Slider.Track",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "Value",
+				"heading": "Slider.Value",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet<[formattedValue: string, value: SliderValue]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					}
+				]
+			}
+		]
+	},
+	"switch": {
+		"slug": "switch",
+		"exportName": "Switch",
+		"kind": "compound",
+		"parts": [
+			{
+				"name": "Root",
+				"heading": "Switch.Root",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "checked",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Controlled checked state.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultChecked",
+						"type": "boolean",
+						"optional": true,
+						"description": "Uncontrolled initial checked state.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onCheckedChange",
+						"type": "((checked: boolean, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the checked state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "required",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "name",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "value",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ checked: boolean; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-checked",
+						"description": "Present when the part is checked."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
+					}
+				]
+			},
+			{
+				"name": "Thumb",
+				"heading": "Switch.Thumb",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-checked",
+						"description": "Present when the part is checked."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-unchecked",
+						"description": "Present when the part is unchecked."
+					}
+				]
+			}
+		]
+	},
+	"tabs": {
+		"slug": "tabs",
+		"exportName": "Tabs",
+		"kind": "compound",
+		"parts": [
+			{
+				"name": "Root",
+				"heading": "Tabs.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultValue",
+						"type": "string",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueChange",
+						"type": "((value: string) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "orientation",
+						"type": "TabsOrientation",
+						"optional": true,
+						"description": "",
+						"defaultValue": "'horizontal'"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ value: string; orientation: TabsOrientation }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "Indicator",
+				"heading": "Tabs.Indicator",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "List",
+				"heading": "Tabs.List",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "activateOnFocus",
+						"type": "boolean",
+						"optional": true,
+						"description": "Activate the focused tab.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "loopFocus",
+						"type": "boolean",
+						"optional": true,
+						"description": "Loop arrow-key focus at the ends.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "Panel",
+				"heading": "Tabs.Panel",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "string",
+						"optional": false,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "Keep the panel in the DOM when inactive.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					},
+					{
+						"name": "data-selected",
+						"description": "Present when the item is selected."
+					}
+				]
+			},
+			{
+				"name": "Tab",
+				"heading": "Tabs.Tab",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "string",
+						"optional": false,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ selected: boolean; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					},
+					{
+						"name": "data-selected",
+						"description": "Present when the item is selected."
+					}
+				]
+			}
+		]
+	},
+	"toast": {
+		"slug": "toast",
+		"exportName": "Toast",
+		"kind": "compound",
+		"parts": [
+			{
+				"name": "Root",
+				"heading": "Toast.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "toast",
+						"type": "ToastData",
+						"optional": false,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "swipeDirection",
+						"type": "ToastSwipeDirection | ToastSwipeDirection[] | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-expanded",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-limited",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
+					},
+					{
+						"name": "data-swipe-direction",
+						"description": "Direction of an active toast swipe."
+					},
+					{
+						"name": "data-swiping",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-type",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Provider",
+				"heading": "Toast.Provider",
+				"extendsNote": "",
+				"props": [
+					{
+						"name": "toaster",
+						"type": "ToastManager | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "timeout",
+						"type": "number | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "limit",
+						"type": "number | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Action",
+				"heading": "Toast.Action",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Arrow",
+				"heading": "Toast.Arrow",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-anchored",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-side",
+						"description": "The side the popup is placed on."
+					}
+				]
+			},
+			{
+				"name": "Close",
+				"heading": "Toast.Close",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Content",
+				"heading": "Toast.Content",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-behind",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-expanded",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Description",
+				"heading": "Toast.Description",
+				"extendsNote": "Extends paragraph HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-type",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Portal",
+				"heading": "Toast.Portal",
+				"extendsNote": "",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Positioner",
+				"heading": "Toast.Positioner",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "side",
+						"type": "t<HT",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "align",
+						"type": "s<HTM",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sideOffset",
+						"type": "hildre",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "alignOffset",
+						"type": "?: Sni",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionPadding",
+						"type": "ToastSwipeDirection = 'up' | 'down' |",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionBoundary",
+						"type": "rt type ToastRo",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionAvoidance",
+						"type": "butes<HTMLDivEleme",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "arrowPadding",
+						"type": "{ to",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sticky",
+						"type": "ta; sw",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "positionMethod",
+						"type": "?: Snippet; }; ex",
+						"optional": true,
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "strategy",
+						"type": "ppet; }; export t",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "anchor",
+						"type": "ildren?: Snippet; }; export ty",
+						"optional": true,
+						"description": "Override the positioning anchor (element or virtual element).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disableAnchorTracking",
+						"type": "ippet;",
+						"optional": true,
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-anchored",
+						"description": "Present on the element when applicable."
+					},
+					{
+						"name": "data-side",
+						"description": "The side the popup is placed on."
+					}
+				]
+			},
+			{
+				"name": "Title",
+				"heading": "Toast.Title",
+				"extendsNote": "Extends heading HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-type",
+						"description": "Present on the element when applicable."
+					}
+				]
+			},
+			{
+				"name": "Viewport",
+				"heading": "Toast.Viewport",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-expanded",
+						"description": "Present on the element when applicable."
+					}
+				]
+			}
+		]
+	},
+	"toggle": {
+		"slug": "toggle",
+		"exportName": "Toggle",
+		"kind": "single",
+		"parts": [
+			{
+				"name": "Toggle",
+				"heading": "Toggle",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "pressed",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Controlled pressed state.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultPressed",
+						"type": "boolean",
+						"optional": true,
+						"description": "Uncontrolled initial pressed state.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onPressedChange",
+						"type": "((pressed: boolean, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the pressed state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "value",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ pressed: boolean; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-pressed",
+						"description": "Present when the toggle is pressed."
+					}
+				]
+			},
+			{
+				"name": "ToggleGroup",
+				"heading": "ToggleGroup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "value",
+						"type": "string[] | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultValue",
+						"type": "string[]",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueChange",
+						"type": "((value: string[], event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "multiple",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "orientation",
+						"type": "ToggleGroupOrientation",
+						"optional": true,
+						"description": "",
+						"defaultValue": "'horizontal'"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ value: string[]; disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			}
+		]
+	},
+	"toolbar": {
+		"slug": "toolbar",
+		"exportName": "Toolbar",
+		"kind": "compound",
+		"parts": [
+			{
+				"name": "Root",
+				"heading": "Toolbar.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "orientation",
+						"type": "ToolbarOrientation",
+						"optional": true,
+						"description": "",
+						"defaultValue": "'horizontal'"
+					},
+					{
+						"name": "loopFocus",
+						"type": "boolean",
+						"optional": true,
+						"description": "Loop arrow-key focus at the ends.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ orientation: ToolbarOrientation }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "Button",
+				"heading": "Toolbar.Button",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "focusableWhenDisabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control remains focusable when disabled.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "type",
+						"type": "'button' | 'submit' | 'reset' | undefined",
+						"optional": true,
+						"description": "Native control type when rendering a native element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ disabled: boolean }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "Group",
+				"heading": "Toolbar.Group",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "Input",
+				"heading": "Toolbar.Input",
+				"extendsNote": "Extends input HTML attributes.",
+				"props": [
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "focusableWhenDisabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control remains focusable when disabled.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "value",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "Controlled value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultValue",
+						"type": "string",
+						"optional": true,
+						"description": "Uncontrolled initial value.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onValueChange",
+						"type": "((value: string, event: Event) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the value changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "Link",
+				"heading": "Toolbar.Link",
+				"extendsNote": "Extends anchor HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			},
+			{
+				"name": "Separator",
+				"heading": "Toolbar.Separator",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "orientation",
+						"type": "ToolbarOrientation | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "'horizontal'"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-orientation",
+						"description": "The orientation of the component."
+					}
+				]
+			}
+		]
+	},
+	"tooltip": {
+		"slug": "tooltip",
+		"exportName": "Tooltip",
+		"kind": "compound",
+		"parts": [
+			{
+				"name": "Root",
+				"heading": "Tooltip.Root",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "open",
+						"type": "boolean | undefined",
+						"optional": true,
+						"description": "Whether the component is open (controlled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "defaultOpen",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the component is initially open (uncontrolled).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onOpenChange",
+						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
+						"optional": true,
+						"description": "Event handler called when the open state changes.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "onOpenChangeComplete",
+						"type": "((open: boolean) => void) | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "delay",
+						"type": "number",
+						"optional": true,
+						"description": "Alias for `openDelay` (Base UI name).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "openDelay",
+						"type": "number",
+						"optional": true,
+						"description": "How long to wait before opening on hover (ms).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "closeDelay",
+						"type": "number",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "handle",
+						"type": "TooltipHandle | undefined",
+						"optional": true,
+						"description": "Imperative handle from .",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Provider",
+				"heading": "Tooltip.Provider",
+				"extendsNote": "",
+				"props": [
+					{
+						"name": "delay",
+						"type": "number",
+						"optional": true,
+						"description": "Shared open delay for nested tooltips (ms).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "closeDelay",
+						"type": "number",
+						"optional": true,
+						"description": "Shared close delay for nested tooltips (ms).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "timeout",
+						"type": "number",
+						"optional": true,
+						"description": "Another tooltip opens instantly if the previous one closed within this window (ms).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Arrow",
+				"heading": "Tooltip.Arrow",
+				"extendsNote": "Extends span HTML attributes.",
+				"props": [
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Popup",
+				"heading": "Tooltip.Popup",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-ending-style",
+						"description": "Present while the exit animation can run."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-starting-style",
+						"description": "Present while the enter animation can run."
+					}
+				]
+			},
+			{
+				"name": "Portal",
+				"heading": "Tooltip.Portal",
+				"extendsNote": "",
+				"props": [
+					{
+						"name": "container",
+						"type": "HTMLElement | string | null",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": []
+			},
+			{
+				"name": "Positioner",
+				"heading": "Tooltip.Positioner",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "side",
+						"type": "voi",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "align",
+						"type": "penIn",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sideOffset",
+						"type": "an; };",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "alignOffset",
+						"type": "ltipCo",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionPadding",
+						"type": "en: boolean; setOpen(open: boolean, r",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionBoundary",
+						"type": "): void; openW",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "collisionAvoidance",
+						"type": "ngeReason): void;",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "arrowPadding",
+						"type": "ason:",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "sticky",
+						"type": "ason):",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "positionMethod",
+						"type": "g; readonly refs:",
+						"optional": true,
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "strategy",
+						"type": "readonly closeDel",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "anchor",
+						"type": "/** Shared open delay for neste",
+						"optional": true,
+						"description": "Override the positioning anchor (element or virtual element).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disableAnchorTracking",
+						"type": "(ms).",
+						"optional": true,
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-side",
+						"description": "The side the popup is placed on."
+					}
+				]
+			},
+			{
+				"name": "Trigger",
+				"heading": "Tooltip.Trigger",
+				"extendsNote": "Extends button HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "disabled",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "id",
+						"type": "string | undefined",
+						"optional": true,
+						"description": "",
+						"defaultValue": "—"
+					},
+					{
+						"name": "handle",
+						"type": "TooltipHandle | undefined",
+						"optional": true,
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "payload",
+						"type": "unknown",
+						"optional": true,
+						"description": "Optional payload associated when opening via this trigger.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-disabled",
+						"description": "Present when the part is disabled."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
+					}
+				]
+			},
+			{
+				"name": "Viewport",
+				"heading": "Tooltip.Viewport",
+				"extendsNote": "Extends div HTML attributes.",
+				"props": [
+					{
+						"name": "render",
+						"type": "string",
+						"optional": true,
+						"description": "HTML element tag to render instead of the default host element.",
+						"defaultValue": "—"
+					},
+					{
+						"name": "children",
+						"type": "Snippet",
+						"optional": true,
+						"description": "Content rendered inside the part.",
+						"defaultValue": "—"
+					}
+				],
+				"dataAttributes": [
+					{
+						"name": "data-closed",
+						"description": "Present when the part is closed."
+					},
+					{
+						"name": "data-open",
+						"description": "Present when the part is open."
 					}
 				]
 			}

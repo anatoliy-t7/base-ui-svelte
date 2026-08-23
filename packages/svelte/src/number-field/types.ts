@@ -11,8 +11,8 @@ export type NumberFieldContext = {
 	decrement(event: Event): void;
 	setInputFocused(focused: boolean): void;
 	readonly scrubbing: boolean;
-	startScrub(clientX: number, event: PointerEvent, pixelSensitivity?: number): void;
-	moveScrub(clientX: number, event: PointerEvent): void;
+	startScrub(clientX: number, clientY: number, event: PointerEvent, options?: { pixelSensitivity?: number; direction?: 'horizontal' | 'vertical'; teleportDistance?: number }): void;
+	moveScrub(clientX: number, clientY: number, event: PointerEvent): void;
 	endScrub(event?: Event): void;
 	readonly scrubPointer: { x: number; y: number } | null;
 	readonly min: number | undefined;
@@ -28,6 +28,7 @@ export type NumberFieldContext = {
 	readonly inputId: string;
 	readonly canIncrement: boolean;
 	readonly canDecrement: boolean;
+	readonly allowWheelScrub: boolean;
 };
 
 export type NumberFieldRootProps = Omit<
@@ -50,6 +51,8 @@ export type NumberFieldRootProps = Omit<
 	allowOutOfRange?: boolean;
 	/** When true, snap to step from min. @default true */
 	snapOnStep?: boolean;
+	/** When true, focused input responds to mouse wheel. @default false */
+	allowWheelScrub?: boolean;
 	locale?: Intl.LocalesArgument | undefined;
 	format?: Intl.NumberFormatOptions | undefined;
 	disabled?: boolean;
@@ -84,6 +87,10 @@ export type NumberFieldIncrementProps = Omit<HTMLButtonAttributes, 'children' | 
 
 export type NumberFieldScrubAreaProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	pixelSensitivity?: number;
+	/** Cursor movement direction. @default 'horizontal' */
+	direction?: 'horizontal' | 'vertical';
+	/** Reset scrub origin when pointer travels farther than this distance from the start point. */
+	teleportDistance?: number | undefined;
 	children?: Snippet;
 };
 

@@ -11,6 +11,8 @@
 		format,
 		allowOutOfRange = false,
 		snapOnStep = true,
+		allowWheelScrub = false,
+		scrubDirection = 'horizontal' as 'horizontal' | 'vertical',
 	}: {
 		defaultValue?: number | null;
 		min?: number;
@@ -21,6 +23,8 @@
 		format?: Intl.NumberFormatOptions | undefined;
 		allowOutOfRange?: boolean;
 		snapOnStep?: boolean;
+		allowWheelScrub?: boolean;
+		scrubDirection?: 'horizontal' | 'vertical';
 	} = $props();
 </script>
 
@@ -34,9 +38,10 @@
 	{format}
 	{allowOutOfRange}
 	{snapOnStep}
+	{allowWheelScrub}
 	data-testid="root"
 >
-	<NumberField.ScrubArea data-testid="scrub-area" pixelSensitivity={2}>
+	<NumberField.ScrubArea data-testid="scrub-area" pixelSensitivity={2} direction={scrubDirection}>
 		<span>Amount</span>
 		<NumberField.ScrubAreaCursor data-testid="scrub-cursor">+</NumberField.ScrubAreaCursor>
 	</NumberField.ScrubArea>

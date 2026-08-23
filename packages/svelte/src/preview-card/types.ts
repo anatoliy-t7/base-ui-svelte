@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAnchorAttributes, HTMLAttributes } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
-import type { Align, Side } from '../internal/floating.svelte.js';
+import type { Align, SharedPositionerProps, Side } from '../internal/floating.svelte.js';
 import type { PopupHandle } from '../internal/popup-handle.js';
 import type { createPresence } from '../internal/presence.svelte.js';
 
@@ -33,6 +33,7 @@ export type PreviewCardRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'childre
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
 	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
+	onOpenChangeComplete?: ((open: boolean) => void) | undefined;
 	openDelay?: number;
 	closeDelay?: number;
 	/** Imperative handle from {@link createHandle}. */
@@ -52,6 +53,8 @@ export type PreviewCardTriggerProps = Omit<HTMLAnchorAttributes, 'children' | 'i
 };
 
 export type PreviewCardPortalProps = {
+	container?: HTMLElement | string | null;
+	keepMounted?: boolean;
 	children?: Snippet;
 };
 
@@ -60,10 +63,8 @@ export type PreviewCardBackdropProps = Omit<HTMLAttributes<HTMLDivElement>, 'chi
 	children?: Snippet;
 };
 
-export type PreviewCardPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
-	side?: Side;
-	align?: Align;
-	sideOffset?: number;
+export type PreviewCardPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
+	SharedPositionerProps & {
 	children?: Snippet;
 };
 

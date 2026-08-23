@@ -20,6 +20,7 @@
 		open = $bindable(undefined),
 		defaultOpen = false,
 		onOpenChange,
+		onOpenChangeComplete,
 		delay,
 		openDelay,
 		closeDelay,
@@ -54,6 +55,37 @@
 	});
 
 	const presence = createPresence(() => state.open);
+
+	let lastReportedOpen: boolean | undefined = undefined;
+	let hasSyncedComplete = false;
+
+	$effect(() => {
+		const present = presence.isPresent;
+		const ending = presence.isEnding;
+		const starting = presence.isStarting;
+		const openNow = state.open;
+
+		if (!hasSyncedComplete) {
+			hasSyncedComplete = true;
+			lastReportedOpen = openNow;
+			return;
+		}
+
+		if (openNow && present && !starting) {
+			if (lastReportedOpen !== true) {
+				lastReportedOpen = true;
+				onOpenChangeComplete?.(true);
+			}
+			return;
+		}
+		if (!openNow && !present && !ending) {
+			if (lastReportedOpen !== false) {
+				lastReportedOpen = false;
+				onOpenChangeComplete?.(false);
+			}
+		}
+	});
+
 	const hover = createHoverDelay(
 		() => (provider?.shouldOpenInstantly() ? 0 : resolvedOpenDelay),
 		() => resolvedCloseDelay,

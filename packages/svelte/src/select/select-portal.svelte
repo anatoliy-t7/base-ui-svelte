@@ -4,13 +4,18 @@
 	import { portal } from '../internal/portal.js';
 	import type { SelectContext, SelectPortalProps } from './types.js';
 
-	let { children }: SelectPortalProps = $props();
+	let { container, keepMounted = false, children }: SelectPortalProps = $props();
 
 	const ctx = getContext<SelectContext>(SELECT_CONTEXT);
+
+	const shouldRender = $derived(keepMounted || ctx.presence.isPresent);
 </script>
 
-{#if ctx.presence.isPresent}
-	<div {@attach portal()}>
+{#if shouldRender}
+	<div
+		{@attach portal(container)}
+		hidden={keepMounted && !ctx.presence.isPresent ? true : undefined}
+	>
 		{#if children}
 			{@render children()}
 		{/if}

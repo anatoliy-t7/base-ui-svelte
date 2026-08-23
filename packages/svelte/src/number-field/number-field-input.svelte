@@ -36,6 +36,17 @@
 		}
 	}
 
+	function onWheel(event: WheelEvent): void {
+		if (!ctx.allowWheelScrub || isDisabled || isReadOnly) return;
+		if (event.deltaY === 0) return;
+		event.preventDefault();
+		if (event.deltaY < 0) {
+			ctx.increment(event);
+		} else {
+			ctx.decrement(event);
+		}
+	}
+
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			id: ctx.inputId,
@@ -73,4 +84,5 @@
 <input
 	{...mergedProps}
 	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+	onwheel={onWheel}
 />

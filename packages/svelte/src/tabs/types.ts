@@ -20,9 +20,16 @@ export type TabsContext = {
 	setValue(next: string): void;
 	getTabId(value: string): string;
 	getPanelId(value: string): string;
+	readonly activateOnFocus: boolean;
+	readonly loopFocus: boolean;
+	setListOptions(options: { activateOnFocus: boolean; loopFocus: boolean }): void;
 };
 
 export type TabsListProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
+	/** Activate the focused tab. @default false */
+	activateOnFocus?: boolean;
+	/** Loop arrow-key focus at the ends. @default true */
+	loopFocus?: boolean;
 	children?: Snippet;
 };
 
@@ -34,6 +41,8 @@ export type TabsTabProps = Omit<HTMLButtonAttributes, 'children' | 'disabled' | 
 
 export type TabsPanelProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	value: string;
+	/** Keep the panel in the DOM when inactive. @default false */
+	keepMounted?: boolean;
 	children?: Snippet;
 };
 

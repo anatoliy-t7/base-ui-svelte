@@ -9,6 +9,15 @@
 		side = 'top',
 		align = 'center',
 		sideOffset = 8,
+		alignOffset = 0,
+		collisionPadding = 8,
+		collisionBoundary = null,
+		collisionAvoidance,
+		arrowPadding = 4,
+		sticky = false,
+		positionMethod,
+		anchor: anchorProp = null,
+		disableAnchorTracking = false,
 		class: className,
 		style,
 		children,
@@ -16,7 +25,7 @@
 	}: ToastPositionerProps = $props();
 
 	const ctx = getContext<ToastContext>(TOAST_CONTEXT);
-	const anchor = $derived(ctx.toast?.anchor ?? null);
+	const toastAnchor = $derived(ctx.toast?.anchor ?? null);
 
 	let positionerEl = $state<HTMLElement | null>(null);
 	let arrowEl = $state<HTMLElement | null>(null);
@@ -32,9 +41,9 @@
 
 	createPositioner({
 		get open() {
-			return Boolean(anchor);
+			return Boolean(anchorProp ?? toastAnchor);
 		},
-		anchor: () => anchor,
+		anchor: () => anchorProp ?? toastAnchor,
 		floating: () => positionerEl,
 		arrowEl: () => arrowEl,
 		get side() {
@@ -46,6 +55,30 @@
 		get sideOffset() {
 			return sideOffset;
 		},
+		get alignOffset() {
+			return alignOffset;
+		},
+		get collisionPadding() {
+			return collisionPadding;
+		},
+		get collisionBoundary() {
+			return collisionBoundary;
+		},
+		get collisionAvoidance() {
+			return collisionAvoidance;
+		},
+		get arrowPadding() {
+			return arrowPadding;
+		},
+		get sticky() {
+			return sticky;
+		},
+		get positionMethod() {
+			return positionMethod;
+		},
+		get disableAnchorTracking() {
+			return disableAnchorTracking;
+		},
 	});
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -53,13 +86,13 @@
 			class: className,
 			style,
 			role: 'presentation',
-			'data-anchored': anchor ? '' : undefined,
+			'data-anchored': (anchorProp ?? toastAnchor) ? '' : undefined,
 			'data-side': side,
 		}),
 	);
 </script>
 
-{#if anchor}
+{#if anchorProp ?? toastAnchor}
 	<div
 		{...mergedProps}
 		bind:this={positionerEl}

@@ -4,7 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { TabsContext, TabsPanelProps } from './types.js';
 
-	let { value, class: className, style, children, ...rest }: TabsPanelProps = $props();
+	let { value, keepMounted = false, class: className, style, children, ...rest }: TabsPanelProps = $props();
 
 	const ctx = getContext<TabsContext>(TABS_CONTEXT);
 
@@ -27,8 +27,10 @@
 	);
 </script>
 
-<div {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
-	{#if children}
-		{@render children()}
-	{/if}
-</div>
+{#if selected || keepMounted}
+	<div {...mergedProps} style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}>
+		{#if children}
+			{@render children()}
+		{/if}
+	</div>
+{/if}

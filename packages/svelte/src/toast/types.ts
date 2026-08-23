@@ -1,3 +1,4 @@
+import type { SharedPositionerProps } from '../internal/floating.svelte.js';
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
 import type { ToastData, ToastManager } from './manager.svelte.js';
@@ -55,10 +56,8 @@ export type ToastActionProps = Omit<HTMLButtonAttributes, 'children'> & {
 	children?: Snippet;
 };
 
-export type ToastPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
-	side?: 'top' | 'right' | 'bottom' | 'left';
-	align?: 'start' | 'center' | 'end';
-	sideOffset?: number;
+export type ToastPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
+	SharedPositionerProps & {
 	children?: Snippet;
 };
 

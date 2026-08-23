@@ -1,4 +1,5 @@
 import type { Snippet } from 'svelte';
+import type { FocusTarget } from '../internal/focus-trap.svelte.js';
 import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
 import type { PopupHandle } from '../internal/popup-handle.js';
@@ -57,6 +58,7 @@ export type DrawerRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
 	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
+	onOpenChangeComplete?: ((open: boolean) => void) | undefined;
 	swipeDirection?: DrawerSwipeDirection;
 	/**
 	 * Whether the drawer enters a modal state when open.
@@ -67,6 +69,10 @@ export type DrawerRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
 	modal?: boolean;
 	disablePointerDismissal?: boolean;
 	snapPoints?: ReadonlyArray<DrawerSnapPoint>;
+	snapPoint?: DrawerSnapPoint | null | undefined;
+	defaultSnapPoint?: DrawerSnapPoint | null;
+	onSnapPointChange?: ((snapPoint: DrawerSnapPoint | null) => void) | undefined;
+	snapToSequentialPoints?: boolean;
 	/** Imperative handle from {@link createHandle}. */
 	handle?: DrawerHandle | undefined;
 	children?: Snippet<[{ open: boolean; payload: unknown }]>;
@@ -84,11 +90,14 @@ export type DrawerTriggerProps = Omit<HTMLButtonAttributes, 'children' | 'disabl
 };
 
 export type DrawerPortalProps = {
+	container?: HTMLElement | string | null;
+	keepMounted?: boolean;
 	children?: Snippet;
 };
 
 export type DrawerBackdropProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	render?: string;
+	forceRender?: boolean;
 	children?: Snippet;
 };
 
@@ -99,6 +108,8 @@ export type DrawerViewportProps = Omit<HTMLAttributes<HTMLDivElement>, 'children
 
 export type DrawerPopupProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	render?: string;
+	initialFocus?: FocusTarget;
+	finalFocus?: FocusTarget;
 	children?: Snippet;
 };
 

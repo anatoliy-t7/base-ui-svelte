@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
-import type { Align, Side } from '../internal/floating.svelte.js';
+import type { Align, SharedPositionerProps, Side } from '../internal/floating.svelte.js';
 import type { PopupHandle } from '../internal/popup-handle.js';
 import type { createPresence } from '../internal/presence.svelte.js';
 
@@ -119,6 +119,8 @@ export type MenuTriggerProps = Omit<HTMLButtonAttributes, 'children' | 'disabled
 };
 
 export type MenuPortalProps = {
+	container?: HTMLElement | string | null;
+	keepMounted?: boolean;
 	children?: Snippet;
 };
 
@@ -128,10 +130,8 @@ export type MenuBackdropProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>
 	children?: Snippet;
 };
 
-export type MenuPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
-	side?: Side;
-	align?: Align;
-	sideOffset?: number;
+export type MenuPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
+	SharedPositionerProps & {
 	children?: Snippet;
 };
 

@@ -3,8 +3,12 @@ import {
 	autoUpdate,
 	computePosition,
 	flip,
+	limitShift,
 	offset,
 	shift,
+	type Boundary,
+	type Middleware,
+	type Padding,
 	type Placement,
 } from '@floating-ui/dom';
 
@@ -19,17 +23,59 @@ export type VirtualElement = {
 
 export type PositionerStrategy = 'absolute' | 'fixed';
 
+export type CollisionAvoidance = {
+	readonly side?: 'flip' | 'none';
+	readonly align?: 'flip' | 'shift' | 'none';
+};
+
+/**
+ * Shared Positioner props aligned with Base UI React naming.
+ * Components may omit fields they don't expose yet.
+ */
+export type SharedPositionerProps = {
+	side?: Side;
+	align?: Align;
+	sideOffset?: number;
+	alignOffset?: number;
+	collisionPadding?: number | Partial<Record<Side, number>>;
+	collisionBoundary?: Boundary | null;
+	collisionAvoidance?: CollisionAvoidance;
+	arrowPadding?: number;
+	sticky?: boolean;
+	/** Maps to Floating UI strategy (`absolute` | `fixed`). */
+	positionMethod?: PositionerStrategy;
+	/**
+	 * @deprecated Prefer {@link positionMethod}. Kept for internal callers.
+	 */
+	strategy?: PositionerStrategy;
+	/** Override the positioning anchor (element or virtual element). */
+	anchor?: Element | VirtualElement | null;
+	/**
+	 * When `true`, skip continuous layout tracking of the anchor
+	 * (position once; no resize/scroll auto-updates beyond the initial compute).
+	 * @default false
+	 */
+	disableAnchorTracking?: boolean;
+};
+
 export type PositionerOptions = {
 	readonly open: boolean;
 	readonly anchor: () => Element | VirtualElement | null | undefined;
 	readonly floating: () => HTMLElement | null | undefined;
-	readonly arrowEl?: () => HTMLElement | null | undefined;
-	readonly side?: Side;
-	readonly align?: Align;
-	readonly sideOffset?: number;
-	readonly collisionPadding?: number;
-	/** Floating UI strategy. Prefer `fixed` for pointer/virtual anchors. */
-	readonly strategy?: PositionerStrategy;
+	readonly arrowEl?: (() => HTMLElement | null | undefined) | undefined;
+	readonly side?: Side | undefined;
+	readonly align?: Align | undefined;
+	readonly sideOffset?: number | undefined;
+	readonly alignOffset?: number | undefined;
+	readonly collisionPadding?: number | Partial<Record<Side, number>> | undefined;
+	readonly collisionBoundary?: Boundary | null | undefined;
+	readonly collisionAvoidance?: CollisionAvoidance | undefined;
+	readonly arrowPadding?: number | undefined;
+	readonly sticky?: boolean | undefined;
+	readonly positionMethod?: PositionerStrategy | undefined;
+	/** @deprecated Prefer {@link positionMethod}. */
+	readonly strategy?: PositionerStrategy | undefined;
+	readonly disableAnchorTracking?: boolean | undefined;
 };
 
 function toPlacement(side: Side = 'bottom', align: Align = 'center'): Placement {
@@ -39,6 +85,81 @@ function toPlacement(side: Side = 'bottom', align: Align = 'center'): Placement 
 
 function placedSideOf(placement: Placement): Side {
 	return placement.split('-')[0] as Side;
+}
+
+function toPadding(value: number | Partial<Record<Side, number>> | undefined, fallback: number): Padding {
+	if (value == null) return fallback;
+	if (typeof value === 'number') return value;
+	return {
+		top: value.top ?? fallback,
+		right: value.right ?? fallback,
+		bottom: value.bottom ?? fallback,
+		left: value.left ?? fallback,
+	};
+}
+
+function buildMiddleware(options: {
+	sideOffset: number;
+	alignOffset: number;
+	collisionPadding: Padding;
+	collisionBoundary: Boundary | undefined;
+	collisionAvoidance: CollisionAvoidance;
+	sticky: boolean;
+	arrowElement: HTMLElement | null;
+	arrowPadding: number;
+}): Middleware[] {
+	const {
+		sideOffset,
+		alignOffset,
+		collisionPadding,
+		collisionBoundary,
+		collisionAvoidance,
+		sticky,
+		arrowElement,
+		arrowPadding,
+	} = options;
+
+	const middleware: Middleware[] = [
+		offset({ mainAxis: sideOffset, crossAxis: alignOffset }),
+	];
+
+	const sideMode = collisionAvoidance.side ?? 'flip';
+	const alignMode = collisionAvoidance.align ?? 'flip';
+
+	if (sideMode === 'flip') {
+		middleware.push(
+			flip({
+				padding: collisionPadding,
+				...(collisionBoundary != null ? { boundary: collisionBoundary } : {}),
+			}),
+		);
+	}
+
+	if (alignMode === 'shift' || sticky || sideMode === 'none') {
+		middleware.push(
+			shift({
+				padding: collisionPadding,
+				...(collisionBoundary != null ? { boundary: collisionBoundary } : {}),
+				...(sticky ? { limiter: limitShift() } : {}),
+				mainAxis: true,
+				crossAxis: sticky || alignMode === 'shift',
+			}),
+		);
+	} else if (alignMode === 'flip') {
+		// Default: keep shift on the main collision axis so the popup stays in view.
+		middleware.push(
+			shift({
+				padding: collisionPadding,
+				...(collisionBoundary != null ? { boundary: collisionBoundary } : {}),
+			}),
+		);
+	}
+
+	if (arrowElement) {
+		middleware.push(arrow({ element: arrowElement, padding: arrowPadding }));
+	}
+
+	return middleware;
 }
 
 /**
@@ -58,8 +179,14 @@ export function createPositioner(options: PositionerOptions) {
 		const preferredSide = options.side ?? 'bottom';
 		const preferredAlign = options.align ?? 'center';
 		const sideOffset = options.sideOffset ?? 8;
-		const collisionPadding = options.collisionPadding ?? 8;
-		const strategy = options.strategy ?? 'absolute';
+		const alignOffset = options.alignOffset ?? 0;
+		const collisionPadding = toPadding(options.collisionPadding, 8);
+		const collisionBoundary = options.collisionBoundary ?? undefined;
+		const collisionAvoidance = options.collisionAvoidance ?? {};
+		const arrowPadding = options.arrowPadding ?? 4;
+		const sticky = options.sticky ?? false;
+		const strategy = options.positionMethod ?? options.strategy ?? 'absolute';
+		const disableAnchorTracking = options.disableAnchorTracking ?? false;
 
 		// Take out of document flow immediately so mount/focus cannot scroll the page.
 		Object.assign(floating.style, {
@@ -68,17 +195,18 @@ export function createPositioner(options: PositionerOptions) {
 			top: '0',
 		});
 
-		const cleanup = autoUpdate(reference, floating, async () => {
+		const update = async () => {
 			const arrowElement = options.arrowEl?.() ?? null;
-			const middleware = [
-				offset(sideOffset),
-				flip({ padding: collisionPadding }),
-				shift({ padding: collisionPadding }),
-			];
-
-			if (arrowElement) {
-				middleware.push(arrow({ element: arrowElement, padding: 4 }));
-			}
+			const middleware = buildMiddleware({
+				sideOffset,
+				alignOffset,
+				collisionPadding,
+				collisionBoundary,
+				collisionAvoidance,
+				sticky,
+				arrowElement,
+				arrowPadding,
+			});
 
 			const result = await computePosition(reference, floating, {
 				placement: toPlacement(preferredSide, preferredAlign),
@@ -125,8 +253,15 @@ export function createPositioner(options: PositionerOptions) {
 					});
 				}
 			}
-		});
+		};
 
-		return cleanup;
+		if (disableAnchorTracking) {
+			void update();
+			return;
+		}
+
+		return autoUpdate(reference, floating, () => {
+			void update();
+		});
 	});
 }

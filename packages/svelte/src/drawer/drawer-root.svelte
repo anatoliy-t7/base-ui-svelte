@@ -20,6 +20,7 @@
 		DrawerProviderContext,
 		DrawerRefs,
 		DrawerRootProps,
+		DrawerSnapPoint,
 		DrawerSwipeMode,
 		DrawerSwipeVisual,
 	} from './types.js';
@@ -29,10 +30,15 @@
 		open = $bindable(undefined),
 		defaultOpen = false,
 		onOpenChange,
+		onOpenChangeComplete,
 		swipeDirection = 'down',
 		modal = true,
 		disablePointerDismissal = false,
 		snapPoints,
+		snapPoint = $bindable(undefined),
+		defaultSnapPoint = null,
+		onSnapPointChange,
+		snapToSequentialPoints = false,
 		handle,
 		class: className,
 		style,
@@ -63,6 +69,37 @@
 
 	const presence = createPresence(() => openState.open);
 
+	let lastReportedOpen: boolean | undefined = undefined;
+	let hasSyncedComplete = false;
+
+	$effect(() => {
+		const present = presence.isPresent;
+		const ending = presence.isEnding;
+		const starting = presence.isStarting;
+		const openNow = openState.open;
+
+		if (!hasSyncedComplete) {
+			hasSyncedComplete = true;
+			lastReportedOpen = openNow;
+			return;
+		}
+
+		if (openNow && present && !starting) {
+			if (lastReportedOpen !== true) {
+				lastReportedOpen = true;
+				onOpenChangeComplete?.(true);
+			}
+			return;
+		}
+		if (!openNow && !present && !ending) {
+			if (lastReportedOpen !== false) {
+				lastReportedOpen = false;
+				onOpenChangeComplete?.(false);
+			}
+		}
+	});
+
+
 	const refs: DrawerRefs = {
 		trigger: null,
 		popup: null,
@@ -75,6 +112,7 @@
 
 	let unregisterOpen: (() => void) | undefined;
 	let activeSnapPointIndex = $state(0);
+	let hasInitializedSnap = false;
 	let swipeProgress = $state(0);
 	let swipeMovementX = $state(0);
 	let swipeMovementY = $state(0);
@@ -115,8 +153,35 @@
 		});
 	});
 
+	function findSnapPointIndex(point: DrawerSnapPoint | null | undefined): number {
+		const points = snapPoints;
+		if (!points || points.length === 0 || point == null) return 0;
+		const index = points.findIndex((entry) => entry === point);
+		return index >= 0 ? index : 0;
+	}
+
+	function emitSnapPointChange(index: number): void {
+		const points = snapPoints;
+		const nextPoint = points?.[index] ?? null;
+		if (snapPoint !== undefined) {
+			snapPoint = nextPoint;
+		}
+		onSnapPointChange?.(nextPoint);
+	}
+
 	function setActiveSnapPointIndex(index: number): void {
-		activeSnapPointIndex = Math.max(0, index);
+		const points = snapPoints;
+		const max = points && points.length > 0 ? points.length - 1 : 0;
+		let next = Math.max(0, Math.min(index, max));
+		if (snapToSequentialPoints && points && points.length > 0) {
+			const delta = next - activeSnapPointIndex;
+			if (Math.abs(delta) > 1) {
+				next = activeSnapPointIndex + Math.sign(delta);
+			}
+		}
+		if (next === activeSnapPointIndex) return;
+		activeSnapPointIndex = next;
+		emitSnapPointChange(next);
 	}
 
 	function resetSwipeVisual(): void {
@@ -308,6 +373,20 @@
 			activeSnapPointIndex = 0;
 			return;
 		}
+
+		const controlled = snapPoint;
+		if (controlled !== undefined) {
+			activeSnapPointIndex = findSnapPointIndex(controlled);
+			hasInitializedSnap = true;
+			return;
+		}
+
+		if (!hasInitializedSnap) {
+			hasInitializedSnap = true;
+			activeSnapPointIndex = findSnapPointIndex(defaultSnapPoint ?? points[points.length - 1] ?? null);
+			return;
+		}
+
 		if (activeSnapPointIndex > points.length - 1) {
 			activeSnapPointIndex = points.length - 1;
 		}

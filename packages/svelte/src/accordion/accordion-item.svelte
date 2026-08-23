@@ -9,6 +9,7 @@
 	let {
 		value = useId('accordion-item'),
 		disabled = false,
+		onOpenChange,
 		class: className,
 		style,
 		id,
@@ -20,6 +21,18 @@
 
 	const itemDisabled = $derived(disabled || root.disabled);
 	const open = $derived(root.isOpen(value));
+	let previousOpen = $state<boolean | undefined>(undefined);
+	$effect(() => {
+		const next = open;
+		if (previousOpen === undefined) {
+			previousOpen = next;
+			return;
+		}
+		if (previousOpen !== next) {
+			onOpenChange?.(next, { reason: 'trigger-press' });
+			previousOpen = next;
+		}
+	});
 	const presence = createPresence(() => open);
 	const triggerId = $derived(root.getTriggerId(value));
 	const panelId = $derived(root.getPanelId(value));

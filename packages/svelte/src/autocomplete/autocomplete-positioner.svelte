@@ -9,6 +9,15 @@
 		side = 'bottom',
 		align = 'start',
 		sideOffset = 4,
+		alignOffset = 0,
+		collisionPadding = 8,
+		collisionBoundary = null,
+		collisionAvoidance,
+		arrowPadding = 4,
+		sticky = false,
+		positionMethod,
+		anchor = null,
+		disableAnchorTracking = false,
 		class: className,
 		style,
 		children,
@@ -32,7 +41,7 @@
 		get open() {
 			return ctx.open;
 		},
-		anchor: () => ctx.refs.input ?? ctx.refs.trigger,
+		anchor: () => anchor ?? ctx.refs.input ?? ctx.refs.trigger,
 		floating: () => ctx.refs.positioner,
 		arrowEl: () => ctx.refs.arrow,
 		get side() {
@@ -43,6 +52,30 @@
 		},
 		get sideOffset() {
 			return sideOffset;
+		},
+		get alignOffset() {
+			return alignOffset;
+		},
+		get collisionPadding() {
+			return collisionPadding;
+		},
+		get collisionBoundary() {
+			return collisionBoundary;
+		},
+		get collisionAvoidance() {
+			return collisionAvoidance;
+		},
+		get arrowPadding() {
+			return arrowPadding;
+		},
+		get sticky() {
+			return sticky;
+		},
+		get positionMethod() {
+			return positionMethod;
+		},
+		get disableAnchorTracking() {
+			return disableAnchorTracking;
 		},
 	});
 

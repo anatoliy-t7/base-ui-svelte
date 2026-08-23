@@ -1,4 +1,5 @@
 import type { Snippet } from 'svelte';
+import type { FocusTarget } from '../internal/focus-trap.svelte.js';
 import type {
 	HTMLAttributes,
 	HTMLButtonAttributes,
@@ -6,10 +7,15 @@ import type {
 	HTMLLabelAttributes,
 } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
-import type { Align, Side } from '../internal/floating.svelte.js';
+import type { Align, SharedPositionerProps, Side } from '../internal/floating.svelte.js';
 import type { createPresence } from '../internal/presence.svelte.js';
 
 export type ComboboxValue = string | string[] | null;
+
+export type ComboboxFilter =
+	| boolean
+	| ((itemValue: string, query: string, itemLabel: string) => boolean);
+
 
 export type ComboboxCollectionItem = {
 	readonly value: string;
@@ -47,7 +53,7 @@ export type ComboboxContext = {
 	setOpen(open: boolean, reason: OpenChangeReason): void;
 	registerItem(id: string, value: string, label: string, element: HTMLElement): () => void;
 	readonly highlighted: string | null;
-	setHighlighted(value: string | null): void;
+	setHighlighted(value: string | null, reason?: 'none' | 'keyboard' | 'pointer' | 'filter'): void;
 	readonly items: ComboboxItemEntry[];
 	getVisibleItems(): ComboboxItemEntry[];
 	isItemVisible(value: string): boolean;
@@ -64,7 +70,9 @@ export type ComboboxContext = {
 	readonly required: boolean;
 	readonly name: string | undefined;
 	readonly form: string | undefined;
-	readonly filter: boolean;
+	readonly filter: ComboboxFilter;
+	readonly highlightItemOnHover: boolean;
+	readonly autoHighlight: boolean;
 	readonly multiple: boolean;
 	readonly loopFocus: boolean;
 	readonly modal: boolean;
@@ -110,7 +118,24 @@ export type ComboboxRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>
 	required?: boolean;
 	name?: string | undefined;
 	form?: string | undefined;
-	filter?: boolean;
+	filter?: ComboboxFilter;
+	/** Externally filtered item values; when set, skips internal filtering. */
+	filteredItems?: ReadonlyArray<string> | undefined;
+	/** Max visible items (-1 = no limit). @default -1 */
+	limit?: number;
+	/** Locale for default string filtering. */
+	locale?: string | undefined;
+	/** Highlight the first matching item while filtering. @default false */
+	autoHighlight?: boolean;
+	/** Highlight items on pointer move. @default true */
+	highlightItemOnHover?: boolean;
+	onItemHighlighted?:
+		| ((value: string | null, eventDetails: { reason: 'none' | 'keyboard' | 'pointer' | 'filter' }) => void)
+		| undefined;
+	itemToStringLabel?: ((itemValue: string) => string) | undefined;
+	itemToStringValue?: ((itemValue: string) => string) | undefined;
+	isItemEqualToValue?: ((itemValue: string, value: string) => boolean) | undefined;
+
 	multiple?: boolean;
 	/** Whether highlight wraps at list ends. @default true */
 	loopFocus?: boolean;
@@ -157,6 +182,8 @@ export type ComboboxValueProps = Omit<HTMLAttributes<HTMLSpanElement>, 'children
 };
 
 export type ComboboxPortalProps = {
+	container?: HTMLElement | string | null;
+	keepMounted?: boolean;
 	children?: Snippet;
 };
 
@@ -165,15 +192,15 @@ export type ComboboxBackdropProps = Omit<HTMLAttributes<HTMLDivElement>, 'childr
 	children?: Snippet;
 };
 
-export type ComboboxPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
-	side?: Side;
-	align?: Align;
-	sideOffset?: number;
+export type ComboboxPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
+	SharedPositionerProps & {
 	children?: Snippet;
 };
 
 export type ComboboxPopupProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	render?: string;
+	initialFocus?: FocusTarget;
+	finalFocus?: FocusTarget;
 	children?: Snippet;
 };
 

@@ -10,11 +10,11 @@ describe('Tabs', () => {
 		render(TabsTest);
 
 		expect(screen.getByTestId('tab-one')).toHaveAttribute('aria-selected', 'true');
-		expect(screen.getByTestId('panel-two')).toHaveAttribute('hidden');
+		expect(screen.queryByTestId('panel-two')).not.toBeInTheDocument();
 
 		await user.click(screen.getByTestId('tab-two'));
 		expect(screen.getByTestId('tab-two')).toHaveAttribute('aria-selected', 'true');
-		expect(screen.getByTestId('panel-one')).toHaveAttribute('hidden');
+		expect(screen.queryByTestId('panel-one')).not.toBeInTheDocument();
 
 		screen.getByTestId('tab-two').focus();
 		await user.keyboard('{ArrowLeft}');

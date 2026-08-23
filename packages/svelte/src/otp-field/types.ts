@@ -6,7 +6,9 @@ export type OtpFieldContext = {
 	readonly slots: string[];
 	readonly length: number;
 	readonly disabled: boolean;
+	readonly readOnly: boolean;
 	readonly type: 'text' | 'password';
+	readonly mask: boolean | string | undefined;
 	readonly pattern: string | undefined;
 	readonly autoFocus: boolean;
 	readonly name: string | undefined;
@@ -30,6 +32,16 @@ export type OtpFieldRootProps = Omit<
 	disabled?: boolean;
 	type?: 'text' | 'password';
 	pattern?: string | undefined;
+	autoSubmit?: boolean;
+	/** When true, inputs use `type="password"`. A string sets a display mask character via CSS hooks. */
+	mask?: boolean | string;
+	/** Built-in character validation. Overrides default digit-only when set. */
+	validationType?: 'numeric' | 'alphanumeric' | 'none';
+	normalizeValue?: ((value: string) => string) | undefined;
+	onValueInvalid?: ((details: { value: string; reason: 'pattern' | 'validation-type' }) => void) | undefined;
+	readOnly?: boolean;
+	required?: boolean;
+	form?: string | undefined;
 	autoFocus?: boolean;
 	name?: string | undefined;
 	children?: Snippet<[{ value: string; disabled: boolean }]>;
@@ -44,5 +56,6 @@ export type OtpFieldInputProps = Omit<
 };
 
 export type OtpFieldSeparatorProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
+	orientation?: 'horizontal' | 'vertical';
 	children?: Snippet;
 };

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/svelte';
+import { fireEvent, render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
 import { describe, expect, it } from 'vitest';
@@ -116,5 +116,31 @@ describe('NumberField', () => {
 	it('has no axe violations', async () => {
 		const { container } = render(NumberFieldTest);
 		expect(await axe(container)).toHaveNoViolations();
+	});
+
+	it('scrubs with the mouse wheel when allowWheelScrub is set', async () => {
+		render(NumberFieldTest, { props: { allowWheelScrub: true } });
+		const input = screen.getByTestId('input');
+		input.focus();
+		await fireEvent.wheel(input, { deltaY: -100 });
+		expect(input).toHaveValue('6');
+		await fireEvent.wheel(input, { deltaY: 100 });
+		expect(input).toHaveValue('5');
+	});
+
+	it('scrubs vertically when ScrubArea direction is vertical', async () => {
+		const user = userEvent.setup();
+		render(NumberFieldTest, { props: { scrubDirection: 'vertical' } });
+
+		const scrub = screen.getByTestId('scrub-area');
+		const input = screen.getByTestId('input');
+
+		await user.pointer([
+			{ keys: '[MouseLeft>]', target: scrub, coords: { x: 100, y: 50 } },
+			{ coords: { x: 100, y: 40 } },
+			{ keys: '[/MouseLeft]' },
+		]);
+
+		expect(input).toHaveValue('10');
 	});
 });

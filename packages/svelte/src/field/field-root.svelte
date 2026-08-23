@@ -17,6 +17,13 @@
 		invalid,
 		validate,
 		validationMode = 'onSubmit',
+		validationDebounceTime = 0,
+		dirty: dirtyProp = $bindable(undefined),
+		defaultDirty = false,
+		onDirtyChange,
+		touched: touchedProp = $bindable(undefined),
+		defaultTouched = false,
+		onTouchedChange,
 		class: className,
 		style,
 		id = useId('field'),
@@ -34,8 +41,10 @@
 	let value = $state('');
 	let initialValue = $state<unknown>('');
 	let initialized = $state(false);
-	let touched = $state(false);
-	let dirty = $state(false);
+	let touchedUncontrolled = $state(defaultTouched);
+	let dirtyUncontrolled = $state(defaultDirty);
+	const touched = $derived(touchedProp !== undefined ? touchedProp : touchedUncontrolled);
+	const dirty = $derived(dirtyProp !== undefined ? dirtyProp : dirtyUncontrolled);
 	let focused = $state(false);
 	let validationErrors = $state<string[]>([]);
 	let hasValidated = $state(false);
@@ -178,25 +187,43 @@
 		return ok;
 	}
 
+	let validateTimer: ReturnType<typeof setTimeout> | undefined;
+
+	function scheduleValidate(): void {
+		if (validationDebounceTime > 0) {
+			if (validateTimer) clearTimeout(validateTimer);
+			validateTimer = setTimeout(() => {
+				void runValidate();
+			}, validationDebounceTime);
+			return;
+		}
+		void runValidate();
+	}
+
 	function setValue(next: string, event?: Event): void {
 		if (!initialized) {
 			initialized = true;
 			initialValue = next;
 			value = next;
-			dirty = false;
+			setDirty(false);
 			return;
 		}
 		value = next;
-		dirty = next !== initialValue;
+		setDirty(next !== initialValue);
 		if (name) form?.clearFieldError(name);
 		if (validationMode === 'onChange' || (validationMode === 'onSubmit' && hasValidated)) {
-			void runValidate();
+			scheduleValidate();
 		}
 		void event;
 	}
 
 	function setTouched(next: boolean): void {
-		touched = next;
+		if (touchedProp !== undefined) {
+			touchedProp = next;
+		} else {
+			touchedUncontrolled = next;
+		}
+		onTouchedChange?.(next);
 		if (next && validationMode === 'onBlur') {
 			void runValidate();
 		}
@@ -207,7 +234,12 @@
 	}
 
 	function setDirty(next: boolean): void {
-		dirty = next;
+		if (dirtyProp !== undefined) {
+			dirtyProp = next;
+		} else {
+			dirtyUncontrolled = next;
+		}
+		onDirtyChange?.(next);
 	}
 
 	function getDescribedBy(): string | undefined {

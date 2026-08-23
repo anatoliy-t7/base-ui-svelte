@@ -23,6 +23,11 @@ export type ScrollAreaContext = {
 };
 
 export type ScrollAreaRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
+	/**
+	 * Distance from an edge (px) at which overflow data attributes become active.
+	 * @default 0
+	 */
+	overflowEdgeThreshold?: number | { top?: number; right?: number; bottom?: number; left?: number };
 	children?: Snippet;
 };
 
@@ -36,6 +41,7 @@ export type ScrollAreaContentProps = Omit<HTMLAttributes<HTMLDivElement>, 'child
 
 export type ScrollAreaScrollbarProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	orientation?: ScrollAreaOrientation;
+	keepMounted?: boolean;
 	children?: Snippet;
 };
 

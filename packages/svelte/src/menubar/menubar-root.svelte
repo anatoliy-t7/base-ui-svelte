@@ -13,6 +13,7 @@
 
 	let {
 		orientation = 'horizontal',
+		openOnHover: openOnHoverProp,
 		closeDelay = 150,
 		modal = true,
 		class: className,
@@ -26,7 +27,7 @@
 	let triggers = $state<MenubarTriggerEntry[]>([]);
 	let openMenuId = $state<string | null>(null);
 
-	const openOnHover = $derived(openMenuId != null);
+	const openOnHover = $derived(openOnHoverProp !== undefined ? openOnHoverProp : openMenuId != null);
 	const hover = createHoverDelay(
 		() => 0,
 		() => closeDelay,

@@ -19,6 +19,7 @@
 		largeStep = 10,
 		allowOutOfRange = false,
 		snapOnStep = true,
+		allowWheelScrub = false,
 		locale,
 		format,
 		disabled = false,
@@ -38,7 +39,10 @@
 	let inputFocused = $state(false);
 	let scrubbing = $state(false);
 	let scrubStartX = $state(0);
+	let scrubStartY = $state(0);
 	let scrubStartValue = $state<number | null>(null);
+	let scrubDirection = $state<'horizontal' | 'vertical'>('horizontal');
+	let scrubTeleportDistance = $state<number | undefined>(undefined);
 	let scrubPointer = $state<{ x: number; y: number } | null>(null);
 	let scrubPixelSensitivity = $state(2);
 
@@ -143,19 +147,42 @@
 		inputFocused = focused;
 	}
 
-	function startScrub(clientX: number, event: PointerEvent, pixelSensitivity = 2): void {
+	function startScrub(
+		clientX: number,
+		clientY: number,
+		event: PointerEvent,
+		options: {
+			pixelSensitivity?: number;
+			direction?: 'horizontal' | 'vertical';
+			teleportDistance?: number;
+		} = {},
+	): void {
 		if (disabled || readOnly) return;
 		scrubbing = true;
 		scrubStartX = clientX;
+		scrubStartY = clientY;
 		scrubStartValue = currentValue;
-		scrubPixelSensitivity = pixelSensitivity;
+		scrubPixelSensitivity = options.pixelSensitivity ?? 2;
+		scrubDirection = options.direction ?? 'horizontal';
+		scrubTeleportDistance = options.teleportDistance;
 		scrubPointer = { x: event.clientX, y: event.clientY };
 	}
 
-	function moveScrub(clientX: number, event: PointerEvent): void {
+	function moveScrub(clientX: number, clientY: number, event: PointerEvent): void {
 		if (!scrubbing || disabled || readOnly) return;
 		scrubPointer = { x: event.clientX, y: event.clientY };
-		const delta = clientX - scrubStartX;
+
+		if (scrubTeleportDistance != null) {
+			const dist = Math.hypot(clientX - scrubStartX, clientY - scrubStartY);
+			if (dist > scrubTeleportDistance) {
+				scrubStartX = clientX;
+				scrubStartY = clientY;
+				scrubStartValue = currentValue;
+			}
+		}
+
+		const delta =
+			scrubDirection === 'vertical' ? scrubStartY - clientY : clientX - scrubStartX;
 		const steps = Math.trunc(delta / scrubPixelSensitivity);
 		const base = scrubStartValue ?? (min !== undefined ? min : 0);
 		writeValue(clamp(base + steps * step), event, true);
@@ -248,6 +275,9 @@
 		},
 		get canDecrement() {
 			return canDecrement;
+		},
+		get allowWheelScrub() {
+			return allowWheelScrub;
 		},
 	} satisfies NumberFieldContext);
 

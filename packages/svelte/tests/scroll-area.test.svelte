@@ -8,10 +8,10 @@
 			Long content for scrolling
 		</ScrollArea.Content>
 	</ScrollArea.Viewport>
-	<ScrollArea.Scrollbar orientation="vertical" data-testid="scrollbar">
+	<ScrollArea.Scrollbar orientation="vertical" keepMounted data-testid="scrollbar">
 		<ScrollArea.Thumb data-testid="thumb" />
 	</ScrollArea.Scrollbar>
-	<ScrollArea.Scrollbar orientation="horizontal" data-testid="scrollbar-x">
+	<ScrollArea.Scrollbar orientation="horizontal" keepMounted data-testid="scrollbar-x">
 		<ScrollArea.Thumb data-testid="thumb-x" />
 	</ScrollArea.Scrollbar>
 	<ScrollArea.Corner data-testid="corner" />

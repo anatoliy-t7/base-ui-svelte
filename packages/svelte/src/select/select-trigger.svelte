@@ -17,7 +17,7 @@
 
 	let triggerEl = $state<HTMLElement | null>(null);
 
-	const isDisabled = $derived(Boolean(disabled || ctx.disabled));
+	const isDisabled = $derived(Boolean(disabled || ctx.disabled || ctx.readOnly));
 
 	$effect(() => {
 		ctx.refs.trigger = triggerEl;

@@ -2,10 +2,19 @@
 	import { getContext } from 'svelte';
 	import { COMBOBOX_CONTEXT } from '../internal/context-keys.js';
 	import { createDismiss } from '../internal/dismiss.svelte.js';
+	import { createFocusTrap } from '../internal/focus-trap.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { ComboboxContext, ComboboxPopupProps } from './types.js';
 
-	let { render = 'div', class: className, style, children, ...rest }: ComboboxPopupProps = $props();
+	let {
+		render = 'div',
+		class: className,
+		style,
+		initialFocus,
+		finalFocus,
+		children,
+		...rest
+	}: ComboboxPopupProps = $props();
 
 	const ctx = getContext<ComboboxContext>(COMBOBOX_CONTEXT);
 
@@ -23,6 +32,20 @@
 	$effect(() => {
 		ctx.presence.setNode(popupEl);
 		return () => ctx.presence.setNode(null);
+	});
+
+	createFocusTrap({
+		get enabled() {
+			return ctx.open && ctx.modal;
+		},
+		container: () => ctx.refs.popup,
+		restoreFocus: true,
+		get initialFocus() {
+			return initialFocus;
+		},
+		get finalFocus() {
+			return finalFocus;
+		},
 	});
 
 	createDismiss({

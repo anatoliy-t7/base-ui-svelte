@@ -30,6 +30,11 @@ export type SliderContext = {
 	setActiveThumbIndex: (index: number) => void;
 	setThumbValue: (index: number, next: number, event: Event) => void;
 	setValueFromPointer: (pointerValue: number, event: Event, preferredIndex?: number) => void;
+	commitValue: (event: Event) => void;
+	readonly largeStep: number;
+	readonly minStepsBetweenValues: number;
+	readonly thumbCollisionBehavior: 'push' | 'swap' | 'none';
+	readonly form: string | undefined;
 };
 
 export type SliderRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'onValueChange'> & {
@@ -44,6 +49,17 @@ export type SliderRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children' | 
 	format?: Intl.NumberFormatOptions | undefined;
 	locale?: Intl.LocalesArgument | undefined;
 	onValueChange?: ((value: SliderValue, event: Event) => void) | undefined;
+	/** Called when the value is committed (pointer up / key up). */
+	onValueCommitted?: ((value: SliderValue, event: Event) => void) | undefined;
+	/** Step used with Page Up/Down. @default 10 */
+	largeStep?: number;
+	/** Minimum steps between adjacent thumbs in a range. @default 0 */
+	minStepsBetweenValues?: number;
+	/** How thumbs align to the control edge. @default 'center' */
+	thumbAlignment?: 'center' | 'edge' | 'edge-client-only';
+	/** Behavior when thumbs collide. @default 'none' */
+	thumbCollisionBehavior?: 'push' | 'swap' | 'none';
+	form?: string | undefined;
 	children?: Snippet;
 };
 
@@ -70,5 +86,7 @@ export type SliderIndicatorProps = Omit<HTMLAttributes<HTMLDivElement>, 'childre
 export type SliderThumbProps = Omit<HTMLAttributes<HTMLSpanElement>, 'children'> & {
 	/** Index into the value array for range sliders (recommended for SSR). */
 	index?: number | undefined;
+	getAriaLabel?: ((index: number) => string) | undefined;
+	getAriaValueText?: ((formattedValue: string, value: number, index: number) => string) | undefined;
 	children?: Snippet;
 };

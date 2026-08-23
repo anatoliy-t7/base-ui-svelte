@@ -9,6 +9,15 @@
 		side = 'bottom',
 		align = 'start',
 		sideOffset = 8,
+		alignOffset = 0,
+		collisionPadding = 8,
+		collisionBoundary = null,
+		collisionAvoidance,
+		arrowPadding = 4,
+		sticky = false,
+		positionMethod,
+		anchor = null,
+		disableAnchorTracking = false,
 		class: className,
 		style,
 		children,
@@ -33,6 +42,7 @@
 			return ctx.open;
 		},
 		anchor: () => {
+			if (anchor) return anchor;
 			if (ctx.isSubmenu) {
 				return ctx.refs.trigger;
 			}
@@ -58,8 +68,30 @@
 		get sideOffset() {
 			return sideOffset;
 		},
-		// Match Base UI: context menus (pointer / virtual anchors) use fixed.
-		strategy: 'fixed',
+		get alignOffset() {
+			return alignOffset;
+		},
+		get collisionPadding() {
+			return collisionPadding;
+		},
+		get collisionBoundary() {
+			return collisionBoundary;
+		},
+		get collisionAvoidance() {
+			return collisionAvoidance;
+		},
+		get arrowPadding() {
+			return arrowPadding;
+		},
+		get sticky() {
+			return sticky;
+		},
+		get positionMethod() {
+			return positionMethod ?? 'fixed';
+		},
+		get disableAnchorTracking() {
+			return disableAnchorTracking;
+		},
 	});
 
 	const mergedProps: Record<string, unknown> = $derived(

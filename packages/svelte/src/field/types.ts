@@ -73,6 +73,14 @@ export type FieldRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & 
 		| ((value: string) => string | string[] | null | Promise<string | string[] | null>)
 		| undefined;
 	validationMode?: FieldValidationMode;
+	/** Debounce (ms) before running `validate` on change. @default 0 */
+	validationDebounceTime?: number;
+	dirty?: boolean | undefined;
+	defaultDirty?: boolean;
+	onDirtyChange?: ((dirty: boolean) => void) | undefined;
+	touched?: boolean | undefined;
+	defaultTouched?: boolean;
+	onTouchedChange?: ((touched: boolean) => void) | undefined;
 	children?: Snippet<
 		[
 			{
@@ -88,6 +96,8 @@ export type FieldRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & 
 };
 
 export type FieldLabelProps = Omit<HTMLLabelAttributes, 'children'> & {
+	/** When false, render a `span` instead of a native `label`. @default true */
+	nativeLabel?: boolean;
 	children?: Snippet;
 };
 

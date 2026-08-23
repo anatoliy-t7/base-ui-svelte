@@ -4,7 +4,14 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { TabsContext, TabsListProps } from './types.js';
 
-	let { class: className, style, children, ...rest }: TabsListProps = $props();
+	let {
+		activateOnFocus = false,
+		loopFocus = true,
+		class: className,
+		style,
+		children,
+		...rest
+	}: TabsListProps = $props();
 
 	const ctx = getContext<TabsContext>(TABS_CONTEXT);
 
@@ -12,6 +19,7 @@
 
 	$effect(() => {
 		ctx.setListElement(listEl);
+		ctx.setListOptions({ activateOnFocus, loopFocus });
 		return () => {
 			if (ctx.listElement === listEl) {
 				ctx.setListElement(null);

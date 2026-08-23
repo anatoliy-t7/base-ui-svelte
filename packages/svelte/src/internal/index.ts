@@ -13,7 +13,15 @@ export {
 } from './scroll-lock.svelte.js';
 export type { ScrollLockOptions, AnchoredPopupScrollLockOptions } from './scroll-lock.svelte.js';
 export { createPositioner } from './floating.svelte.js';
-export type { Side, Align, PositionerOptions, VirtualElement } from './floating.svelte.js';
+export type {
+	Side,
+	Align,
+	PositionerOptions,
+	PositionerStrategy,
+	SharedPositionerProps,
+	CollisionAvoidance,
+	VirtualElement,
+} from './floating.svelte.js';
 export {
 	useId,
 	createControllableOpen,

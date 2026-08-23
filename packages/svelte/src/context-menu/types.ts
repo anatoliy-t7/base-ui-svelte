@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAnchorAttributes, HTMLAttributes } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
-import type { Align, Side } from '../internal/floating.svelte.js';
+import type { Align, SharedPositionerProps, Side } from '../internal/floating.svelte.js';
 import type { createPresence } from '../internal/presence.svelte.js';
 
 export type ContextMenuAnchorPoint = {
@@ -89,6 +89,8 @@ export type ContextMenuTriggerProps = Omit<HTMLAttributes<HTMLDivElement>, 'chil
 };
 
 export type ContextMenuPortalProps = {
+	container?: HTMLElement | string | null;
+	keepMounted?: boolean;
 	children?: Snippet;
 };
 
@@ -98,10 +100,8 @@ export type ContextMenuBackdropProps = Omit<HTMLAttributes<HTMLDivElement>, 'chi
 	children?: Snippet;
 };
 
-export type ContextMenuPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
-	side?: Side;
-	align?: Align;
-	sideOffset?: number;
+export type ContextMenuPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
+	SharedPositionerProps & {
 	children?: Snippet;
 };
 

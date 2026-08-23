@@ -63,6 +63,7 @@
 		if (target.hasPointerCapture(event.pointerId)) {
 			target.releasePointerCapture(event.pointerId);
 		}
+		ctx.commitValue(event);
 	}
 
 	const controlStyle = $derived.by(() => {

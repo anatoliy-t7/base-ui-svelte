@@ -57,12 +57,34 @@ function jsDocText(node: ts.Node): string {
 	return parts.join(' ').replace(/\s+/g, ' ').trim();
 }
 
-function extractLiteralProps(sourceText: string, typeNode: ts.TypeNode): PropDef[] {
+function extractLiteralProps(
+	sourceText: string,
+	typeNode: ts.TypeNode,
+	resolveAlias?: (name: string) => ts.TypeNode | undefined
+): PropDef[] {
 	const literals: ts.TypeLiteralNode[] = [];
+	const seenAliases = new Set<string>();
+
 	function walk(n: ts.TypeNode): void {
-		if (ts.isTypeLiteralNode(n)) literals.push(n);
-		else if (ts.isIntersectionTypeNode(n)) n.types.forEach(walk);
-		else if (ts.isParenthesizedTypeNode(n)) walk(n.type);
+		if (ts.isTypeLiteralNode(n)) {
+			literals.push(n);
+			return;
+		}
+		if (ts.isIntersectionTypeNode(n)) {
+			n.types.forEach(walk);
+			return;
+		}
+		if (ts.isParenthesizedTypeNode(n)) {
+			walk(n.type);
+			return;
+		}
+		if (ts.isTypeReferenceNode(n) && ts.isIdentifier(n.typeName) && resolveAlias) {
+			const aliasName = n.typeName.text;
+			if (seenAliases.has(aliasName)) return;
+			seenAliases.add(aliasName);
+			const resolved = resolveAlias(aliasName);
+			if (resolved) walk(resolved);
+		}
 	}
 	walk(typeNode);
 
@@ -172,13 +194,42 @@ function extractExtendsNote(sourceText: string, typeNode: ts.TypeNode): string {
 function parsePropsFile(filePath: string): Map<string, { props: PropDef[]; extendsNote: string }> {
 	const sourceText = readFileSync(filePath, 'utf8');
 	const sf = ts.createSourceFile(filePath, sourceText, ts.ScriptTarget.Latest, true);
+	const aliasTypes = new Map<string, { sourceText: string; type: ts.TypeNode }>();
+
+	for (const stmt of sf.statements) {
+		if (!ts.isTypeAliasDeclaration(stmt) || !stmt.type) continue;
+		aliasTypes.set(stmt.name.text, { sourceText, type: stmt.type });
+	}
+
+	// Resolve SharedPositionerProps (and similar) from the floating module when referenced.
+	const floatingPath = join(svelteSrc, 'internal/floating.svelte.ts');
+	if (existsSync(floatingPath)) {
+		const floatingText = readFileSync(floatingPath, 'utf8');
+		const floatingSf = ts.createSourceFile(
+			floatingPath,
+			floatingText,
+			ts.ScriptTarget.Latest,
+			true
+		);
+		for (const stmt of floatingSf.statements) {
+			if (!ts.isTypeAliasDeclaration(stmt) || !stmt.type) continue;
+			if (!aliasTypes.has(stmt.name.text)) {
+				aliasTypes.set(stmt.name.text, { sourceText: floatingText, type: stmt.type });
+			}
+		}
+	}
+
+	function resolveAlias(name: string): ts.TypeNode | undefined {
+		return aliasTypes.get(name)?.type;
+	}
+
 	const map = new Map<string, { props: PropDef[]; extendsNote: string }>();
 	for (const stmt of sf.statements) {
 		if (!ts.isTypeAliasDeclaration(stmt)) continue;
 		const name = stmt.name.text;
 		if (!name.endsWith('Props')) continue;
 		map.set(name, {
-			props: extractLiteralProps(sourceText, stmt.type),
+			props: extractLiteralProps(sourceText, stmt.type, resolveAlias),
 			extendsNote: extractExtendsNote(sourceText, stmt.type)
 		});
 	}

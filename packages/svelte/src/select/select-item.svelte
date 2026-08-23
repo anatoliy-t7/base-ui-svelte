@@ -61,7 +61,7 @@
 				select(event);
 			},
 			onpointermove: () => {
-				if (isDisabled) return;
+				if (isDisabled || !ctx.highlightItemOnHover) return;
 				ctx.setHighlighted(value);
 			},
 		}),

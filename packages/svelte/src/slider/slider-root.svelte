@@ -18,6 +18,12 @@
 		format,
 		locale,
 		onValueChange,
+		onValueCommitted,
+		largeStep = 10,
+		minStepsBetweenValues = 0,
+		thumbAlignment = 'center',
+		thumbCollisionBehavior = 'none',
+		form,
 		class: className,
 		style,
 		id,
@@ -67,6 +73,10 @@
 		return range ? nextValues : nextValues[0]!;
 	}
 
+	function minimumGap(): number {
+		return minStepsBetweenValues * step;
+	}
+
 	function setThumbValue(index: number, next: number, event: Event): void {
 		if (disabled) return;
 		const snapped = snap(next);
@@ -74,14 +84,42 @@
 		if (index < 0 || index >= nextValues.length) return;
 
 		if (range) {
-			const lower = index > 0 ? nextValues[index - 1]! : min;
-			const upper = index < nextValues.length - 1 ? nextValues[index + 1]! : max;
-			nextValues[index] = Math.min(upper, Math.max(lower, snapped));
+			const gap = minimumGap();
+			if (thumbCollisionBehavior === 'none') {
+				const lower = index > 0 ? nextValues[index - 1]! + gap : min;
+				const upper = index < nextValues.length - 1 ? nextValues[index + 1]! - gap : max;
+				nextValues[index] = Math.min(upper, Math.max(lower, snapped));
+			} else if (thumbCollisionBehavior === 'push') {
+				nextValues[index] = Math.min(max, Math.max(min, snapped));
+				// Push neighbors to maintain gap
+				for (let i = index - 1; i >= 0; i -= 1) {
+					nextValues[i] = Math.min(nextValues[i]!, nextValues[i + 1]! - gap);
+					nextValues[i] = Math.max(min, nextValues[i]!);
+				}
+				for (let i = index + 1; i < nextValues.length; i += 1) {
+					nextValues[i] = Math.max(nextValues[i]!, nextValues[i - 1]! + gap);
+					nextValues[i] = Math.min(max, nextValues[i]!);
+				}
+			} else {
+				// swap: allow crossing, then sort
+				nextValues[index] = Math.min(max, Math.max(min, snapped));
+				nextValues.sort((a, b) => a - b);
+				// Enforce gap after sort by expanding from moved thumb position approximately
+				for (let i = 1; i < nextValues.length; i += 1) {
+					if (nextValues[i]! - nextValues[i - 1]! < gap) {
+						nextValues[i] = Math.min(max, nextValues[i - 1]! + gap);
+					}
+				}
+			}
 		} else {
 			nextValues[0] = snapped;
 		}
 
 		valueState.setValue(toOutput(nextValues), event);
+	}
+
+	function commitValue(event: Event): void {
+		onValueCommitted?.(toOutput([...values]), event);
 	}
 
 	function closestThumbIndex(pointerValue: number, preferredIndex?: number): number {
@@ -200,6 +238,19 @@
 		},
 		setThumbValue,
 		setValueFromPointer,
+		commitValue,
+		get largeStep() {
+			return largeStep;
+		},
+		get minStepsBetweenValues() {
+			return minStepsBetweenValues;
+		},
+		get thumbCollisionBehavior() {
+			return thumbCollisionBehavior;
+		},
+		get form() {
+			return form;
+		},
 	} satisfies SliderContext);
 
 	const rootProps: Record<string, unknown> = $derived(
@@ -211,6 +262,7 @@
 			role: range ? 'group' : undefined,
 			'data-disabled': disabled ? '' : undefined,
 			'data-orientation': orientation,
+			'data-thumb-alignment': thumbAlignment,
 		}),
 	);
 </script>
@@ -222,10 +274,10 @@
 	{#if name && !disabled}
 		{#if range}
 			{#each values as item, i (i)}
-				<input type="hidden" name={`${name}[${i}]`} value={item} />
+				<input type="hidden" name={`${name}[${i}]`} value={item} {form} />
 			{/each}
 		{:else}
-			<input type="hidden" {name} value={values[0]} />
+			<input type="hidden" {name} value={values[0]} {form} />
 		{/if}
 	{/if}
 </div>

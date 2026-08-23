@@ -8,11 +8,14 @@
 		render = 'div',
 		class: className,
 		style,
+		forceRender = false,
 		children,
 		...rest
 	}: DrawerBackdropProps = $props();
 
 	const ctx = getContext<DrawerContext>(DRAWER_CONTEXT);
+
+	const shouldRender = $derived(forceRender || ctx.presence.isPresent);
 
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
@@ -20,6 +23,7 @@
 			style: ['position:fixed;inset:0;', typeof style === 'string' ? style : undefined]
 				.filter(Boolean)
 				.join(';'),
+			hidden: forceRender && !ctx.presence.isPresent ? true : undefined,
 			'data-open': ctx.open ? '' : undefined,
 			'data-closed': !ctx.open || ctx.presence.isEnding ? '' : undefined,
 			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
@@ -32,7 +36,7 @@
 	);
 </script>
 
-{#if ctx.presence.isPresent}
+{#if shouldRender}
 	<svelte:element
 		this={render}
 		{...mergedProps}

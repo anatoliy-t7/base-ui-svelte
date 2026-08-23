@@ -5,9 +5,30 @@
 	import { ScrollAreaState } from './scroll-area-state.svelte.js';
 	import type { ScrollAreaContext, ScrollAreaRootProps } from './types.js';
 
-	let { class: className, style, id, children, ...rest }: ScrollAreaRootProps = $props();
+	let {
+		overflowEdgeThreshold = 0,
+		class: className,
+		style,
+		id,
+		children,
+		...rest
+	}: ScrollAreaRootProps = $props();
 
 	const state = new ScrollAreaState();
+
+	function thresholdFor(side: 'top' | 'right' | 'bottom' | 'left'): number {
+		if (typeof overflowEdgeThreshold === 'number') return overflowEdgeThreshold;
+		return overflowEdgeThreshold?.[side] ?? 0;
+	}
+
+	const overflow = $derived.by(() => {
+		const m = state.metrics;
+		const top = m.scrollTop > thresholdFor('top');
+		const bottom = m.scrollTop + m.clientHeight < m.scrollHeight - thresholdFor('bottom');
+		const left = m.scrollLeft > thresholdFor('left');
+		const right = m.scrollLeft + m.clientWidth < m.scrollWidth - thresholdFor('right');
+		return { top, right, bottom, left, x: left || right, y: top || bottom };
+	});
 
 	setContext(SCROLL_AREA_CONTEXT, {
 		get viewport() {
@@ -45,6 +66,12 @@
 			class: className,
 			style: rootStyle,
 			'data-scrolling': state.scrolling ? '' : undefined,
+			'data-overflow-x': overflow.x ? '' : undefined,
+			'data-overflow-y': overflow.y ? '' : undefined,
+			'data-overflow-top': overflow.top ? '' : undefined,
+			'data-overflow-right': overflow.right ? '' : undefined,
+			'data-overflow-bottom': overflow.bottom ? '' : undefined,
+			'data-overflow-left': overflow.left ? '' : undefined,
 		}),
 	);
 </script>

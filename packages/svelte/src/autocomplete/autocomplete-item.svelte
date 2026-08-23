@@ -64,8 +64,8 @@
 				select(event);
 			},
 			onpointermove: () => {
-				if (isDisabled || !visible) return;
-				ctx.setHighlighted(value);
+				if (isDisabled || !visible || !ctx.highlightItemOnHover) return;
+				ctx.setHighlighted(value, 'pointer');
 			},
 		}),
 	);

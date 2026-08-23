@@ -20,6 +20,8 @@ export type ToolbarItemRegistration = {
 
 export type ToolbarContext = {
 	readonly orientation: ToolbarOrientation;
+	readonly disabled: boolean;
+	readonly loopFocus: boolean;
 	readonly activeId: string | null;
 	registerItem: (item: ToolbarItemRegistration) => () => void;
 	setActiveId: (id: string) => void;
@@ -30,6 +32,9 @@ export type ToolbarContext = {
 
 export type ToolbarRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	orientation?: ToolbarOrientation;
+	/** Loop arrow-key focus at the ends. @default true */
+	loopFocus?: boolean;
+	disabled?: boolean;
 	children?: Snippet<[{ orientation: ToolbarOrientation }]>;
 };
 

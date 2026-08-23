@@ -12,9 +12,17 @@
 		onValueChange,
 		onComplete,
 		disabled = false,
-		type = 'text',
+		type: typeProp = 'text',
 		pattern,
 		autoFocus = false,
+		autoSubmit = false,
+		mask = false,
+		validationType,
+		normalizeValue,
+		onValueInvalid,
+		readOnly = false,
+		required = false,
+		form,
 		name,
 		class: className,
 		style,
@@ -22,6 +30,12 @@
 		children,
 		...rest
 	}: OtpFieldRootProps = $props();
+
+	const resolvedType = $derived(
+		mask === true || typeof mask === 'string' ? 'password' : typeProp,
+	);
+
+	let rootEl: HTMLDivElement | undefined = $state();
 
 	let uncontrolledValue = $state<string | undefined>(undefined);
 	let nextIndex = 0;
@@ -39,17 +53,29 @@
 		if (!char) return true;
 		if (pattern) {
 			try {
-				return new RegExp(`^(?:${pattern})$`).test(char);
+				const ok = new RegExp(`^(?:${pattern})$`).test(char);
+				if (!ok) onValueInvalid?.({ value: char, reason: 'pattern' });
+				return ok;
 			} catch {
 				return true;
 			}
 		}
-		return /^\d$/.test(char);
+		const mode = validationType ?? 'numeric';
+		if (mode === 'none') return true;
+		if (mode === 'alphanumeric') {
+			const ok = /^[a-zA-Z0-9]$/.test(char);
+			if (!ok) onValueInvalid?.({ value: char, reason: 'validation-type' });
+			return ok;
+		}
+		const ok = /^\d$/.test(char);
+		if (!ok) onValueInvalid?.({ value: char, reason: 'validation-type' });
+		return ok;
 	}
 
 	function writeValue(next: string, event: Event): void {
-		if (disabled) return;
-		const clipped = next.slice(0, length);
+		if (disabled || readOnly) return;
+		const normalized = normalizeValue ? normalizeValue(next) : next;
+		const clipped = normalized.slice(0, length);
 		if (isValueControlled) {
 			value = clipped;
 		} else {
@@ -58,6 +84,12 @@
 		onValueChange?.(clipped, event);
 		if (clipped.length === length) {
 			onComplete?.(clipped);
+			if (autoSubmit && rootEl) {
+				const formEl = rootEl.closest('form') ?? (form ? document.getElementById(form) : null);
+				if (formEl instanceof HTMLFormElement) {
+					formEl.requestSubmit();
+				}
+			}
 		}
 	}
 
@@ -66,7 +98,7 @@
 	}
 
 	function setSlot(index: number, char: string, event: Event): void {
-		if (disabled || index < 0 || index >= length) return;
+		if (disabled || readOnly || index < 0 || index >= length) return;
 		const nextChar = char.slice(-1);
 		if (nextChar && !isAllowedChar(nextChar)) return;
 		const nextSlots = [...slots];
@@ -78,7 +110,7 @@
 	}
 
 	function clearSlot(index: number, event: Event): void {
-		if (disabled || index < 0 || index >= length) return;
+		if (disabled || readOnly || index < 0 || index >= length) return;
 		const nextSlots = [...slots];
 		if (nextSlots[index]) {
 			nextSlots[index] = '';
@@ -99,7 +131,7 @@
 	}
 
 	function handlePaste(index: number, text: string, event: Event): void {
-		if (disabled) return;
+		if (disabled || readOnly) return;
 		const chars = [...text].filter((char) => isAllowedChar(char));
 		if (chars.length === 0) return;
 		const nextSlots = [...slots];
@@ -137,8 +169,14 @@
 		get disabled() {
 			return disabled;
 		},
+		get readOnly() {
+			return readOnly;
+		},
 		get type() {
-			return type;
+			return resolvedType;
+		},
+		get mask() {
+			return mask;
 		},
 		get pattern() {
 			return pattern;
@@ -168,11 +206,11 @@
 	);
 </script>
 
-<div {...rootProps} style={typeof rootProps.style === 'string' ? rootProps.style : undefined}>
+<div bind:this={rootEl} {...rootProps} style={typeof rootProps.style === 'string' ? rootProps.style : undefined}>
 	{#if children}
 		{@render children({ value: currentValue, disabled })}
 	{/if}
 	{#if name && !disabled}
-		<input type="hidden" {name} value={currentValue} />
+		<input type="hidden" {form} {required} {name} value={currentValue} />
 	{/if}
 </div>

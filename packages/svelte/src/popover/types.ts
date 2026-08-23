@@ -1,7 +1,8 @@
 import type { Snippet } from 'svelte';
+import type { FocusTarget } from '../internal/focus-trap.svelte.js';
 import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
-import type { Align, Side } from '../internal/floating.svelte.js';
+import type { Align, SharedPositionerProps, Side } from '../internal/floating.svelte.js';
 import type { PopupHandle } from '../internal/popup-handle.js';
 import type { createPresence } from '../internal/presence.svelte.js';
 
@@ -40,6 +41,7 @@ export type PopoverRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> 
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
 	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
+	onOpenChangeComplete?: ((open: boolean) => void) | undefined;
 	openOnHover?: boolean;
 	/** Open delay when `openOnHover` is set (ms). @default 0 */
 	delay?: number;
@@ -86,15 +88,15 @@ export type PopoverViewportProps = Omit<HTMLAttributes<HTMLDivElement>, 'childre
 	children?: Snippet;
 };
 
-export type PopoverPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
-	side?: Side;
-	align?: Align;
-	sideOffset?: number;
+export type PopoverPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
+	SharedPositionerProps & {
 	children?: Snippet;
 };
 
 export type PopoverPopupProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	render?: string;
+	initialFocus?: FocusTarget;
+	finalFocus?: FocusTarget;
 	children?: Snippet;
 };
 

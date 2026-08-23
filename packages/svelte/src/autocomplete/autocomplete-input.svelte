@@ -26,12 +26,14 @@
 		if (visible.length === 0) return;
 
 		const currentIndex = visible.findIndex((item) => item.value === ctx.highlighted);
-		const nextIndex =
-			currentIndex === -1
-				? delta > 0
-					? 0
-					: visible.length - 1
-				: (currentIndex + delta + visible.length) % visible.length;
+		if (currentIndex === -1) {
+			ctx.setHighlighted(visible[delta > 0 ? 0 : visible.length - 1]?.value ?? null);
+			return;
+		}
+		const rawNext = currentIndex + delta;
+		const nextIndex = ctx.loopFocus
+			? (rawNext + visible.length) % visible.length
+			: Math.min(visible.length - 1, Math.max(0, rawNext));
 		ctx.setHighlighted(visible[nextIndex]?.value ?? null);
 	}
 

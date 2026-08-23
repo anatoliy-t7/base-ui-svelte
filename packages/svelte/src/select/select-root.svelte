@@ -20,7 +20,16 @@
 		open = $bindable(undefined),
 		defaultOpen = false,
 		onOpenChange,
+		onOpenChangeComplete,
 		disabled = false,
+		readOnly = false,
+		required = false,
+		form,
+		autoComplete,
+		highlightItemOnHover = true,
+		itemToStringLabel,
+		itemToStringValue,
+		isItemEqualToValue,
 		name,
 		multiple = false,
 		modal = true,
@@ -67,6 +76,37 @@
 
 	const presence = createPresence(() => openState.open);
 
+	let lastReportedOpen: boolean | undefined = undefined;
+	let hasSyncedComplete = false;
+
+	$effect(() => {
+		const present = presence.isPresent;
+		const ending = presence.isEnding;
+		const starting = presence.isStarting;
+		const openNow = openState.open;
+
+		if (!hasSyncedComplete) {
+			hasSyncedComplete = true;
+			lastReportedOpen = openNow;
+			return;
+		}
+
+		if (openNow && present && !starting) {
+			if (lastReportedOpen !== true) {
+				lastReportedOpen = true;
+				onOpenChangeComplete?.(true);
+			}
+			return;
+		}
+		if (!openNow && !present && !ending) {
+			if (lastReportedOpen !== false) {
+				lastReportedOpen = false;
+				onOpenChangeComplete?.(false);
+			}
+		}
+	});
+
+
 	const refs: SelectRefs = {
 		trigger: null,
 		popup: null,
@@ -85,11 +125,17 @@
 		return [currentValue];
 	}
 
+	function valuesEqual(a: string, b: string): boolean {
+		if (isItemEqualToValue) return isItemEqualToValue(a, b);
+		return Object.is(a, b);
+	}
+
 	function isSelected(itemValue: string): boolean {
-		return getSelectedValues().includes(itemValue);
+		return getSelectedValues().some((entry) => valuesEqual(entry, itemValue));
 	}
 
 	function getLabelForValue(itemValue: string): string {
+		if (itemToStringLabel) return itemToStringLabel(itemValue);
 		const registered = registeredItems.find((item) => item.value === itemValue);
 		if (registered?.label && registered.label !== itemValue) return registered.label;
 		if (labelCache[itemValue]) return labelCache[itemValue];
@@ -98,8 +144,13 @@
 		return registered?.label ?? itemValue;
 	}
 
+	function getFormValue(itemValue: string): string {
+		if (itemToStringValue) return itemToStringValue(itemValue);
+		return itemValue;
+	}
+
 	function setValue(next: SelectValue, event: Event): void {
-		if (disabled) return;
+		if (disabled || readOnly) return;
 		if (isValueControlled) {
 			value = next;
 		} else {
@@ -109,7 +160,7 @@
 	}
 
 	function setOpen(next: boolean, reason: Parameters<SelectContext['setOpen']>[1]): void {
-		if (disabled && next) return;
+		if ((disabled || readOnly) && next) return;
 		openState.setOpen(next, reason);
 		if (next) {
 			const selected = getSelectedValues();
@@ -216,6 +267,18 @@
 		get disabled() {
 			return disabled;
 		},
+		get readOnly() {
+			return readOnly;
+		},
+		get required() {
+			return required;
+		},
+		get form() {
+			return form;
+		},
+		get highlightItemOnHover() {
+			return highlightItemOnHover;
+		},
 		get name() {
 			return name;
 		},
@@ -258,10 +321,24 @@
 	{#if name && !disabled}
 		{#if multiple}
 			{#each selectedValues as selectedValue (selectedValue)}
-				<input type="hidden" {name} value={selectedValue} />
+				<input
+					type="hidden"
+					{form}
+					{required}
+					autocomplete={autoComplete}
+					{name}
+					value={getFormValue(selectedValue)}
+				/>
 			{/each}
 		{:else}
-			<input type="hidden" {name} value={serializedValue} />
+			<input
+				type="hidden"
+				{form}
+				{required}
+				autocomplete={autoComplete}
+				{name}
+				value={currentValue == null ? '' : Array.isArray(currentValue) ? currentValue.map(getFormValue).join(',') : getFormValue(currentValue)}
+			/>
 		{/if}
 	{/if}
 </div>

@@ -7,6 +7,7 @@
 
 	let {
 		orientation = 'vertical',
+		keepMounted = false,
 		class: className,
 		style,
 		children,
@@ -22,6 +23,12 @@
 	} satisfies ScrollbarContext);
 
 	let trackEl: HTMLDivElement | undefined = $state();
+
+	const hasOverflow = $derived.by(() => {
+		const m = ctx.metrics;
+		if (orientation === 'vertical') return m.scrollHeight > m.clientHeight;
+		return m.scrollWidth > m.clientWidth;
+	});
 
 	function onPointerDown(event: PointerEvent): void {
 		if (event.button !== 0 || !trackEl) return;
@@ -73,8 +80,10 @@
 	);
 </script>
 
-<div bind:this={trackEl} {...scrollbarProps}>
+{#if hasOverflow || keepMounted}
+<div bind:this={trackEl} {...scrollbarProps} hidden={!hasOverflow && keepMounted ? true : undefined}>
 	{#if children}
 		{@render children()}
 	{/if}
 </div>
+{/if}

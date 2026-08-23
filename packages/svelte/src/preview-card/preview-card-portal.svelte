@@ -4,13 +4,18 @@
 	import { portal } from '../internal/portal.js';
 	import type { PreviewCardContext, PreviewCardPortalProps } from './types.js';
 
-	let { children }: PreviewCardPortalProps = $props();
+	let { container, keepMounted = false, children }: PreviewCardPortalProps = $props();
 
 	const ctx = getContext<PreviewCardContext>(PREVIEW_CARD_CONTEXT);
+
+	const shouldRender = $derived(keepMounted || ctx.presence.isPresent);
 </script>
 
-{#if ctx.presence.isPresent}
-	<div {@attach portal()}>
+{#if shouldRender}
+	<div
+		{@attach portal(container)}
+		hidden={keepMounted && !ctx.presence.isPresent ? true : undefined}
+	>
 		{#if children}
 			{@render children()}
 		{/if}

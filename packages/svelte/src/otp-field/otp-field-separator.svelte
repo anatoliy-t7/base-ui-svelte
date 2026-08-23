@@ -2,7 +2,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { OtpFieldSeparatorProps } from './types.js';
 
-	let { class: className, style, children, ...rest }: OtpFieldSeparatorProps = $props();
+	let { orientation = 'horizontal', class: className, style, children, ...rest }: OtpFieldSeparatorProps = $props();
 
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
@@ -10,6 +10,8 @@
 			class: className,
 			style,
 			'aria-hidden': 'true',
+			'aria-orientation': orientation,
+			'data-orientation': orientation,
 		}),
 	);
 </script>

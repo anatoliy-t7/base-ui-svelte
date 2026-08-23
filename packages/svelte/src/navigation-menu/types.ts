@@ -1,6 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
-import type { Align, Side } from '../internal/floating.svelte.js';
+import type { Align, SharedPositionerProps, Side } from '../internal/floating.svelte.js';
 import type { createPresence } from '../internal/presence.svelte.js';
 
 export type NavigationMenuOrientation = 'horizontal' | 'vertical';
@@ -86,10 +86,8 @@ export type NavigationMenuBackdropProps = Omit<HTMLAttributes<HTMLDivElement>, '
 	children?: Snippet;
 };
 
-export type NavigationMenuPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
-	side?: Side;
-	align?: Align;
-	sideOffset?: number;
+export type NavigationMenuPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
+	SharedPositionerProps & {
 	children?: Snippet;
 };
 

@@ -6,6 +6,8 @@
 
 	let {
 		pixelSensitivity = 2,
+		direction = 'horizontal',
+		teleportDistance,
 		class: className,
 		style,
 		children,
@@ -18,7 +20,11 @@
 		if (ctx.disabled || ctx.readOnly) return;
 		const isMainButton = !event.button || event.button === 0;
 		if (!isMainButton) return;
-		ctx.startScrub(event.clientX, event, pixelSensitivity);
+		ctx.startScrub(event.clientX, event.clientY, event, {
+			pixelSensitivity,
+			direction,
+			...(teleportDistance !== undefined ? { teleportDistance } : {}),
+		});
 		try {
 			(event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
 		} catch {
@@ -28,7 +34,7 @@
 
 	function handlePointerMove(event: PointerEvent): void {
 		if (!ctx.scrubbing) return;
-		ctx.moveScrub(event.clientX, event);
+		ctx.moveScrub(event.clientX, event.clientY, event);
 	}
 
 	function handlePointerUp(event: PointerEvent): void {

@@ -7,6 +7,8 @@
 
 	let {
 		orientation = 'horizontal',
+		loopFocus = true,
+		disabled = false,
 		class: className,
 		style,
 		id = useId('toolbar'),
@@ -62,11 +64,17 @@
 	}
 
 	function moveFocus(fromId: string, direction: 1 | -1): void {
+		if (disabled) return;
 		const focusable = getFocusableItems();
 		if (focusable.length === 0) return;
 		const currentIndex = focusable.findIndex((item) => item.id === fromId);
 		if (currentIndex === -1) return;
-		const nextIndex = (currentIndex + direction + focusable.length) % focusable.length;
+		let nextIndex = currentIndex + direction;
+		if (loopFocus) {
+			nextIndex = (nextIndex + focusable.length) % focusable.length;
+		} else if (nextIndex < 0 || nextIndex >= focusable.length) {
+			return;
+		}
 		const next = focusable[nextIndex];
 		if (next) focusItem(next.id);
 	}
@@ -78,6 +86,12 @@
 	setContext(TOOLBAR_CONTEXT, {
 		get orientation() {
 			return orientation;
+		},
+		get disabled() {
+			return disabled;
+		},
+		get loopFocus() {
+			return loopFocus;
 		},
 		get activeId() {
 			return activeId;
@@ -97,6 +111,7 @@
 			style,
 			'aria-orientation': orientation,
 			'data-orientation': orientation,
+			'data-disabled': disabled ? '' : undefined,
 		}),
 	);
 </script>

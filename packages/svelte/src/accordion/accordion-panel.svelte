@@ -6,6 +6,7 @@
 
 	let {
 		keepMounted = false,
+		hiddenUntilFound = false,
 		role,
 		class: className,
 		style,
@@ -18,7 +19,7 @@
 	let panelHeight = $state<string | undefined>(undefined);
 	let panelWidth = $state<string | undefined>(undefined);
 
-	const shouldRender = $derived(keepMounted || item.presence.isPresent);
+	const shouldRender = $derived(keepMounted || hiddenUntilFound || item.presence.isPresent);
 
 	function attachPanel(element: HTMLElement) {
 		item.presence.setNode(element);
@@ -53,7 +54,13 @@
 			]
 				.filter(Boolean)
 				.join(';'),
-			hidden: keepMounted && !item.presence.isPresent ? true : undefined,
+			hidden: !item.open
+				? hiddenUntilFound
+					? ('until-found' as unknown as boolean)
+					: keepMounted
+						? true
+						: undefined
+				: undefined,
 			'aria-labelledby': item.triggerId,
 			'data-open': item.open ? '' : undefined,
 			'data-closed': !item.open ? '' : undefined,

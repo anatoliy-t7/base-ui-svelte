@@ -16,10 +16,11 @@
 	const registeredIndex = ctx.registerInput();
 	const index = $derived(typeof indexProp === 'number' ? indexProp : registeredIndex);
 	const isDisabled = $derived(Boolean(disabled || ctx.disabled));
+	const isReadOnly = $derived(ctx.readOnly);
 	const slotValue = $derived(ctx.slots[index] ?? '');
 
 	function onInput(event: Event): void {
-		if (isDisabled) return;
+		if (isDisabled || isReadOnly) return;
 		const target = event.currentTarget;
 		if (!(target instanceof HTMLInputElement)) return;
 		const next = target.value;
@@ -39,6 +40,7 @@
 
 		switch (event.key) {
 			case 'Backspace': {
+				if (isReadOnly) return;
 				event.preventDefault();
 				ctx.clearSlot(index, event);
 				break;
@@ -67,7 +69,7 @@
 	}
 
 	function onPaste(event: ClipboardEvent): void {
-		if (isDisabled) return;
+		if (isDisabled || isReadOnly) return;
 		const text = event.clipboardData?.getData('text') ?? '';
 		if (!text) return;
 		event.preventDefault();
@@ -83,10 +85,14 @@
 			class: className,
 			style,
 			disabled: isDisabled || undefined,
+			readonly: isReadOnly || undefined,
 			value: slotValue,
 			'aria-label': `Digit ${index + 1} of ${ctx.length}`,
 			'aria-disabled': isDisabled || undefined,
+			'aria-readonly': isReadOnly || undefined,
 			'data-disabled': isDisabled ? '' : undefined,
+			'data-readonly': isReadOnly ? '' : undefined,
+			'data-mask': typeof ctx.mask === 'string' ? ctx.mask : ctx.mask ? '' : undefined,
 			'data-index': index,
 			oninput: onInput,
 			onkeydown: onKeyDown,

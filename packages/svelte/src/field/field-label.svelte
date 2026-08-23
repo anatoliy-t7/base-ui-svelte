@@ -4,7 +4,7 @@
 	import { mergeProps } from '../internal/merge-props.js';
 	import type { FieldContext, FieldLabelProps } from './types.js';
 
-	let { class: className, style, children, ...rest }: FieldLabelProps = $props();
+	let { nativeLabel = true, class: className, style, children, ...rest }: FieldLabelProps = $props();
 
 	const ctx = getContext<FieldContext>(FIELD_CONTEXT);
 
@@ -25,11 +25,23 @@
 	);
 </script>
 
-<label
-	{...mergedProps}
-	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
->
-	{#if children}
-		{@render children()}
-	{/if}
-</label>
+{#if nativeLabel}
+	<label
+		{...mergedProps}
+		style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
+	>
+		{#if children}
+			{@render children()}
+		{/if}
+	</label>
+{:else}
+	{@const { for: _forAttr, ...spanProps } = mergedProps}
+	<span
+		{...spanProps}
+		style={typeof spanProps.style === 'string' ? spanProps.style : undefined}
+	>
+		{#if children}
+			{@render children()}
+		{/if}
+	</span>
+{/if}

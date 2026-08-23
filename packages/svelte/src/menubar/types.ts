@@ -31,6 +31,8 @@ export type MenubarContext = {
 
 export type MenubarProps = Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role'> & {
 	orientation?: MenubarOrientation;
+	/** Force open-on-hover even when no menu is open. When omitted, follows open menu state. */
+	openOnHover?: boolean | undefined;
 	/** Delay before closing after pointer leaves (ms). @default 150 */
 	closeDelay?: number;
 	/**

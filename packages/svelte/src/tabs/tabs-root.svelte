@@ -30,6 +30,8 @@
 
 	let tabs = $state<TabEntry[]>([]);
 	let listElement = $state<HTMLElement | null>(null);
+	let activateOnFocus = $state(false);
+	let loopFocus = $state(true);
 
 	function setValue(next: string): void {
 		if (isControlled) {
@@ -60,6 +62,11 @@
 		listElement = element;
 	}
 
+	function setListOptions(options: { activateOnFocus: boolean; loopFocus: boolean }): void {
+		activateOnFocus = options.activateOnFocus;
+		loopFocus = options.loopFocus;
+	}
+
 	function getTabId(tabValue: string): string {
 		return `${id}-tab-${tabValue}`;
 	}
@@ -88,6 +95,13 @@
 		getPanelId,
 		activateTab,
 		getTabs: () => tabs,
+		get activateOnFocus() {
+			return activateOnFocus;
+		},
+		get loopFocus() {
+			return loopFocus;
+		},
+		setListOptions,
 	};
 
 	setContext(TABS_CONTEXT, context);
