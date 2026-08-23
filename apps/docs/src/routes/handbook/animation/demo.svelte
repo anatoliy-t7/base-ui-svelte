@@ -5,7 +5,7 @@
 	const attachButtonMotionPress = buttonMotionPress();
 </script>
 
-<h3>Button press (yui540 #50)</h3>
+<h3>Button press</h3>
 <p>
 	Press and release (pointer or Space/Enter). Uses <code>data-motion-phase="press"</code> /
 	<code>data-motion-phase="release"</code> via <code>buttonMotionPress()</code>.

@@ -17,6 +17,7 @@ export type ApiDataAttr = {
 export type ApiPart = {
 	name: string;
 	heading: string;
+	description: string;
 	extendsNote: string;
 	props: ApiProp[];
 	dataAttributes: ApiDataAttr[];
@@ -38,48 +39,49 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Accordion.Root",
+				"description": "Groups all parts of the accordion. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "AccordionValue | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "The controlled value of the item(s) that should be expanded. To render an uncontrolled accordion, use the `defaultValue` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "AccordionValue",
 						"optional": true,
-						"description": "Uncontrolled initial value.",
+						"description": "The uncontrolled value of the item(s) that should be initially expanded. To render a controlled accordion, use the `value` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: AccordionValue) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Event handler called when an accordion item is expanded or collapsed.\nProvides the new value as an argument.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "multiple",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether multiple items can be open at the same time.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "orientation",
 						"type": "AccordionOrientation",
 						"optional": true,
-						"description": "",
+						"description": "Deprecated following the [APG guidance update](https://github.com/w3c/aria-practices/pull/3434)\nto remove roving focus. This prop no longer affects keyboard focus behavior.",
 						"defaultValue": "'horizontal'"
 					},
 					{
@@ -93,24 +95,25 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the accordion is disabled."
 					},
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the accordion."
 					}
 				]
 			},
 			{
 				"name": "Header",
 				"heading": "Accordion.Header",
+				"description": "A heading that labels the corresponding panel. Renders an `<h3>` element.",
 				"extendsNote": "Extends HTML element attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -126,27 +129,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Item",
 				"heading": "Accordion.Item",
+				"description": "Groups an accordion header with the corresponding panel. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "string",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "A unique value that identifies this accordion item.\nIf no value is provided, a unique ID will be generated automatically.\nUse when controlling the accordion programmatically, or to set an initial open state.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: 'trigger-press' | 'imperative' }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the panel is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
@@ -164,32 +168,33 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the accordion item is disabled."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the accordion item is open."
 					}
 				]
 			},
 			{
 				"name": "Panel",
 				"heading": "Accordion.Panel",
+				"description": "A collapsible panel with the accordion item contents. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the element in the DOM while the panel is closed.\nThis prop is ignored when `hiddenUntilFound` is used.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "hiddenUntilFound",
 						"type": "boolean",
 						"optional": true,
-						"description": "Use the `hidden=\"until-found\"` attribute when collapsed.",
-						"defaultValue": "—"
+						"description": "Allows the browser's built-in page search to find and expand the panel contents. Overrides the `keepMounted` prop and uses `hidden=\"until-found\"`\nto hide the element without removing it from the DOM.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "role",
@@ -213,21 +218,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the panel is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the accordion panel is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the panel begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Trigger",
 				"heading": "Accordion.Trigger",
+				"description": "A button that opens and closes the corresponding panel. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
@@ -241,11 +247,11 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the accordion item is disabled."
 					},
 					{
 						"name": "data-panel-open",
-						"description": "Present on the element when applicable."
+						"description": "Present when the accordion panel is open."
 					}
 				]
 			}
@@ -259,27 +265,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "AlertDialog.Root",
+				"description": "Groups all parts of the alert dialog. Doesn't render its own HTML element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the dialog is currently open.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the dialog is initially open. To render a controlled dialog, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the alert dialog is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
@@ -300,21 +307,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "onOpenChangeComplete",
 						"type": "((open: boolean) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Event handler called after any animations complete when the dialog is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "handle",
 						"type": "AlertDialogHandle | undefined",
 						"optional": true,
-						"description": "Imperative handle from .",
+						"description": "A handle to associate the alert dialog with a trigger.\nIf specified, allows external triggers to control the alert dialog's open state.\nCan be created with the AlertDialog.createHandle() method.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content of the dialog.\nThis can be a regular React node or a render function that receives the `payload` of the active trigger.",
 						"defaultValue": "—"
 					}
 				],
@@ -332,21 +339,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Backdrop",
 				"heading": "AlertDialog.Backdrop",
+				"description": "An overlay displayed beneath the popup. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "forceRender",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the backdrop is forced to render even when nested.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -359,32 +367,33 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the dialog is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the dialog is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the dialog is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the dialog begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Close",
 				"heading": "AlertDialog.Close",
+				"description": "A button that closes the dialog. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -400,6 +409,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Description",
 				"heading": "AlertDialog.Description",
+				"description": "A paragraph with additional information about the dialog. Renders a `<p>` element.",
 				"extendsNote": "Extends paragraph HTML attributes.",
 				"props": [
 					{
@@ -415,27 +425,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Popup",
 				"heading": "AlertDialog.Popup",
+				"description": "A container for the dialog contents. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "initialFocus",
 						"type": "FocusTarget",
 						"optional": true,
-						"description": "",
+						"description": "Determines the element to focus when the dialog is opened.\nBy default, focus moves to the first tabbable element inside the popup, except when the dialog is opened by touch — then the popup itself is focused to avoid opening the virtual keyboard. `false`: Do not move focus.`true`: Move focus based on the default behavior (first tabbable element or popup).`RefObject`: Move focus to the ref element.`function`: Called with the interaction type (`mouse`, `touch`, `pen`, or `keyboard`).\nReturn an element to focus, `true` to use the default behavior, `null` to fall back to the default behavior, or `false`/`undefined` to do nothing.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "finalFocus",
 						"type": "FocusTarget",
 						"optional": true,
-						"description": "",
+						"description": "Determines the element to focus when the dialog is closed. `false`: Do not move focus.`true`: Move focus based on the default behavior (trigger or previously focused element).`RefObject`: Move focus to the ref element.`function`: Called with the interaction type (`mouse`, `touch`, `pen`, or `keyboard`).\nReturn an element to focus, `true` to use the default behavior, `null` to fall back to the default behavior, or `false`/`undefined` to do nothing.",
 						"defaultValue": "—"
 					},
 					{
@@ -449,40 +460,41 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the dialog is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the dialog is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the dialog is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the dialog begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Portal",
 				"heading": "AlertDialog.Portal",
+				"description": "A portal element that moves the popup to a different part of the DOM. By default, the portal element is appended to `<body>`. Renders a `<div>` element.",
 				"extendsNote": "",
 				"props": [
 					{
 						"name": "container",
 						"type": "HTMLElement | string | null",
 						"optional": true,
-						"description": "",
+						"description": "A parent element to render the portal element into.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the portal mounted in the DOM while the popup is hidden.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -497,6 +509,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Title",
 				"heading": "AlertDialog.Title",
+				"description": "A heading that labels the dialog. Renders an `<h2>` element.",
 				"extendsNote": "Extends heading HTML attributes.",
 				"props": [
 					{
@@ -512,13 +525,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Trigger",
 				"heading": "AlertDialog.Trigger",
+				"description": "A button that opens the alert dialog. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -532,21 +546,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "id",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "ID of the trigger. In addition to being forwarded to the rendered element, it is also used to specify the active trigger for the dialog in controlled mode (with the DialogRoot `triggerId` prop).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "handle",
 						"type": "AlertDialogHandle | undefined",
 						"optional": true,
-						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"description": "A handle to associate the trigger with an alert dialog.\nCan be created with the AlertDialog.createHandle() method.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "Optional payload associated when opening via this trigger.",
+						"description": "A payload to pass to the dialog when it is opened.",
 						"defaultValue": "—"
 					},
 					{
@@ -564,7 +578,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the trigger is disabled."
 					},
 					{
 						"name": "data-open",
@@ -575,13 +589,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Viewport",
 				"heading": "AlertDialog.Viewport",
+				"description": "A positioning container for the dialog popup that can be made scrollable. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -595,11 +610,11 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the dialog is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the dialog is open."
 					}
 				]
 			}
@@ -613,27 +628,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Autocomplete.Root",
+				"description": "Groups all parts of the autocomplete. Doesn't render its own HTML element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "string | null | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "The input value of the autocomplete. Use when controlled.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string | null",
 						"optional": true,
-						"description": "Uncontrolled initial value.",
+						"description": "The uncontrolled input value of the autocomplete when it's initially rendered. To render a controlled autocomplete, use the `value` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string | null, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Event handler called when the input value of the autocomplete changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -661,91 +677,91 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the popup is currently open. Use when controlled.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the popup is initially open. To render a controlled popup, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the popup is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChangeComplete",
 						"type": "((open: boolean) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Event handler called after any animations complete when the popup is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "loopFocus",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to loop keyboard focus back to the input when the end of the list is reached while using the arrow keys. The first item can then be reached by pressing ArrowDown again from the input, or the last item can be reached by pressing ArrowUp from the input.\nThe input is always included in the focus loop per [ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).\nWhen disabled, focus does not move when on the last element and the user presses ArrowDown, or when on the first element and the user presses ArrowUp.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "filter",
 						"type": "AutocompleteFilter",
 						"optional": true,
-						"description": "",
+						"description": "AutocompleteFilter function used to match items vs input query.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "filteredItems",
 						"type": "ReadonlyArray<string> | undefined",
 						"optional": true,
-						"description": "Externally filtered item values; when set, skips internal filtering.",
+						"description": "Filtered items to display in the list.\nWhen provided, the list will use these items instead of filtering the `items` prop internally.\nUse when you want to control filtering logic externally with the `useFilter()` hook.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "limit",
 						"type": "number",
 						"optional": true,
-						"description": "Max visible items (-1 = no limit).",
-						"defaultValue": "—"
+						"description": "The maximum number of items to display in the list.",
+						"defaultValue": "-1"
 					},
 					{
 						"name": "locale",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "Locale for default string filtering.",
+						"description": "The locale to use for string comparison.\nDefaults to the user's runtime locale.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "autoHighlight",
 						"type": "boolean",
 						"optional": true,
-						"description": "Highlight the first matching item while filtering.",
-						"defaultValue": "—"
+						"description": "Whether the first matching item is highlighted automatically. `true`: highlight after the user types and keep the highlight while the query changes.\n- `'always'`: always highlight the first item.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "highlightItemOnHover",
 						"type": "boolean",
 						"optional": true,
-						"description": "Highlight items on pointer move.",
-						"defaultValue": "—"
+						"description": "Whether moving the pointer over items should highlight them.\nDisabling this prop allows CSS `:hover` to be differentiated from the `:focus` (`data-highlighted`) state.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "onItemHighlighted",
 						"type": "| ((value: string | null, eventDetails: { reason: 'none' | 'keyboard' | 'pointer' | 'filter' }) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Callback fired when an item is highlighted or unhighlighted.\nReceives the highlighted item value (or `undefined` if no item is highlighted) and event details with a `reason` property describing why the highlight changed.\nThe `reason` can be: `'keyboard'`: the highlight changed due to keyboard navigation.\n- `'pointer'`: the highlight changed due to pointer hovering.\n- `'none'`: the highlight changed programmatically.",
 						"defaultValue": "—"
 					},
 					{
@@ -759,7 +775,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "itemToStringValue",
 						"type": "((itemValue: string) => string) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "When the item values are objects (`<Autocomplete.Item value={object}>`), this function converts the object value to a string representation for both display in the input and form submission.\nIf the shape of the object is `{ value, label }`, the label will be used automatically without needing to specify this prop.",
 						"defaultValue": "—"
 					},
 					{
@@ -773,7 +789,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "items",
 						"type": "AutocompleteItemsProp | undefined",
 						"optional": true,
-						"description": "",
+						"description": "The items to be displayed in the list.\nCan be either a flat array of items or an array of groups with items.",
 						"defaultValue": "—"
 					},
 					{
@@ -802,6 +818,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Arrow",
 				"heading": "Autocomplete.Arrow",
+				"description": "Displays an element positioned against the anchor. Renders a `<div>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -815,24 +832,25 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					}
 				]
 			},
 			{
 				"name": "Backdrop",
 				"heading": "Autocomplete.Backdrop",
+				"description": "An overlay displayed beneath the popup. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -846,24 +864,25 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					}
 				]
 			},
 			{
 				"name": "Clear",
 				"heading": "Autocomplete.Clear",
+				"description": "Clears the value when clicked. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -877,7 +896,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the button is disabled."
 					},
 					{
 						"name": "data-empty",
@@ -892,6 +911,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Collection",
 				"heading": "Autocomplete.Collection",
+				"description": "Renders filtered list items. Doesn't render its own HTML element. If rendering a flat list, pass a function child to the `List` component instead, which implicitly wraps it.",
 				"extendsNote": "",
 				"props": [
 					{
@@ -907,6 +927,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Empty",
 				"heading": "Autocomplete.Empty",
+				"description": "Renders its children only when the list is empty. Requires the `items` prop on the root component. Announces changes politely to screen readers. This component's root element must remain mounted in the DOM to announce changes consistently across screen readers. Avoid hiding or removing the component itself with `display: none`, `hidden`, `aria-hidden`, or conditional rendering. Prefer updating or conditionally rendering its children instead. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -927,6 +948,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Group",
 				"heading": "Autocomplete.Group",
+				"description": "Groups related items with the corresponding label. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -942,6 +964,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "GroupLabel",
 				"heading": "Autocomplete.GroupLabel",
+				"description": "An accessible label that is automatically associated with its parent group. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -957,6 +980,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Icon",
 				"heading": "Autocomplete.Icon",
+				"description": "An icon that indicates that the trigger button opens the popup. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -981,13 +1005,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Input",
 				"heading": "Autocomplete.Input",
+				"description": "A text input to search for items in the list. Renders an `<input>` element.",
 				"extendsNote": "Extends input HTML attributes.",
 				"props": [
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					}
 				],
@@ -998,7 +1023,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the component is disabled."
 					},
 					{
 						"name": "data-open",
@@ -1009,6 +1034,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "InputGroup",
 				"heading": "Autocomplete.InputGroup",
+				"description": "A wrapper for the input and its associated controls. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -1026,7 +1052,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the component is disabled."
 					},
 					{
 						"name": "data-open",
@@ -1037,14 +1063,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Item",
 				"heading": "Autocomplete.Item",
+				"description": "An individual item in the list. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "string",
 						"optional": false,
-						"description": "Controlled value.",
-						"defaultValue": "—"
+						"description": "A unique value that identifies this item.",
+						"defaultValue": "null"
 					},
 					{
 						"name": "label",
@@ -1057,7 +1084,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -1071,7 +1098,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the item is disabled."
 					},
 					{
 						"name": "data-highlighted",
@@ -1086,6 +1113,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "ItemIndicator",
 				"heading": "Autocomplete.ItemIndicator",
+				"description": "",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -1110,6 +1138,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Label",
 				"heading": "Autocomplete.Label",
+				"description": "",
 				"extendsNote": "Extends label HTML attributes.",
 				"props": [
 					{
@@ -1130,6 +1159,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "List",
 				"heading": "Autocomplete.List",
+				"description": "A list container for the items. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -1154,13 +1184,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Popup",
 				"heading": "Autocomplete.Popup",
+				"description": "A container for the list. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -1174,40 +1205,41 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the popup is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the popup begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Portal",
 				"heading": "Autocomplete.Portal",
+				"description": "A portal element that moves the popup to a different part of the DOM. By default, the portal element is appended to `<body>`. Renders a `<div>` element.",
 				"extendsNote": "",
 				"props": [
 					{
 						"name": "container",
 						"type": "HTMLElement | string | null",
 						"optional": true,
-						"description": "",
+						"description": "A parent element to render the portal element into.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the portal mounted in the DOM while the popup is hidden.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -1222,77 +1254,78 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Positioner",
 				"heading": "Autocomplete.Positioner",
+				"description": "Positions the popup against the trigger. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "side",
 						"type": "null",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Which side of the anchor element to align the popup against.\nMay automatically change to avoid collisions.",
+						"defaultValue": "'bottom'"
 					},
 					{
 						"name": "align",
 						"type": "HTML",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "How to align the popup relative to the specified side.",
+						"defaultValue": "'center'"
 					},
 					{
 						"name": "sideOffset",
 						"type": "popup",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Distance between the anchor and the popup in pixels.\nAlso accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "alignOffset",
 						"type": "ull;",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional offset along the alignment axis in pixels.\nAlso accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "collisionPadding",
 						"type": "t | null; list: HTMLElement | null;",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional space to maintain from the edge of the collision boundary.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "collisionBoundary",
 						"type": "ll; }; export",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "An element or a rectangle that delimits the area that the popup is confined to.",
+						"defaultValue": "'clipping-ancestors'"
 					},
 					{
 						"name": "collisionAvoidance",
 						"type": "= { readonly val",
 						"optional": true,
-						"description": "",
+						"description": "Determines how to handle collisions when positioning the popup. `side` controls overflow on the preferred placement axis (`top`/`bottom` or `left`/`right`): `'flip'`: keep the requested side when it fits; otherwise try the opposite side\n(`top` and `bottom`, or `left` and `right`).\n- `'shift'`: never change side; keep the requested side and move the popup within the clipping boundary so it stays visible.\n- `'none'`: do not correct side-axis overflow. `align` controls overflow on the alignment axis (`start`/`center`/`end`): `'flip'`: keep side, but swap `start` and `end` when the requested alignment overflows.\n- `'shift'`: keep side and requested alignment, then nudge the popup along the alignment axis to fit.\n- `'none'`: do not correct alignment-axis overflow. `fallbackAxisSide` controls fallback behavior on the perpendicular axis when the preferred axis cannot fit: `'start'`: allow perpendicular fallback and try the logical start side first\n(`top` before `bottom`, or `left` before `right` in LTR).\n- `'end'`: allow perpendicular fallback and try the logical end side first\n(`bottom` before `top`, or `right` before `left` in LTR).\n- `'none'`: do not fallback to the perpendicular axis. When `side` is `'shift'`, explicitly setting `align` only supports `'shift'` or `'none'`.\nIf `align` is omitted, it defaults to `'flip'`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "arrowPadding",
 						"type": "setV",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Minimum distance to maintain between the arrow and the edges of the popup. Use it to prevent the arrow element from hanging out of the rounded corners of a popup.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "sticky",
 						"type": "string",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to maintain the popup in the viewport after the anchor element was scrolled out of view.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "positionMethod",
 						"type": "string, event?: Ev",
 						"optional": true,
-						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
-						"defaultValue": "—"
+						"description": "Determines which CSS `position` property to use.",
+						"defaultValue": "'absolute'"
 					},
 					{
 						"name": "strategy",
@@ -1305,15 +1338,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "): () => void; readonly highli",
 						"optional": true,
-						"description": "Override the positioning anchor (element or virtual element).",
+						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "Entry[]",
 						"optional": true,
-						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
-						"defaultValue": "—"
+						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -1326,17 +1359,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					}
 				]
 			},
 			{
 				"name": "Row",
 				"heading": "Autocomplete.Row",
+				"description": "Displays a single row of items in a grid list. Enable `grid` on the root component to turn the listbox into a grid. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -1352,6 +1386,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Separator",
 				"heading": "Autocomplete.Separator",
+				"description": "A visual separator between items or groups. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [],
 				"dataAttributes": []
@@ -1359,6 +1394,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Status",
 				"heading": "Autocomplete.Status",
+				"description": "Displays a status message whose content changes are announced politely to screen readers. Useful for conveying the status of an asynchronously loaded list. This component's root element must remain mounted in the DOM to announce changes consistently across screen readers. Avoid hiding or removing the component itself with `display: none`, `hidden`, `aria-hidden`, or conditional rendering. Prefer updating or conditionally rendering its children instead. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -1383,20 +1419,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Trigger",
 				"heading": "Autocomplete.Trigger",
+				"description": "A button that opens the popup. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -1414,7 +1451,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the component is disabled."
 					},
 					{
 						"name": "data-open",
@@ -1425,6 +1462,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Value",
 				"heading": "Autocomplete.Value",
+				"description": "The current value of the autocomplete. Doesn't render its own HTML element.",
 				"extendsNote": "",
 				"props": [
 					{
@@ -1447,6 +1485,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Avatar.Root",
+				"description": "Displays a user's profile picture, initials, or fallback icon. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -1462,14 +1501,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Fallback",
 				"heading": "Avatar.Fallback",
+				"description": "Rendered when the image fails to load or when no image is provided. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
 						"name": "delay",
 						"type": "number",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "How long to wait before showing the fallback. Specified in milliseconds.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "children",
@@ -1484,13 +1524,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Image",
 				"heading": "Avatar.Image",
+				"description": "The image to be displayed in the avatar. Renders an `<img>` element.",
 				"extendsNote": "Also accepts native HTML attributes for the rendered element.",
 				"props": [
 					{
 						"name": "onLoadingStatusChange",
 						"type": "((status: ImageLoadingStatus) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Callback fired when the loading status changes.",
 						"defaultValue": "—"
 					}
 				],
@@ -1506,6 +1547,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Button",
 				"heading": "Button",
+				"description": "A button component that can be used to trigger actions. Renders a `<button>` element.",
 				"extendsNote": "Extends HTML element attributes.",
 				"props": [
 					{
@@ -1519,14 +1561,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "focusableWhenDisabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control remains focusable when disabled.",
+						"description": "Whether the button should be focusable when disabled.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render. Defaults to `button`.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -1547,7 +1589,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the button is disabled."
 					}
 				]
 			}
@@ -1561,91 +1603,92 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Checkbox.Root",
+				"description": "Represents the checkbox itself. Renders a `<span>` element and a hidden `<input>` beside.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "checked",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Controlled checked state.",
-						"defaultValue": "—"
+						"description": "Whether the checkbox is currently ticked. To render an uncontrolled checkbox, use the `defaultChecked` prop instead.",
+						"defaultValue": "undefined"
 					},
 					{
 						"name": "defaultChecked",
 						"type": "boolean",
 						"optional": true,
-						"description": "Uncontrolled initial checked state.",
-						"defaultValue": "—"
+						"description": "Whether the checkbox is initially ticked. To render a controlled checkbox, use the `checked` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onCheckedChange",
 						"type": "((checked: boolean, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the checked state changes.",
+						"description": "Event handler called when the checkbox is ticked or unticked.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "required",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the user must tick the checkbox before submitting a form.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "readOnly",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the user should be unable to tick or untick the checkbox.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "name",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Identifies the field when a form is submitted.",
+						"defaultValue": "undefined"
 					},
 					{
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "The checkbox's value. Identifies it within a [Checkbox Group](https://base-ui.com/react/components/checkbox-group), falling back to `name` when omitted.\nWhen submitting a form, a checked box submits `value`; with no `value`, it submits the native \"on\".",
 						"defaultValue": "—"
 					},
 					{
 						"name": "uncheckedValue",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "Submitted when the checkbox is unchecked (native form pattern).",
+						"description": "The value submitted with the form when the checkbox is unchecked.\nBy default, unchecked checkboxes do not submit any value, matching native checkbox behavior.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "form",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "Form id association for the hidden input.",
+						"description": "Identifies the form that owns the hidden input.\nUseful when the checkbox is rendered outside the form.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "indeterminate",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the checkbox is in a mixed state: neither ticked, nor unticked.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "parent",
 						"type": "boolean",
 						"optional": true,
-						"description": "When true inside a CheckboxGroup with `allValues`, this checkbox controls selecting / clearing the whole group (parent checkbox).",
-						"defaultValue": "—"
+						"description": "Whether the checkbox controls a group of child checkboxes. Must be used in a [Checkbox Group](https://base-ui.com/react/components/checkbox-group).",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -1658,37 +1701,38 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the checkbox is checked."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the checkbox is disabled."
 					},
 					{
 						"name": "data-indeterminate",
-						"description": "Present when the checkbox is indeterminate."
+						"description": "Present when the checkbox is in an indeterminate state."
 					},
 					{
 						"name": "data-readonly",
-						"description": "Present when the control is read-only."
+						"description": "Present when the checkbox is readonly."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the checkbox is not checked."
 					}
 				]
 			},
 			{
 				"name": "Indicator",
 				"heading": "Checkbox.Indicator",
+				"description": "Indicates whether the checkbox is ticked. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the element in the DOM when the checkbox is not checked.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -1701,19 +1745,19 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the checkbox is checked."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the checkbox is disabled."
 					},
 					{
 						"name": "data-indeterminate",
-						"description": "Present when the checkbox is indeterminate."
+						"description": "Present when the checkbox is in an indeterminate state."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the checkbox is not checked."
 					}
 				]
 			}
@@ -1727,41 +1771,42 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "CheckboxGroup",
 				"heading": "CheckboxGroup",
+				"description": "Provides a shared state to a series of checkboxes.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "string[] | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "Names of the checkboxes in the group that should be ticked. To render an uncontrolled checkbox group, use the `defaultValue` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string[]",
 						"optional": true,
-						"description": "Uncontrolled initial value.",
+						"description": "Names of the checkboxes in the group that should be initially ticked. To render a controlled checkbox group, use the `value` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string[], event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Event handler called when a checkbox in the group is ticked or unticked.\nProvides the new value as an argument.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "allValues",
 						"type": "string[] | undefined",
 						"optional": true,
-						"description": "Values controlled by a parent checkbox (`parent` on Checkbox.Root).",
+						"description": "Names of all checkboxes in the group. Use this when creating a parent checkbox.",
 						"defaultValue": "—"
 					},
 					{
@@ -1775,7 +1820,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the checkbox group is disabled."
 					}
 				]
 			}
@@ -1789,34 +1834,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Collapsible.Root",
+				"description": "Groups all parts of the collapsible. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the collapsible panel is currently open. To render an uncontrolled collapsible, use the `defaultOpen` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the collapsible panel is initially open. To render a controlled collapsible, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the panel is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -1830,7 +1876,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the collapsible is closed."
 					},
 					{
 						"name": "data-disabled",
@@ -1838,21 +1884,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the collapsible is open."
 					}
 				]
 			},
 			{
 				"name": "Panel",
 				"heading": "Collapsible.Panel",
+				"description": "A panel with the collapsible contents. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the element in the DOM while the panel is hidden.\nThis prop is ignored when `hiddenUntilFound` is used.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "role",
@@ -1872,25 +1919,26 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the collapsible panel is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the panel is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the collapsible panel is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the panel begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Trigger",
 				"heading": "Collapsible.Trigger",
+				"description": "A button that opens and closes the collapsible panel. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
@@ -1908,7 +1956,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-panel-open",
-						"description": "Present on the element when applicable."
+						"description": "Present when the collapsible panel is open."
 					}
 				]
 			}
@@ -1922,41 +1970,42 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Combobox.Root",
+				"description": "Groups all parts of the combobox. Doesn't render its own HTML element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "ComboboxValue | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "The selected value of the combobox. Use when controlled.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "ComboboxValue",
 						"optional": true,
-						"description": "Uncontrolled initial value.",
+						"description": "The uncontrolled selected value of the combobox when it's initially rendered. To render a controlled combobox, use the `value` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: ComboboxValue, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Event handler called when the selected value of the combobox changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "inputValue",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "The input value of the combobox. Use when controlled.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultInputValue",
 						"type": "string",
 						"optional": true,
-						"description": "",
+						"description": "The uncontrolled input value when initially rendered. To render a controlled input, use the `inputValue` prop instead.",
 						"defaultValue": "—"
 					},
 					{
@@ -1970,175 +2019,175 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the popup is currently open. Use when controlled.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the popup is initially open. To render a controlled popup, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the popup is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onOpenChangeComplete",
 						"type": "((open: boolean) => void) | undefined",
 						"optional": true,
-						"description": "Called after open/close animations complete.",
+						"description": "Event handler called after any animations complete when the popup is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "readOnly",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the user should be unable to choose a different option from the popup.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "required",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the user must choose a value before submitting a form.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "name",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Identifies the field when a form is submitted.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "form",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Identifies the form that owns the internal input.\nUseful when the combobox is rendered outside the form.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "filter",
 						"type": "ComboboxFilter",
 						"optional": true,
-						"description": "",
+						"description": "ComboboxFilter function used to match items vs input query.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "filteredItems",
 						"type": "ReadonlyArray<string> | undefined",
 						"optional": true,
-						"description": "Externally filtered item values; when set, skips internal filtering.",
+						"description": "Filtered items to display in the list.\nWhen provided, the list will use these items instead of filtering the `items` prop internally.\nUse when you want to control filtering logic externally with the `useFilter()` hook.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "limit",
 						"type": "number",
 						"optional": true,
-						"description": "Max visible items (-1 = no limit).",
-						"defaultValue": "—"
+						"description": "The maximum number of items to display in the list.",
+						"defaultValue": "-1"
 					},
 					{
 						"name": "locale",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "Locale for default string filtering.",
+						"description": "The locale to use for string comparison.\nDefaults to the user's runtime locale.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "autoHighlight",
 						"type": "boolean",
 						"optional": true,
-						"description": "Highlight the first matching item while filtering.",
-						"defaultValue": "—"
+						"description": "Whether the first matching item is highlighted automatically while filtering.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "highlightItemOnHover",
 						"type": "boolean",
 						"optional": true,
-						"description": "Highlight items on pointer move.",
-						"defaultValue": "—"
+						"description": "Whether moving the pointer over items should highlight them.\nDisabling this prop allows CSS `:hover` to be differentiated from the `:focus` (`data-highlighted`) state.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "onItemHighlighted",
 						"type": "| ((value: string | null, eventDetails: { reason: 'none' | 'keyboard' | 'pointer' | 'filter' }) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Callback fired when an item is highlighted or unhighlighted.\nReceives the highlighted item value (or `undefined` if no item is highlighted) and event details with a `reason` property describing why the highlight changed.\nThe `reason` can be: `'keyboard'`: the highlight changed due to keyboard navigation.\n- `'pointer'`: the highlight changed due to pointer hovering.\n- `'none'`: the highlight changed programmatically.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "itemToStringLabel",
 						"type": "((itemValue: string) => string) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "When the item values are objects (`<Combobox.Item value={object}>`), this function converts the object value to a string representation for display in the input.\nIf the shape of the object is `{ value, label }`, the label will be used automatically without needing to specify this prop.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "itemToStringValue",
 						"type": "((itemValue: string) => string) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "When the item values are objects (`<Combobox.Item value={object}>`), this function converts the object value to a string representation for form submission.\nIf the shape of the object is `{ value, label }`, the value will be used automatically without needing to specify this prop.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "isItemEqualToValue",
 						"type": "((itemValue: string, value: string) => boolean) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Custom comparison logic used to determine if a combobox item value matches the current selected value. Useful when item values are objects without matching referentially.\nDefaults to `Object.is` comparison.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "multiple",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether multiple items can be selected.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "loopFocus",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether highlight wraps at list ends.",
-						"defaultValue": "—"
+						"description": "Whether to loop keyboard focus back to the input when the end of the list is reached while using the arrow keys. The first item can then be reached by pressing ArrowDown again from the input, or the last item can be reached by pressing ArrowUp from the input.\nThe input is always included in the focus loop per [ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).\nWhen disabled, focus does not move when on the last element and the user presses ArrowDown, or when on the first element and the user presses ArrowUp.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "modal",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the popup behaves as a modal layer.",
-						"defaultValue": "—"
+						"description": "Determines if the popup enters a modal state when open. `true`: user interaction is limited to the popup: document page scroll is locked and pointer interactions on outside elements are disabled.`false`: user interaction with the rest of the document is allowed. On touch devices, a `true` modal blocks outside taps but leaves the page scrollable unless the popup spans nearly the full viewport width, matching native iOS behavior.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "openOnInputClick",
 						"type": "boolean",
 						"optional": true,
-						"description": "Open the popup when the input is clicked.",
-						"defaultValue": "—"
+						"description": "Whether the popup opens when clicking the input.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "items",
 						"type": "ComboboxItemsProp | undefined",
 						"optional": true,
-						"description": "",
+						"description": "The items to be displayed in the list.\nCan be either a flat array of items or an array of groups with items.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet< [{ value: ComboboxValue; inputValue: string; open: boolean; disabled: boolean }] >",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "- **`autoComplete` Prop References:** - See [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete)",
 						"defaultValue": "—"
 					}
 				],
@@ -2164,6 +2213,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Arrow",
 				"heading": "Combobox.Arrow",
+				"description": "Displays an element positioned against the anchor. Renders a `<div>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -2177,24 +2227,25 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					}
 				]
 			},
 			{
 				"name": "Backdrop",
 				"heading": "Combobox.Backdrop",
+				"description": "An overlay displayed beneath the popup. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -2208,17 +2259,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					}
 				]
 			},
 			{
 				"name": "Chip",
 				"heading": "Combobox.Chip",
+				"description": "An individual chip that represents a value in a multiselectable input. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -2246,6 +2298,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "ChipRemove",
 				"heading": "Combobox.ChipRemove",
+				"description": "A button to remove a chip. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
@@ -2273,6 +2326,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Chips",
 				"heading": "Combobox.Chips",
+				"description": "A container for the chips in a multiselectable input. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -2288,13 +2342,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Clear",
 				"heading": "Combobox.Clear",
+				"description": "Clears the value when clicked. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -2308,7 +2363,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the button is disabled."
 					},
 					{
 						"name": "data-empty",
@@ -2323,6 +2378,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Collection",
 				"heading": "Combobox.Collection",
+				"description": "Renders filtered list items. Doesn't render its own HTML element. If rendering a flat list, pass a function child to the `List` component instead, which implicitly wraps it.",
 				"extendsNote": "",
 				"props": [
 					{
@@ -2338,6 +2394,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Empty",
 				"heading": "Combobox.Empty",
+				"description": "Renders its children only when the list is empty. Requires the `items` prop on the root component. Announces changes politely to screen readers. This component's root element must remain mounted in the DOM to announce changes consistently across screen readers. Avoid hiding or removing the component itself with `display: none`, `hidden`, `aria-hidden`, or conditional rendering. Prefer updating or conditionally rendering its children instead. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -2358,6 +2415,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Group",
 				"heading": "Combobox.Group",
+				"description": "Groups related items with the corresponding label. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -2373,6 +2431,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "GroupLabel",
 				"heading": "Combobox.GroupLabel",
+				"description": "An accessible label that is automatically associated with its parent group. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -2388,6 +2447,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Icon",
 				"heading": "Combobox.Icon",
+				"description": "An icon that indicates that the trigger button opens the popup. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -2412,13 +2472,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Input",
 				"heading": "Combobox.Input",
+				"description": "A text input to search for items in the list. Renders an `<input>` element.",
 				"extendsNote": "Extends input HTML attributes.",
 				"props": [
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					}
 				],
@@ -2429,7 +2490,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the component is disabled."
 					},
 					{
 						"name": "data-open",
@@ -2437,13 +2498,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-readonly",
-						"description": "Present when the control is read-only."
+						"description": "Present when the component is readonly."
 					}
 				]
 			},
 			{
 				"name": "InputGroup",
 				"heading": "Combobox.InputGroup",
+				"description": "A wrapper for the input and its associated controls. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -2461,7 +2523,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the component is disabled."
 					},
 					{
 						"name": "data-open",
@@ -2472,14 +2534,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Item",
 				"heading": "Combobox.Item",
+				"description": "An individual item in the list. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "string",
 						"optional": false,
-						"description": "Controlled value.",
-						"defaultValue": "—"
+						"description": "A unique value that identifies this item.",
+						"defaultValue": "null"
 					},
 					{
 						"name": "label",
@@ -2492,7 +2555,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -2506,7 +2569,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the item is disabled."
 					},
 					{
 						"name": "data-highlighted",
@@ -2521,6 +2584,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "ItemIndicator",
 				"heading": "Combobox.ItemIndicator",
+				"description": "Indicates whether the item is selected. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -2545,6 +2609,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Label",
 				"heading": "Combobox.Label",
+				"description": "An accessible label that is automatically associated with the combobox trigger. Renders a `<div>` element.",
 				"extendsNote": "Extends label HTML attributes.",
 				"props": [
 					{
@@ -2565,6 +2630,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "List",
 				"heading": "Combobox.List",
+				"description": "A list container for the items. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -2589,27 +2655,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Popup",
 				"heading": "Combobox.Popup",
+				"description": "A container for the list. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "initialFocus",
 						"type": "FocusTarget",
 						"optional": true,
-						"description": "",
+						"description": "Determines the element to focus when the popup is opened. `false`: Do not move focus.`true`: Move focus based on the default behavior (first tabbable element or popup).`RefObject`: Move focus to the ref element.`function`: Called with the interaction type (`mouse`, `touch`, `pen`, or `keyboard`).\nReturn an element to focus, `true` to use the default behavior, or `false`/`undefined` to do nothing.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "finalFocus",
 						"type": "FocusTarget",
 						"optional": true,
-						"description": "",
+						"description": "Determines the element to focus when the popup is closed. `false`: Do not move focus.`true`: Move focus based on the default behavior (trigger or previously focused element).`RefObject`: Move focus to the ref element.`function`: Called with the interaction type (`mouse`, `touch`, `pen`, or `keyboard`).\nReturn an element to focus, `true` to use the default behavior, or `false`/`undefined` to do nothing.",
 						"defaultValue": "—"
 					},
 					{
@@ -2623,40 +2690,41 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the popup is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the popup begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Portal",
 				"heading": "Combobox.Portal",
+				"description": "A portal element that moves the popup to a different part of the DOM. By default, the portal element is appended to `<body>`. Renders a `<div>` element.",
 				"extendsNote": "",
 				"props": [
 					{
 						"name": "container",
 						"type": "HTMLElement | string | null",
 						"optional": true,
-						"description": "",
+						"description": "A parent element to render the portal element into.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the portal mounted in the DOM while the popup is hidden.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -2671,77 +2739,78 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Positioner",
 				"heading": "Combobox.Positioner",
+				"description": "Positions the popup against the trigger. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "side",
 						"type": "ring",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Which side of the anchor element to align the popup against.\nMay automatically change to avoid collisions.",
+						"defaultValue": "'bottom'"
 					},
 					{
 						"name": "align",
 						"type": "labe",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "How to align the popup relative to the specified side.",
+						"defaultValue": "'center'"
 					},
 					{
 						"name": "sideOffset",
 						"type": "expor",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Distance between the anchor and the popup in pixels.\nAlso accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "alignOffset",
 						"type": "emEntr",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional offset along the alignment axis in pixels.\nAlso accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "collisionPadding",
 						"type": "ring; readonly value: string; label:",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional space to maintain from the edge of the collision boundary.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "collisionBoundary",
 						"type": "ent: HTMLElemen",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "An element or a rectangle that delimits the area that the popup is confined to.",
+						"defaultValue": "'clipping-ancestors'"
 					},
 					{
 						"name": "collisionAvoidance",
 						"type": "boxRefs = { input",
 						"optional": true,
-						"description": "",
+						"description": "Determines how to handle collisions when positioning the popup. `side` controls overflow on the preferred placement axis (`top`/`bottom` or `left`/`right`): `'flip'`: keep the requested side when it fits; otherwise try the opposite side\n(`top` and `bottom`, or `left` and `right`).\n- `'shift'`: never change side; keep the requested side and move the popup within the clipping boundary so it stays visible.\n- `'none'`: do not correct side-axis overflow. `align` controls overflow on the alignment axis (`start`/`center`/`end`): `'flip'`: keep side, but swap `start` and `end` when the requested alignment overflows.\n- `'shift'`: keep side and requested alignment, then nudge the popup along the alignment axis to fit.\n- `'none'`: do not correct alignment-axis overflow. `fallbackAxisSide` controls fallback behavior on the perpendicular axis when the preferred axis cannot fit: `'start'`: allow perpendicular fallback and try the logical start side first\n(`top` before `bottom`, or `left` before `right` in LTR).\n- `'end'`: allow perpendicular fallback and try the logical end side first\n(`bottom` before `top`, or `right` before `left` in LTR).\n- `'none'`: do not fallback to the perpendicular axis. When `side` is `'shift'`, explicitly setting `align` only supports `'shift'` or `'none'`.\nIf `align` is omitted, it defaults to `'flip'`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "arrowPadding",
 						"type": "ll; t",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Minimum distance to maintain between the arrow and the edges of the popup. Use it to prevent the arrow element from hanging out of the rounded corners of a popup.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "sticky",
 						"type": "Element",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to maintain the popup in the viewport after the anchor element was scrolled out of view.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "positionMethod",
 						"type": "Element | null; a",
 						"optional": true,
-						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
-						"defaultValue": "—"
+						"description": "Determines which CSS `position` property to use.",
+						"defaultValue": "'absolute'"
 					},
 					{
 						"name": "strategy",
@@ -2754,15 +2823,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "string, event?: Event): void;",
 						"optional": true,
-						"description": "Override the positioning anchor (element or virtual element).",
+						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "d; rea",
 						"optional": true,
-						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
-						"defaultValue": "—"
+						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -2775,17 +2844,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					}
 				]
 			},
 			{
 				"name": "Row",
 				"heading": "Combobox.Row",
+				"description": "Displays a single row of items in a grid list. Enable `grid` on the root component to turn the listbox into a grid. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -2801,6 +2871,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Separator",
 				"heading": "Combobox.Separator",
+				"description": "A visual separator between items or groups. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [],
 				"dataAttributes": []
@@ -2808,6 +2879,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Status",
 				"heading": "Combobox.Status",
+				"description": "Displays a status message whose content changes are announced politely to screen readers. Useful for conveying the status of an asynchronously loaded list. This component's root element must remain mounted in the DOM to announce changes consistently across screen readers. Avoid hiding or removing the component itself with `display: none`, `hidden`, `aria-hidden`, or conditional rendering. Prefer updating or conditionally rendering its children instead. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -2832,20 +2904,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Trigger",
 				"heading": "Combobox.Trigger",
+				"description": "A button that opens the popup. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -2863,7 +2936,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the component is disabled."
 					},
 					{
 						"name": "data-open",
@@ -2874,13 +2947,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Value",
 				"heading": "Combobox.Value",
+				"description": "The current value of the combobox. Doesn't render its own HTML element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
 						"name": "placeholder",
 						"type": "string",
 						"optional": true,
-						"description": "",
+						"description": "The placeholder value to display when no value is selected.\nThis is overridden by `children` if specified, or by a null item's label in `items`.",
 						"defaultValue": "—"
 					},
 					{
@@ -2908,27 +2982,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "ContextMenu.Root",
+				"description": "A component that creates a context menu activated by right clicking or long pressing. Doesn't render its own HTML element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the menu is currently open.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the menu is initially open. To render a controlled menu, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the menu is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
@@ -2953,6 +3028,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Arrow",
 				"heading": "ContextMenu.Arrow",
+				"description": "Displays an element positioned against the menu anchor. Renders a `<div>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -2966,24 +3042,25 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the menu popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the menu popup is open."
 					}
 				]
 			},
 			{
 				"name": "Backdrop",
 				"heading": "ContextMenu.Backdrop",
+				"description": "An overlay displayed beneath the menu popup. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -3004,45 +3081,46 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the menu is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the menu is open."
 					}
 				]
 			},
 			{
 				"name": "CheckboxItem",
 				"heading": "ContextMenu.CheckboxItem",
+				"description": "A menu item that toggles a setting on or off. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "checked",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Controlled checked state.",
+						"description": "Whether the checkbox item is currently ticked. To render an uncontrolled checkbox item, use the `defaultChecked` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultChecked",
 						"type": "boolean",
 						"optional": true,
-						"description": "Uncontrolled initial checked state.",
-						"defaultValue": "—"
+						"description": "Whether the checkbox item is initially ticked. To render a controlled checkbox item, use the `checked` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onCheckedChange",
 						"type": "((checked: boolean, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the checked state changes.",
+						"description": "Event handler called when the checkbox item is ticked or unticked.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -3056,25 +3134,26 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the menu checkbox item is checked."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the menu checkbox item is disabled."
 					},
 					{
 						"name": "data-highlighted",
-						"description": "Present when the item is highlighted."
+						"description": "Present when the menu checkbox item is highlighted."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the menu checkbox item is not checked."
 					}
 				]
 			},
 			{
 				"name": "CheckboxItemIndicator",
 				"heading": "ContextMenu.CheckboxItemIndicator",
+				"description": "Indicates whether the checkbox item is ticked. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -3088,28 +3167,29 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the menu checkbox item is checked."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the menu checkbox item is disabled."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the menu checkbox item is not checked."
 					}
 				]
 			},
 			{
 				"name": "Group",
 				"heading": "ContextMenu.Group",
+				"description": "Groups related menu items with the corresponding label. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "children",
 						"type": "Snippet",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content of the component.",
 						"defaultValue": "—"
 					}
 				],
@@ -3118,6 +3198,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "GroupLabel",
 				"heading": "ContextMenu.GroupLabel",
+				"description": "An accessible label that is automatically associated with its parent group. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -3133,20 +3214,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Item",
 				"heading": "ContextMenu.Item",
+				"description": "An individual interactive item in the menu. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onClick",
 						"type": "((event: MouseEvent) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "The click handler for the menu item.",
 						"defaultValue": "—"
 					},
 					{
@@ -3160,17 +3242,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the menu item is disabled."
 					},
 					{
 						"name": "data-highlighted",
-						"description": "Present when the item is highlighted."
+						"description": "Present when the menu item is highlighted."
 					}
 				]
 			},
 			{
 				"name": "LinkItem",
 				"heading": "ContextMenu.LinkItem",
+				"description": "A link in the menu that can be used to navigate to a different page or section. Renders an `<a>` element.",
 				"extendsNote": "Extends anchor HTML attributes.",
 				"props": [
 					{
@@ -3195,20 +3278,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-highlighted",
-						"description": "Present when the item is highlighted."
+						"description": "Present when the link is highlighted."
 					}
 				]
 			},
 			{
 				"name": "Popup",
 				"heading": "ContextMenu.Popup",
+				"description": "A container for the menu items. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -3222,40 +3306,41 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the menu is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the menu is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the menu is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the menu begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Portal",
 				"heading": "ContextMenu.Portal",
+				"description": "A portal element that moves the popup to a different part of the DOM. By default, the portal element is appended to `<body>`. Renders a `<div>` element.",
 				"extendsNote": "",
 				"props": [
 					{
 						"name": "container",
 						"type": "HTMLElement | string | null",
 						"optional": true,
-						"description": "",
+						"description": "A parent element to render the portal element into.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the portal mounted in the DOM while the popup is hidden.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -3270,77 +3355,78 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Positioner",
 				"heading": "ContextMenu.Positioner",
+				"description": "Positions the menu popup against the trigger. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "side",
 						"type": "=> v",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Which side of the anchor element to align the popup against.\nMay automatically change to avoid collisions.",
+						"defaultValue": "'bottom'"
 					},
 					{
 						"name": "align",
 						"type": "en: (",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "How to align the popup relative to the specified side.",
+						"defaultValue": "'center'"
 					},
 					{
 						"name": "sideOffset",
 						"type": "expo",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Distance between the anchor and the popup in pixels.\nAlso accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "alignOffset",
 						"type": "nuCont",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional offset along the alignment axis in pixels.\nAlso accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "collisionPadding",
 						"type": ": boolean; setOpen(open: boolean, rea",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional space to maintain from the edge of the collision boundary.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "collisionBoundary",
 						"type": "void; readonl",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "An element or a rectangle that delimits the area that the popup is confined to.",
+						"defaultValue": "'clipping-ancestors'"
 					},
 					{
 						"name": "collisionAvoidance",
 						"type": "nly triggerId: str",
 						"optional": true,
-						"description": "",
+						"description": "Determines how to handle collisions when positioning the popup. `side` controls overflow on the preferred placement axis (`top`/`bottom` or `left`/`right`): `'flip'`: keep the requested side when it fits; otherwise try the opposite side\n(`top` and `bottom`, or `left` and `right`).\n- `'shift'`: never change side; keep the requested side and move the popup within the clipping boundary so it stays visible.\n- `'none'`: do not correct side-axis overflow. `align` controls overflow on the alignment axis (`start`/`center`/`end`): `'flip'`: keep side, but swap `start` and `end` when the requested alignment overflows.\n- `'shift'`: keep side and requested alignment, then nudge the popup along the alignment axis to fit.\n- `'none'`: do not correct alignment-axis overflow. `fallbackAxisSide` controls fallback behavior on the perpendicular axis when the preferred axis cannot fit: `'start'`: allow perpendicular fallback and try the logical start side first\n(`top` before `bottom`, or `left` before `right` in LTR).\n- `'end'`: allow perpendicular fallback and try the logical end side first\n(`bottom` before `top`, or `right` before `left` in LTR).\n- `'none'`: do not fallback to the perpendicular axis. When `side` is `'shift'`, explicitly setting `align` only supports `'shift'` or `'none'`.\nIf `align` is omitted, it defaults to `'flip'`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "arrowPadding",
 						"type": "upId:",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Minimum distance to maintain between the arrow and the edges of the popup. Use it to prevent the arrow element from hanging out of the rounded corners of a popup.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "sticky",
 						"type": "donly r",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to maintain the popup in the viewport after the anchor element was scrolled out of view.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "positionMethod",
 						"type": "donly anchorPoint:",
 						"optional": true,
-						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
-						"defaultValue": "—"
+						"description": "Determines which CSS `position` property to use.",
+						"defaultValue": "'absolute'"
 					},
 					{
 						"name": "strategy",
@@ -3353,15 +3439,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "g, element: HTMLElement, disabl",
 						"optional": true,
-						"description": "Override the positioning anchor (element or virtual element).",
+						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "donly i",
 						"optional": true,
-						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
-						"defaultValue": "—"
+						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -3374,52 +3460,53 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the menu popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the menu popup is open."
 					}
 				]
 			},
 			{
 				"name": "RadioGroup",
 				"heading": "ContextMenu.RadioGroup",
+				"description": "Groups related radio items. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "The controlled value of the radio item that should be currently selected. To render an uncontrolled radio group, use the `defaultValue` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string",
 						"optional": true,
-						"description": "Uncontrolled initial value.",
+						"description": "The uncontrolled value of the radio item that should be initially selected. To render a controlled radio group, use the `value` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Function called when the selected value changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ value: string }]>",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content of the component.",
 						"defaultValue": "—"
 					}
 				],
@@ -3433,6 +3520,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "RadioItem",
 				"heading": "ContextMenu.RadioItem",
+				"description": "A menu item that works like a radio button in a given group. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -3446,7 +3534,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -3460,25 +3548,26 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the menu radio item is selected."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the menu radio item is disabled."
 					},
 					{
 						"name": "data-highlighted",
-						"description": "Present when the item is highlighted."
+						"description": "Present when the menu radio item is highlighted."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the menu radio item is not selected."
 					}
 				]
 			},
 			{
 				"name": "RadioItemIndicator",
 				"heading": "ContextMenu.RadioItemIndicator",
+				"description": "Indicates whether the radio item is selected. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -3492,21 +3581,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the menu radio item is selected."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the menu radio item is disabled."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the menu radio item is not selected."
 					}
 				]
 			},
 			{
 				"name": "Separator",
 				"heading": "ContextMenu.Separator",
+				"description": "A separator element accessible to screen readers. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [],
 				"dataAttributes": []
@@ -3514,34 +3604,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "SubmenuRoot",
 				"heading": "ContextMenu.SubmenuRoot",
+				"description": "Groups all parts of a submenu. Doesn't render its own HTML element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the menu is currently open.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the menu is initially open. To render a controlled menu, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the menu is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean }]>",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content of the submenu.",
 						"defaultValue": "—"
 					}
 				],
@@ -3559,13 +3650,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "SubmenuTrigger",
 				"heading": "ContextMenu.SubmenuTrigger",
+				"description": "A menu item that opens a submenu. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -3583,11 +3675,11 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the submenu trigger is disabled."
 					},
 					{
 						"name": "data-highlighted",
-						"description": "Present when the item is highlighted."
+						"description": "Present when the submenu trigger is highlighted."
 					},
 					{
 						"name": "data-open",
@@ -3598,13 +3690,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Trigger",
 				"heading": "ContextMenu.Trigger",
+				"description": "An area that opens the menu on right click or long press. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -3640,6 +3733,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Viewport",
 				"heading": "ContextMenu.Viewport",
+				"description": "",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -3662,62 +3756,63 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Dialog.Root",
+				"description": "Groups all parts of the dialog. Doesn't render its own HTML element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the dialog is currently open.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the dialog is initially open. To render a controlled dialog, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the dialog is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "modal",
 						"type": "DialogModal",
 						"optional": true,
-						"description": "Whether the dialog enters a modal state when open. - `true`: focus trap, `aria-modal`, document scroll locked, page interaction limited - `false`: no focus trap / aria-modal / scroll lock - `'trap-focus'`: focus trap without `aria-modal` or scroll lock",
-						"defaultValue": "—"
+						"description": "Determines if the dialog enters a modal state when open. `true`: user interaction is limited to just the dialog: focus is trapped, document page scroll is locked, and pointer interactions on outside elements are disabled.`false`: user interaction with the rest of the document is allowed.\n- `'trap-focus'`: focus is trapped inside the dialog, but document page scroll is not locked and pointer interactions outside of it remain enabled. When `modal` is `true` or `'trap-focus'`, render `<Dialog.Close>` inside `<Dialog.Popup>` so touch screen readers can escape the popup.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "disablePointerDismissal",
 						"type": "boolean",
 						"optional": true,
-						"description": "Prevents closing on outside presses (and backdrop click).",
-						"defaultValue": "—"
+						"description": "Whether to prevent the dialog from closing on outside presses.\nFor non-modal dialogs, this also prevents the dialog from closing when focus moves outside of it.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChangeComplete",
 						"type": "((open: boolean) => void) | undefined",
 						"optional": true,
-						"description": "Called after open/close animations complete.",
+						"description": "Event handler called after any animations complete when the dialog is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "handle",
 						"type": "DialogHandle | undefined",
 						"optional": true,
-						"description": "Imperative handle from .",
+						"description": "A handle to associate the dialog with a trigger.\nIf specified, allows external triggers to control the dialog's open state.\nCan be created with the Dialog.createHandle() method.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content of the dialog.\nThis can be a regular React node or a render function that receives the `payload` of the active trigger.",
 						"defaultValue": "—"
 					}
 				],
@@ -3735,21 +3830,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Backdrop",
 				"heading": "Dialog.Backdrop",
+				"description": "An overlay displayed beneath the popup. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "forceRender",
 						"type": "boolean",
 						"optional": true,
-						"description": "Keep the backdrop mounted while closed (for exit animations).",
-						"defaultValue": "—"
+						"description": "Whether the backdrop is forced to render even when nested.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -3762,32 +3858,33 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the dialog is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the dialog is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the dialog is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the dialog begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Close",
 				"heading": "Dialog.Close",
+				"description": "A button that closes the dialog. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -3803,6 +3900,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Description",
 				"heading": "Dialog.Description",
+				"description": "A paragraph with additional information about the dialog. Renders a `<p>` element.",
 				"extendsNote": "Extends paragraph HTML attributes.",
 				"props": [
 					{
@@ -3818,27 +3916,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Popup",
 				"heading": "Dialog.Popup",
+				"description": "A container for the dialog contents. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "initialFocus",
 						"type": "FocusTarget",
 						"optional": true,
-						"description": "",
+						"description": "Determines the element to focus when the dialog is opened.\nBy default, focus moves to the first tabbable element inside the popup, except when the dialog is opened by touch — then the popup itself is focused to avoid opening the virtual keyboard. `false`: Do not move focus.`true`: Move focus based on the default behavior (first tabbable element or popup).`RefObject`: Move focus to the ref element.`function`: Called with the interaction type (`mouse`, `touch`, `pen`, or `keyboard`).\nReturn an element to focus, `true` to use the default behavior, `null` to fall back to the default behavior, or `false`/`undefined` to do nothing.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "finalFocus",
 						"type": "FocusTarget",
 						"optional": true,
-						"description": "",
+						"description": "Determines the element to focus when the dialog is closed. `false`: Do not move focus.`true`: Move focus based on the default behavior (trigger or previously focused element).`RefObject`: Move focus to the ref element.`function`: Called with the interaction type (`mouse`, `touch`, `pen`, or `keyboard`).\nReturn an element to focus, `true` to use the default behavior, `null` to fall back to the default behavior, or `false`/`undefined` to do nothing.",
 						"defaultValue": "—"
 					},
 					{
@@ -3852,40 +3951,41 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the dialog is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the dialog is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the dialog is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the dialog begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Portal",
 				"heading": "Dialog.Portal",
+				"description": "A portal element that moves the popup to a different part of the DOM. By default, the portal element is appended to `<body>`. Renders a `<div>` element.",
 				"extendsNote": "",
 				"props": [
 					{
 						"name": "container",
 						"type": "HTMLElement | string | null",
 						"optional": true,
-						"description": "",
+						"description": "A parent element to render the portal element into.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the portal mounted in the DOM while the popup is hidden.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -3900,6 +4000,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Title",
 				"heading": "Dialog.Title",
+				"description": "A heading that labels the dialog. Renders an `<h2>` element.",
 				"extendsNote": "Extends heading HTML attributes.",
 				"props": [
 					{
@@ -3915,13 +4016,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Trigger",
 				"heading": "Dialog.Trigger",
+				"description": "A button that opens the dialog. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -3935,21 +4037,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "id",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "ID of the trigger. In addition to being forwarded to the rendered element, it is also used to specify the active trigger for the dialog in controlled mode (with the Dialog.Root `triggerId` prop).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "handle",
 						"type": "DialogHandle | undefined",
 						"optional": true,
-						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"description": "A handle to associate the trigger with a dialog.\nCan be created with the Dialog.createHandle() method.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "Optional payload associated when opening via this trigger.",
+						"description": "A payload to pass to the dialog when it is opened.",
 						"defaultValue": "—"
 					},
 					{
@@ -3967,7 +4069,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the trigger is disabled."
 					},
 					{
 						"name": "data-open",
@@ -3978,13 +4080,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Viewport",
 				"heading": "Dialog.Viewport",
+				"description": "A positioning container for the dialog popup that can be made scrollable. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -3998,11 +4101,11 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the dialog is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the dialog is open."
 					}
 				]
 			}
@@ -4016,104 +4119,105 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Drawer.Root",
+				"description": "Groups all parts of the drawer. Doesn't render its own HTML element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the drawer is currently open.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the drawer is initially open. To render a controlled drawer, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the drawer is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onOpenChangeComplete",
 						"type": "((open: boolean) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Event handler called after any animations complete when the drawer is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "swipeDirection",
 						"type": "DrawerSwipeDirection",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "The swipe direction used to dismiss the drawer.",
+						"defaultValue": "'down'"
 					},
 					{
 						"name": "modal",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the drawer enters a modal state when open. When `true`, focus is trapped, document scroll is locked, and outside pointer interaction is limited.",
-						"defaultValue": "—"
+						"description": "Determines if the drawer enters a modal state when open. `true`: user interaction is limited to just the drawer: focus is trapped, document page scroll is locked, and pointer interactions on outside elements are disabled.`false`: user interaction with the rest of the document is allowed.\n- `'trap-focus'`: focus is trapped inside the drawer, but document page scroll is not locked and pointer interactions outside of it remain enabled.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "disablePointerDismissal",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to prevent the drawer from closing on outside presses.\nFor non-modal drawers, this also prevents the drawer from closing when focus moves outside of it.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "snapPoints",
 						"type": "ReadonlyArray<DrawerSnapPoint>",
 						"optional": true,
-						"description": "",
+						"description": "Snap points used to position the drawer.\nUse numbers between 0 and 1 to represent fractions of the viewport height, numbers greater than 1 as pixel values, or strings in `px`/`rem` units\n(for example, `'148px'` or `'30rem'`).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "snapPoint",
 						"type": "DrawerSnapPoint | null | undefined",
 						"optional": true,
-						"description": "",
+						"description": "The currently active snap point. Use with `onSnapPointChange` to control the snap point.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultSnapPoint",
 						"type": "DrawerSnapPoint | null",
 						"optional": true,
-						"description": "",
+						"description": "The initial snap point value when uncontrolled.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onSnapPointChange",
 						"type": "((snapPoint: DrawerSnapPoint | null) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Callback fired when the snap point changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "snapToSequentialPoints",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Disables velocity-based snap skipping so drag distance determines the next snap point.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "handle",
 						"type": "DrawerHandle | undefined",
 						"optional": true,
-						"description": "Imperative handle from .",
+						"description": "A handle to associate the drawer with a trigger.\nIf specified, allows detached triggers to control the drawer's open state.\nCan be created with the Drawer.createHandle() method.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content of the drawer.",
 						"defaultValue": "—"
 					}
 				],
@@ -4139,6 +4243,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Provider",
 				"heading": "Drawer.Provider",
+				"description": "Provides a shared context for coordinating global Drawer UI, such as indent/background effects based on whether any Drawer is open. Doesn't render its own HTML element.",
 				"extendsNote": "",
 				"props": [
 					{
@@ -4161,21 +4266,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Backdrop",
 				"heading": "Drawer.Backdrop",
+				"description": "An overlay displayed beneath the popup. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "forceRender",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the backdrop is forced to render even when nested.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -4188,32 +4294,33 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the drawer is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the drawer is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the drawer is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the drawer begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Close",
 				"heading": "Drawer.Close",
+				"description": "A button that closes the drawer. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -4229,13 +4336,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Content",
 				"heading": "Drawer.Content",
+				"description": "A container for the drawer contents. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -4264,6 +4372,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Description",
 				"heading": "Drawer.Description",
+				"description": "A paragraph with additional information about the drawer. Renders a `<p>` element.",
 				"extendsNote": "Extends paragraph HTML attributes.",
 				"props": [
 					{
@@ -4279,13 +4388,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Indent",
 				"heading": "Drawer.Indent",
+				"description": "A wrapper element intended to contain your app's main UI. Applies `data-active` when any drawer within the nearest `<Drawer.Provider>` is open. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -4314,13 +4424,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "IndentBackground",
 				"heading": "Drawer.IndentBackground",
+				"description": "An element placed before `<Drawer.Indent>` to render a background layer that can be styled based on whether any drawer is open. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -4349,27 +4460,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Popup",
 				"heading": "Drawer.Popup",
+				"description": "A container for the drawer contents. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "initialFocus",
 						"type": "FocusTarget",
 						"optional": true,
-						"description": "",
+						"description": "Determines the element to focus when the drawer is opened. `false`: Do not move focus.`true`: Move focus based on the default behavior (first tabbable element or popup).`RefObject`: Move focus to the ref element.`function`: Called with the interaction type (`mouse`, `touch`, `pen`, or `keyboard`).\nReturn an element to focus, `true` to use the default behavior, or `false`/`undefined` to do nothing.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "finalFocus",
 						"type": "FocusTarget",
 						"optional": true,
-						"description": "",
+						"description": "Determines the element to focus when the drawer is closed. `false`: Do not move focus.`true`: Move focus based on the default behavior (trigger or previously focused element).`RefObject`: Move focus to the ref element.`function`: Called with the interaction type (`mouse`, `touch`, `pen`, or `keyboard`).\nReturn an element to focus, `true` to use the default behavior, or `false`/`undefined` to do nothing.",
 						"defaultValue": "—"
 					},
 					{
@@ -4383,23 +4495,23 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the drawer is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the drawer is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the drawer is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the drawer begins animating in."
 					},
 					{
 						"name": "data-swipe-direction",
-						"description": "Direction of an active toast swipe."
+						"description": "Indicates the swipe direction."
 					},
 					{
 						"name": "data-swipe-snap",
@@ -4407,28 +4519,29 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-swiping",
-						"description": "Present on the element when applicable."
+						"description": "Present when the drawer is being swiped."
 					}
 				]
 			},
 			{
 				"name": "Portal",
 				"heading": "Drawer.Portal",
+				"description": "A portal element that moves the popup to a different part of the DOM. By default, the portal element is appended to `<body>`. Renders a `<div>` element.",
 				"extendsNote": "",
 				"props": [
 					{
 						"name": "container",
 						"type": "HTMLElement | string | null",
 						"optional": true,
-						"description": "",
+						"description": "A parent element to render the portal element into.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the portal mounted in the DOM while the popup is hidden.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -4443,27 +4556,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "SwipeArea",
 				"heading": "Drawer.SwipeArea",
+				"description": "An invisible area that listens for swipe gestures to open the drawer. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the swipe area is disabled.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "swipeDirection",
 						"type": "DrawerSwipeDirection",
 						"optional": true,
-						"description": "",
+						"description": "The swipe direction that opens the drawer.\nDefaults to the opposite of `Drawer.Root` `swipeDirection`.",
 						"defaultValue": "—"
 					},
 					{
@@ -4477,29 +4591,30 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the drawer is closed."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the swipe area is disabled."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the drawer is open."
 					},
 					{
 						"name": "data-swipe-direction",
-						"description": "Direction of an active toast swipe."
+						"description": "Indicates the swipe direction."
 					},
 					{
 						"name": "data-swiping",
-						"description": "Present on the element when applicable."
+						"description": "Present when the drawer is being swiped."
 					}
 				]
 			},
 			{
 				"name": "Title",
 				"heading": "Drawer.Title",
+				"description": "A heading that labels the drawer. Renders an `<h2>` element.",
 				"extendsNote": "Extends heading HTML attributes.",
 				"props": [
 					{
@@ -4515,13 +4630,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Trigger",
 				"heading": "Drawer.Trigger",
+				"description": "A button that opens the drawer. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -4535,21 +4651,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "id",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "ID of the trigger. In addition to being forwarded to the rendered element, it is also used to specify the active trigger for drawers in controlled mode (with the Drawer.Root `triggerId` prop).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "handle",
 						"type": "DrawerHandle | undefined",
 						"optional": true,
-						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"description": "A handle to associate the trigger with a drawer.\nCan be created with the Drawer.createHandle() method.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "Optional payload associated when opening via this trigger.",
+						"description": "A payload to pass to the drawer when it is opened.",
 						"defaultValue": "—"
 					},
 					{
@@ -4578,13 +4694,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Viewport",
 				"heading": "Drawer.Viewport",
+				"description": "A positioning container for the drawer popup that can be made scrollable. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -4598,11 +4715,11 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the drawer is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the drawer is animating out."
 					},
 					{
 						"name": "data-keyboard-open",
@@ -4610,11 +4727,11 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the drawer is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the drawer begins animating in."
 					},
 					{
 						"name": "data-swipe-direction",
@@ -4625,6 +4742,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "VirtualKeyboardProvider",
 				"heading": "Drawer.VirtualKeyboardProvider",
+				"description": "Provides keyboard-aware focus and scroll handling for bottom-sheet drawers with form fields.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -4652,55 +4770,56 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Field.Root",
+				"description": "Groups all parts of the field. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "name",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Identifies the field when a form is submitted.\nTakes precedence over the `name` prop on the `<Field.Control>` component.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.\nTakes precedence over the `disabled` prop on the `<Field.Control>` component.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "invalid",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Whether the field is invalid.\nUseful when the field state is controlled by an external library.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "validate",
 						"type": "| ((value: string) => string | string[] | null | Promise<string | string[] | null>) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "A function for custom validation. Return a string or an array of strings with the error message(s) if the value is invalid, or `null` if the value is valid.\nAsynchronous functions are supported, but they do not prevent form submission when using `validationMode=\"onSubmit\"`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "validationMode",
 						"type": "FieldValidationMode",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Determines when the field should be validated.\nThis takes precedence over the `validationMode` prop on `<Form>`. `onSubmit`: triggers validation when the form is submitted, and re-validates on change after submission.`onBlur`: triggers validation when the control loses focus.`onchange`: triggers validation on every change to the control value.",
+						"defaultValue": "'onSubmit'"
 					},
 					{
 						"name": "validationDebounceTime",
 						"type": "number",
 						"optional": true,
-						"description": "Debounce (ms) before running `validate` on change.",
-						"defaultValue": "—"
+						"description": "How long to wait between `validate` callbacks if\n`validationMode=\"onchange\"` is used. Specified in milliseconds.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "dirty",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Whether the field's value has been changed from its initial value.\nUseful when the field state is controlled by an external library.",
 						"defaultValue": "—"
 					},
 					{
@@ -4721,7 +4840,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "touched",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Whether the field has been touched.\nUseful when the field state is controlled by an external library.",
 						"defaultValue": "—"
 					},
 					{
@@ -4749,19 +4868,19 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-dirty",
-						"description": "Present when the field value has changed."
+						"description": "Present when the field's value has changed."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the field is disabled."
 					},
 					{
 						"name": "data-filled",
-						"description": "Present when the field has a value."
+						"description": "Present when the field is filled."
 					},
 					{
 						"name": "data-focused",
-						"description": "Present when the field is focused."
+						"description": "Present when the field control is focused."
 					},
 					{
 						"name": "data-invalid",
@@ -4780,6 +4899,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Control",
 				"heading": "Field.Control",
+				"description": "The form control to label and validate. Renders an `<input>` element. You can omit this part and use any Base UI input component instead. For example, [Input](https://base-ui.com/react/components/input), [Checkbox](https://base-ui.com/react/components/checkbox), or [Select](https://base-ui.com/react/components/select), among others, will work with Field out of the box.",
 				"extendsNote": "Extends input HTML attributes.",
 				"props": [
 					{
@@ -4807,7 +4927,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "onValueChange",
 						"type": "((value: string, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Callback fired when the `value` changes. Use when controlled.",
 						"defaultValue": "—"
 					},
 					{
@@ -4821,23 +4941,23 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-dirty",
-						"description": "Present when the field value has changed."
+						"description": "Present when the field's value has changed."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the field is disabled."
 					},
 					{
 						"name": "data-filled",
-						"description": "Present when the field has a value."
+						"description": "Present when the field is filled."
 					},
 					{
 						"name": "data-focused",
-						"description": "Present when the field is focused."
+						"description": "Present when the field control is focused."
 					},
 					{
 						"name": "data-invalid",
-						"description": "Present when the field is invalid."
+						"description": "Present when the field is in an invalid state."
 					},
 					{
 						"name": "data-touched",
@@ -4845,13 +4965,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-valid",
-						"description": "Present when the field is valid."
+						"description": "Present when the field is in a valid state."
 					}
 				]
 			},
 			{
 				"name": "Description",
 				"heading": "Field.Description",
+				"description": "A paragraph with additional information about the field. Renders a `<p>` element.",
 				"extendsNote": "Extends paragraph HTML attributes.",
 				"props": [
 					{
@@ -4865,23 +4986,23 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-dirty",
-						"description": "Present when the field value has changed."
+						"description": "Present when the field's value has changed."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the field is disabled."
 					},
 					{
 						"name": "data-filled",
-						"description": "Present when the field has a value."
+						"description": "Present when the field is filled."
 					},
 					{
 						"name": "data-focused",
-						"description": "Present when the field is focused."
+						"description": "Present when the field control is focused."
 					},
 					{
 						"name": "data-invalid",
-						"description": "Present when the field is invalid."
+						"description": "Present when the field is in an invalid state."
 					},
 					{
 						"name": "data-touched",
@@ -4889,20 +5010,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-valid",
-						"description": "Present when the field is valid."
+						"description": "Present when the field is in a valid state."
 					}
 				]
 			},
 			{
 				"name": "Error",
 				"heading": "Field.Error",
+				"description": "An error message displayed if the field control fails validation. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "match",
 						"type": "FieldErrorMatch | undefined",
 						"optional": true,
-						"description": "When `true`, always show. When a `ValidityState` key, show when that flag is true. When omitted, show when the field is invalid (or has a form error).",
+						"description": "Determines whether to show the error message according to the field's\n[ValidityState](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState).\nSpecifying `true` will always show the error message, and lets external libraries control the visibility.",
 						"defaultValue": "—"
 					},
 					{
@@ -4916,23 +5038,23 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-dirty",
-						"description": "Present when the field value has changed."
+						"description": "Present when the field's value has changed."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the field is disabled."
 					},
 					{
 						"name": "data-filled",
-						"description": "Present when the field has a value."
+						"description": "Present when the field is filled."
 					},
 					{
 						"name": "data-focused",
-						"description": "Present when the field is focused."
+						"description": "Present when the field control is focused."
 					},
 					{
 						"name": "data-invalid",
-						"description": "Present when the field is invalid."
+						"description": "Present when the field is in an invalid state."
 					},
 					{
 						"name": "data-touched",
@@ -4940,27 +5062,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-valid",
-						"description": "Present when the field is valid."
+						"description": "Present when the field is in a valid state."
 					}
 				]
 			},
 			{
 				"name": "Item",
 				"heading": "Field.Item",
+				"description": "Groups individual items in a checkbox group or radio group with a label and description. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the wrapped control should ignore user interaction.\nThe `disabled` prop on `<Field.Root>` takes precedence over this.",
 						"defaultValue": "false"
 					},
 					{
@@ -4974,23 +5097,23 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-dirty",
-						"description": "Present when the field value has changed."
+						"description": "Present when the field's value has changed."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the field is disabled."
 					},
 					{
 						"name": "data-filled",
-						"description": "Present when the field has a value."
+						"description": "Present when the field is filled."
 					},
 					{
 						"name": "data-focused",
-						"description": "Present when the field is focused."
+						"description": "Present when the field control is focused."
 					},
 					{
 						"name": "data-invalid",
-						"description": "Present when the field is invalid."
+						"description": "Present when the field is in an invalid state."
 					},
 					{
 						"name": "data-touched",
@@ -4998,21 +5121,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-valid",
-						"description": "Present when the field is valid."
+						"description": "Present when the field is in a valid state."
 					}
 				]
 			},
 			{
 				"name": "Label",
 				"heading": "Field.Label",
+				"description": "An accessible label that is automatically associated with the field control. Renders a `<label>` element.",
 				"extendsNote": "Extends label HTML attributes.",
 				"props": [
 					{
 						"name": "nativeLabel",
 						"type": "boolean",
 						"optional": true,
-						"description": "When false, render a `span` instead of a native `label`.",
-						"defaultValue": "—"
+						"description": "Whether the component renders a native `<label>` element when replacing it via the `render` prop.\nSet to `false` if the rendered element is not a label (for example, `<div>`). This is useful to avoid inheriting label behaviors on `<button>` controls (such as `<Select.Trigger>` and `<Combobox.Trigger>`), including avoiding `:hover` on the button when hovering the label, and preventing clicks on the label from firing on the button.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "children",
@@ -5025,23 +5149,23 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-dirty",
-						"description": "Present when the field value has changed."
+						"description": "Present when the field's value has changed."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the field is disabled."
 					},
 					{
 						"name": "data-filled",
-						"description": "Present when the field has a value."
+						"description": "Present when the field is filled."
 					},
 					{
 						"name": "data-focused",
-						"description": "Present when the field is focused."
+						"description": "Present when the field control is focused."
 					},
 					{
 						"name": "data-invalid",
-						"description": "Present when the field is invalid."
+						"description": "Present when the field is in an invalid state."
 					},
 					{
 						"name": "data-touched",
@@ -5049,13 +5173,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-valid",
-						"description": "Present when the field is valid."
+						"description": "Present when the field is in a valid state."
 					}
 				]
 			},
 			{
 				"name": "Validity",
 				"heading": "Field.Validity",
+				"description": "Used to display a custom message based on the field's validity. Requires `children` to be a function that accepts field validity state as an argument.",
 				"extendsNote": "",
 				"props": [
 					{
@@ -5078,6 +5203,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Fieldset.Root",
+				"description": "Groups a shared legend with related controls. Renders a `<fieldset>` element.",
 				"extendsNote": "Extends fieldset HTML attributes.",
 				"props": [
 					{
@@ -5105,6 +5231,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Legend",
 				"heading": "Fieldset.Legend",
+				"description": "An accessible label that is automatically associated with the fieldset. Renders a `<div>` element.",
 				"extendsNote": "Extends HTML attributes for the rendered element.",
 				"props": [
 					{
@@ -5132,20 +5259,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Form",
 				"heading": "Form",
+				"description": "A native form element with consolidated error handling. Renders a `<form>` element.",
 				"extendsNote": "Extends form HTML attributes.",
 				"props": [
 					{
 						"name": "errors",
 						"type": "FormErrors | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Validation errors returned externally, typically after submission by a server or a form action.\nThis should be an object where keys correspond to the `name` attribute on `<Field.Root>`, and values correspond to error(s) related to that field.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onFormSubmit",
 						"type": "((formData: FormData, event: SubmitEvent) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Event handler called when the form is submitted.\n`preventDefault()` is called on the native submit event when used.",
 						"defaultValue": "—"
 					},
 					{
@@ -5168,6 +5296,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Input",
 				"heading": "Input",
+				"description": "A native input element that automatically works with [Field](https://base-ui.com/react/components/field). Renders an `<input>` element.",
 				"extendsNote": "Extends input HTML attributes.",
 				"props": [
 					{
@@ -5181,21 +5310,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "The value of the input. Use when controlled.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string",
 						"optional": true,
-						"description": "Uncontrolled initial value.",
+						"description": "The default value of the input. Use when uncontrolled.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Callback fired when the `value` changes. Use when controlled.",
 						"defaultValue": "—"
 					},
 					{
@@ -5209,31 +5338,31 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-dirty",
-						"description": "Present when the field value has changed."
+						"description": "Present when the input's value has changed (when wrapped in Field.Root)."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the input is disabled."
 					},
 					{
 						"name": "data-filled",
-						"description": "Present when the field has a value."
+						"description": "Present when the input is filled (when wrapped in Field.Root)."
 					},
 					{
 						"name": "data-focused",
-						"description": "Present when the field is focused."
+						"description": "Present when the input is focused (when wrapped in Field.Root)."
 					},
 					{
 						"name": "data-invalid",
-						"description": "Present when the field is invalid."
+						"description": "Present when the input is in an invalid state (when wrapped in Field.Root)."
 					},
 					{
 						"name": "data-touched",
-						"description": "Present when the field has been touched."
+						"description": "Present when the input has been touched (when wrapped in Field.Root)."
 					},
 					{
 						"name": "data-valid",
-						"description": "Present when the field is valid."
+						"description": "Present when the input is in a valid state (when wrapped in Field.Root)."
 					}
 				]
 			}
@@ -5247,63 +5376,64 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Menu.Root",
+				"description": "Groups all parts of the menu. Doesn't render its own HTML element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the menu is currently open.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the menu is initially open. To render a controlled menu, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the menu is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onOpenChangeComplete",
 						"type": "((open: boolean) => void) | undefined",
 						"optional": true,
-						"description": "Called after open/close animations complete.",
+						"description": "Event handler called after any animations complete when the menu is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "modal",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the menu enters a modal state when open.",
-						"defaultValue": "—"
+						"description": "Determines if the menu enters a modal state when open. `true`: user interaction is limited to the menu: document page scroll is locked and pointer interactions on outside elements are disabled.`false`: user interaction with the rest of the document is allowed. On touch devices, a `true` modal blocks outside taps but leaves the page scrollable unless the popup spans nearly the full viewport width, matching native iOS behavior. Nested menus ignore this prop, and menus opened by hover are never modal.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "orientation",
 						"type": "'horizontal' | 'vertical'",
 						"optional": true,
-						"description": "",
+						"description": "The visual orientation of the menu.\nControls whether roving focus uses up/down or left/right arrow keys.",
 						"defaultValue": "'horizontal'"
 					},
 					{
 						"name": "loopFocus",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether highlight wraps at list ends.",
-						"defaultValue": "—"
+						"description": "Whether to loop keyboard focus back to the first item when the end of the list is reached while using the arrow keys.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "openOnHover",
@@ -5330,14 +5460,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "MenuHandle | undefined",
 						"optional": true,
-						"description": "Imperative handle from .",
+						"description": "A handle to associate the menu with a trigger.\nIf specified, allows external triggers to control the menu's open state.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content of the menu.\nThis can be a regular React node or a render function that receives the `payload` of the active trigger.",
 						"defaultValue": "—"
 					}
 				],
@@ -5363,6 +5493,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Arrow",
 				"heading": "Menu.Arrow",
+				"description": "Displays an element positioned against the menu anchor. Renders a `<div>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -5376,24 +5507,25 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the menu popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the menu popup is open."
 					}
 				]
 			},
 			{
 				"name": "Backdrop",
 				"heading": "Menu.Backdrop",
+				"description": "An overlay displayed beneath the menu popup. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -5414,45 +5546,46 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the menu is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the menu is open."
 					}
 				]
 			},
 			{
 				"name": "CheckboxItem",
 				"heading": "Menu.CheckboxItem",
+				"description": "A menu item that toggles a setting on or off. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "checked",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Controlled checked state.",
+						"description": "Whether the checkbox item is currently ticked. To render an uncontrolled checkbox item, use the `defaultChecked` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultChecked",
 						"type": "boolean",
 						"optional": true,
-						"description": "Uncontrolled initial checked state.",
-						"defaultValue": "—"
+						"description": "Whether the checkbox item is initially ticked. To render a controlled checkbox item, use the `checked` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onCheckedChange",
 						"type": "((checked: boolean, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the checked state changes.",
+						"description": "Event handler called when the checkbox item is ticked or unticked.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -5466,25 +5599,26 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the menu checkbox item is checked."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the menu checkbox item is disabled."
 					},
 					{
 						"name": "data-highlighted",
-						"description": "Present when the item is highlighted."
+						"description": "Present when the menu checkbox item is highlighted."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the menu checkbox item is not checked."
 					}
 				]
 			},
 			{
 				"name": "CheckboxItemIndicator",
 				"heading": "Menu.CheckboxItemIndicator",
+				"description": "Indicates whether the checkbox item is ticked. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -5498,28 +5632,29 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the menu checkbox item is checked."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the menu checkbox item is disabled."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the menu checkbox item is not checked."
 					}
 				]
 			},
 			{
 				"name": "Group",
 				"heading": "Menu.Group",
+				"description": "Groups related menu items with the corresponding label. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "children",
 						"type": "Snippet",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content of the component.",
 						"defaultValue": "—"
 					}
 				],
@@ -5528,6 +5663,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "GroupLabel",
 				"heading": "Menu.GroupLabel",
+				"description": "An accessible label that is automatically associated with its parent group. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -5543,20 +5679,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Item",
 				"heading": "Menu.Item",
+				"description": "An individual interactive item in the menu. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onClick",
 						"type": "((event: MouseEvent) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "The click handler for the menu item.",
 						"defaultValue": "—"
 					},
 					{
@@ -5570,17 +5707,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the menu item is disabled."
 					},
 					{
 						"name": "data-highlighted",
-						"description": "Present when the item is highlighted."
+						"description": "Present when the menu item is highlighted."
 					}
 				]
 			},
 			{
 				"name": "LinkItem",
 				"heading": "Menu.LinkItem",
+				"description": "A link in the menu that can be used to navigate to a different page or section. Renders an `<a>` element.",
 				"extendsNote": "Extends anchor HTML attributes.",
 				"props": [
 					{
@@ -5605,20 +5743,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-highlighted",
-						"description": "Present when the item is highlighted."
+						"description": "Present when the link is highlighted."
 					}
 				]
 			},
 			{
 				"name": "Popup",
 				"heading": "Menu.Popup",
+				"description": "A container for the menu items. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -5632,15 +5771,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the menu is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the menu is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the menu is open."
 					},
 					{
 						"name": "data-orientation",
@@ -5648,28 +5787,29 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the menu begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Portal",
 				"heading": "Menu.Portal",
+				"description": "A portal element that moves the popup to a different part of the DOM. By default, the portal element is appended to `<body>`. Renders a `<div>` element.",
 				"extendsNote": "",
 				"props": [
 					{
 						"name": "container",
 						"type": "HTMLElement | string | null",
 						"optional": true,
-						"description": "",
+						"description": "A parent element to render the portal element into.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the portal mounted in the DOM while the popup is hidden.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -5684,77 +5824,78 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Positioner",
 				"heading": "Menu.Positioner",
+				"description": "Positions the menu popup against the trigger. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "side",
 						"type": "rId:",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Which side of the anchor element to align the popup against.\nMay automatically change to avoid collisions.",
+						"defaultValue": "'bottom'"
 					},
 					{
 						"name": "align",
 						"type": "etOpe",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "How to align the popup relative to the specified side.",
+						"defaultValue": "'center'"
 					},
 					{
 						"name": "sideOffset",
 						"type": "n, rea",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Distance between the anchor and the popup in pixels.\nAlso accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "alignOffset",
 						"type": "ason)",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional offset along the alignment axis in pixels.\nAlso accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "collisionPadding",
 						"type": "=> boolean; }; export type MenuContex",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional space to maintain from the edge of the collision boundary.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "collisionBoundary",
 						"type": "oolean; setOpe",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "An element or a rectangle that delimits the area that the popup is confined to.",
+						"defaultValue": "'clipping-ancestors'"
 					},
 					{
 						"name": "collisionAvoidance",
 						"type": "OpenChangeReason)",
 						"optional": true,
-						"description": "",
+						"description": "Determines how to handle collisions when positioning the popup. `side` controls overflow on the preferred placement axis (`top`/`bottom` or `left`/`right`): `'flip'`: keep the requested side when it fits; otherwise try the opposite side\n(`top` and `bottom`, or `left` and `right`).\n- `'shift'`: never change side; keep the requested side and move the popup within the clipping boundary so it stays visible.\n- `'none'`: do not correct side-axis overflow. `align` controls overflow on the alignment axis (`start`/`center`/`end`): `'flip'`: keep side, but swap `start` and `end` when the requested alignment overflows.\n- `'shift'`: keep side and requested alignment, then nudge the popup along the alignment axis to fit.\n- `'none'`: do not correct alignment-axis overflow. `fallbackAxisSide` controls fallback behavior on the perpendicular axis when the preferred axis cannot fit: `'start'`: allow perpendicular fallback and try the logical start side first\n(`top` before `bottom`, or `left` before `right` in LTR).\n- `'end'`: allow perpendicular fallback and try the logical end side first\n(`bottom` before `top`, or `right` before `left` in LTR).\n- `'none'`: do not fallback to the perpendicular axis. When `side` is `'shift'`, explicitly setting `align` only supports `'shift'` or `'none'`.\nIf `align` is omitted, it defaults to `'flip'`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "arrowPadding",
 						"type": "overDe",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Minimum distance to maintain between the arrow and the edges of the popup. Use it to prevent the arrow element from hanging out of the rounded corners of a popup.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "sticky",
 						"type": "OpenCha",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to maintain the popup in the viewport after the anchor element was scrolled out of view.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "positionMethod",
 						"type": "ver(): void; read",
 						"optional": true,
-						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
-						"defaultValue": "—"
+						"description": "Determines which CSS `position` property to use.",
+						"defaultValue": "'absolute'"
 					},
 					{
 						"name": "strategy",
@@ -5767,15 +5908,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "oopFocus: boolean; readonly me",
 						"optional": true,
-						"description": "Override the positioning anchor (element or virtual element).",
+						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "n | nul",
 						"optional": true,
-						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
-						"defaultValue": "—"
+						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -5788,52 +5929,53 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the menu popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the menu popup is open."
 					}
 				]
 			},
 			{
 				"name": "RadioGroup",
 				"heading": "Menu.RadioGroup",
+				"description": "Groups related radio items. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "The controlled value of the radio item that should be currently selected. To render an uncontrolled radio group, use the `defaultValue` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string",
 						"optional": true,
-						"description": "Uncontrolled initial value.",
+						"description": "The uncontrolled value of the radio item that should be initially selected. To render a controlled radio group, use the `value` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Function called when the selected value changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ value: string }]>",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content of the component.",
 						"defaultValue": "—"
 					}
 				],
@@ -5847,6 +5989,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "RadioItem",
 				"heading": "Menu.RadioItem",
+				"description": "A menu item that works like a radio button in a given group. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -5860,7 +6003,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -5874,25 +6017,26 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the menu radio item is selected."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the menu radio item is disabled."
 					},
 					{
 						"name": "data-highlighted",
-						"description": "Present when the item is highlighted."
+						"description": "Present when the menu radio item is highlighted."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the menu radio item is not selected."
 					}
 				]
 			},
 			{
 				"name": "RadioItemIndicator",
 				"heading": "Menu.RadioItemIndicator",
+				"description": "Indicates whether the radio item is selected. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -5906,21 +6050,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the menu radio item is selected."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the menu radio item is disabled."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the menu radio item is not selected."
 					}
 				]
 			},
 			{
 				"name": "Separator",
 				"heading": "Menu.Separator",
+				"description": "A separator element accessible to screen readers. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [],
 				"dataAttributes": []
@@ -5928,34 +6073,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "SubmenuRoot",
 				"heading": "Menu.SubmenuRoot",
+				"description": "Groups all parts of a submenu. Doesn't render its own HTML element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the menu is currently open.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the menu is initially open. To render a controlled menu, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the menu is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean }]>",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content of the submenu.",
 						"defaultValue": "—"
 					}
 				],
@@ -5973,13 +6119,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "SubmenuTrigger",
 				"heading": "Menu.SubmenuTrigger",
+				"description": "A menu item that opens a submenu. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -5997,11 +6144,11 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the submenu trigger is disabled."
 					},
 					{
 						"name": "data-highlighted",
-						"description": "Present when the item is highlighted."
+						"description": "Present when the submenu trigger is highlighted."
 					},
 					{
 						"name": "data-open",
@@ -6012,20 +6159,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Trigger",
 				"heading": "Menu.Trigger",
+				"description": "A button that opens the menu. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -6039,21 +6187,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "MenuHandle | undefined",
 						"optional": true,
-						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"description": "A handle to associate the trigger with a menu.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "Optional payload associated when opening via this trigger.",
+						"description": "A payload to pass to the menu when it is opened.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "openOnHover",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
+						"description": "Whether the menu should also open when the trigger is hovered.",
 						"defaultValue": "—"
 					},
 					{
@@ -6082,13 +6230,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Viewport",
 				"heading": "Menu.Viewport",
+				"description": "A viewport for displaying content transitions. This component is only required if one popup can be opened by multiple triggers, its content changes based on the trigger, and switching between them is animated. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "children",
 						"type": "Snippet",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content to render inside the transition container.",
 						"defaultValue": "—"
 					}
 				],
@@ -6104,13 +6253,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Menubar",
 				"heading": "Menubar",
+				"description": "The container for menus.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "orientation",
 						"type": "MenubarOrientation",
 						"optional": true,
-						"description": "",
+						"description": "The orientation of the menubar.",
 						"defaultValue": "'horizontal'"
 					},
 					{
@@ -6131,8 +6281,8 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "modal",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether menus in this menubar lock document scroll when open.",
-						"defaultValue": "—"
+						"description": "Whether the menubar is modal.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "children",
@@ -6145,7 +6295,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Determines the orientation of the menubar."
 					}
 				]
 			}
@@ -6159,6 +6309,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Meter.Root",
+				"description": "Groups all parts of the meter and provides the value for screen readers. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -6172,35 +6323,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "min",
 						"type": "number",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "The minimum value",
+						"defaultValue": "0"
 					},
 					{
 						"name": "max",
 						"type": "number",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "The maximum value",
+						"defaultValue": "100"
 					},
 					{
 						"name": "format",
 						"type": "Intl.NumberFormatOptions | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Options to format the value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "getAriaValueText",
 						"type": "((formattedValue: string, value: number) => string | undefined) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "A function that returns a string value that provides a human-readable text alternative for `aria-valuenow`, the current value of the meter.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "locale",
 						"type": "Intl.LocalesArgument | undefined",
 						"optional": true,
-						"description": "",
+						"description": "The locale used by `Intl.NumberFormat` when formatting the value.\nDefaults to the user's runtime locale.",
 						"defaultValue": "—"
 					},
 					{
@@ -6225,6 +6376,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Indicator",
 				"heading": "Meter.Indicator",
+				"description": "Visualizes the position of the value along the range. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -6249,6 +6401,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Label",
 				"heading": "Meter.Label",
+				"description": "An accessible label for the meter. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -6273,6 +6426,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Track",
 				"heading": "Meter.Track",
+				"description": "Contains the meter indicator and represents the entire range of the meter. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -6297,6 +6451,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Value",
 				"heading": "Meter.Value",
+				"description": "A text element displaying the current value. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -6328,49 +6483,50 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "NavigationMenu.Root",
+				"description": "Groups all parts of the navigation menu. Renders a `<nav>` element at the root, or `<div>` element when nested.",
 				"extendsNote": "Extends HTML element attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "string | null | undefined",
 						"optional": true,
-						"description": "Controlled value.",
-						"defaultValue": "—"
+						"description": "The controlled value of the navigation menu item that should be currently open.\nWhen non-nullish, the menu will be open. When nullish, the menu will be closed. To render an uncontrolled navigation menu, use the `defaultValue` prop instead.",
+						"defaultValue": "null"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string | null",
 						"optional": true,
-						"description": "Uncontrolled initial value.",
-						"defaultValue": "—"
+						"description": "The uncontrolled value of the item that should be initially selected. To render a controlled navigation menu, use the `value` prop instead.",
+						"defaultValue": "null"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string | null) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Callback fired when the value changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "orientation",
 						"type": "NavigationMenuOrientation",
 						"optional": true,
-						"description": "",
+						"description": "The orientation of the navigation menu.",
 						"defaultValue": "'horizontal'"
 					},
 					{
 						"name": "delay",
 						"type": "number",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "How long to wait before opening the navigation popup. Specified in milliseconds.",
+						"defaultValue": "50"
 					},
 					{
 						"name": "closeDelay",
 						"type": "number",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "How long to wait before closing the navigation popup. Specified in milliseconds.",
+						"defaultValue": "50"
 					},
 					{
 						"name": "children",
@@ -6398,6 +6554,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Arrow",
 				"heading": "NavigationMenu.Arrow",
+				"description": "Displays an element pointing toward the navigation menu's current anchor. Renders a `<div>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -6411,24 +6568,25 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					}
 				]
 			},
 			{
 				"name": "Backdrop",
 				"heading": "NavigationMenu.Backdrop",
+				"description": "A backdrop for the navigation menu popup. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -6442,17 +6600,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					}
 				]
 			},
 			{
 				"name": "Content",
 				"heading": "NavigationMenu.Content",
+				"description": "A container for the content of the navigation menu item that is moved into the popup when the item is active. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -6468,6 +6627,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Icon",
 				"heading": "NavigationMenu.Icon",
+				"description": "An icon that indicates that the trigger button opens a menu.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -6492,13 +6652,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Item",
 				"heading": "NavigationMenu.Item",
+				"description": "An individual navigation menu item. Renders a `<li>` element.",
 				"extendsNote": "Extends HTML attributes for the rendered element.",
 				"props": [
 					{
 						"name": "value",
 						"type": "string",
 						"optional": false,
-						"description": "Controlled value.",
+						"description": "A unique value that identifies this navigation menu item.\nIf no value is provided, a unique ID will be generated automatically.\nUse when controlling the navigation menu programmatically.",
 						"defaultValue": "—"
 					},
 					{
@@ -6523,6 +6684,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Link",
 				"heading": "NavigationMenu.Link",
+				"description": "A link in the navigation menu that can be used to navigate to a different page or section. Renders an `<a>` element.",
 				"extendsNote": "Extends anchor HTML attributes.",
 				"props": [
 					{
@@ -6538,6 +6700,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "List",
 				"heading": "NavigationMenu.List",
+				"description": "Contains a list of navigation menu items. Renders a `<ul>` element.",
 				"extendsNote": "Extends HTML attributes for the rendered element.",
 				"props": [
 					{
@@ -6558,6 +6721,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Popup",
 				"heading": "NavigationMenu.Popup",
+				"description": "A container for the navigation menu contents. Renders a `<nav>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -6571,25 +6735,26 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the popup is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the popup begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Portal",
 				"heading": "NavigationMenu.Portal",
+				"description": "A portal element that moves the popup to a different part of the DOM. By default, the portal element is appended to `<body>`. Renders a `<div>` element.",
 				"extendsNote": "",
 				"props": [
 					{
@@ -6605,77 +6770,78 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Positioner",
 				"heading": "NavigationMenu.Positioner",
+				"description": "Positions the navigation menu against the currently active trigger. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "side",
 						"type": "re",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Which side of the anchor element to align the popup against.\nMay automatically change to avoid collisions.",
+						"defaultValue": "'bottom'"
 					},
 					{
 						"name": "align",
 						"type": ": Nav",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "How to align the popup relative to the specified side.",
+						"defaultValue": "'center'"
 					},
 					{
 						"name": "sideOffset",
 						"type": "read",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Distance between the anchor and the popup in pixels.\nAlso accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "alignOffset",
 						"type": "ng; r",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional offset along the alignment axis in pixels.\nAlso accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "collisionPadding",
 						"type": "g; registerContent(itemValue: string,",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional space to maintain from the edge of the collision boundary.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "collisionBoundary",
 						"type": "=> void; getCo",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "An element or a rectangle that delimits the area that the popup is confined to.",
+						"defaultValue": "'clipping-ancestors'"
 					},
 					{
 						"name": "collisionAvoidance",
 						"type": ": Snippet | undefi",
 						"optional": true,
-						"description": "",
+						"description": "Determines how to handle collisions when positioning the popup. `side` controls overflow on the preferred placement axis (`top`/`bottom` or `left`/`right`): `'flip'`: keep the requested side when it fits; otherwise try the opposite side\n(`top` and `bottom`, or `left` and `right`).\n- `'shift'`: never change side; keep the requested side and move the popup within the clipping boundary so it stays visible.\n- `'none'`: do not correct side-axis overflow. `align` controls overflow on the alignment axis (`start`/`center`/`end`): `'flip'`: keep side, but swap `start` and `end` when the requested alignment overflows.\n- `'shift'`: keep side and requested alignment, then nudge the popup along the alignment axis to fit.\n- `'none'`: do not correct alignment-axis overflow. `fallbackAxisSide` controls fallback behavior on the perpendicular axis when the preferred axis cannot fit: `'start'`: allow perpendicular fallback and try the logical start side first\n(`top` before `bottom`, or `left` before `right` in LTR).\n- `'end'`: allow perpendicular fallback and try the logical end side first\n(`bottom` before `top`, or `right` before `left` in LTR).\n- `'none'`: do not fallback to the perpendicular axis. When `side` is `'shift'`, explicitly setting `align` only supports `'shift'` or `'none'`.\nIf `align` is omitted, it defaults to `'flip'`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "arrowPadding",
 						"type": "ger(it",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Minimum distance to maintain between the arrow and the edges of the popup. Use it to prevent the arrow element from hanging out of the rounded corners of a popup.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "sticky",
 						"type": "ing, el",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to maintain the popup in the viewport after the anchor element was scrolled out of view.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "positionMethod",
 						"type": "id; readonly open",
 						"optional": true,
-						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
-						"defaultValue": "—"
+						"description": "Determines which CSS `position` property to use.",
+						"defaultValue": "'absolute'"
 					},
 					{
 						"name": "strategy",
@@ -6688,15 +6854,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "ring; readonly open: boolean;",
 						"optional": true,
-						"description": "Override the positioning anchor (element or virtual element).",
+						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "e?: str",
 						"optional": true,
-						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
-						"defaultValue": "—"
+						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -6709,17 +6875,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					}
 				]
 			},
 			{
 				"name": "Trigger",
 				"heading": "NavigationMenu.Trigger",
+				"description": "Opens the navigation menu popup when hovered or clicked, revealing the associated content. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
@@ -6755,6 +6922,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Viewport",
 				"heading": "NavigationMenu.Viewport",
+				"description": "The clipping viewport of the navigation menu's current content. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -6786,140 +6954,141 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "NumberField.Root",
+				"description": "Groups all parts of the number field and manages its state. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "number | null | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "The raw numeric value of the field.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "number | null",
 						"optional": true,
-						"description": "Uncontrolled initial value.",
+						"description": "The uncontrolled value of the field when it's initially rendered. To render a controlled number field, use the `value` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: number | null, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Callback fired when the number value changes.\n\nThe `eventDetails.reason` indicates what triggered the change:\n\n- `'input-change'` for parseable typing or programmatic text updates\n- `'input-clear'` when the field becomes empty\n- `'input-blur'` when formatting (and clamping, if enabled) occurs on blur\n- `'input-paste'` for paste interactions\n- `'keyboard'` for arrow-key/Home/End stepping (typing digits uses `'input-change'`/`'input-clear'`)\n- `'increment-press'` / `'decrement-press'` for button presses on the increment and decrement controls\n- `'wheel'` for wheel-based scrubbing\n- `'scrub'` for scrub area drags",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueCommitted",
 						"type": "((value: number | null, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Called when the value is committed (blur, Enter, scrub end).",
+						"description": "Callback function that is fired when the value is committed.\nIt runs later than `onValueChange`, when:\n\n- The input is blurred after typing a value.\n- The pointer is released after scrubbing or pressing the increment/decrement buttons. It runs simultaneously with `onValueChange` when interacting with the keyboard or the mouse wheel.\n\n**Warning**: This is a generic event not a change event.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "min",
 						"type": "number | undefined",
 						"optional": true,
-						"description": "",
+						"description": "The minimum value of the input element.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "max",
 						"type": "number | undefined",
 						"optional": true,
-						"description": "",
+						"description": "The maximum value of the input element.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "step",
 						"type": "number",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Amount to increment and decrement with the buttons and arrow keys, or to scrub with pointer movement in the scrub area.\nTo always enable step validation on form submission, specify the `min` prop explicitly in conjunction with this prop.\nSpecify `step=\"any\"` to always disable step validation; interactive stepping then uses a base amount of `1`, while the alt and shift keys still step by `smallStep` and `largeStep`.",
+						"defaultValue": "1"
 					},
 					{
 						"name": "smallStep",
 						"type": "number",
 						"optional": true,
-						"description": "Step used with Alt.",
-						"defaultValue": "—"
+						"description": "The small step value of the input element when incrementing while the alt key is held.\nSnaps to multiples of this value when `snapOnStep` is enabled.",
+						"defaultValue": "0.1"
 					},
 					{
 						"name": "largeStep",
 						"type": "number",
 						"optional": true,
-						"description": "Step used with Shift.",
-						"defaultValue": "—"
+						"description": "The large step value of the input element when incrementing while the shift key is held.\nSnaps to multiples of this value when `snapOnStep` is enabled.",
+						"defaultValue": "10"
 					},
 					{
 						"name": "allowOutOfRange",
 						"type": "boolean",
 						"optional": true,
-						"description": "When true, skip min/max clamping.",
-						"defaultValue": "—"
+						"description": "When true, direct text entry may be outside the `min`/`max` range without clamping, so native range underflow/overflow validation can occur.\nStep-based interactions (keyboard arrows, buttons, wheel, scrub) still clamp.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "snapOnStep",
 						"type": "boolean",
 						"optional": true,
-						"description": "When true, snap to step from min.",
-						"defaultValue": "—"
+						"description": "Whether the value should snap to the nearest step when incrementing or decrementing.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "allowWheelScrub",
 						"type": "boolean",
 						"optional": true,
-						"description": "When true, focused input responds to mouse wheel.",
-						"defaultValue": "—"
+						"description": "Whether to allow the user to scrub the input value with the mouse wheel while focused and hovering over the input.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "locale",
 						"type": "Intl.LocalesArgument | undefined",
 						"optional": true,
-						"description": "",
+						"description": "The locale of the input element.\nDefaults to the user's runtime locale.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "format",
 						"type": "Intl.NumberFormatOptions | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Options to format the input value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "readOnly",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the user should be unable to change the field value.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "name",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Identifies the field when a form is submitted.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "form",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Identifies the form that owns the hidden input.\nUseful when the number field is rendered outside the form.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "required",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the user must enter a value before submitting a form.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -6932,21 +7101,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the number field is disabled."
 					},
 					{
 						"name": "data-readonly",
-						"description": "Present when the control is read-only."
+						"description": "Present when the number field is readonly."
 					},
 					{
 						"name": "data-scrubbing",
-						"description": "Present on the element when applicable."
+						"description": "Present while scrubbing."
 					}
 				]
 			},
 			{
 				"name": "Decrement",
 				"heading": "NumberField.Decrement",
+				"description": "A stepper button that decreases the field value when clicked. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
@@ -6967,13 +7137,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the number field is disabled."
 					}
 				]
 			},
 			{
 				"name": "Group",
 				"heading": "NumberField.Group",
+				"description": "Groups the input with the increment and decrement buttons. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -6987,13 +7158,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the number field is disabled."
 					}
 				]
 			},
 			{
 				"name": "Increment",
 				"heading": "NumberField.Increment",
+				"description": "A stepper button that increases the field value when clicked. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
@@ -7014,13 +7186,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the number field is disabled."
 					}
 				]
 			},
 			{
 				"name": "Input",
 				"heading": "NumberField.Input",
+				"description": "The native input control in the number field. Renders an `<input>` element.",
 				"extendsNote": "Extends input HTML attributes.",
 				"props": [
 					{
@@ -7041,38 +7214,39 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the number field is disabled."
 					},
 					{
 						"name": "data-readonly",
-						"description": "Present when the control is read-only."
+						"description": "Present when the number field is readonly."
 					}
 				]
 			},
 			{
 				"name": "ScrubArea",
 				"heading": "NumberField.ScrubArea",
+				"description": "An interactive area where the user can click and drag to change the field value. Renders a `<span>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "pixelSensitivity",
 						"type": "number",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Determines how many pixels the cursor must move before the value changes.\nA higher value will make scrubbing less sensitive.",
+						"defaultValue": "2"
 					},
 					{
 						"name": "direction",
 						"type": "'horizontal' | 'vertical'",
 						"optional": true,
-						"description": "Cursor movement direction.",
-						"defaultValue": "—"
+						"description": "Cursor movement direction in the scrub area.",
+						"defaultValue": "'horizontal'"
 					},
 					{
 						"name": "teleportDistance",
 						"type": "number | undefined",
 						"optional": true,
-						"description": "Reset scrub origin when pointer travels farther than this distance from the start point.",
+						"description": "If specified, determines the distance that the cursor may move from the center of the scrub area before it will loop back around.",
 						"defaultValue": "—"
 					},
 					{
@@ -7086,17 +7260,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the number field is disabled."
 					},
 					{
 						"name": "data-scrubbing",
-						"description": "Present on the element when applicable."
+						"description": "Present while scrubbing."
 					}
 				]
 			},
 			{
 				"name": "ScrubAreaCursor",
 				"heading": "NumberField.ScrubAreaCursor",
+				"description": "A custom element to display instead of the native cursor while using the scrub area. Renders a `<span>` element. This component uses the [Pointer Lock API](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API), which may prompt the browser to display a related notification. It is disabled in Safari to avoid a layout shift that this notification causes there.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -7110,7 +7285,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-scrubbing",
-						"description": "Present on the element when applicable."
+						"description": "Present while scrubbing."
 					}
 				]
 			}
@@ -7124,6 +7299,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "OTPField.Root",
+				"description": "Groups all OTP field parts and manages their state. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -7137,21 +7313,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "The OTP value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string",
 						"optional": true,
-						"description": "Uncontrolled initial value.",
+						"description": "The uncontrolled OTP value when the component is initially rendered.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Callback fired when the OTP value changes.\n\nThe `eventDetails.reason` indicates what triggered the change:\n\n- `'input-change'` for typing or autofill\n- `'input-clear'` when a character is removed by text input\n- `'input-paste'` for paste interactions\n- `'keyboard'` for keyboard interactions that change the value",
 						"defaultValue": "—"
 					},
 					{
@@ -7165,7 +7341,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -7186,56 +7362,56 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "autoSubmit",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to submit the owning form when the OTP becomes complete.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "mask",
 						"type": "boolean | string",
 						"optional": true,
-						"description": "When true, inputs use `type=\"password\"`. A string sets a display mask character via CSS hooks.",
-						"defaultValue": "—"
+						"description": "Whether the slot inputs should mask entered characters.\nPass `type` directly to individual `<OTPField.Input>` parts to use a custom input type.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "validationType",
 						"type": "'numeric' | 'alphanumeric' | 'none'",
 						"optional": true,
-						"description": "Built-in character validation. Overrides default digit-only when set.",
-						"defaultValue": "—"
+						"description": "The type of input validation to apply to the OTP value.",
+						"defaultValue": "'numeric'"
 					},
 					{
 						"name": "normalizeValue",
 						"type": "((value: string) => string) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Function that normalizes the OTP value after whitespace and `validationType` filtering.\nIt runs whenever OTP Field normalizes a value, including initial/default values, controlled values, and user edits. The returned value is filtered by `validationType` again, then clamped to `length`.\nIt should be idempotent because OTP Field may normalize the same value more than once while handling edits, storing state, and rendering controlled or uncontrolled values. Non-idempotent normalizers can compound across those normalization passes. Characters rejected while normalizing typed or pasted text are reported through `onValueInvalid`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueInvalid",
 						"type": "((details: { value: string; reason: 'pattern' | 'validation-type' }) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Callback fired when entered text contains characters that are rejected by validation or normalization before the OTP value updates. The `value` argument is the attempted user-entered string before normalization.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "readOnly",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the user should be unable to change the field value.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "required",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the user must enter a value before submitting a form.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "form",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "A string specifying the `form` element with which the hidden input is associated.\nThis string's value must match the id of a `form` element in the same document.",
 						"defaultValue": "—"
 					},
 					{
@@ -7249,7 +7425,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "name",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Identifies the field when a form is submitted.",
 						"defaultValue": "—"
 					},
 					{
@@ -7263,13 +7439,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the OTP field is disabled."
 					}
 				]
 			},
 			{
 				"name": "Input",
 				"heading": "OTPField.Input",
+				"description": "An individual OTP character input. Renders an `<input>` element.",
 				"extendsNote": "Extends input HTML attributes.",
 				"props": [
 					{
@@ -7290,7 +7467,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the OTP field is disabled."
 					},
 					{
 						"name": "data-index",
@@ -7302,20 +7479,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-readonly",
-						"description": "Present when the control is read-only."
+						"description": "Present when the OTP field is readonly."
 					}
 				]
 			},
 			{
 				"name": "Separator",
 				"heading": "OTPField.Separator",
+				"description": "A separator element accessible to screen readers. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "orientation",
 						"type": "'horizontal' | 'vertical'",
 						"optional": true,
-						"description": "",
+						"description": "The orientation of the separator.",
 						"defaultValue": "'horizontal'"
 					},
 					{
@@ -7343,34 +7521,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Popover.Root",
+				"description": "Groups all parts of the popover. Doesn't render its own HTML element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the popover is currently open.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the popover is initially open. To render a controlled popover, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the popover is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onOpenChangeComplete",
 						"type": "((open: boolean) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Event handler called after any animations complete when the popover is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
@@ -7398,21 +7577,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "modal",
 						"type": "PopoverModal",
 						"optional": true,
-						"description": "Whether the popover enters a modal state when open. - `true`: document scroll locked (except hover-open), outside interaction limited - `false`: no scroll lock - `'trap-focus'`: focus trap without scroll lock",
-						"defaultValue": "—"
+						"description": "Determines if the popover enters a modal state when open. `true`: user interaction is limited to the popover: document page scroll is locked, and pointer interactions on outside elements are disabled.`false`: user interaction with the rest of the document is allowed.\n- `'trap-focus'`: focus is trapped inside the popover, but document page scroll is not locked and pointer interactions outside of it remain enabled. On touch devices, a `true` modal blocks outside taps but leaves the page scrollable unless the popup spans nearly the full viewport width, matching native iOS behavior. When `modal` is `true`, focus trapping is enabled only if `<Popover.Close>` is rendered inside `<Popover.Popup>`. It can be visually hidden with your own CSS if needed, such as\nTailwind's `sr-only` utility. When `modal` is `'trap-focus'`, render `<Popover.Close>` inside `<Popover.Popup>` so touch screen readers can escape the popup.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "handle",
 						"type": "PopoverHandle | undefined",
 						"optional": true,
-						"description": "Imperative handle from .",
+						"description": "A handle to associate the popover with a trigger.\nIf specified, allows external triggers to control the popover's open state.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content of the popover.\nThis can be a regular React node or a render function that receives the `payload` of the active trigger.",
 						"defaultValue": "—"
 					}
 				],
@@ -7430,6 +7609,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Arrow",
 				"heading": "Popover.Arrow",
+				"description": "Displays an element positioned against the popover anchor. Renders a `<div>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -7443,24 +7623,25 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					}
 				]
 			},
 			{
 				"name": "Backdrop",
 				"heading": "Popover.Backdrop",
+				"description": "An overlay displayed beneath the popover. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -7474,32 +7655,33 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the popup is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the popup begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Close",
 				"heading": "Popover.Close",
+				"description": "A button that closes the popover. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -7515,6 +7697,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Description",
 				"heading": "Popover.Description",
+				"description": "A paragraph with additional information about the popover. Renders a `<p>` element.",
 				"extendsNote": "Extends paragraph HTML attributes.",
 				"props": [
 					{
@@ -7530,27 +7713,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Popup",
 				"heading": "Popover.Popup",
+				"description": "A container for the popover contents. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "initialFocus",
 						"type": "FocusTarget",
 						"optional": true,
-						"description": "",
+						"description": "Determines the element to focus when the popover is opened.\nBy default, focus moves to the first tabbable element inside the popup, except when the popover is opened by touch — then the popup itself is focused to avoid opening the virtual keyboard. `false`: Do not move focus.`true`: Move focus based on the default behavior (first tabbable element or popup).`RefObject`: Move focus to the ref element.`function`: Called with the interaction type (`mouse`, `touch`, `pen`, or `keyboard`).\nReturn an element to focus, `true` to use the default behavior, `null` to fall back to the default behavior, or `false`/`undefined` to do nothing.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "finalFocus",
 						"type": "FocusTarget",
 						"optional": true,
-						"description": "",
+						"description": "Determines the element to focus when the popover is closed. `false`: Do not move focus.`true`: Move focus based on the default behavior (trigger or previously focused element).`RefObject`: Move focus to the ref element.`function`: Called with the interaction type (`mouse`, `touch`, `pen`, or `keyboard`).\nReturn an element to focus, `true` to use the default behavior, `null` to fall back to the default behavior, or `false`/`undefined` to do nothing.",
 						"defaultValue": "—"
 					},
 					{
@@ -7564,40 +7748,41 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the popup is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the popup begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Portal",
 				"heading": "Popover.Portal",
+				"description": "A portal element that moves the popup to a different part of the DOM. By default, the portal element is appended to `<body>`. Renders a `<div>` element.",
 				"extendsNote": "",
 				"props": [
 					{
 						"name": "container",
 						"type": "HTMLElement | string | null",
 						"optional": true,
-						"description": "",
+						"description": "A parent element to render the portal element into.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the portal mounted in the DOM while the popup is hidden.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -7612,77 +7797,78 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Positioner",
 				"heading": "Popover.Positioner",
+				"description": "Positions the popover against the trigger. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "side",
 						"type": "ly o",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Which side of the anchor element to align the popup against.\nMay automatically change to avoid collisions.",
+						"defaultValue": "'bottom'"
 					},
 					{
 						"name": "align",
 						"type": "n; s",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "How to align the popup relative to the specified side.",
+						"defaultValue": "'center'"
 					},
 					{
 						"name": "sideOffset",
 						"type": "lean,",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Distance between the anchor and the popup in pixels.\nAlso accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "alignOffset",
 						"type": "eReaso",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional offset along the alignment axis in pixels.\nAlso accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "collisionPadding",
 						"type": "erDelay(reason: OpenChangeReason): voi",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional space to maintain from the edge of the collision boundary.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "collisionBoundary",
 						"type": "(reason: OpenCh",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "An element or a rectangle that delimits the area that the popup is confined to.",
+						"defaultValue": "'clipping-ancestors'"
 					},
 					{
 						"name": "collisionAvoidance",
 						"type": "elHover(): void;",
 						"optional": true,
-						"description": "",
+						"description": "Determines how to handle collisions when positioning the popup. `side` controls overflow on the preferred placement axis (`top`/`bottom` or `left`/`right`): `'flip'`: keep the requested side when it fits; otherwise try the opposite side\n(`top` and `bottom`, or `left` and `right`).\n- `'shift'`: never change side; keep the requested side and move the popup within the clipping boundary so it stays visible.\n- `'none'`: do not correct side-axis overflow. `align` controls overflow on the alignment axis (`start`/`center`/`end`): `'flip'`: keep side, but swap `start` and `end` when the requested alignment overflows.\n- `'shift'`: keep side and requested alignment, then nudge the popup along the alignment axis to fit.\n- `'none'`: do not correct alignment-axis overflow. `fallbackAxisSide` controls fallback behavior on the perpendicular axis when the preferred axis cannot fit: `'start'`: allow perpendicular fallback and try the logical start side first\n(`top` before `bottom`, or `left` before `right` in LTR).\n- `'end'`: allow perpendicular fallback and try the logical end side first\n(`bottom` before `top`, or `right` before `left` in LTR).\n- `'none'`: do not fallback to the perpendicular axis. When `side` is `'shift'`, explicitly setting `align` only supports `'shift'` or `'none'`.\nIf `align` is omitted, it defaults to `'flip'`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "arrowPadding",
 						"type": "er: bo",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Minimum distance to maintain between the arrow and the edges of the popup. Use it to prevent the arrow element from hanging out of the rounded corners of a popup.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "sticky",
 						"type": "only de",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to maintain the popup in the viewport after the anchor element was scrolled out of view.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "positionMethod",
 						"type": "ly lastOpenChangeR",
 						"optional": true,
-						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
-						"defaultValue": "—"
+						"description": "Determines which CSS `position` property to use.",
+						"defaultValue": "'absolute'"
 					},
 					{
 						"name": "strategy",
@@ -7695,15 +7881,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "eturnType<typeof createPresence",
 						"optional": true,
-						"description": "Override the positioning anchor (element or virtual element).",
+						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "olean,",
 						"optional": true,
-						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
-						"defaultValue": "—"
+						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -7716,17 +7902,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the popup is open."
 					}
 				]
 			},
 			{
 				"name": "Title",
 				"heading": "Popover.Title",
+				"description": "A heading that labels the popover. Renders an `<h2>` element.",
 				"extendsNote": "Extends heading HTML attributes.",
 				"props": [
 					{
@@ -7742,13 +7929,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Trigger",
 				"heading": "Popover.Trigger",
+				"description": "A button that opens the popover. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -7762,29 +7950,29 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "id",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "ID of the trigger. In addition to being forwarded to the rendered element, it is also used to specify the active trigger for the popover in controlled mode (with the Popover.Root `triggerId` prop).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "handle",
 						"type": "PopoverHandle | undefined",
 						"optional": true,
-						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"description": "A handle to associate the trigger with a popover.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "Optional payload associated when opening via this trigger.",
+						"description": "A payload to pass to the popover when it is opened.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "openOnHover",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the popover should also open when the trigger is hovered.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -7812,20 +8000,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Viewport",
 				"heading": "Popover.Viewport",
+				"description": "A viewport for displaying content transitions. This component is only required if one popup can be opened by multiple triggers, its content changes based on the trigger, and switching between them is animated. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content to render inside the transition container.",
 						"defaultValue": "—"
 					}
 				],
@@ -7850,34 +8039,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "PreviewCard.Root",
+				"description": "Groups all parts of the preview card. Doesn't render its own HTML element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the preview card is currently open.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the preview card is initially open. To render a controlled preview card, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the preview card is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onOpenChangeComplete",
 						"type": "((open: boolean) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Event handler called after any animations complete when the preview card is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
@@ -7898,14 +8088,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "PreviewCardHandle | undefined",
 						"optional": true,
-						"description": "Imperative handle from .",
+						"description": "A handle to associate the preview card with a trigger.\nIf specified, allows external triggers to control the card's open state.\nCan be created with the PreviewCard.createHandle() method.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content of the preview card.\nThis can be a regular React node or a render function that receives the `payload` of the active trigger.",
 						"defaultValue": "—"
 					}
 				],
@@ -7923,6 +8113,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Arrow",
 				"heading": "PreviewCard.Arrow",
+				"description": "Displays an element positioned against the preview card anchor. Renders a `<div>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -7936,24 +8127,25 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the preview card is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the preview card is open."
 					}
 				]
 			},
 			{
 				"name": "Backdrop",
 				"heading": "PreviewCard.Backdrop",
+				"description": "A presentational overlay displayed beneath the popup. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -7967,24 +8159,25 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the preview card is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the preview card is open."
 					}
 				]
 			},
 			{
 				"name": "Popup",
 				"heading": "PreviewCard.Popup",
+				"description": "A container for the preview card contents. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -7998,40 +8191,41 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the preview card is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the preview card is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the preview card is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the preview card begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Portal",
 				"heading": "PreviewCard.Portal",
+				"description": "A portal element that moves the popup to a different part of the DOM. By default, the portal element is appended to `<body>`. Renders a `<div>` element.",
 				"extendsNote": "",
 				"props": [
 					{
 						"name": "container",
 						"type": "HTMLElement | string | null",
 						"optional": true,
-						"description": "",
+						"description": "A parent element to render the portal element into.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the portal mounted in the DOM while the popup is hidden.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -8046,77 +8240,78 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Positioner",
 				"heading": "PreviewCard.Positioner",
+				"description": "Positions the popup against the trigger. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "side",
 						"type": "easo",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Which side of the anchor element to align the popup against.\nMay automatically change to avoid collisions.",
+						"defaultValue": "'bottom'"
 					},
 					{
 						"name": "align",
 						"type": "close",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "How to align the popup relative to the specified side.",
+						"defaultValue": "'center'"
 					},
 					{
 						"name": "sideOffset",
 						"type": ": Open",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Distance between the anchor and the popup in pixels.\nAlso accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "alignOffset",
 						"type": "id; c",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional offset along the alignment axis in pixels.\nAlso accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "collisionPadding",
 						"type": "eadonly triggerId: string; readonly p",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional space to maintain from the edge of the collision boundary.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "collisionBoundary",
 						"type": "ly refs: Previe",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "An element or a rectangle that delimits the area that the popup is confined to.",
+						"defaultValue": "'clipping-ancestors'"
 					},
 					{
 						"name": "collisionAvoidance",
 						"type": "sence: ReturnType<",
 						"optional": true,
-						"description": "",
+						"description": "Determines how to handle collisions when positioning the popup. `side` controls overflow on the preferred placement axis (`top`/`bottom` or `left`/`right`): `'flip'`: keep the requested side when it fits; otherwise try the opposite side\n(`top` and `bottom`, or `left` and `right`).\n- `'shift'`: never change side; keep the requested side and move the popup within the clipping boundary so it stays visible.\n- `'none'`: do not correct side-axis overflow. `align` controls overflow on the alignment axis (`start`/`center`/`end`): `'flip'`: keep side, but swap `start` and `end` when the requested alignment overflows.\n- `'shift'`: keep side and requested alignment, then nudge the popup along the alignment axis to fit.\n- `'none'`: do not correct alignment-axis overflow. `fallbackAxisSide` controls fallback behavior on the perpendicular axis when the preferred axis cannot fit: `'start'`: allow perpendicular fallback and try the logical start side first\n(`top` before `bottom`, or `left` before `right` in LTR).\n- `'end'`: allow perpendicular fallback and try the logical end side first\n(`bottom` before `top`, or `right` before `left` in LTR).\n- `'none'`: do not fallback to the perpendicular axis. When `side` is `'shift'`, explicitly setting `align` only supports `'shift'` or `'none'`.\nIf `align` is omitted, it defaults to `'flip'`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "arrowPadding",
 						"type": "nce>;",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Minimum distance to maintain between the arrow and the edges of the popup. Use it to prevent the arrow element from hanging out of the rounded corners of a popup.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "sticky",
 						"type": "enDelay",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to maintain the popup in the viewport after the anchor element was scrolled out of view.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "positionMethod",
 						"type": "pe PreviewCardRoot",
 						"optional": true,
-						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
-						"defaultValue": "—"
+						"description": "Determines which CSS `position` property to use.",
+						"defaultValue": "'absolute'"
 					},
 					{
 						"name": "strategy",
@@ -8129,15 +8324,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": ") | undefined; onOpenChangeCom",
 						"optional": true,
-						"description": "Override the positioning anchor (element or virtual element).",
+						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "ippet<[",
 						"optional": true,
-						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
-						"defaultValue": "—"
+						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -8150,24 +8345,25 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the preview card is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the preview card is open."
 					}
 				]
 			},
 			{
 				"name": "Trigger",
 				"heading": "PreviewCard.Trigger",
+				"description": "A link that opens the preview card. Renders an `<a>` element.",
 				"extendsNote": "Extends anchor HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -8188,14 +8384,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "PreviewCardHandle | undefined",
 						"optional": true,
-						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"description": "A handle to associate the trigger with a preview card.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "Optional payload associated when opening via this trigger.",
+						"description": "A payload to pass to the preview card when it is opened.",
 						"defaultValue": "—"
 					},
 					{
@@ -8224,20 +8420,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Viewport",
 				"heading": "PreviewCard.Viewport",
+				"description": "A viewport for displaying content transitions. This component is only required if one popup can be opened by multiple triggers, its content changes based on the trigger, and switching between them is animated. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content to render inside the transition container.",
 						"defaultValue": "—"
 					}
 				],
@@ -8262,6 +8459,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Progress.Root",
+				"description": "Groups all parts of the progress bar and provides the task completion status to screen readers. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -8275,35 +8473,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "min",
 						"type": "number",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "The minimum value.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "max",
 						"type": "number",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "The maximum value.",
+						"defaultValue": "100"
 					},
 					{
 						"name": "format",
 						"type": "Intl.NumberFormatOptions | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Options to format the value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "getAriaValueText",
 						"type": "| ((formattedValue: string | null, value: number | null) => string | undefined) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Accepts a function which returns a string value that provides a human-readable text alternative for the current value of the progress bar.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "locale",
 						"type": "Intl.LocalesArgument | undefined",
 						"optional": true,
-						"description": "",
+						"description": "The locale used by `Intl.NumberFormat` when formatting the value.\nDefaults to the user's runtime locale.",
 						"defaultValue": "—"
 					},
 					{
@@ -8317,21 +8515,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-complete",
-						"description": "Present on the element when applicable."
+						"description": "Present when the progress has completed."
 					},
 					{
 						"name": "data-indeterminate",
-						"description": "Present when the checkbox is indeterminate."
+						"description": "Present when the progress is in indeterminate state."
 					},
 					{
 						"name": "data-progressing",
-						"description": "Present on the element when applicable."
+						"description": "Present while the progress is progressing."
 					}
 				]
 			},
 			{
 				"name": "Indicator",
 				"heading": "Progress.Indicator",
+				"description": "Visualizes the completion status of the task. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -8345,21 +8544,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-complete",
-						"description": "Present on the element when applicable."
+						"description": "Present when the progress has completed."
 					},
 					{
 						"name": "data-indeterminate",
-						"description": "Present when the checkbox is indeterminate."
+						"description": "Present when the progress is in indeterminate state."
 					},
 					{
 						"name": "data-progressing",
-						"description": "Present on the element when applicable."
+						"description": "Present while the progress is progressing."
 					}
 				]
 			},
 			{
 				"name": "Label",
 				"heading": "Progress.Label",
+				"description": "An accessible label for the progress bar. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -8373,21 +8573,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-complete",
-						"description": "Present on the element when applicable."
+						"description": "Present when the progress has completed."
 					},
 					{
 						"name": "data-indeterminate",
-						"description": "Present when the checkbox is indeterminate."
+						"description": "Present when the progress is in indeterminate state."
 					},
 					{
 						"name": "data-progressing",
-						"description": "Present on the element when applicable."
+						"description": "Present while the progress is progressing."
 					}
 				]
 			},
 			{
 				"name": "Track",
 				"heading": "Progress.Track",
+				"description": "Contains the progress bar indicator. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -8401,21 +8602,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-complete",
-						"description": "Present on the element when applicable."
+						"description": "Present when the progress has completed."
 					},
 					{
 						"name": "data-indeterminate",
-						"description": "Present when the checkbox is indeterminate."
+						"description": "Present when the progress is in indeterminate state."
 					},
 					{
 						"name": "data-progressing",
-						"description": "Present on the element when applicable."
+						"description": "Present while the progress is progressing."
 					}
 				]
 			},
 			{
 				"name": "Value",
 				"heading": "Progress.Value",
+				"description": "A text element displaying the current value. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -8429,15 +8631,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-complete",
-						"description": "Present on the element when applicable."
+						"description": "Present when the progress has completed."
 					},
 					{
 						"name": "data-indeterminate",
-						"description": "Present when the checkbox is indeterminate."
+						"description": "Present when the progress is in indeterminate state."
 					},
 					{
 						"name": "data-progressing",
-						"description": "Present on the element when applicable."
+						"description": "Present while the progress is progressing."
 					}
 				]
 			}
@@ -8451,6 +8653,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Radio.Root",
+				"description": "Represents the radio button itself. Renders a `<span>` element and a hidden `<input>` beside.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
@@ -8464,7 +8667,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -8478,21 +8681,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the radio is checked."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the radio is disabled."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the radio is not checked."
 					}
 				]
 			},
 			{
 				"name": "Indicator",
 				"heading": "Radio.Indicator",
+				"description": "Indicates whether the radio button is selected. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -8506,21 +8710,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the radio is checked."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the radio is disabled."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the radio is not checked."
 					}
 				]
 			},
 			{
 				"name": "RadioGroup",
 				"heading": "RadioGroup",
+				"description": "",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -8590,14 +8795,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "ScrollArea.Root",
+				"description": "Groups all parts of the scroll area. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "overflowEdgeThreshold",
 						"type": "number | { top?: number; right?: number; bottom?: number; left?: number }",
 						"optional": true,
-						"description": "Distance from an edge (px) at which overflow data attributes become active.",
-						"defaultValue": "—"
+						"description": "The threshold in pixels that must be passed before the overflow edge attributes are applied.\nAccepts a single number for all edges or an object to configure them individually.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "children",
@@ -8634,13 +8840,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-scrolling",
-						"description": "Present on the element when applicable."
+						"description": "Present when the user scrolls inside the scroll area."
 					}
 				]
 			},
 			{
 				"name": "Content",
 				"heading": "ScrollArea.Content",
+				"description": "A container for the content of the scroll area. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -8654,13 +8861,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-scrolling",
-						"description": "Present on the element when applicable."
+						"description": "Present when the user scrolls inside the scroll area."
 					}
 				]
 			},
 			{
 				"name": "Corner",
 				"heading": "ScrollArea.Corner",
+				"description": "A small rectangular area that appears at the intersection of horizontal and vertical scrollbars. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -8681,21 +8889,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Scrollbar",
 				"heading": "ScrollArea.Scrollbar",
+				"description": "A vertical or horizontal scrollbar for the scroll area. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "orientation",
 						"type": "ScrollAreaOrientation",
 						"optional": true,
-						"description": "",
+						"description": "Whether the scrollbar controls vertical or horizontal scroll.",
 						"defaultValue": "'horizontal'"
 					},
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the HTML element in the DOM when the viewport isn't scrollable.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -8708,17 +8917,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the scrollbar."
 					},
 					{
 						"name": "data-scrolling",
-						"description": "Present on the element when applicable."
+						"description": "Present when the user scrolls inside the scroll area."
 					}
 				]
 			},
 			{
 				"name": "Thumb",
 				"heading": "ScrollArea.Thumb",
+				"description": "The draggable part of the scrollbar that indicates the current scroll position. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -8732,11 +8942,11 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the scrollbar."
 					},
 					{
 						"name": "data-scrolling",
-						"description": "Present on the element when applicable."
+						"description": "Present when the user scrolls inside the scroll area."
 					},
 					{
 						"name": "data-slot",
@@ -8747,6 +8957,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Viewport",
 				"heading": "ScrollArea.Viewport",
+				"description": "The actual scrollable container of the scroll area. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -8760,7 +8971,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-scrolling",
-						"description": "Present on the element when applicable."
+						"description": "Present when the user scrolls inside the scroll area."
 					}
 				]
 			}
@@ -8774,153 +8985,154 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Select.Root",
+				"description": "Groups all parts of the select. Doesn't render its own HTML element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "SelectValue | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "The value of the select. Use when controlled.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "SelectValue",
 						"optional": true,
-						"description": "Uncontrolled initial value.",
+						"description": "The uncontrolled value of the select when it's initially rendered. To render a controlled select, use the `value` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: SelectValue, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Event handler called when the value of the select changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the select popup is currently open.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the select popup is initially open. To render a controlled select popup, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the select popup is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "name",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Identifies the field when a form is submitted.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "multiple",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether multiple items can be selected.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "modal",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the select enters a modal state when open. When `true`, document scroll is locked while open.",
-						"defaultValue": "—"
+						"description": "Determines if the select enters a modal state when open. `true`: user interaction is limited to the select: document page scroll is locked and pointer interactions on outside elements are disabled.`false`: user interaction with the rest of the document is allowed. On touch devices, a `true` modal blocks outside taps but leaves the page scrollable unless the popup spans nearly the full viewport width, matching native iOS behavior.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "onOpenChangeComplete",
 						"type": "((open: boolean) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Event handler called after any animations complete when the select popup is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "form",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Identifies the form that owns the hidden input.\nUseful when the select is rendered outside the form.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "readOnly",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the user should be unable to choose a different option from the select popup.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "required",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the user must choose a value before submitting a form.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "autoComplete",
 						"type": "HTMLInputAttributes['autocomplete']",
 						"optional": true,
-						"description": "",
+						"description": "Provides a hint to the browser for autofill.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "highlightItemOnHover",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether moving the pointer over items should highlight them.\nDisabling this prop allows CSS `:hover` to be differentiated from the `:focus` (`data-highlighted`) state.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "itemToStringLabel",
 						"type": "((itemValue: string) => string) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "When the item values are objects (`<Select.Item value={object}>`), this function converts the object value to a string representation for display in the trigger.\nIf the shape of the object is `{ value, label }`, the label will be used automatically without needing to specify this prop.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "itemToStringValue",
 						"type": "((itemValue: string) => string) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "When the item values are objects (`<Select.Item value={object}>`), this function converts the object value to a string representation for form submission.\nIf the shape of the object is `{ value, label }`, the value will be used automatically without needing to specify this prop.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "isItemEqualToValue",
 						"type": "((itemValue: string, value: string) => boolean) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Custom comparison logic used to determine if a select item value matches the current selected value. Useful when item values are objects without matching referentially.\nDefaults to `Object.is` comparison.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "items",
 						"type": "SelectItemsProp | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Data structure of the items rendered in the select popup.\nWhen specified, `<Select.Value>` renders the label of the selected item instead of the raw value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ value: SelectValue; open: boolean; disabled: boolean }]>",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "- **`items` Prop Example:** ```tsx const items = { sans: 'Sans-serif', serif: 'Serif', mono: 'Monospace', cursive: 'Cursive', }; <Select.Root items={items} />; ``` **`autoComplete` Prop References:** - See [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete)",
 						"defaultValue": "—"
 					}
 				],
@@ -8942,6 +9154,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Arrow",
 				"heading": "Select.Arrow",
+				"description": "Displays an element positioned against the select popup anchor. Renders a `<div>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -8955,24 +9168,25 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the select popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the select popup is open."
 					}
 				]
 			},
 			{
 				"name": "Backdrop",
 				"heading": "Select.Backdrop",
+				"description": "An overlay displayed beneath the select popup. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -8986,17 +9200,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the select is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the select is open."
 					}
 				]
 			},
 			{
 				"name": "Group",
 				"heading": "Select.Group",
+				"description": "Groups related select items with the corresponding label. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -9012,6 +9227,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "GroupLabel",
 				"heading": "Select.GroupLabel",
+				"description": "An accessible label that is automatically associated with its parent group. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -9027,6 +9243,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Icon",
 				"heading": "Select.Icon",
+				"description": "An icon that indicates that the trigger button opens a select popup. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -9051,20 +9268,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Item",
 				"heading": "Select.Item",
+				"description": "An individual option in the select popup. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "string",
 						"optional": false,
-						"description": "Controlled value.",
-						"defaultValue": "—"
+						"description": "A unique value that identifies this select item.",
+						"defaultValue": "null"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -9078,21 +9296,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the select item is disabled."
 					},
 					{
 						"name": "data-highlighted",
-						"description": "Present when the item is highlighted."
+						"description": "Present when the select item is highlighted."
 					},
 					{
 						"name": "data-selected",
-						"description": "Present when the item is selected."
+						"description": "Present when the select item is selected."
 					}
 				]
 			},
 			{
 				"name": "ItemIndicator",
 				"heading": "Select.ItemIndicator",
+				"description": "Indicates whether the select item is selected. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -9117,6 +9336,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "ItemText",
 				"heading": "Select.ItemText",
+				"description": "A text label of the select item. Renders a `<div>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -9145,6 +9365,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Label",
 				"heading": "Select.Label",
+				"description": "An accessible label that is automatically associated with the select trigger. Renders a `<div>` element.",
 				"extendsNote": "Extends label HTML attributes.",
 				"props": [
 					{
@@ -9165,6 +9386,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "List",
 				"heading": "Select.List",
+				"description": "A container for the select items. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -9189,13 +9411,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Popup",
 				"heading": "Select.Popup",
+				"description": "A container for the select list. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -9209,32 +9432,33 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the select is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the select is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the select is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the select begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Portal",
 				"heading": "Select.Portal",
+				"description": "A portal element that moves the popup to a different part of the DOM. By default, the portal element is appended to `<body>`. Renders a `<div>` element.",
 				"extendsNote": "",
 				"props": [
 					{
 						"name": "container",
 						"type": "HTMLElement | string | null",
 						"optional": true,
-						"description": "",
+						"description": "A parent element to render the portal element into.",
 						"defaultValue": "—"
 					},
 					{
@@ -9257,77 +9481,78 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Positioner",
 				"heading": "Select.Positioner",
+				"description": "Positions the select popup. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "side",
 						"type": "{ t",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Which side of the anchor element to align the popup against.\nMay automatically change to avoid collisions.",
+						"defaultValue": "'bottom'"
 					},
 					{
 						"name": "align",
 						"type": "LElem",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "How to align the popup relative to the specified side.",
+						"defaultValue": "'center'"
 					},
 					{
 						"name": "sideOffset",
 						"type": "up: HT",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Distance between the anchor and the popup in pixels.\nAlso accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "alignOffset",
 						"type": "posi",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional offset along the alignment axis in pixels.\nAlso accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "collisionPadding",
 						"type": "null; list: HTMLElement | null; arro",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional space to maintain from the edge of the collision boundary.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "collisionBoundary",
 						"type": "}; export type",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "An element or a rectangle that delimits the area that the popup is confined to.",
+						"defaultValue": "'clipping-ancestors'"
 					},
 					{
 						"name": "collisionAvoidance",
 						"type": "only value: Select",
 						"optional": true,
-						"description": "",
+						"description": "Determines how to handle collisions when positioning the popup. `side` controls overflow on the preferred placement axis (`top`/`bottom` or `left`/`right`): `'flip'`: keep the requested side when it fits; otherwise try the opposite side\n(`top` and `bottom`, or `left` and `right`).\n- `'shift'`: never change side; keep the requested side and move the popup within the clipping boundary so it stays visible.\n- `'none'`: do not correct side-axis overflow. `align` controls overflow on the alignment axis (`start`/`center`/`end`): `'flip'`: keep side, but swap `start` and `end` when the requested alignment overflows.\n- `'shift'`: keep side and requested alignment, then nudge the popup along the alignment axis to fit.\n- `'none'`: do not correct alignment-axis overflow. `fallbackAxisSide` controls fallback behavior on the perpendicular axis when the preferred axis cannot fit: `'start'`: allow perpendicular fallback and try the logical start side first\n(`top` before `bottom`, or `left` before `right` in LTR).\n- `'end'`: allow perpendicular fallback and try the logical end side first\n(`bottom` before `top`, or `right` before `left` in LTR).\n- `'none'`: do not fallback to the perpendicular axis. When `side` is `'shift'`, explicitly setting `align` only supports `'shift'` or `'none'`.\nIf `align` is omitted, it defaults to `'flip'`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "arrowPadding",
 						"type": "alue:",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Minimum distance to maintain between the arrow and the edges of the popup. Use it to prevent the arrow element from hanging out of the rounded corners of a popup.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "sticky",
 						"type": "event:",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to maintain the popup in the viewport after the anchor element was scrolled out of view.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "positionMethod",
 						"type": "eReason): void; r",
 						"optional": true,
-						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
-						"defaultValue": "—"
+						"description": "Determines which CSS `position` property to use.",
+						"defaultValue": "'absolute'"
 					},
 					{
 						"name": "strategy",
@@ -9340,22 +9565,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "l): void; readonly items: Sele",
 						"optional": true,
-						"description": "Override the positioning anchor (element or virtual element).",
+						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "string",
 						"optional": true,
-						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
-						"defaultValue": "—"
+						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "alignItemWithTrigger",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the positioner overlaps the trigger so the selected item's text is aligned with the trigger's value text. This only applies to mouse input and is automatically disabled if there is not enough space.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "children",
@@ -9368,17 +9593,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the select popup is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the select popup is open."
 					}
 				]
 			},
 			{
 				"name": "ScrollDownArrow",
 				"heading": "Select.ScrollDownArrow",
+				"description": "An element that scrolls the select popup down when hovered. Does not render when using touch input. Renders a `<div>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
@@ -9392,7 +9618,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-direction",
-						"description": "Present on the element when applicable."
+						"description": "Indicates the direction of the scroll arrow."
 					},
 					{
 						"name": "data-hidden",
@@ -9403,6 +9629,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "ScrollUpArrow",
 				"heading": "Select.ScrollUpArrow",
+				"description": "An element that scrolls the select popup up when hovered. Does not render when using touch input. Renders a `<div>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
@@ -9416,7 +9643,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-direction",
-						"description": "Present on the element when applicable."
+						"description": "Indicates the direction of the scroll arrow."
 					},
 					{
 						"name": "data-hidden",
@@ -9427,6 +9654,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Separator",
 				"heading": "Select.Separator",
+				"description": "A visual separator between items or groups. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [],
 				"dataAttributes": []
@@ -9434,20 +9662,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Trigger",
 				"heading": "Select.Trigger",
+				"description": "A button that opens the select popup. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -9465,7 +9694,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the select is disabled."
 					},
 					{
 						"name": "data-open",
@@ -9476,27 +9705,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Value",
 				"heading": "Select.Value",
+				"description": "A text label of the currently selected item. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
 						"name": "placeholder",
 						"type": "string",
 						"optional": true,
-						"description": "",
+						"description": "The placeholder value to display when no value is selected.\nThis is overridden by `children` if specified, or by a null item's label in `items`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[SelectValue]>",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "Accepts a function that returns a `ReactNode` to format the selected value.",
 						"defaultValue": "—"
 					}
 				],
 				"dataAttributes": [
 					{
 						"name": "data-placeholder",
-						"description": "Present when showing placeholder content."
+						"description": "Present when the select doesn't have a value."
 					}
 				]
 			}
@@ -9510,20 +9740,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Separator",
 				"heading": "Separator",
+				"description": "A separator element accessible to screen readers. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "orientation",
 						"type": "SeparatorOrientation",
 						"optional": true,
-						"description": "",
+						"description": "The orientation of the separator.",
 						"defaultValue": "'horizontal'"
 					}
 				],
 				"dataAttributes": [
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the separator."
 					}
 				]
 			}
@@ -9537,125 +9768,126 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Slider.Root",
+				"description": "Groups all parts of the slider. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "SliderValue | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "The value of the slider.\nFor range sliders, provide an array with one value per thumb.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "SliderValue",
 						"optional": true,
-						"description": "Uncontrolled initial value.",
+						"description": "The uncontrolled value of the slider when it's initially rendered. To render a controlled slider, use the `value` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "min",
 						"type": "number",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "The minimum allowed value of the slider.\nShould not be equal to max.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "max",
 						"type": "number",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "The maximum allowed value of the slider.\nShould not be equal to min.",
+						"defaultValue": "100"
 					},
 					{
 						"name": "step",
 						"type": "number",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "The granularity with which the slider can step through values. (A \"discrete\" slider.)\nThe `min` prop serves as the origin for the valid values.\nWe recommend (max - min) to be evenly divisible by the step.",
+						"defaultValue": "1"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the slider should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "orientation",
 						"type": "SliderOrientation",
 						"optional": true,
-						"description": "",
+						"description": "The component orientation.",
 						"defaultValue": "'horizontal'"
 					},
 					{
 						"name": "name",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Identifies the field when a form is submitted.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "format",
 						"type": "Intl.NumberFormatOptions | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Options to format the value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "locale",
 						"type": "Intl.LocalesArgument | undefined",
 						"optional": true,
-						"description": "",
+						"description": "The locale used by `Intl.NumberFormat` when formatting the value.\nDefaults to the user's runtime locale.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: SliderValue, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Callback function that is fired when the slider's value changed.\nReceives the new value as the first argument; the originating event is available as `eventDetails.event`. The value is also reflected on\n`eventDetails.event.target.value` for form integration.\n\nThe `eventDetails.reason` indicates what triggered the change:\n\n- `'input-change'` when the hidden range input emits a change event (for example, via form integration)\n- `'track-press'` when the control track is pressed\n- `'drag'` while dragging a thumb\n- `'keyboard'` for keyboard input\n- `'none'` when the change is triggered without a specific interaction",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueCommitted",
 						"type": "((value: SliderValue, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Called when the value is committed (pointer up / key up).",
+						"description": "Callback function that is fired when a value change is committed.\nDoes not fire if the value did not change, or if the change was canceled.\n\n**Warning**: This is a generic event, not a change event.\n\nThe `eventDetails.reason` indicates what triggered the commit:\n\n- `'drag'` while dragging a thumb\n- `'track-press'` when the control track is pressed\n- `'keyboard'` for keyboard input\n- `'input-change'` when the hidden range input emits a change event (for example, via form integration)\n- `'none'` when the commit occurs without a specific interaction",
 						"defaultValue": "—"
 					},
 					{
 						"name": "largeStep",
 						"type": "number",
 						"optional": true,
-						"description": "Step used with Page Up/Down.",
-						"defaultValue": "—"
+						"description": "The granularity with which the slider can step through values when using Page Up/Page Down or Shift + Arrow Up/Arrow Down.",
+						"defaultValue": "10"
 					},
 					{
 						"name": "minStepsBetweenValues",
 						"type": "number",
 						"optional": true,
-						"description": "Minimum steps between adjacent thumbs in a range.",
-						"defaultValue": "—"
+						"description": "The minimum steps between values in a range slider.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "thumbAlignment",
 						"type": "'center' | 'edge' | 'edge-client-only'",
 						"optional": true,
-						"description": "How thumbs align to the control edge.",
-						"defaultValue": "—"
+						"description": "How the thumb(s) are aligned relative to `Slider.Control` when the value is at `min` or `max`: `center`: The center of the thumb is aligned with the control edge`edge`: The thumb is inset within the control such that its edge is aligned with the control edge`edge-client-only`: Same as `edge` but renders after React hydration on the client, reducing bundle size in return",
+						"defaultValue": "'center'"
 					},
 					{
 						"name": "thumbCollisionBehavior",
 						"type": "'push' | 'swap' | 'none'",
 						"optional": true,
-						"description": "Behavior when thumbs collide.",
-						"defaultValue": "—"
+						"description": "Controls how thumbs behave when they collide during pointer interactions. `'push'` (default): Thumbs push each other without restoring their previous positions when dragged back.\n- `'swap'`: Thumbs swap places when dragged past each other.\n- `'none'`: Thumbs cannot move past each other; excess movement is ignored.",
+						"defaultValue": "'push'"
 					},
 					{
 						"name": "form",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Identifies the form that owns the slider inputs.\nUseful when the slider is rendered outside the form.",
 						"defaultValue": "—"
 					},
 					{
@@ -9669,11 +9901,11 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the slider is disabled."
 					},
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the slider."
 					},
 					{
 						"name": "data-thumb-alignment",
@@ -9684,6 +9916,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Control",
 				"heading": "Slider.Control",
+				"description": "The clickable, interactive part of the slider. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -9697,17 +9930,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the slider is disabled."
 					},
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the slider."
 					}
 				]
 			},
 			{
 				"name": "Indicator",
 				"heading": "Slider.Indicator",
+				"description": "Visualizes the current value of the slider. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -9721,17 +9955,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the slider is disabled."
 					},
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the slider."
 					}
 				]
 			},
 			{
 				"name": "Label",
 				"heading": "Slider.Label",
+				"description": "An accessible label that is automatically associated with the slider thumbs. Renders a `<div>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -9752,27 +9987,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Thumb",
 				"heading": "Slider.Thumb",
+				"description": "The draggable part of the slider at the tip of the indicator. Renders a `<div>` element and a nested `<input type=\"range\">`.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
 						"name": "index",
 						"type": "number | undefined",
 						"optional": true,
-						"description": "Index into the value array for range sliders (recommended for SSR).",
+						"description": "The index of the thumb which corresponds to the index of its value in the\n`value` or `defaultValue` array.\nThis prop is required to support server-side rendering for range sliders with multiple thumbs.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "getAriaLabel",
 						"type": "((index: number) => string) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "A function which returns a string value for the [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label) attribute of the `input`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "getAriaValueText",
 						"type": "((formattedValue: string, value: number, index: number) => string) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "A function which returns a string value for the [`aria-valuetext`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-valuetext) attribute of the `input`.\nThis is important for screen reader users.",
 						"defaultValue": "—"
 					},
 					{
@@ -9786,21 +10022,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the slider is disabled."
 					},
 					{
 						"name": "data-index",
-						"description": "Index of the item within a collection."
+						"description": "Indicates the index of the thumb in range sliders."
 					},
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the slider."
 					}
 				]
 			},
 			{
 				"name": "Track",
 				"heading": "Slider.Track",
+				"description": "Contains the slider indicator and represents the entire range of the slider. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -9814,17 +10051,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the slider is disabled."
 					},
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the slider."
 					}
 				]
 			},
 			{
 				"name": "Value",
 				"heading": "Slider.Value",
+				"description": "Displays the current value of the slider as text. Renders an `<output>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -9838,7 +10076,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the slider is disabled."
 					}
 				]
 			}
@@ -9852,55 +10090,56 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Switch.Root",
+				"description": "Represents the switch itself. Renders a `<span>` element and a hidden `<input>` beside.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "checked",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Controlled checked state.",
+						"description": "Whether the switch is currently active. To render an uncontrolled switch, use the `defaultChecked` prop instead.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultChecked",
 						"type": "boolean",
 						"optional": true,
-						"description": "Uncontrolled initial checked state.",
-						"defaultValue": "—"
+						"description": "Whether the switch is initially active. To render a controlled switch, use the `checked` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onCheckedChange",
 						"type": "((checked: boolean, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the checked state changes.",
+						"description": "Event handler called when the switch is activated or deactivated.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "required",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether the user must activate the switch before submitting a form.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "name",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Identifies the field when a form is submitted.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "The value submitted with the form when the switch is on.\nBy default, switch submits the \"on\" value, matching native checkbox behavior.",
 						"defaultValue": "—"
 					},
 					{
@@ -9914,21 +10153,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the switch is checked."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the switch is disabled."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the switch is not checked."
 					}
 				]
 			},
 			{
 				"name": "Thumb",
 				"heading": "Switch.Thumb",
+				"description": "The movable part of the switch that indicates whether the switch is on or off. Renders a `<span>`.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -9942,15 +10182,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-checked",
-						"description": "Present when the part is checked."
+						"description": "Present when the switch is checked."
 					},
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the switch is disabled."
 					},
 					{
 						"name": "data-unchecked",
-						"description": "Present when the part is unchecked."
+						"description": "Present when the switch is not checked."
 					}
 				]
 			}
@@ -9964,34 +10204,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Tabs.Root",
+				"description": "Groups the tabs and the corresponding panels. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "The value of the currently active `Tab`. Use when the component is controlled.\nWhen the value is `null`, no Tab will be active.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string",
 						"optional": true,
-						"description": "Uncontrolled initial value.",
-						"defaultValue": "—"
+						"description": "The default value. Use when the component is not controlled.\nWhen the value is `null`, no Tab will be active.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value changes.",
+						"description": "Callback invoked when new value is being set. The event `reason` is `'none'` for user-initiated changes, such as a click or keyboard navigation; `'initial'` for the first automatic selection or fallback in uncontrolled roots when `defaultValue` is omitted or\n`undefined`, including when the implicit initial value is disabled or missing; `'disabled'` for automatic fallback when the selected tab becomes disabled in uncontrolled roots; or `'missing'` for automatic fallback when the selected tab is removed, or when an explicit `defaultValue` never matches a mounted tab in uncontrolled roots. For automatic changes, the selected value can be `null` when no enabled Tab is available as a fallback. Automatic changes cannot be canceled; calling `eventDetails.cancel()` for\n`'initial'`, `'disabled'`, or `'missing'` has no effect.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "orientation",
 						"type": "TabsOrientation",
 						"optional": true,
-						"description": "",
+						"description": "The component orientation (layout flow direction).",
 						"defaultValue": "'horizontal'"
 					},
 					{
@@ -10005,13 +10246,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the tabs."
 					}
 				]
 			},
 			{
 				"name": "Indicator",
 				"heading": "Tabs.Indicator",
+				"description": "A visual indicator that can be styled to match the position of the currently active tab. Renders a `<span>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -10025,28 +10267,29 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the tabs."
 					}
 				]
 			},
 			{
 				"name": "List",
 				"heading": "Tabs.List",
+				"description": "Groups the individual tab buttons. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "activateOnFocus",
 						"type": "boolean",
 						"optional": true,
-						"description": "Activate the focused tab.",
-						"defaultValue": "—"
+						"description": "Whether to automatically change the active tab on arrow key focus.\nOtherwise, tabs will be activated using Enter or Space key press.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "loopFocus",
 						"type": "boolean",
 						"optional": true,
-						"description": "Loop arrow-key focus at the ends.",
-						"defaultValue": "—"
+						"description": "Whether to loop keyboard focus back to the first item when the end of the list is reached while using the arrow keys.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "children",
@@ -10059,13 +10302,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the tabs."
 					}
 				]
 			},
 			{
 				"name": "Panel",
 				"heading": "Tabs.Panel",
+				"description": "A panel displayed when the corresponding tab is active. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -10079,8 +10323,8 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "Keep the panel in the DOM when inactive.",
-						"defaultValue": "—"
+						"description": "Whether to keep the HTML element in the DOM while the panel is hidden.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -10093,7 +10337,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the tabs."
 					},
 					{
 						"name": "data-selected",
@@ -10104,6 +10348,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Tab",
 				"heading": "Tabs.Tab",
+				"description": "An individual interactive tab button that toggles the corresponding panel. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
@@ -10117,7 +10362,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the Tab is disabled. If a first Tab on a `<Tabs.List>` is disabled, it won't initially be selected.\nInstead, the next enabled Tab will be selected.\nHowever, it does not work like this during server-side rendering, as it is not known during pre-rendering which Tabs are disabled.\nTo work around it, ensure that `defaultValue` or `value` on `<Tabs.Root>` is set to an enabled Tab's value.",
 						"defaultValue": "false"
 					},
 					{
@@ -10131,11 +10376,11 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the tab is disabled."
 					},
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the tabs."
 					},
 					{
 						"name": "data-selected",
@@ -10153,6 +10398,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Toast.Root",
+				"description": "Groups all parts of an individual toast. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -10166,8 +10412,8 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "swipeDirection",
 						"type": "ToastSwipeDirection | ToastSwipeDirection[] | undefined",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Direction(s) in which the toast can be swiped to dismiss.",
+						"defaultValue": "['down', 'right']"
 					},
 					{
 						"name": "children",
@@ -10184,15 +10430,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the toast is animating out."
 					},
 					{
 						"name": "data-expanded",
-						"description": "Present on the element when applicable."
+						"description": "Present when the toast is expanded in the viewport."
 					},
 					{
 						"name": "data-limited",
-						"description": "Present on the element when applicable."
+						"description": "Present when the toast was limited because the toast limit was exceeded."
 					},
 					{
 						"name": "data-open",
@@ -10200,25 +10446,26 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the toast begins animating in."
 					},
 					{
 						"name": "data-swipe-direction",
-						"description": "Direction of an active toast swipe."
+						"description": "The direction the toast was swiped."
 					},
 					{
 						"name": "data-swiping",
-						"description": "Present on the element when applicable."
+						"description": "Present when the toast is being swiped."
 					},
 					{
 						"name": "data-type",
-						"description": "Present on the element when applicable."
+						"description": "The type of the toast."
 					}
 				]
 			},
 			{
 				"name": "Provider",
 				"heading": "Toast.Provider",
+				"description": "Provides a context for creating and managing toasts.",
 				"extendsNote": "",
 				"props": [
 					{
@@ -10232,15 +10479,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "timeout",
 						"type": "number | undefined",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "The default amount of time (in ms) before a toast is auto dismissed.\nA value of `0` will prevent the toast from being dismissed automatically.",
+						"defaultValue": "5000"
 					},
 					{
 						"name": "limit",
 						"type": "number | undefined",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "The maximum number of toasts that can be displayed at once.\nWhen the limit is exceeded, the oldest toasts are marked as `limited` (via the `data-limited`\nattribute) rather than removed, so they can be hidden or animated out.",
+						"defaultValue": "3"
 					},
 					{
 						"name": "children",
@@ -10255,6 +10502,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Action",
 				"heading": "Toast.Action",
+				"description": "Performs an action when clicked. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
@@ -10270,6 +10518,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Arrow",
 				"heading": "Toast.Arrow",
+				"description": "Displays an element positioned against the toast anchor. Renders a `<div>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -10287,13 +10536,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-side",
-						"description": "The side the popup is placed on."
+						"description": "Indicates which side the toast is positioned relative to the anchor."
 					}
 				]
 			},
 			{
 				"name": "Close",
 				"heading": "Toast.Close",
+				"description": "Closes the toast when clicked. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
@@ -10309,6 +10559,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Content",
 				"heading": "Toast.Content",
+				"description": "A container for the contents of a toast. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -10322,17 +10573,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-behind",
-						"description": "Present on the element when applicable."
+						"description": "Present when the toast is behind the frontmost toast in the stack."
 					},
 					{
 						"name": "data-expanded",
-						"description": "Present on the element when applicable."
+						"description": "Present when the toast viewport is expanded."
 					}
 				]
 			},
 			{
 				"name": "Description",
 				"heading": "Toast.Description",
+				"description": "A description that describes the toast. Can be used as the default message for the toast when no title is provided. Renders a `<p>` element.",
 				"extendsNote": "Extends paragraph HTML attributes.",
 				"props": [
 					{
@@ -10346,13 +10598,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-type",
-						"description": "Present on the element when applicable."
+						"description": "The type of the toast."
 					}
 				]
 			},
 			{
 				"name": "Portal",
 				"heading": "Toast.Portal",
+				"description": "A portal element that moves the viewport to a different part of the DOM. By default, the portal element is appended to `<body>`. Renders a `<div>` element.",
 				"extendsNote": "",
 				"props": [
 					{
@@ -10368,77 +10621,78 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Positioner",
 				"heading": "Toast.Positioner",
+				"description": "Positions the toast against the anchor. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "side",
 						"type": "t<HT",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Which side of the anchor element to align the toast against.\nMay automatically change to avoid collisions.",
+						"defaultValue": "'top'"
 					},
 					{
 						"name": "align",
 						"type": "s<HTM",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "How to align the popup relative to the specified side.",
+						"defaultValue": "'center'"
 					},
 					{
 						"name": "sideOffset",
 						"type": "hildre",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Distance between the anchor and the popup in pixels.\nAlso accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "alignOffset",
 						"type": "?: Sni",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional offset along the alignment axis in pixels.\nAlso accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "collisionPadding",
 						"type": "ToastSwipeDirection = 'up' | 'down' |",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional space to maintain from the edge of the collision boundary.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "collisionBoundary",
 						"type": "rt type ToastRo",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "An element or a rectangle that delimits the area that the popup is confined to.",
+						"defaultValue": "'clipping-ancestors'"
 					},
 					{
 						"name": "collisionAvoidance",
 						"type": "butes<HTMLDivEleme",
 						"optional": true,
-						"description": "",
+						"description": "Determines how to handle collisions when positioning the popup. `side` controls overflow on the preferred placement axis (`top`/`bottom` or `left`/`right`): `'flip'`: keep the requested side when it fits; otherwise try the opposite side\n(`top` and `bottom`, or `left` and `right`).\n- `'shift'`: never change side; keep the requested side and move the popup within the clipping boundary so it stays visible.\n- `'none'`: do not correct side-axis overflow. `align` controls overflow on the alignment axis (`start`/`center`/`end`): `'flip'`: keep side, but swap `start` and `end` when the requested alignment overflows.\n- `'shift'`: keep side and requested alignment, then nudge the popup along the alignment axis to fit.\n- `'none'`: do not correct alignment-axis overflow. `fallbackAxisSide` controls fallback behavior on the perpendicular axis when the preferred axis cannot fit: `'start'`: allow perpendicular fallback and try the logical start side first\n(`top` before `bottom`, or `left` before `right` in LTR).\n- `'end'`: allow perpendicular fallback and try the logical end side first\n(`bottom` before `top`, or `right` before `left` in LTR).\n- `'none'`: do not fallback to the perpendicular axis. When `side` is `'shift'`, explicitly setting `align` only supports `'shift'` or `'none'`.\nIf `align` is omitted, it defaults to `'flip'`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "arrowPadding",
 						"type": "{ to",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Minimum distance to maintain between the arrow and the edges of the popup. Use it to prevent the arrow element from hanging out of the rounded corners of a popup.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "sticky",
 						"type": "ta; sw",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to maintain the popup in the viewport after the anchor element was scrolled out of view.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "positionMethod",
 						"type": "?: Snippet; }; ex",
 						"optional": true,
-						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
-						"defaultValue": "—"
+						"description": "Determines which CSS `position` property to use.",
+						"defaultValue": "'absolute'"
 					},
 					{
 						"name": "strategy",
@@ -10451,15 +10705,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "ildren?: Snippet; }; export ty",
 						"optional": true,
-						"description": "Override the positioning anchor (element or virtual element).",
+						"description": "An element to position the toast against.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "ippet;",
 						"optional": true,
-						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
-						"defaultValue": "—"
+						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -10476,13 +10730,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "data-side",
-						"description": "The side the popup is placed on."
+						"description": "Indicates which side the toast is positioned relative to the trigger."
 					}
 				]
 			},
 			{
 				"name": "Title",
 				"heading": "Toast.Title",
+				"description": "A title that labels the toast. Renders an `<h2>` element.",
 				"extendsNote": "Extends heading HTML attributes.",
 				"props": [
 					{
@@ -10496,13 +10751,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-type",
-						"description": "Present on the element when applicable."
+						"description": "The type of the toast."
 					}
 				]
 			},
 			{
 				"name": "Viewport",
 				"heading": "Toast.Viewport",
+				"description": "A container viewport for toasts. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -10516,7 +10772,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-expanded",
-						"description": "Present on the element when applicable."
+						"description": "Indicates toasts are expanded in the viewport."
 					}
 				]
 			}
@@ -10530,41 +10786,42 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Toggle",
 				"heading": "Toggle",
+				"description": "A two-state button that can be on or off. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "pressed",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Controlled pressed state.",
+						"description": "Whether the toggle button is currently pressed.\nThis is the controlled counterpart of `defaultPressed`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultPressed",
 						"type": "boolean",
 						"optional": true,
-						"description": "Uncontrolled initial pressed state.",
-						"defaultValue": "—"
+						"description": "Whether the toggle button is currently pressed.\nThis is the uncontrolled counterpart of `pressed`.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onPressedChange",
 						"type": "((pressed: boolean, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the pressed state changes.",
+						"description": "Callback fired when the pressed state is changed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "Whether the component should ignore user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "Controlled value.",
+						"description": "A unique string that identifies the toggle when used inside a toggle group.",
 						"defaultValue": "—"
 					},
 					{
@@ -10578,17 +10835,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the toggle button is disabled."
 					},
 					{
 						"name": "data-pressed",
-						"description": "Present when the toggle is pressed."
+						"description": "Present when the toggle button is pressed."
 					}
 				]
 			},
 			{
 				"name": "ToggleGroup",
 				"heading": "ToggleGroup",
+				"description": "",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -10662,21 +10920,22 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Toolbar.Root",
+				"description": "A container for grouping a set of controls, such as buttons, toggle groups, or menus. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "orientation",
 						"type": "ToolbarOrientation",
 						"optional": true,
-						"description": "",
+						"description": "The orientation of the toolbar.",
 						"defaultValue": "'horizontal'"
 					},
 					{
 						"name": "loopFocus",
 						"type": "boolean",
 						"optional": true,
-						"description": "Loop arrow-key focus at the ends.",
-						"defaultValue": "—"
+						"description": "If `true`, using keyboard navigation will wrap focus to the other end of the toolbar once the end is reached.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "disabled",
@@ -10696,31 +10955,32 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the toolbar is disabled."
 					},
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the toolbar."
 					}
 				]
 			},
 			{
 				"name": "Button",
 				"heading": "Toolbar.Button",
+				"description": "A button that can be used as-is or as a trigger for other components. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "When `true` the item is disabled.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "focusableWhenDisabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control remains focusable when disabled.",
+						"description": "When `true` the item remains focusable when disabled.",
 						"defaultValue": "false"
 					},
 					{
@@ -10741,17 +11001,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the button is disabled."
 					},
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the toolbar."
 					}
 				]
 			},
 			{
 				"name": "Group",
 				"heading": "Toolbar.Group",
+				"description": "Groups several toolbar items or toggles. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
@@ -10765,27 +11026,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the toolbar."
 					}
 				]
 			},
 			{
 				"name": "Input",
 				"heading": "Toolbar.Input",
+				"description": "A native input element that integrates with Toolbar keyboard navigation. Renders an `<input>` element.",
 				"extendsNote": "Extends input HTML attributes.",
 				"props": [
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "When `true` the item is disabled.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "focusableWhenDisabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control remains focusable when disabled.",
+						"description": "When `true` the item remains focusable when disabled.",
 						"defaultValue": "false"
 					},
 					{
@@ -10820,17 +11082,18 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-disabled",
-						"description": "Present when the part is disabled."
+						"description": "Present when the input is disabled."
 					},
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the toolbar."
 					}
 				]
 			},
 			{
 				"name": "Link",
 				"heading": "Toolbar.Link",
+				"description": "A link component. Renders an `<a>` element.",
 				"extendsNote": "Extends anchor HTML attributes.",
 				"props": [
 					{
@@ -10844,27 +11107,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the toolbar."
 					}
 				]
 			},
 			{
 				"name": "Separator",
 				"heading": "Toolbar.Separator",
+				"description": "A separator element accessible to screen readers. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "orientation",
 						"type": "ToolbarOrientation | undefined",
 						"optional": true,
-						"description": "",
+						"description": "The orientation of the separator. Defaults to the opposite of the toolbar's orientation, so a horizontal toolbar renders vertical separators.",
 						"defaultValue": "'horizontal'"
 					}
 				],
 				"dataAttributes": [
 					{
 						"name": "data-orientation",
-						"description": "The orientation of the component."
+						"description": "Indicates the orientation of the separator, which is perpendicular to the toolbar."
 					}
 				]
 			}
@@ -10878,34 +11142,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Root",
 				"heading": "Tooltip.Root",
+				"description": "Groups all parts of the tooltip. Doesn't render its own HTML element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the component is open (controlled).",
+						"description": "Whether the tooltip is currently open.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component is initially open (uncontrolled).",
-						"defaultValue": "—"
+						"description": "Whether the tooltip is initially open. To render a controlled tooltip, use the `open` prop instead.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the open state changes.",
+						"description": "Event handler called when the tooltip is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onOpenChangeComplete",
 						"type": "((open: boolean) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Event handler called after any animations complete when the tooltip is opened or closed.",
 						"defaultValue": "—"
 					},
 					{
@@ -10933,14 +11198,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "TooltipHandle | undefined",
 						"optional": true,
-						"description": "Imperative handle from .",
+						"description": "A handle to associate the tooltip with a trigger.\nIf specified, allows external triggers to control the tooltip's open state.\nCan be created with the Tooltip.createHandle() method.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content of the tooltip.\nThis can be a regular React node or a render function that receives the `payload` of the active trigger.",
 						"defaultValue": "—"
 					}
 				],
@@ -10958,28 +11223,29 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Provider",
 				"heading": "Tooltip.Provider",
+				"description": "Provides a shared delay for multiple tooltips. The grouping logic ensures that once a tooltip becomes visible, the adjacent tooltips will be shown instantly.",
 				"extendsNote": "",
 				"props": [
 					{
 						"name": "delay",
 						"type": "number",
 						"optional": true,
-						"description": "Shared open delay for nested tooltips (ms).",
+						"description": "How long to wait before opening the tooltip on hover. Specified in milliseconds.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "closeDelay",
 						"type": "number",
 						"optional": true,
-						"description": "Shared close delay for nested tooltips (ms).",
+						"description": "How long to wait before closing a tooltip. Specified in milliseconds.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "timeout",
 						"type": "number",
 						"optional": true,
-						"description": "Another tooltip opens instantly if the previous one closed within this window (ms).",
-						"defaultValue": "—"
+						"description": "Another tooltip will open instantly if the previous tooltip is closed within this timeout. Specified in milliseconds.",
+						"defaultValue": "400"
 					},
 					{
 						"name": "children",
@@ -10994,6 +11260,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Arrow",
 				"heading": "Tooltip.Arrow",
+				"description": "Displays an element positioned against the tooltip anchor. Renders a `<div>` element.",
 				"extendsNote": "Extends span HTML attributes.",
 				"props": [
 					{
@@ -11007,24 +11274,25 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the tooltip is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the tooltip is open."
 					}
 				]
 			},
 			{
 				"name": "Popup",
 				"heading": "Tooltip.Popup",
+				"description": "A container for the tooltip contents. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
@@ -11038,40 +11306,41 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the tooltip is closed."
 					},
 					{
 						"name": "data-ending-style",
-						"description": "Present while the exit animation can run."
+						"description": "Present when the tooltip is animating out."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the tooltip is open."
 					},
 					{
 						"name": "data-starting-style",
-						"description": "Present while the enter animation can run."
+						"description": "Present when the tooltip begins animating in."
 					}
 				]
 			},
 			{
 				"name": "Portal",
 				"heading": "Tooltip.Portal",
+				"description": "A portal element that moves the popup to a different part of the DOM. By default, the portal element is appended to `<body>`. Renders a `<div>` element.",
 				"extendsNote": "",
 				"props": [
 					{
 						"name": "container",
 						"type": "HTMLElement | string | null",
 						"optional": true,
-						"description": "",
+						"description": "A parent element to render the portal element into.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to keep the portal mounted in the DOM while the popup is hidden.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -11086,77 +11355,78 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Positioner",
 				"heading": "Tooltip.Positioner",
+				"description": "Positions the tooltip against the trigger. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "side",
 						"type": "voi",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Which side of the anchor element to align the popup against.\nMay automatically change to avoid collisions.",
+						"defaultValue": "'top'"
 					},
 					{
 						"name": "align",
 						"type": "penIn",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "How to align the popup relative to the specified side.",
+						"defaultValue": "'center'"
 					},
 					{
 						"name": "sideOffset",
 						"type": "an; };",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Distance between the anchor and the popup in pixels.\nAlso accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "alignOffset",
 						"type": "ltipCo",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional offset along the alignment axis in pixels.\nAlso accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
+						"defaultValue": "0"
 					},
 					{
 						"name": "collisionPadding",
 						"type": "en: boolean; setOpen(open: boolean, r",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Additional space to maintain from the edge of the collision boundary.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "collisionBoundary",
 						"type": "): void; openW",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "An element or a rectangle that delimits the area that the popup is confined to.",
+						"defaultValue": "'clipping-ancestors'"
 					},
 					{
 						"name": "collisionAvoidance",
 						"type": "ngeReason): void;",
 						"optional": true,
-						"description": "",
+						"description": "Determines how to handle collisions when positioning the popup. `side` controls overflow on the preferred placement axis (`top`/`bottom` or `left`/`right`): `'flip'`: keep the requested side when it fits; otherwise try the opposite side\n(`top` and `bottom`, or `left` and `right`).\n- `'shift'`: never change side; keep the requested side and move the popup within the clipping boundary so it stays visible.\n- `'none'`: do not correct side-axis overflow. `align` controls overflow on the alignment axis (`start`/`center`/`end`): `'flip'`: keep side, but swap `start` and `end` when the requested alignment overflows.\n- `'shift'`: keep side and requested alignment, then nudge the popup along the alignment axis to fit.\n- `'none'`: do not correct alignment-axis overflow. `fallbackAxisSide` controls fallback behavior on the perpendicular axis when the preferred axis cannot fit: `'start'`: allow perpendicular fallback and try the logical start side first\n(`top` before `bottom`, or `left` before `right` in LTR).\n- `'end'`: allow perpendicular fallback and try the logical end side first\n(`bottom` before `top`, or `right` before `left` in LTR).\n- `'none'`: do not fallback to the perpendicular axis. When `side` is `'shift'`, explicitly setting `align` only supports `'shift'` or `'none'`.\nIf `align` is omitted, it defaults to `'flip'`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "arrowPadding",
 						"type": "ason:",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Minimum distance to maintain between the arrow and the edges of the popup. Use it to prevent the arrow element from hanging out of the rounded corners of a popup.",
+						"defaultValue": "5"
 					},
 					{
 						"name": "sticky",
 						"type": "ason):",
 						"optional": true,
-						"description": "",
-						"defaultValue": "—"
+						"description": "Whether to maintain the popup in the viewport after the anchor element was scrolled out of view.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "positionMethod",
 						"type": "g; readonly refs:",
 						"optional": true,
-						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
-						"defaultValue": "—"
+						"description": "Determines which CSS `position` property to use.",
+						"defaultValue": "'absolute'"
 					},
 					{
 						"name": "strategy",
@@ -11169,15 +11439,15 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "/** Shared open delay for neste",
 						"optional": true,
-						"description": "Override the positioning anchor (element or virtual element).",
+						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "(ms).",
 						"optional": true,
-						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
-						"defaultValue": "—"
+						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"defaultValue": "false"
 					},
 					{
 						"name": "children",
@@ -11190,35 +11460,36 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"dataAttributes": [
 					{
 						"name": "data-closed",
-						"description": "Present when the part is closed."
+						"description": "Present when the tooltip is closed."
 					},
 					{
 						"name": "data-open",
-						"description": "Present when the part is open."
+						"description": "Present when the tooltip is open."
 					},
 					{
 						"name": "data-side",
-						"description": "The side the popup is placed on."
+						"description": "Indicates which side the popup is positioned relative to the trigger."
 					}
 				]
 			},
 			{
 				"name": "Trigger",
 				"heading": "Tooltip.Trigger",
+				"description": "An element to attach the tooltip to. Renders a `<button>` element.",
 				"extendsNote": "Extends button HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the control ignores user interaction.",
+						"description": "If `true`, the tooltip will not open when interacting with this trigger.\nNote that this doesn't apply the `disabled` attribute to the trigger element.\nIf you want to disable the trigger element itself, you can pass the `disabled` prop to the trigger element via the `render` prop.",
 						"defaultValue": "false"
 					},
 					{
@@ -11232,14 +11503,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "TooltipHandle | undefined",
 						"optional": true,
-						"description": "Same handle as Root — enables triggers outside the Root tree.",
+						"description": "A handle to associate the trigger with a tooltip.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "Optional payload associated when opening via this trigger.",
+						"description": "A payload to pass to the tooltip when it is opened.",
 						"defaultValue": "—"
 					},
 					{
@@ -11268,20 +11539,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 			{
 				"name": "Viewport",
 				"heading": "Tooltip.Viewport",
+				"description": "A viewport for displaying content transitions. This component is only required if one popup can be opened by multiple triggers, its content changes based on the trigger, and switching between them is animated. Renders a `<div>` element.",
 				"extendsNote": "Extends div HTML attributes.",
 				"props": [
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "HTML element tag to render instead of the default host element.",
+						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet",
 						"optional": true,
-						"description": "Content rendered inside the part.",
+						"description": "The content to render inside the transition container.",
 						"defaultValue": "—"
 					}
 				],

@@ -10,3 +10,4 @@ coverage
 .env.*
 !.env.example
 deploy.md
+apps/docs/scripts/.cache/

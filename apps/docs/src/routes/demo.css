@@ -3,6 +3,7 @@
    do not leak into component trees (including portaled popups). */
 
 :root {
+	interpolate-size: allow-keywords;
 	--docs-fg: #151a21;
 	--docs-fg-muted: #4a5560;
 	--docs-bg: #f4f2ee;
@@ -15,7 +16,7 @@
 	--docs-focus: #0052cc;
 	--docs-overlay: color-mix(in srgb, #151a21 40%, transparent);
 	--docs-shadow: color-mix(in srgb, #151a21 12%, transparent);
-	--docs-code-inline-bg: color-mix(in srgb, #151a21 12%, #fff);
+	--docs-code-inline-bg: color-mix(in srgb, #151a21 6%, #fff);
 	--docs-hover-bg: color-mix(in srgb, #151a21 5%, transparent);
 	--docs-demo-bg: color-mix(in srgb, var(--docs-bg) 55%, #fff);
 	--docs-radius: 0.5rem;
@@ -501,8 +502,7 @@ body {
 
 .prose pre,
 .docs-content > pre {
-	margin: 0.75rem 0 1.1rem;
-	padding: 0.95rem 1.05rem;
+	margin: 0;
 	overflow-x: auto;
 	border-radius: calc(var(--docs-radius, 0.5rem) + 0.05rem);
 	background: #151a21;
@@ -566,7 +566,6 @@ body {
 /* Markdown comparison / reference tables */
 .prose :where(table) {
 	width: 100%;
-	margin: 0.85rem 0 1.2rem;
 	border-collapse: separate;
 	border-spacing: 0;
 	font-size: 0.875rem;
@@ -603,10 +602,6 @@ body {
 	border-bottom: 0;
 }
 
-.prose :where(tbody tr:nth-child(even) td) {
-	background: color-mix(in srgb, var(--docs-bg, #f4f2ee) 45%, transparent);
-}
-
 .prose :where(tbody td:first-child) {
 	font-weight: 600;
 	color: var(--docs-fg, #151a21);
@@ -627,6 +622,300 @@ body {
 .prose :where(td) code {
 	font-size: 0.92em;
 	white-space: nowrap;
+}
+
+/* API reference tables (ApiTable.svelte) */
+.api-part-heading {
+	margin: 1.35rem 0 0.4rem;
+	font-size: 1.25rem;
+	font-weight: 600;
+	line-height: 1.3;
+	scroll-margin-top: 5rem;
+}
+
+.api-part-heading-link {
+	color: inherit;
+	text-decoration: none;
+}
+
+.api-part-heading-link:hover {
+	color: var(--docs-accent, #0052cc);
+}
+
+.api-prop-name-link {
+	color: inherit;
+	text-decoration: none;
+}
+
+.api-prop-name-link code {
+	color: inherit;
+}
+
+.api-prop-col-name .api-prop-name-link code {
+	font-weight: 600;
+	color: var(--docs-fg, #151a21);
+}
+
+.api-prop-col-name .api-prop-name-link:hover code {
+	color: var(--docs-accent, #0052cc);
+}
+
+.api-prop-row:target,
+.api-prop-name-link:target {
+	scroll-margin-top: 5rem;
+}
+
+.api-props-table,
+.api-table-wrap {
+	margin: 0.75rem 0 1.25rem;
+	overflow-x: auto;
+	border: 1px solid var(--docs-border, color-mix(in srgb, #151a21 10%, transparent));
+	border-radius: calc(var(--docs-radius, 0.5rem) + 0.05rem);
+	background: var(--docs-surface, #fff);
+	font-size: 0.875rem;
+	line-height: 1.45;
+	--api-prop-cols: minmax(7rem, 1.35fr) minmax(6rem, 1fr) minmax(3.5rem, 0.65fr) 1.25rem;
+}
+
+.api-props-header,
+.api-prop-summary {
+	display: grid;
+	grid-template-columns: var(--api-prop-cols);
+	column-gap: 1rem;
+	align-items: center;
+	padding: 0.65rem 0.85rem;
+}
+
+.api-props-header {
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	color: var(--docs-fg-muted, #4a5560);
+	background: color-mix(in srgb, var(--docs-bg, #f4f2ee) 70%, var(--docs-surface, #fff));
+	border-bottom: 1px solid var(--docs-border, color-mix(in srgb, #151a21 10%, transparent));
+}
+
+.api-prop-row {
+	border-bottom: 1px solid var(--docs-border, color-mix(in srgb, #151a21 10%, transparent));
+}
+
+.api-prop-row:last-child {
+	border-bottom: 0;
+}
+
+.api-prop-summary {
+	list-style: none;
+	cursor: pointer;
+}
+
+.api-prop-summary::-webkit-details-marker {
+	display: none;
+}
+
+.api-prop-summary::marker {
+	content: '';
+}
+
+.api-prop-col-name code {
+	font-weight: 600;
+	color: var(--docs-fg, #151a21);
+}
+
+.api-prop-col-type,
+.api-prop-col-default {
+	min-width: 0;
+}
+
+.api-prop-col-type code,
+.api-prop-col-default code {
+	color: var(--docs-fg-muted, #4a5560);
+	white-space: nowrap;
+}
+
+.api-prop-chevron,
+.api-prop-chevron-spacer {
+	justify-self: end;
+	width: 0.45rem;
+	height: 0.45rem;
+	flex-shrink: 0;
+}
+
+.api-prop-chevron {
+	border-right: 1.5px solid var(--docs-fg-muted, #4a5560);
+	border-bottom: 1.5px solid var(--docs-fg-muted, #4a5560);
+	transform: rotate(45deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.api-prop-chevron {
+		transition: transform 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+	}
+
+	.api-prop-row::details-content {
+		block-size: 0;
+		overflow: hidden;
+		opacity: 0;
+		transition:
+			block-size 0.25s cubic-bezier(0.32, 0.72, 0, 1),
+			opacity 0.2s cubic-bezier(0.32, 0.72, 0, 1),
+			content-visibility 0.25s allow-discrete;
+		transition-behavior: allow-discrete;
+	}
+
+	.api-prop-row[open]::details-content {
+		block-size: auto;
+		opacity: 1;
+	}
+
+	@starting-style {
+		.api-prop-row[open]::details-content {
+			block-size: 0;
+			opacity: 0;
+		}
+	}
+}
+
+.api-prop-row[open] > .api-prop-summary .api-prop-chevron {
+	transform: rotate(-135deg);
+}
+
+.api-prop-summary:hover {
+	background: var(--docs-hover-bg, color-mix(in srgb, #151a21 5%, transparent));
+}
+
+.api-prop-summary:focus-visible {
+	outline: 2px solid var(--docs-focus, #0052cc);
+	outline-offset: -2px;
+}
+
+.api-prop-panel {
+	padding: 0.75rem 0.85rem 0.85rem;
+	border-top: 1px solid var(--docs-border, color-mix(in srgb, #151a21 10%, transparent));
+	background: color-mix(in srgb, var(--docs-bg, #f4f2ee) 35%, var(--docs-surface, #fff));
+}
+
+.api-prop-details {
+	display: grid;
+	gap: 0.75rem;
+	margin: 0;
+}
+
+.api-prop-detail {
+	display: grid;
+	grid-template-columns: 5.5rem 1fr;
+	column-gap: 1rem;
+	align-items: start;
+}
+
+.api-prop-detail dt {
+	margin: 0;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	color: var(--docs-fg-muted, #4a5560);
+	padding-top: 0.1rem;
+}
+
+.api-prop-detail dd {
+	margin: 0;
+	min-width: 0;
+	color: color-mix(in srgb, var(--docs-fg, #151a21) 88%, #4a5560);
+}
+
+.api-prop-detail-name dd .api-prop-name-link code {
+	color: var(--docs-accent, #0052cc);
+	text-decoration: underline;
+	text-decoration-color: color-mix(in srgb, var(--docs-accent, #0052cc) 35%, transparent);
+	text-underline-offset: 0.15em;
+}
+
+.api-prop-detail-name dd .api-prop-name-link:hover code {
+	text-decoration-color: var(--docs-accent, #0052cc);
+}
+
+.api-prop-detail dd .api-description code {
+	color: inherit;
+	text-decoration: none;
+}
+
+.api-description p,
+.api-description ul {
+	margin: 0;
+}
+
+.api-description p + p,
+.api-description p + ul,
+.api-description ul + p {
+	margin-top: 0.65rem;
+}
+
+.api-description ul {
+	padding-left: 1.25rem;
+	list-style: disc;
+}
+
+.api-description li + li {
+	margin-top: 0.35rem;
+}
+
+.api-description li code {
+	font-size: 0.92em;
+}
+
+.api-description-empty {
+	margin: 0;
+	color: var(--docs-fg-muted, #4a5560);
+}
+
+.api-type-block {
+	margin: 0;
+	padding: 0.45rem 0.55rem;
+	overflow-x: auto;
+	border-radius: calc(var(--docs-radius, 0.5rem) - 0.05rem);
+	background: color-mix(in srgb, var(--docs-bg, #f4f2ee) 55%, var(--docs-surface, #fff));
+	font-family: var(--font-mono, ui-monospace, monospace);
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+.api-props-table code,
+.api-table code {
+	font-size: 1em;
+	font-family: var(--font-mono, ui-monospace, monospace);
+	background: var(--docs-surface);
+	padding: 0;
+}
+
+.api-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.875rem;
+	line-height: 1.45;
+}
+
+.api-table th,
+.api-table td {
+	padding: 0.7rem 0.85rem;
+	text-align: left;
+	vertical-align: top;
+	border-bottom: 1px solid var(--docs-border, color-mix(in srgb, #151a21 10%, transparent));
+}
+
+.api-table th {
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	color: var(--docs-fg-muted, #4a5560);
+	background: color-mix(in srgb, var(--docs-bg, #f4f2ee) 70%, var(--docs-surface, #fff));
+	white-space: nowrap;
+}
+
+.api-table tr:last-child td {
+	border-bottom: 0;
 }
 
 @media (max-width: 640px) {

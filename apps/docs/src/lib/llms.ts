@@ -187,7 +187,9 @@ function formatApiMarkdown(slug: string): string {
 	const blocks: string[] = [];
 	for (const part of api.parts) {
 		blocks.push(`### ${part.heading}`, '');
-		if (part.extendsNote) {
+		if (part.description) {
+			blocks.push(part.description, '');
+		} else if (part.extendsNote) {
 			blocks.push(part.extendsNote, '');
 		}
 		if (part.props.length === 0 && part.dataAttributes.length === 0) {

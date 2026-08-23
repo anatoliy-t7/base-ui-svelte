@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { getComponentApi } from './registry.js';
 	import ApiTable from './ApiTable.svelte';
+	import ApiDescription from './ApiDescription.svelte';
+	import ApiPartHeading from './ApiPartHeading.svelte';
 
 	let {
 		slug
@@ -25,15 +27,29 @@
 		</p>
 
 		{#each api.parts as part (part.heading)}
-			<h3>{part.heading}</h3>
-			{#if part.extendsNote}
-				<p class="api-extends">{part.extendsNote}</p>
-			{/if}
-			{#if part.props.length === 0 && part.dataAttributes.length === 0}
-				<p class="api-empty">No component-specific props — HTML attributes and children only.</p>
-			{:else}
-				<ApiTable props={part.props} dataAttributes={part.dataAttributes} />
-			{/if}
+			<article class="api-part">
+				<ApiPartHeading heading={part.heading} />
+				{#if part.description}
+					<div class="api-part-description">
+						<ApiDescription source={part.description} />
+					</div>
+				{:else if part.extendsNote}
+					<p class="api-extends">{part.extendsNote}</p>
+				{/if}
+
+				{#if part.props.length === 0 && part.dataAttributes.length === 0}
+					<p class="api-empty">No component-specific props — HTML attributes and children only.</p>
+				{:else}
+					{#if part.props.length > 0}
+						<p class="api-subsection-label">Props</p>
+						<ApiTable props={part.props} partHeading={part.heading} />
+					{/if}
+					{#if part.dataAttributes.length > 0}
+						<p class="api-subsection-label">Data attributes</p>
+						<ApiTable dataAttributes={part.dataAttributes} />
+					{/if}
+				{/if}
+			</article>
 		{/each}
 	</section>
 {/if}
@@ -43,9 +59,14 @@
 		margin-top: 0.5rem;
 	}
 
+	.api-part + .api-part {
+		margin-top: 2rem;
+	}
+
 	.api-lede,
 	.api-extends,
-	.api-empty {
+	.api-empty,
+	.api-part-description {
 		margin: 0.4rem 0 0.85rem;
 		max-width: 42rem;
 		line-height: 1.55;
@@ -55,6 +76,15 @@
 
 	.api-extends {
 		font-size: 0.875rem;
+		color: var(--docs-fg-muted, #4a5560);
+	}
+
+	.api-subsection-label {
+		margin: 0.85rem 0 0.35rem;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
 		color: var(--docs-fg-muted, #4a5560);
 	}
 </style>

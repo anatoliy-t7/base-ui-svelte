@@ -9,6 +9,7 @@
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"gen:api": "bun run scripts/gen-api-registry.ts",
+		"gen:api:refresh": "bun run scripts/gen-api-registry.ts --refresh",
 		"fmt": "oxfmt .",
 		"fmt:check": "oxfmt --check ."
 	},
