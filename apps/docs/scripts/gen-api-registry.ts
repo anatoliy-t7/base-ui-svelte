@@ -61,6 +61,21 @@ function jsDocText(node: ts.Node): string {
 				else if ('text' in c) parts.push(String(c.text));
 			}
 		}
+		if (ts.isJSDoc(d)) {
+			for (const tag of d.tags ?? []) {
+				if (tag.tagName.text === 'default') {
+					const tagComment =
+						typeof tag.comment === 'string'
+							? tag.comment
+							: Array.isArray(tag.comment)
+								? tag.comment
+										.map((c) => (typeof c === 'string' ? c : 'text' in c ? String(c.text) : ''))
+										.join('')
+								: '';
+					if (tagComment) parts.push(`@default ${tagComment.trim()}`);
+				}
+			}
+		}
 	}
 	return parts.join(' ').replace(/\s+/g, ' ').trim();
 }

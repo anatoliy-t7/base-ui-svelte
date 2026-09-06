@@ -46,21 +46,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "AccordionValue | undefined",
 						"optional": true,
-						"description": "The controlled value of the item(s) that should be expanded. To render an uncontrolled accordion, use the `defaultValue` prop instead.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "AccordionValue",
 						"optional": true,
-						"description": "The uncontrolled value of the item(s) that should be initially expanded. To render a controlled accordion, use the `value` prop instead.",
+						"description": "Uncontrolled initial value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: AccordionValue) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when an accordion item is expanded or collapsed.\nProvides the new value as an argument.",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -74,7 +74,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -113,7 +113,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -136,21 +136,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string",
 						"optional": true,
-						"description": "A unique value that identifies this accordion item.\nIf no value is provided, a unique ID will be generated automatically.\nUse when controlling the accordion programmatically, or to set an initial open state.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: 'trigger-press' | 'imperative' }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the panel is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -193,7 +193,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "hiddenUntilFound",
 						"type": "boolean",
 						"optional": true,
-						"description": "Allows the browser's built-in page search to find and expand the panel contents. Overrides the `keepMounted` prop and uses `hidden=\"until-found\"`\nto hide the element without removing it from the DOM.",
+						"description": "Use the `hidden=\"until-found\"` attribute when collapsed.",
 						"defaultValue": "false"
 					},
 					{
@@ -272,21 +272,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the dialog is currently open.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the dialog is initially open. To render a controlled dialog, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the alert dialog is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -294,14 +294,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"type": "AlertDialogModal",
 						"optional": true,
 						"description": "",
-						"defaultValue": "—"
+						"defaultValue": "true"
 					},
 					{
 						"name": "disablePointerDismissal",
 						"type": "boolean",
 						"optional": true,
 						"description": "",
-						"defaultValue": "—"
+						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChangeComplete",
@@ -314,14 +314,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "AlertDialogHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the alert dialog with a trigger.\nIf specified, allows external triggers to control the alert dialog's open state.\nCan be created with the AlertDialog.createHandle() method.",
+						"description": "Imperative handle from .",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "The content of the dialog.\nThis can be a regular React node or a render function that receives the `payload` of the active trigger.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -346,7 +346,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -393,7 +393,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -432,7 +432,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -532,7 +532,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -553,14 +553,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "AlertDialogHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the trigger with an alert dialog.\nCan be created with the AlertDialog.createHandle() method.",
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "A payload to pass to the dialog when it is opened.",
+						"description": "Optional payload associated when opening via this trigger.",
 						"defaultValue": "—"
 					},
 					{
@@ -596,7 +596,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -635,21 +635,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string | null | undefined",
 						"optional": true,
-						"description": "The input value of the autocomplete. Use when controlled.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string | null",
 						"optional": true,
-						"description": "The uncontrolled input value of the autocomplete when it's initially rendered. To render a controlled autocomplete, use the `value` prop instead.",
+						"description": "Uncontrolled initial value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string | null, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the input value of the autocomplete changes.",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -677,28 +677,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the popup is currently open. Use when controlled.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the popup is initially open. To render a controlled popup, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the popup is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
+						"defaultValue": "false"
+					},
+					{
+						"name": "readOnly",
+						"type": "boolean",
+						"optional": true,
+						"description": "Whether the user should be unable to choose a different option. The popup can still open and be browsed; selection and typing stay blocked.",
 						"defaultValue": "false"
 					},
 					{
@@ -726,35 +733,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "filteredItems",
 						"type": "ReadonlyArray<string> | undefined",
 						"optional": true,
-						"description": "Filtered items to display in the list.\nWhen provided, the list will use these items instead of filtering the `items` prop internally.\nUse when you want to control filtering logic externally with the `useFilter()` hook.",
+						"description": "Externally filtered item values; when set, skips internal filtering.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "limit",
 						"type": "number",
 						"optional": true,
-						"description": "The maximum number of items to display in the list.",
+						"description": "Max visible items (-1 = no limit).",
 						"defaultValue": "-1"
 					},
 					{
 						"name": "locale",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "The locale to use for string comparison.\nDefaults to the user's runtime locale.",
+						"description": "Locale for default string filtering.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "autoHighlight",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the first matching item is highlighted automatically. `true`: highlight after the user types and keep the highlight while the query changes.\n- `'always'`: always highlight the first item.",
+						"description": "Highlight the first matching item while filtering.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "highlightItemOnHover",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether moving the pointer over items should highlight them.\nDisabling this prop allows CSS `:hover` to be differentiated from the `:focus` (`data-highlighted`) state.",
+						"description": "Highlight items on pointer move.",
 						"defaultValue": "true"
 					},
 					{
@@ -812,6 +819,10 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					{
 						"name": "data-open",
 						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-readonly",
+						"description": "Present when the control is read-only."
 					}
 				]
 			},
@@ -850,7 +861,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -882,7 +893,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -1012,7 +1023,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					}
 				],
@@ -1028,6 +1039,10 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					{
 						"name": "data-open",
 						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-readonly",
+						"description": "Present when the component is readonly."
 					}
 				]
 			},
@@ -1070,7 +1085,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string",
 						"optional": false,
-						"description": "A unique value that identifies this item.",
+						"description": "Controlled value.",
 						"defaultValue": "null"
 					},
 					{
@@ -1084,7 +1099,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -1191,7 +1206,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -1324,7 +1339,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "positionMethod",
 						"type": "string, event?: Ev",
 						"optional": true,
-						"description": "Determines which CSS `position` property to use.",
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
 						"defaultValue": "'absolute'"
 					},
 					{
@@ -1338,14 +1353,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "): () => void; readonly highli",
 						"optional": true,
-						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
+						"description": "Override the positioning anchor (element or virtual element).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "Entry[]",
 						"optional": true,
-						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
 						"defaultValue": "false"
 					},
 					{
@@ -1426,14 +1441,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -1456,6 +1471,10 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					{
 						"name": "data-open",
 						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-readonly",
+						"description": "Present when the component is readonly."
 					}
 				]
 			},
@@ -1533,6 +1552,13 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"optional": true,
 						"description": "Callback fired when the loading status changes.",
 						"defaultValue": "—"
+					},
+					{
+						"name": "keepMounted",
+						"type": "boolean",
+						"optional": true,
+						"description": "When `true`, keep the image element mounted even after an error (useful for stacked fallbacks and image optimizers that need the node present).",
+						"defaultValue": "false"
 					}
 				],
 				"dataAttributes": []
@@ -1561,14 +1587,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "focusableWhenDisabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the button should be focusable when disabled.",
+						"description": "Whether the control remains focusable when disabled.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render. Defaults to `button`.",
 						"defaultValue": "—"
 					},
 					{
@@ -1610,28 +1636,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "checked",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the checkbox is currently ticked. To render an uncontrolled checkbox, use the `defaultChecked` prop instead.",
+						"description": "Controlled checked state.",
 						"defaultValue": "undefined"
 					},
 					{
 						"name": "defaultChecked",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the checkbox is initially ticked. To render a controlled checkbox, use the `checked` prop instead.",
+						"description": "Uncontrolled initial checked state.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onCheckedChange",
 						"type": "((checked: boolean, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the checkbox is ticked or unticked.",
+						"description": "Event handler called when the checked state changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -1659,21 +1685,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "The checkbox's value. Identifies it within a [Checkbox Group](https://base-ui.com/react/components/checkbox-group), falling back to `name` when omitted.\nWhen submitting a form, a checked box submits `value`; with no `value`, it submits the native \"on\".",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "uncheckedValue",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "The value submitted with the form when the checkbox is unchecked.\nBy default, unchecked checkboxes do not submit any value, matching native checkbox behavior.",
+						"description": "Submitted when the checkbox is unchecked (native form pattern).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "form",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "Identifies the form that owns the hidden input.\nUseful when the checkbox is rendered outside the form.",
+						"description": "Form id association for the hidden input.",
 						"defaultValue": "—"
 					},
 					{
@@ -1687,7 +1713,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "parent",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the checkbox controls a group of child checkboxes. Must be used in a [Checkbox Group](https://base-ui.com/react/components/checkbox-group).",
+						"description": "When true inside a CheckboxGroup with `allValues`, this checkbox controls selecting / clearing the whole group (parent checkbox).",
 						"defaultValue": "false"
 					},
 					{
@@ -1778,35 +1804,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string[] | undefined",
 						"optional": true,
-						"description": "Names of the checkboxes in the group that should be ticked. To render an uncontrolled checkbox group, use the `defaultValue` prop instead.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string[]",
 						"optional": true,
-						"description": "Names of the checkboxes in the group that should be initially ticked. To render a controlled checkbox group, use the `value` prop instead.",
+						"description": "Uncontrolled initial value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string[], event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when a checkbox in the group is ticked or unticked.\nProvides the new value as an argument.",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "allValues",
 						"type": "string[] | undefined",
 						"optional": true,
-						"description": "Names of all checkboxes in the group. Use this when creating a parent checkbox.",
+						"description": "Values controlled by a parent checkbox (`parent` on Checkbox.Root).",
 						"defaultValue": "—"
 					},
 					{
@@ -1841,28 +1867,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the collapsible panel is currently open. To render an uncontrolled collapsible, use the `defaultOpen` prop instead.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the collapsible panel is initially open. To render a controlled collapsible, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the panel is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -1977,21 +2003,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "ComboboxValue | undefined",
 						"optional": true,
-						"description": "The selected value of the combobox. Use when controlled.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "ComboboxValue",
 						"optional": true,
-						"description": "The uncontrolled selected value of the combobox when it's initially rendered. To render a controlled combobox, use the `value` prop instead.",
+						"description": "Uncontrolled initial value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: ComboboxValue, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the selected value of the combobox changes.",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -2010,51 +2036,51 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "onInputChange",
-						"type": "((value: string, event?: Event) => void) | undefined",
+						"type": "| ((value: string, eventDetails: ComboboxInputChangeEventDetails, event?: Event) => void) | undefined",
 						"optional": true,
-						"description": "",
+						"description": "Called when the input value changes. Use `eventDetails.cancel()` to keep the previous value (e.g. preserve filter text after a multi-select item press when `eventDetails.isItemPress` is true).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the popup is currently open. Use when controlled.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the popup is initially open. To render a controlled popup, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the popup is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onOpenChangeComplete",
 						"type": "((open: boolean) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called after any animations complete when the popup is opened or closed.",
+						"description": "Called after open/close animations complete.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "readOnly",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the user should be unable to choose a different option from the popup.",
+						"description": "Whether the user should be unable to choose a different option. The popup can still open and be browsed; selection stays blocked.",
 						"defaultValue": "false"
 					},
 					{
@@ -2089,35 +2115,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "filteredItems",
 						"type": "ReadonlyArray<string> | undefined",
 						"optional": true,
-						"description": "Filtered items to display in the list.\nWhen provided, the list will use these items instead of filtering the `items` prop internally.\nUse when you want to control filtering logic externally with the `useFilter()` hook.",
+						"description": "Externally filtered item values; when set, skips internal filtering.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "limit",
 						"type": "number",
 						"optional": true,
-						"description": "The maximum number of items to display in the list.",
+						"description": "Max visible items (-1 = no limit).",
 						"defaultValue": "-1"
 					},
 					{
 						"name": "locale",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "The locale to use for string comparison.\nDefaults to the user's runtime locale.",
+						"description": "Locale for default string filtering.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "autoHighlight",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the first matching item is highlighted automatically while filtering.",
+						"description": "Highlight the first matching item while filtering.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "highlightItemOnHover",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether moving the pointer over items should highlight them.\nDisabling this prop allows CSS `:hover` to be differentiated from the `:focus` (`data-highlighted`) state.",
+						"description": "Highlight items on pointer move.",
 						"defaultValue": "true"
 					},
 					{
@@ -2159,21 +2185,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "loopFocus",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether to loop keyboard focus back to the input when the end of the list is reached while using the arrow keys. The first item can then be reached by pressing ArrowDown again from the input, or the last item can be reached by pressing ArrowUp from the input.\nThe input is always included in the focus loop per [ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).\nWhen disabled, focus does not move when on the last element and the user presses ArrowDown, or when on the first element and the user presses ArrowUp.",
+						"description": "Whether highlight wraps at list ends.",
 						"defaultValue": "true"
 					},
 					{
 						"name": "modal",
 						"type": "boolean",
 						"optional": true,
-						"description": "Determines if the popup enters a modal state when open. `true`: user interaction is limited to the popup: document page scroll is locked and pointer interactions on outside elements are disabled.`false`: user interaction with the rest of the document is allowed. On touch devices, a `true` modal blocks outside taps but leaves the page scrollable unless the popup spans nearly the full viewport width, matching native iOS behavior.",
+						"description": "Whether the popup behaves as a modal layer.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "openOnInputClick",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the popup opens when clicking the input.",
+						"description": "Open the popup when the input is clicked.",
 						"defaultValue": "true"
 					},
 					{
@@ -2187,7 +2213,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "children",
 						"type": "Snippet< [{ value: ComboboxValue; inputValue: string; open: boolean; disabled: boolean }] >",
 						"optional": true,
-						"description": "- **`autoComplete` Prop References:** - See [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete)",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -2245,7 +2271,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -2349,7 +2375,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -2479,7 +2505,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					}
 				],
@@ -2541,7 +2567,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string",
 						"optional": false,
-						"description": "A unique value that identifies this item.",
+						"description": "Controlled value.",
 						"defaultValue": "null"
 					},
 					{
@@ -2555,7 +2581,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -2662,7 +2688,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -2744,93 +2770,93 @@ export const apiRegistry: Record<string, ComponentApi> = {
 				"props": [
 					{
 						"name": "side",
-						"type": "ring",
+						"type": "type",
 						"optional": true,
 						"description": "Which side of the anchor element to align the popup against.\nMay automatically change to avoid collisions.",
 						"defaultValue": "'bottom'"
 					},
 					{
 						"name": "align",
-						"type": "labe",
+						"type": "lter",
 						"optional": true,
 						"description": "How to align the popup relative to the specified side.",
 						"defaultValue": "'center'"
 					},
 					{
 						"name": "sideOffset",
-						"type": "expor",
+						"type": "((item",
 						"optional": true,
 						"description": "Distance between the anchor and the popup in pixels.\nAlso accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
 						"defaultValue": "0"
 					},
 					{
 						"name": "alignOffset",
-						"type": "emEntr",
+						"type": "ery: s",
 						"optional": true,
 						"description": "Additional offset along the alignment axis in pixels.\nAlso accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: `data.anchor`: the dimensions of the anchor element with properties `width` and `height`.`data.positioner`: the dimensions of the positioner element with properties `width` and `height`.`data.side`: which side of the anchor element the positioner is aligned against.`data.align`: how the positioner is aligned relative to the specified side.",
 						"defaultValue": "0"
 					},
 					{
 						"name": "collisionPadding",
-						"type": "ring; readonly value: string; label:",
+						"type": "ng) => boolean); export type Combobox",
 						"optional": true,
 						"description": "Additional space to maintain from the edge of the collision boundary.",
 						"defaultValue": "5"
 					},
 					{
 						"name": "collisionBoundary",
-						"type": "ent: HTMLElemen",
+						"type": "Array<{ read",
 						"optional": true,
 						"description": "An element or a rectangle that delimits the area that the popup is confined to.",
 						"defaultValue": "'clipping-ancestors'"
 					},
 					{
 						"name": "collisionAvoidance",
-						"type": "boxRefs = { input",
+						"type": "eadonly label?: st",
 						"optional": true,
 						"description": "Determines how to handle collisions when positioning the popup. `side` controls overflow on the preferred placement axis (`top`/`bottom` or `left`/`right`): `'flip'`: keep the requested side when it fits; otherwise try the opposite side\n(`top` and `bottom`, or `left` and `right`).\n- `'shift'`: never change side; keep the requested side and move the popup within the clipping boundary so it stays visible.\n- `'none'`: do not correct side-axis overflow. `align` controls overflow on the alignment axis (`start`/`center`/`end`): `'flip'`: keep side, but swap `start` and `end` when the requested alignment overflows.\n- `'shift'`: keep side and requested alignment, then nudge the popup along the alignment axis to fit.\n- `'none'`: do not correct alignment-axis overflow. `fallbackAxisSide` controls fallback behavior on the perpendicular axis when the preferred axis cannot fit: `'start'`: allow perpendicular fallback and try the logical start side first\n(`top` before `bottom`, or `left` before `right` in LTR).\n- `'end'`: allow perpendicular fallback and try the logical end side first\n(`bottom` before `top`, or `right` before `left` in LTR).\n- `'none'`: do not fallback to the perpendicular axis. When `side` is `'shift'`, explicitly setting `align` only supports `'shift'` or `'none'`.\nIf `align` is omitted, it defaults to `'flip'`.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "arrowPadding",
-						"type": "ll; t",
+						"type": "boboxI",
 						"optional": true,
 						"description": "Minimum distance to maintain between the arrow and the edges of the popup. Use it to prevent the arrow element from hanging out of the rounded corners of a popup.",
 						"defaultValue": "5"
 					},
 					{
 						"name": "sticky",
-						"type": "Element",
+						"type": "n; exp",
 						"optional": true,
 						"description": "Whether to maintain the popup in the viewport after the anchor element was scrolled out of view.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "positionMethod",
-						"type": "Element | null; a",
+						"type": "bel: string; read",
 						"optional": true,
-						"description": "Determines which CSS `position` property to use.",
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
 						"defaultValue": "'absolute'"
 					},
 					{
 						"name": "strategy",
-						"type": "Value(value: Combo",
+						"type": "HTMLElement | null",
 						"optional": true,
 						"description": "",
 						"defaultValue": "—"
 					},
 					{
 						"name": "anchor",
-						"type": "string, event?: Event): void;",
+						"type": "| null; arrow: HTMLElement | n",
 						"optional": true,
-						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
+						"description": "Override the positioning anchor (element or virtual element).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
-						"type": "d; rea",
+						"type": "Event,",
 						"optional": true,
-						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
 						"defaultValue": "false"
 					},
 					{
@@ -2911,14 +2937,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -2941,6 +2967,10 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					{
 						"name": "data-open",
 						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-readonly",
+						"description": "Present when the component is readonly."
 					}
 				]
 			},
@@ -2989,21 +3019,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the menu is currently open.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the menu is initially open. To render a controlled menu, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the menu is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -3060,7 +3090,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -3099,28 +3129,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "checked",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the checkbox item is currently ticked. To render an uncontrolled checkbox item, use the `defaultChecked` prop instead.",
+						"description": "Controlled checked state.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultChecked",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the checkbox item is initially ticked. To render a controlled checkbox item, use the `checked` prop instead.",
+						"description": "Uncontrolled initial checked state.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onCheckedChange",
 						"type": "((checked: boolean, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the checkbox item is ticked or unticked.",
+						"description": "Event handler called when the checked state changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -3189,7 +3219,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "children",
 						"type": "Snippet",
 						"optional": true,
-						"description": "The content of the component.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -3221,7 +3251,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -3292,7 +3322,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -3425,7 +3455,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "positionMethod",
 						"type": "donly anchorPoint:",
 						"optional": true,
-						"description": "Determines which CSS `position` property to use.",
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
 						"defaultValue": "'absolute'"
 					},
 					{
@@ -3439,14 +3469,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "g, element: HTMLElement, disabl",
 						"optional": true,
-						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
+						"description": "Override the positioning anchor (element or virtual element).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "donly i",
 						"optional": true,
-						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
 						"defaultValue": "false"
 					},
 					{
@@ -3478,35 +3508,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "The controlled value of the radio item that should be currently selected. To render an uncontrolled radio group, use the `defaultValue` prop instead.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string",
 						"optional": true,
-						"description": "The uncontrolled value of the radio item that should be initially selected. To render a controlled radio group, use the `value` prop instead.",
+						"description": "Uncontrolled initial value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Function called when the selected value changes.",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ value: string }]>",
 						"optional": true,
-						"description": "The content of the component.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -3534,7 +3564,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -3611,28 +3641,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the menu is currently open.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the menu is initially open. To render a controlled menu, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the menu is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean }]>",
 						"optional": true,
-						"description": "The content of the submenu.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -3657,7 +3687,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -3697,7 +3727,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -3763,56 +3793,56 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the dialog is currently open.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the dialog is initially open. To render a controlled dialog, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the dialog is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "modal",
 						"type": "DialogModal",
 						"optional": true,
-						"description": "Determines if the dialog enters a modal state when open. `true`: user interaction is limited to just the dialog: focus is trapped, document page scroll is locked, and pointer interactions on outside elements are disabled.`false`: user interaction with the rest of the document is allowed.\n- `'trap-focus'`: focus is trapped inside the dialog, but document page scroll is not locked and pointer interactions outside of it remain enabled. When `modal` is `true` or `'trap-focus'`, render `<Dialog.Close>` inside `<Dialog.Popup>` so touch screen readers can escape the popup.",
+						"description": "Whether the dialog enters a modal state when open. - `true`: focus trap, `aria-modal`, document scroll locked, page interaction limited - `false`: no focus trap / aria-modal / scroll lock - `'trap-focus'`: focus trap without `aria-modal` or scroll lock",
 						"defaultValue": "true"
 					},
 					{
 						"name": "disablePointerDismissal",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether to prevent the dialog from closing on outside presses.\nFor non-modal dialogs, this also prevents the dialog from closing when focus moves outside of it.",
+						"description": "Prevents closing on outside presses (and backdrop click).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChangeComplete",
 						"type": "((open: boolean) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called after any animations complete when the dialog is opened or closed.",
+						"description": "Called after open/close animations complete.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "handle",
 						"type": "DialogHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the dialog with a trigger.\nIf specified, allows external triggers to control the dialog's open state.\nCan be created with the Dialog.createHandle() method.",
+						"description": "Imperative handle from .",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "The content of the dialog.\nThis can be a regular React node or a render function that receives the `payload` of the active trigger.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -3837,14 +3867,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "forceRender",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the backdrop is forced to render even when nested.",
+						"description": "Keep the backdrop mounted while closed (for exit animations).",
 						"defaultValue": "false"
 					},
 					{
@@ -3884,7 +3914,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -3923,7 +3953,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -4023,7 +4053,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -4044,14 +4074,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "DialogHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the trigger with a dialog.\nCan be created with the Dialog.createHandle() method.",
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "A payload to pass to the dialog when it is opened.",
+						"description": "Optional payload associated when opening via this trigger.",
 						"defaultValue": "—"
 					},
 					{
@@ -4087,7 +4117,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -4126,21 +4156,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the drawer is currently open.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the drawer is initially open. To render a controlled drawer, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the drawer is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -4161,7 +4191,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "modal",
 						"type": "boolean",
 						"optional": true,
-						"description": "Determines if the drawer enters a modal state when open. `true`: user interaction is limited to just the drawer: focus is trapped, document page scroll is locked, and pointer interactions on outside elements are disabled.`false`: user interaction with the rest of the document is allowed.\n- `'trap-focus'`: focus is trapped inside the drawer, but document page scroll is not locked and pointer interactions outside of it remain enabled.",
+						"description": "Whether the drawer enters a modal state when open. When `true`, focus is trapped, document scroll is locked, and outside pointer interaction is limited.",
 						"defaultValue": "true"
 					},
 					{
@@ -4194,9 +4224,9 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					},
 					{
 						"name": "onSnapPointChange",
-						"type": "((snapPoint: DrawerSnapPoint | null) => void) | undefined",
+						"type": "| (( snapPoint: DrawerSnapPoint | null, eventDetails: DrawerSnapPointChangeEventDetails, ) => void) | undefined",
 						"optional": true,
-						"description": "Callback fired when the snap point changes.",
+						"description": "Callback fired when the active snap point changes. Call `eventDetails.cancel()` to reject a snap (including swipe-to-dismiss).",
 						"defaultValue": "—"
 					},
 					{
@@ -4210,14 +4240,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "DrawerHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the drawer with a trigger.\nIf specified, allows detached triggers to control the drawer's open state.\nCan be created with the Drawer.createHandle() method.",
+						"description": "Imperative handle from .",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "The content of the drawer.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -4273,7 +4303,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -4320,7 +4350,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -4343,7 +4373,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -4395,7 +4425,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -4431,7 +4461,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -4467,7 +4497,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -4563,14 +4593,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the swipe area is disabled.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -4637,7 +4667,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -4658,14 +4688,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "DrawerHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the trigger with a drawer.\nCan be created with the Drawer.createHandle() method.",
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "A payload to pass to the drawer when it is opened.",
+						"description": "Optional payload associated when opening via this trigger.",
 						"defaultValue": "—"
 					},
 					{
@@ -4701,7 +4731,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -4784,7 +4814,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.\nTakes precedence over the `disabled` prop on the `<Field.Control>` component.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -4812,7 +4842,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "validationDebounceTime",
 						"type": "number",
 						"optional": true,
-						"description": "How long to wait between `validate` callbacks if\n`validationMode=\"onchange\"` is used. Specified in milliseconds.",
+						"description": "Debounce (ms) before running `validate` on change.",
 						"defaultValue": "0"
 					},
 					{
@@ -4927,7 +4957,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "onValueChange",
 						"type": "((value: string, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Callback fired when the `value` changes. Use when controlled.",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -5024,7 +5054,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "match",
 						"type": "FieldErrorMatch | undefined",
 						"optional": true,
-						"description": "Determines whether to show the error message according to the field's\n[ValidityState](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState).\nSpecifying `true` will always show the error message, and lets external libraries control the visibility.",
+						"description": "When `true`, always show. When a `ValidityState` key, show when that flag is true. When omitted, show when the field is invalid (or has a form error).",
 						"defaultValue": "—"
 					},
 					{
@@ -5076,14 +5106,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the wrapped control should ignore user interaction.\nThe `disabled` prop on `<Field.Root>` takes precedence over this.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -5135,7 +5165,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "nativeLabel",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component renders a native `<label>` element when replacing it via the `render` prop.\nSet to `false` if the rendered element is not a label (for example, `<div>`). This is useful to avoid inheriting label behaviors on `<button>` controls (such as `<Select.Trigger>` and `<Combobox.Trigger>`), including avoiding `:hover` on the button when hovering the label, and preventing clicks on the label from firing on the button.",
+						"description": "When false, render a `span` instead of a native `label`.",
 						"defaultValue": "true"
 					},
 					{
@@ -5310,21 +5340,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "The value of the input. Use when controlled.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string",
 						"optional": true,
-						"description": "The default value of the input. Use when uncontrolled.",
+						"description": "Uncontrolled initial value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Callback fired when the `value` changes. Use when controlled.",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -5383,42 +5413,42 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the menu is currently open.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the menu is initially open. To render a controlled menu, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the menu is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onOpenChangeComplete",
 						"type": "((open: boolean) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called after any animations complete when the menu is opened or closed.",
+						"description": "Called after open/close animations complete.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "modal",
 						"type": "boolean",
 						"optional": true,
-						"description": "Determines if the menu enters a modal state when open. `true`: user interaction is limited to the menu: document page scroll is locked and pointer interactions on outside elements are disabled.`false`: user interaction with the rest of the document is allowed. On touch devices, a `true` modal blocks outside taps but leaves the page scrollable unless the popup spans nearly the full viewport width, matching native iOS behavior. Nested menus ignore this prop, and menus opened by hover are never modal.",
+						"description": "Whether the menu enters a modal state when open.",
 						"defaultValue": "true"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -5432,7 +5462,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "loopFocus",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether to loop keyboard focus back to the first item when the end of the list is reached while using the arrow keys.",
+						"description": "Whether highlight wraps at list ends.",
 						"defaultValue": "true"
 					},
 					{
@@ -5447,27 +5477,27 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"type": "number",
 						"optional": true,
 						"description": "Open delay when `openOnHover` is set (ms).",
-						"defaultValue": "—"
+						"defaultValue": "0"
 					},
 					{
 						"name": "closeDelay",
 						"type": "number",
 						"optional": true,
 						"description": "Close delay when leaving trigger/popup under hover (ms).",
-						"defaultValue": "—"
+						"defaultValue": "0"
 					},
 					{
 						"name": "handle",
 						"type": "MenuHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the menu with a trigger.\nIf specified, allows external triggers to control the menu's open state.",
+						"description": "Imperative handle from .",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "The content of the menu.\nThis can be a regular React node or a render function that receives the `payload` of the active trigger.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -5525,7 +5555,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -5564,28 +5594,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "checked",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the checkbox item is currently ticked. To render an uncontrolled checkbox item, use the `defaultChecked` prop instead.",
+						"description": "Controlled checked state.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultChecked",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the checkbox item is initially ticked. To render a controlled checkbox item, use the `checked` prop instead.",
+						"description": "Uncontrolled initial checked state.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onCheckedChange",
 						"type": "((checked: boolean, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the checkbox item is ticked or unticked.",
+						"description": "Event handler called when the checked state changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -5654,7 +5684,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "children",
 						"type": "Snippet",
 						"optional": true,
-						"description": "The content of the component.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -5686,7 +5716,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -5757,7 +5787,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -5894,7 +5924,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "positionMethod",
 						"type": "ver(): void; read",
 						"optional": true,
-						"description": "Determines which CSS `position` property to use.",
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
 						"defaultValue": "'absolute'"
 					},
 					{
@@ -5908,14 +5938,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "oopFocus: boolean; readonly me",
 						"optional": true,
-						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
+						"description": "Override the positioning anchor (element or virtual element).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "n | nul",
 						"optional": true,
-						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
 						"defaultValue": "false"
 					},
 					{
@@ -5947,35 +5977,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "The controlled value of the radio item that should be currently selected. To render an uncontrolled radio group, use the `defaultValue` prop instead.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string",
 						"optional": true,
-						"description": "The uncontrolled value of the radio item that should be initially selected. To render a controlled radio group, use the `value` prop instead.",
+						"description": "Uncontrolled initial value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Function called when the selected value changes.",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ value: string }]>",
 						"optional": true,
-						"description": "The content of the component.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -6003,7 +6033,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -6080,28 +6110,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the menu is currently open.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the menu is initially open. To render a controlled menu, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the menu is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean }]>",
 						"optional": true,
-						"description": "The content of the submenu.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -6126,7 +6156,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -6166,14 +6196,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -6187,14 +6217,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "MenuHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the trigger with a menu.",
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "A payload to pass to the menu when it is opened.",
+						"description": "Optional payload associated when opening via this trigger.",
 						"defaultValue": "—"
 					},
 					{
@@ -6237,7 +6267,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "children",
 						"type": "Snippet",
 						"optional": true,
-						"description": "The content to render inside the transition container.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -6275,13 +6305,13 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"type": "number",
 						"optional": true,
 						"description": "Delay before closing after pointer leaves (ms).",
-						"defaultValue": "—"
+						"defaultValue": "150"
 					},
 					{
 						"name": "modal",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the menubar is modal.",
+						"description": "Whether menus in this menubar lock document scroll when open.",
 						"defaultValue": "true"
 					},
 					{
@@ -6490,21 +6520,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string | null | undefined",
 						"optional": true,
-						"description": "The controlled value of the navigation menu item that should be currently open.\nWhen non-nullish, the menu will be open. When nullish, the menu will be closed. To render an uncontrolled navigation menu, use the `defaultValue` prop instead.",
+						"description": "Controlled value.",
 						"defaultValue": "null"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string | null",
 						"optional": true,
-						"description": "The uncontrolled value of the item that should be initially selected. To render a controlled navigation menu, use the `value` prop instead.",
+						"description": "Uncontrolled initial value.",
 						"defaultValue": "null"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string | null) => void) | undefined",
 						"optional": true,
-						"description": "Callback fired when the value changes.",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -6586,7 +6616,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -6659,7 +6689,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string",
 						"optional": false,
-						"description": "A unique value that identifies this navigation menu item.\nIf no value is provided, a unique ID will be generated automatically.\nUse when controlling the navigation menu programmatically.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
@@ -6840,7 +6870,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "positionMethod",
 						"type": "id; readonly open",
 						"optional": true,
-						"description": "Determines which CSS `position` property to use.",
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
 						"defaultValue": "'absolute'"
 					},
 					{
@@ -6854,14 +6884,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "ring; readonly open: boolean;",
 						"optional": true,
-						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
+						"description": "Override the positioning anchor (element or virtual element).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "e?: str",
 						"optional": true,
-						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
 						"defaultValue": "false"
 					},
 					{
@@ -6961,28 +6991,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "number | null | undefined",
 						"optional": true,
-						"description": "The raw numeric value of the field.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "number | null",
 						"optional": true,
-						"description": "The uncontrolled value of the field when it's initially rendered. To render a controlled number field, use the `value` prop instead.",
+						"description": "Uncontrolled initial value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: number | null, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Callback fired when the number value changes.\n\nThe `eventDetails.reason` indicates what triggered the change:\n\n- `'input-change'` for parseable typing or programmatic text updates\n- `'input-clear'` when the field becomes empty\n- `'input-blur'` when formatting (and clamping, if enabled) occurs on blur\n- `'input-paste'` for paste interactions\n- `'keyboard'` for arrow-key/Home/End stepping (typing digits uses `'input-change'`/`'input-clear'`)\n- `'increment-press'` / `'decrement-press'` for button presses on the increment and decrement controls\n- `'wheel'` for wheel-based scrubbing\n- `'scrub'` for scrub area drags",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueCommitted",
 						"type": "((value: number | null, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Callback function that is fired when the value is committed.\nIt runs later than `onValueChange`, when:\n\n- The input is blurred after typing a value.\n- The pointer is released after scrubbing or pressing the increment/decrement buttons. It runs simultaneously with `onValueChange` when interacting with the keyboard or the mouse wheel.\n\n**Warning**: This is a generic event not a change event.",
+						"description": "Called when the value is committed (blur, Enter, scrub end).",
 						"defaultValue": "—"
 					},
 					{
@@ -7010,35 +7040,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "smallStep",
 						"type": "number",
 						"optional": true,
-						"description": "The small step value of the input element when incrementing while the alt key is held.\nSnaps to multiples of this value when `snapOnStep` is enabled.",
-						"defaultValue": "0.1"
+						"description": "Step used with Alt.",
+						"defaultValue": "1"
 					},
 					{
 						"name": "largeStep",
 						"type": "number",
 						"optional": true,
-						"description": "The large step value of the input element when incrementing while the shift key is held.\nSnaps to multiples of this value when `snapOnStep` is enabled.",
+						"description": "Step used with Shift.",
 						"defaultValue": "10"
 					},
 					{
 						"name": "allowOutOfRange",
 						"type": "boolean",
 						"optional": true,
-						"description": "When true, direct text entry may be outside the `min`/`max` range without clamping, so native range underflow/overflow validation can occur.\nStep-based interactions (keyboard arrows, buttons, wheel, scrub) still clamp.",
+						"description": "When true, skip min/max clamping.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "snapOnStep",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the value should snap to the nearest step when incrementing or decrementing.",
-						"defaultValue": "false"
+						"description": "When true, snap to step from min.",
+						"defaultValue": "true"
 					},
 					{
 						"name": "allowWheelScrub",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether to allow the user to scrub the input value with the mouse wheel while focused and hovering over the input.",
+						"description": "When true, focused input responds to mouse wheel.",
 						"defaultValue": "false"
 					},
 					{
@@ -7059,7 +7089,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -7239,14 +7269,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "direction",
 						"type": "'horizontal' | 'vertical'",
 						"optional": true,
-						"description": "Cursor movement direction in the scrub area.",
+						"description": "Cursor movement direction.",
 						"defaultValue": "'horizontal'"
 					},
 					{
 						"name": "teleportDistance",
 						"type": "number | undefined",
 						"optional": true,
-						"description": "If specified, determines the distance that the cursor may move from the center of the scrub area before it will loop back around.",
+						"description": "Reset scrub origin when pointer travels farther than this distance from the start point.",
 						"defaultValue": "—"
 					},
 					{
@@ -7313,21 +7343,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "The OTP value.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string",
 						"optional": true,
-						"description": "The uncontrolled OTP value when the component is initially rendered.",
+						"description": "Uncontrolled initial value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Callback fired when the OTP value changes.\n\nThe `eventDetails.reason` indicates what triggered the change:\n\n- `'input-change'` for typing or autofill\n- `'input-clear'` when a character is removed by text input\n- `'input-paste'` for paste interactions\n- `'keyboard'` for keyboard interactions that change the value",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -7341,7 +7371,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -7369,14 +7399,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "mask",
 						"type": "boolean | string",
 						"optional": true,
-						"description": "Whether the slot inputs should mask entered characters.\nPass `type` directly to individual `<OTPField.Input>` parts to use a custom input type.",
+						"description": "When true, inputs use `type=\"password\"`. A string sets a display mask character via CSS hooks.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "validationType",
 						"type": "'numeric' | 'alphanumeric' | 'none'",
 						"optional": true,
-						"description": "The type of input validation to apply to the OTP value.",
+						"description": "Built-in character validation. Overrides default digit-only when set.",
 						"defaultValue": "'numeric'"
 					},
 					{
@@ -7528,21 +7558,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the popover is currently open.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the popover is initially open. To render a controlled popover, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the popover is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -7564,34 +7594,34 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"type": "number",
 						"optional": true,
 						"description": "Open delay when `openOnHover` is set (ms).",
-						"defaultValue": "—"
+						"defaultValue": "0"
 					},
 					{
 						"name": "closeDelay",
 						"type": "number",
 						"optional": true,
 						"description": "Close delay when leaving under hover (ms).",
-						"defaultValue": "—"
+						"defaultValue": "0"
 					},
 					{
 						"name": "modal",
 						"type": "PopoverModal",
 						"optional": true,
-						"description": "Determines if the popover enters a modal state when open. `true`: user interaction is limited to the popover: document page scroll is locked, and pointer interactions on outside elements are disabled.`false`: user interaction with the rest of the document is allowed.\n- `'trap-focus'`: focus is trapped inside the popover, but document page scroll is not locked and pointer interactions outside of it remain enabled. On touch devices, a `true` modal blocks outside taps but leaves the page scrollable unless the popup spans nearly the full viewport width, matching native iOS behavior. When `modal` is `true`, focus trapping is enabled only if `<Popover.Close>` is rendered inside `<Popover.Popup>`. It can be visually hidden with your own CSS if needed, such as\nTailwind's `sr-only` utility. When `modal` is `'trap-focus'`, render `<Popover.Close>` inside `<Popover.Popup>` so touch screen readers can escape the popup.",
+						"description": "Whether the popover enters a modal state when open. - `true`: document scroll locked (except hover-open), outside interaction limited - `false`: no scroll lock - `'trap-focus'`: focus trap without scroll lock",
 						"defaultValue": "false"
 					},
 					{
 						"name": "handle",
 						"type": "PopoverHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the popover with a trigger.\nIf specified, allows external triggers to control the popover's open state.",
+						"description": "Imperative handle from .",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "The content of the popover.\nThis can be a regular React node or a render function that receives the `payload` of the active trigger.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -7641,7 +7671,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -7681,7 +7711,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -7720,7 +7750,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -7867,7 +7897,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "positionMethod",
 						"type": "ly lastOpenChangeR",
 						"optional": true,
-						"description": "Determines which CSS `position` property to use.",
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
 						"defaultValue": "'absolute'"
 					},
 					{
@@ -7881,14 +7911,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "eturnType<typeof createPresence",
 						"optional": true,
-						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
+						"description": "Override the positioning anchor (element or virtual element).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "olean,",
 						"optional": true,
-						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
 						"defaultValue": "false"
 					},
 					{
@@ -7936,7 +7966,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -7957,14 +7987,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "PopoverHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the trigger with a popover.",
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "A payload to pass to the popover when it is opened.",
+						"description": "Optional payload associated when opening via this trigger.",
 						"defaultValue": "—"
 					},
 					{
@@ -8007,14 +8037,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet",
 						"optional": true,
-						"description": "The content to render inside the transition container.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -8046,21 +8076,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the preview card is currently open.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the preview card is initially open. To render a controlled preview card, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the preview card is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -8088,14 +8118,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "PreviewCardHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the preview card with a trigger.\nIf specified, allows external triggers to control the card's open state.\nCan be created with the PreviewCard.createHandle() method.",
+						"description": "Imperative handle from .",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "The content of the preview card.\nThis can be a regular React node or a render function that receives the `payload` of the active trigger.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -8145,7 +8175,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -8177,7 +8207,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -8310,7 +8340,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "positionMethod",
 						"type": "pe PreviewCardRoot",
 						"optional": true,
-						"description": "Determines which CSS `position` property to use.",
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
 						"defaultValue": "'absolute'"
 					},
 					{
@@ -8324,14 +8354,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": ") | undefined; onOpenChangeCom",
 						"optional": true,
-						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
+						"description": "Override the positioning anchor (element or virtual element).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "ippet<[",
 						"optional": true,
-						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
 						"defaultValue": "false"
 					},
 					{
@@ -8363,7 +8393,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -8384,14 +8414,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "PreviewCardHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the trigger with a preview card.",
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "A payload to pass to the preview card when it is opened.",
+						"description": "Optional payload associated when opening via this trigger.",
 						"defaultValue": "—"
 					},
 					{
@@ -8427,14 +8457,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet",
 						"optional": true,
-						"description": "The content to render inside the transition container.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -8667,7 +8697,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -8802,7 +8832,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "overflowEdgeThreshold",
 						"type": "number | { top?: number; right?: number; bottom?: number; left?: number }",
 						"optional": true,
-						"description": "The threshold in pixels that must be passed before the overflow edge attributes are applied.\nAccepts a single number for all edges or an object to configure them individually.",
+						"description": "Distance from an edge (px) at which overflow data attributes become active.",
 						"defaultValue": "0"
 					},
 					{
@@ -8992,49 +9022,49 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "SelectValue | undefined",
 						"optional": true,
-						"description": "The value of the select. Use when controlled.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "SelectValue",
 						"optional": true,
-						"description": "The uncontrolled value of the select when it's initially rendered. To render a controlled select, use the `value` prop instead.",
+						"description": "Uncontrolled initial value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: SelectValue, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the value of the select changes.",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the select popup is currently open.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the select popup is initially open. To render a controlled select popup, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the select popup is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -9055,7 +9085,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "modal",
 						"type": "boolean",
 						"optional": true,
-						"description": "Determines if the select enters a modal state when open. `true`: user interaction is limited to the select: document page scroll is locked and pointer interactions on outside elements are disabled.`false`: user interaction with the rest of the document is allowed. On touch devices, a `true` modal blocks outside taps but leaves the page scrollable unless the popup spans nearly the full viewport width, matching native iOS behavior.",
+						"description": "Whether the select enters a modal state when open. When `true`, document scroll is locked while open.",
 						"defaultValue": "true"
 					},
 					{
@@ -9076,7 +9106,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "readOnly",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the user should be unable to choose a different option from the select popup.",
+						"description": "Whether the user should be unable to choose a different option. The popup can still open and be browsed; selection and typeahead commits stay blocked.",
 						"defaultValue": "false"
 					},
 					{
@@ -9132,7 +9162,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "children",
 						"type": "Snippet<[{ value: SelectValue; open: boolean; disabled: boolean }]>",
 						"optional": true,
-						"description": "- **`items` Prop Example:** ```tsx const items = { sans: 'Sans-serif', serif: 'Serif', mono: 'Monospace', cursive: 'Cursive', }; <Select.Root items={items} />; ``` **`autoComplete` Prop References:** - See [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete)",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -9186,7 +9216,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -9275,14 +9305,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string",
 						"optional": false,
-						"description": "A unique value that identifies this select item.",
+						"description": "Controlled value.",
 						"defaultValue": "null"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -9418,7 +9448,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -9551,7 +9581,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "positionMethod",
 						"type": "eReason): void; r",
 						"optional": true,
-						"description": "Determines which CSS `position` property to use.",
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
 						"defaultValue": "'absolute'"
 					},
 					{
@@ -9565,14 +9595,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "l): void; readonly items: Sele",
 						"optional": true,
-						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
+						"description": "Override the positioning anchor (element or virtual element).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "string",
 						"optional": true,
-						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
 						"defaultValue": "false"
 					},
 					{
@@ -9669,14 +9699,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -9699,6 +9729,10 @@ export const apiRegistry: Record<string, ComponentApi> = {
 					{
 						"name": "data-open",
 						"description": "Present when the part is open."
+					},
+					{
+						"name": "data-readonly",
+						"description": "Present when the select is readonly."
 					}
 				]
 			},
@@ -9719,7 +9753,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "children",
 						"type": "Snippet<[SelectValue]>",
 						"optional": true,
-						"description": "Accepts a function that returns a `ReactNode` to format the selected value.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -9775,14 +9809,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "SliderValue | undefined",
 						"optional": true,
-						"description": "The value of the slider.\nFor range sliders, provide an array with one value per thumb.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "SliderValue",
 						"optional": true,
-						"description": "The uncontrolled value of the slider when it's initially rendered. To render a controlled slider, use the `value` prop instead.",
+						"description": "Uncontrolled initial value.",
 						"defaultValue": "—"
 					},
 					{
@@ -9810,7 +9844,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the slider should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -9845,43 +9879,43 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "onValueChange",
 						"type": "((value: SliderValue, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Callback function that is fired when the slider's value changed.\nReceives the new value as the first argument; the originating event is available as `eventDetails.event`. The value is also reflected on\n`eventDetails.event.target.value` for form integration.\n\nThe `eventDetails.reason` indicates what triggered the change:\n\n- `'input-change'` when the hidden range input emits a change event (for example, via form integration)\n- `'track-press'` when the control track is pressed\n- `'drag'` while dragging a thumb\n- `'keyboard'` for keyboard input\n- `'none'` when the change is triggered without a specific interaction",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "onValueCommitted",
 						"type": "((value: SliderValue, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Callback function that is fired when a value change is committed.\nDoes not fire if the value did not change, or if the change was canceled.\n\n**Warning**: This is a generic event, not a change event.\n\nThe `eventDetails.reason` indicates what triggered the commit:\n\n- `'drag'` while dragging a thumb\n- `'track-press'` when the control track is pressed\n- `'keyboard'` for keyboard input\n- `'input-change'` when the hidden range input emits a change event (for example, via form integration)\n- `'none'` when the commit occurs without a specific interaction",
+						"description": "Called when the value is committed (pointer up / key up).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "largeStep",
 						"type": "number",
 						"optional": true,
-						"description": "The granularity with which the slider can step through values when using Page Up/Page Down or Shift + Arrow Up/Arrow Down.",
+						"description": "Step used with Page Up/Down.",
 						"defaultValue": "10"
 					},
 					{
 						"name": "minStepsBetweenValues",
 						"type": "number",
 						"optional": true,
-						"description": "The minimum steps between values in a range slider.",
+						"description": "Minimum steps between adjacent thumbs in a range.",
 						"defaultValue": "0"
 					},
 					{
 						"name": "thumbAlignment",
 						"type": "'center' | 'edge' | 'edge-client-only'",
 						"optional": true,
-						"description": "How the thumb(s) are aligned relative to `Slider.Control` when the value is at `min` or `max`: `center`: The center of the thumb is aligned with the control edge`edge`: The thumb is inset within the control such that its edge is aligned with the control edge`edge-client-only`: Same as `edge` but renders after React hydration on the client, reducing bundle size in return",
+						"description": "How thumbs align to the control edge.",
 						"defaultValue": "'center'"
 					},
 					{
 						"name": "thumbCollisionBehavior",
 						"type": "'push' | 'swap' | 'none'",
 						"optional": true,
-						"description": "Controls how thumbs behave when they collide during pointer interactions. `'push'` (default): Thumbs push each other without restoring their previous positions when dragged back.\n- `'swap'`: Thumbs swap places when dragged past each other.\n- `'none'`: Thumbs cannot move past each other; excess movement is ignored.",
-						"defaultValue": "'push'"
+						"description": "Behavior when thumbs collide.",
+						"defaultValue": "'none'"
 					},
 					{
 						"name": "form",
@@ -9994,7 +10028,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "index",
 						"type": "number | undefined",
 						"optional": true,
-						"description": "The index of the thumb which corresponds to the index of its value in the\n`value` or `defaultValue` array.\nThis prop is required to support server-side rendering for range sliders with multiple thumbs.",
+						"description": "Index into the value array for range sliders (recommended for SSR).",
 						"defaultValue": "—"
 					},
 					{
@@ -10097,28 +10131,28 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "checked",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the switch is currently active. To render an uncontrolled switch, use the `defaultChecked` prop instead.",
+						"description": "Controlled checked state.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultChecked",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the switch is initially active. To render a controlled switch, use the `checked` prop instead.",
+						"description": "Uncontrolled initial checked state.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onCheckedChange",
 						"type": "((checked: boolean, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the switch is activated or deactivated.",
+						"description": "Event handler called when the checked state changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -10139,7 +10173,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "The value submitted with the form when the switch is on.\nBy default, switch submits the \"on\" value, matching native checkbox behavior.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
@@ -10211,21 +10245,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "The value of the currently active `Tab`. Use when the component is controlled.\nWhen the value is `null`, no Tab will be active.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultValue",
 						"type": "string",
 						"optional": true,
-						"description": "The default value. Use when the component is not controlled.\nWhen the value is `null`, no Tab will be active.",
+						"description": "Uncontrolled initial value.",
 						"defaultValue": "0"
 					},
 					{
 						"name": "onValueChange",
 						"type": "((value: string) => void) | undefined",
 						"optional": true,
-						"description": "Callback invoked when new value is being set. The event `reason` is `'none'` for user-initiated changes, such as a click or keyboard navigation; `'initial'` for the first automatic selection or fallback in uncontrolled roots when `defaultValue` is omitted or\n`undefined`, including when the implicit initial value is disabled or missing; `'disabled'` for automatic fallback when the selected tab becomes disabled in uncontrolled roots; or `'missing'` for automatic fallback when the selected tab is removed, or when an explicit `defaultValue` never matches a mounted tab in uncontrolled roots. For automatic changes, the selected value can be `null` when no enabled Tab is available as a fallback. Automatic changes cannot be canceled; calling `eventDetails.cancel()` for\n`'initial'`, `'disabled'`, or `'missing'` has no effect.",
+						"description": "Event handler called when the value changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -10281,14 +10315,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "activateOnFocus",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether to automatically change the active tab on arrow key focus.\nOtherwise, tabs will be activated using Enter or Space key press.",
+						"description": "Activate the focused tab.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "loopFocus",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether to loop keyboard focus back to the first item when the end of the list is reached while using the arrow keys.",
+						"description": "Loop arrow-key focus at the ends.",
 						"defaultValue": "true"
 					},
 					{
@@ -10323,7 +10357,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "keepMounted",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether to keep the HTML element in the DOM while the panel is hidden.",
+						"description": "Keep the panel in the DOM when inactive.",
 						"defaultValue": "false"
 					},
 					{
@@ -10362,7 +10396,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the Tab is disabled. If a first Tab on a `<Tabs.List>` is disabled, it won't initially be selected.\nInstead, the next enabled Tab will be selected.\nHowever, it does not work like this during server-side rendering, as it is not known during pre-rendering which Tabs are disabled.\nTo work around it, ensure that `defaultValue` or `value` on `<Tabs.Root>` is set to an enabled Tab's value.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -10691,7 +10725,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "positionMethod",
 						"type": "?: Snippet; }; ex",
 						"optional": true,
-						"description": "Determines which CSS `position` property to use.",
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
 						"defaultValue": "'absolute'"
 					},
 					{
@@ -10705,14 +10739,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "ildren?: Snippet; }; export ty",
 						"optional": true,
-						"description": "An element to position the toast against.",
+						"description": "Override the positioning anchor (element or virtual element).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "ippet;",
 						"optional": true,
-						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
 						"defaultValue": "false"
 					},
 					{
@@ -10793,35 +10827,35 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "pressed",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the toggle button is currently pressed.\nThis is the controlled counterpart of `defaultPressed`.",
+						"description": "Controlled pressed state.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultPressed",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the toggle button is currently pressed.\nThis is the uncontrolled counterpart of `pressed`.",
+						"description": "Uncontrolled initial pressed state.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onPressedChange",
 						"type": "((pressed: boolean, event: Event) => void) | undefined",
 						"optional": true,
-						"description": "Callback fired when the pressed state is changed.",
+						"description": "Event handler called when the pressed state changes.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the component should ignore user interaction.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "value",
 						"type": "string | undefined",
 						"optional": true,
-						"description": "A unique string that identifies the toggle when used inside a toggle group.",
+						"description": "Controlled value.",
 						"defaultValue": "—"
 					},
 					{
@@ -10934,7 +10968,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "loopFocus",
 						"type": "boolean",
 						"optional": true,
-						"description": "If `true`, using keyboard navigation will wrap focus to the other end of the toolbar once the end is reached.",
+						"description": "Loop arrow-key focus at the ends.",
 						"defaultValue": "true"
 					},
 					{
@@ -10973,14 +11007,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "When `true` the item is disabled.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "focusableWhenDisabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "When `true` the item remains focusable when disabled.",
+						"description": "Whether the control remains focusable when disabled.",
 						"defaultValue": "false"
 					},
 					{
@@ -11040,14 +11074,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "When `true` the item is disabled.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
 						"name": "focusableWhenDisabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "When `true` the item remains focusable when disabled.",
+						"description": "Whether the control remains focusable when disabled.",
 						"defaultValue": "false"
 					},
 					{
@@ -11149,21 +11183,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "open",
 						"type": "boolean | undefined",
 						"optional": true,
-						"description": "Whether the tooltip is currently open.",
+						"description": "Whether the component is open (controlled).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "defaultOpen",
 						"type": "boolean",
 						"optional": true,
-						"description": "Whether the tooltip is initially open. To render a controlled tooltip, use the `open` prop instead.",
+						"description": "Whether the component is initially open (uncontrolled).",
 						"defaultValue": "false"
 					},
 					{
 						"name": "onOpenChange",
 						"type": "((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined",
 						"optional": true,
-						"description": "Event handler called when the tooltip is opened or closed.",
+						"description": "Event handler called when the open state changes.",
 						"defaultValue": "—"
 					},
 					{
@@ -11178,14 +11212,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"type": "number",
 						"optional": true,
 						"description": "Alias for `openDelay` (Base UI name).",
-						"defaultValue": "—"
+						"defaultValue": "600"
 					},
 					{
 						"name": "openDelay",
 						"type": "number",
 						"optional": true,
 						"description": "How long to wait before opening on hover (ms).",
-						"defaultValue": "—"
+						"defaultValue": "600"
 					},
 					{
 						"name": "closeDelay",
@@ -11198,14 +11232,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "TooltipHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the tooltip with a trigger.\nIf specified, allows external triggers to control the tooltip's open state.\nCan be created with the Tooltip.createHandle() method.",
+						"description": "Imperative handle from .",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet<[{ open: boolean; payload: unknown }]>",
 						"optional": true,
-						"description": "The content of the tooltip.\nThis can be a regular React node or a render function that receives the `payload` of the active trigger.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],
@@ -11230,21 +11264,21 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "delay",
 						"type": "number",
 						"optional": true,
-						"description": "How long to wait before opening the tooltip on hover. Specified in milliseconds.",
+						"description": "Shared open delay for nested tooltips (ms).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "closeDelay",
 						"type": "number",
 						"optional": true,
-						"description": "How long to wait before closing a tooltip. Specified in milliseconds.",
+						"description": "Shared close delay for nested tooltips (ms).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "timeout",
 						"type": "number",
 						"optional": true,
-						"description": "Another tooltip will open instantly if the previous tooltip is closed within this timeout. Specified in milliseconds.",
+						"description": "Another tooltip opens instantly if the previous one closed within this window (ms).",
 						"defaultValue": "400"
 					},
 					{
@@ -11292,7 +11326,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
@@ -11425,7 +11459,7 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "positionMethod",
 						"type": "g; readonly refs:",
 						"optional": true,
-						"description": "Determines which CSS `position` property to use.",
+						"description": "Maps to Floating UI strategy (`absolute` | `fixed`).",
 						"defaultValue": "'absolute'"
 					},
 					{
@@ -11439,14 +11473,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "anchor",
 						"type": "/** Shared open delay for neste",
 						"optional": true,
-						"description": "An element to position the popup against.\nBy default, the popup will be positioned against the trigger.",
+						"description": "Override the positioning anchor (element or virtual element).",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disableAnchorTracking",
 						"type": "(ms).",
 						"optional": true,
-						"description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+						"description": "When `true`, skip continuous layout tracking of the anchor (position once; no resize/scroll auto-updates beyond the initial compute).",
 						"defaultValue": "false"
 					},
 					{
@@ -11482,14 +11516,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "disabled",
 						"type": "boolean",
 						"optional": true,
-						"description": "If `true`, the tooltip will not open when interacting with this trigger.\nNote that this doesn't apply the `disabled` attribute to the trigger element.\nIf you want to disable the trigger element itself, you can pass the `disabled` prop to the trigger element via the `render` prop.",
+						"description": "Whether the control ignores user interaction.",
 						"defaultValue": "false"
 					},
 					{
@@ -11503,14 +11537,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "handle",
 						"type": "TooltipHandle | undefined",
 						"optional": true,
-						"description": "A handle to associate the trigger with a tooltip.",
+						"description": "Same handle as Root — enables triggers outside the Root tree.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "payload",
 						"type": "unknown",
 						"optional": true,
-						"description": "A payload to pass to the tooltip when it is opened.",
+						"description": "Optional payload associated when opening via this trigger.",
 						"defaultValue": "—"
 					},
 					{
@@ -11546,14 +11580,14 @@ export const apiRegistry: Record<string, ComponentApi> = {
 						"name": "render",
 						"type": "string",
 						"optional": true,
-						"description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. In this Svelte port, use `render?: string` with `<svelte:element>` — see [Composition](/handbook/composition).",
+						"description": "HTML element tag to render instead of the default host element.",
 						"defaultValue": "—"
 					},
 					{
 						"name": "children",
 						"type": "Snippet",
 						"optional": true,
-						"description": "The content to render inside the transition container.",
+						"description": "Content rendered inside the part.",
 						"defaultValue": "—"
 					}
 				],

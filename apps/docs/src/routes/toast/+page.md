@@ -18,6 +18,19 @@ description: 'A succinct message that is displayed temporarily.'
 
 </ComponentPreview>
 
+## Updating toasts
+
+`useToastManager().update` accepts a partial object or a function of the current toast. Omitted fields are preserved:
+
+```ts
+const toastManager = Toast.useToastManager();
+
+toastManager.update(id, (prev) => ({
+	title: 'Upload complete',
+	description: prev.description
+}));
+```
+
 ## API Reference
 
 <ApiReference slug="toast" />

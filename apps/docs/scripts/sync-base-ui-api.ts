@@ -314,9 +314,10 @@ export function mergePartWithBaseUi(
 		const upstream = baseUiPart.props.find((entry) => entry.name === prop.name);
 		if (!upstream) return prop;
 
-		const description =
-			upstream.description && upstream.description !== '-'
-				? adaptDescriptionForSvelte(upstream.description, prop.name) || prop.description
+		const description = prop.description
+			? prop.description
+			: upstream.description && upstream.description !== '-'
+				? adaptDescriptionForSvelte(upstream.description, prop.name)
 				: prop.description;
 
 		const defaultValue =

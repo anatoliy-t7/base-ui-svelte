@@ -18,6 +18,18 @@ description: 'A panel that slides in from the edge of the screen.'
 
 </ComponentPreview>
 
+## Canceling snap-point changes
+
+`onSnapPointChange` receives event details. Call `cancel()` to reject a snap, including swipe-to-dismiss:
+
+```ts
+onSnapPointChange={(snapPoint, eventDetails) => {
+	if (snapPoint === null) {
+		eventDetails.cancel();
+	}
+}}
+```
+
 ## API Reference
 
 <ApiReference slug="drawer" />

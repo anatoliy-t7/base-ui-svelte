@@ -11,7 +11,11 @@ import type { Align, SharedPositionerProps, Side } from '../internal/floating.sv
 import type { createPresence } from '../internal/presence.svelte.js';
 import type { ComboboxCollectionItem, ComboboxItemCollection } from './create-items.js';
 
-export type { ComboboxCollectionItem, ComboboxItemCollection, CreateItemsOptions } from './create-items.js';
+export type {
+	ComboboxCollectionItem,
+	ComboboxItemCollection,
+	CreateItemsOptions,
+} from './create-items.js';
 export { createItems, isItemCollection } from './create-items.js';
 
 export type ComboboxValue = string | string[] | null;
@@ -119,6 +123,11 @@ export type ComboboxRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>
 	onValueChange?: ((value: ComboboxValue, event: Event) => void) | undefined;
 	inputValue?: string | undefined;
 	defaultInputValue?: string;
+	/**
+	 * Called when the input value changes. Use `eventDetails.cancel()` to keep the
+	 * previous value (e.g. preserve filter text after a multi-select item press when
+	 * `eventDetails.isItemPress` is true).
+	 */
 	onInputChange?:
 		| ((value: string, eventDetails: ComboboxInputChangeEventDetails, event?: Event) => void)
 		| undefined;
@@ -128,6 +137,11 @@ export type ComboboxRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>
 	/** Called after open/close animations complete. */
 	onOpenChangeComplete?: ((open: boolean) => void) | undefined;
 	disabled?: boolean;
+	/**
+	 * Whether the user should be unable to choose a different option.
+	 * The popup can still open and be browsed; selection stays blocked.
+	 * @default false
+	 */
 	readOnly?: boolean;
 	required?: boolean;
 	name?: string | undefined;
@@ -144,7 +158,10 @@ export type ComboboxRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>
 	/** Highlight items on pointer move. @default true */
 	highlightItemOnHover?: boolean;
 	onItemHighlighted?:
-		| ((value: string | null, eventDetails: { reason: 'none' | 'keyboard' | 'pointer' | 'filter' }) => void)
+		| ((
+				value: string | null,
+				eventDetails: { reason: 'none' | 'keyboard' | 'pointer' | 'filter' },
+		  ) => void)
 		| undefined;
 	itemToStringLabel?: ((itemValue: string) => string) | undefined;
 	itemToStringValue?: ((itemValue: string) => string) | undefined;
@@ -208,8 +225,8 @@ export type ComboboxBackdropProps = Omit<HTMLAttributes<HTMLDivElement>, 'childr
 
 export type ComboboxPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
 	SharedPositionerProps & {
-	children?: Snippet;
-};
+		children?: Snippet;
+	};
 
 export type ComboboxPopupProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	render?: string;

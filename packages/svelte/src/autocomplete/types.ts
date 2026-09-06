@@ -90,6 +90,11 @@ export type AutocompleteRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'childr
 	defaultOpen?: boolean;
 	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
 	disabled?: boolean;
+	/**
+	 * Whether the user should be unable to choose a different option.
+	 * The popup can still open and be browsed; selection and typing stay blocked.
+	 * @default false
+	 */
 	readOnly?: boolean;
 	onOpenChangeComplete?: ((open: boolean) => void) | undefined;
 	loopFocus?: boolean;
@@ -105,7 +110,10 @@ export type AutocompleteRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'childr
 	/** Highlight items on pointer move. @default true */
 	highlightItemOnHover?: boolean;
 	onItemHighlighted?:
-		| ((value: string | null, eventDetails: { reason: 'none' | 'keyboard' | 'pointer' | 'filter' }) => void)
+		| ((
+				value: string | null,
+				eventDetails: { reason: 'none' | 'keyboard' | 'pointer' | 'filter' },
+		  ) => void)
 		| undefined;
 	itemToStringLabel?: ((itemValue: string) => string) | undefined;
 	itemToStringValue?: ((itemValue: string) => string) | undefined;
@@ -168,8 +176,8 @@ export type AutocompleteBackdropProps = Omit<HTMLAttributes<HTMLDivElement>, 'ch
 
 export type AutocompletePositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
 	SharedPositionerProps & {
-	children?: Snippet;
-};
+		children?: Snippet;
+	};
 
 export type AutocompletePopupProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	render?: string;
@@ -208,7 +216,6 @@ export type AutocompleteSeparatorProps = Omit<HTMLAttributes<HTMLDivElement>, 'c
 export type AutocompleteFilter =
 	| boolean
 	| ((itemValue: string, query: string, itemLabel: string) => boolean);
-
 
 export type AutocompleteGroupProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	children?: Snippet;

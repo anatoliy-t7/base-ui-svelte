@@ -55,6 +55,7 @@ export type DrawerContext = {
 };
 
 export type DrawerSnapPointChangeEventDetails = {
+	/** Reject the pending snap-point change (including swipe-to-dismiss). */
 	cancel: () => void;
 	readonly isCanceled: boolean;
 };
@@ -76,11 +77,12 @@ export type DrawerRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
 	snapPoints?: ReadonlyArray<DrawerSnapPoint>;
 	snapPoint?: DrawerSnapPoint | null | undefined;
 	defaultSnapPoint?: DrawerSnapPoint | null;
+	/**
+	 * Callback fired when the active snap point changes.
+	 * Call `eventDetails.cancel()` to reject a snap (including swipe-to-dismiss).
+	 */
 	onSnapPointChange?:
-		| ((
-				snapPoint: DrawerSnapPoint | null,
-				eventDetails: DrawerSnapPointChangeEventDetails,
-			) => void)
+		| ((snapPoint: DrawerSnapPoint | null, eventDetails: DrawerSnapPointChangeEventDetails) => void)
 		| undefined;
 	snapToSequentialPoints?: boolean;
 	/** Imperative handle from {@link createHandle}. */

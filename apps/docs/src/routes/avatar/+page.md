@@ -18,6 +18,10 @@ description: 'An image element with a fallback for representing the user.'
 
 </ComponentPreview>
 
+## `Avatar.Image` `keepMounted`
+
+Set `keepMounted` when a stacked fallback or image optimizer needs the `<img>` node to stay in the DOM even after a load error.
+
 ## API Reference
 
 <ApiReference slug="avatar" />

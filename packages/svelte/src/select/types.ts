@@ -1,5 +1,10 @@
 import type { Snippet } from 'svelte';
-import type { HTMLAttributes, HTMLButtonAttributes, HTMLInputAttributes, HTMLLabelAttributes } from 'svelte/elements';
+import type {
+	HTMLAttributes,
+	HTMLButtonAttributes,
+	HTMLInputAttributes,
+	HTMLLabelAttributes,
+} from 'svelte/elements';
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
 import type { Align, SharedPositionerProps, Side } from '../internal/floating.svelte.js';
 import type { createPresence } from '../internal/presence.svelte.js';
@@ -96,6 +101,11 @@ export type SelectRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
 	modal?: boolean;
 	onOpenChangeComplete?: ((open: boolean) => void) | undefined;
 	form?: string | undefined;
+	/**
+	 * Whether the user should be unable to choose a different option.
+	 * The popup can still open and be browsed; selection and typeahead commits stay blocked.
+	 * @default false
+	 */
 	readOnly?: boolean;
 	required?: boolean;
 	autoComplete?: HTMLInputAttributes['autocomplete'];
@@ -139,9 +149,9 @@ export type SelectBackdropProps = Omit<HTMLAttributes<HTMLDivElement>, 'children
 
 export type SelectPositionerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
 	SharedPositionerProps & {
-	alignItemWithTrigger?: boolean;
-	children?: Snippet;
-};
+		alignItemWithTrigger?: boolean;
+		children?: Snippet;
+	};
 
 export type SelectPopupProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	render?: string;

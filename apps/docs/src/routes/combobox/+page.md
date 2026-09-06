@@ -25,13 +25,27 @@ Use `Combobox.createItems()` when selection should store a primitive ID while th
 ```ts
 const items = Combobox.createItems(users, {
 	getValue: (user) => user.id,
-	getLabel: (user) => user.name,
+	getLabel: (user) => user.name
 });
 
 // <Combobox.Root {items}>…
 ```
 
 Pass the collection to `items`. Labels resolve via `getLabel` for values present in the collection; use `itemToStringLabel` as a fallback for values outside the current data set.
+
+## `readOnly` and preserving filter text
+
+`readOnly` locks the value, not the interaction — the popup still opens for browsing.
+
+To keep the filter after a multi-select item press:
+
+```ts
+onInputChange={(_value, eventDetails) => {
+	if (eventDetails.isItemPress) {
+		eventDetails.cancel();
+	}
+}}
+```
 
 ## API Reference
 

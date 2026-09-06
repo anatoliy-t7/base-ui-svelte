@@ -52,7 +52,7 @@ export type ToastUpdateInput = {
 	limited?: boolean | undefined;
 };
 
-/** Object partial or updater derived from the current toast (#5629). */
+/** Object partial or updater derived from the current toast. */
 export type ToastUpdateArg = ToastUpdateInput | ((prev: ToastData) => ToastUpdateInput);
 
 export type ToastManagerOptions = {
@@ -74,6 +74,10 @@ export type ToastManager = {
 	add: (data: ToastAddInput) => string;
 	close: (id?: string) => void;
 	remove: (id: string) => void;
+	/**
+	 * Patch a toast by id. Pass a partial object, or a function of the current toast
+	 * that returns a partial (omitted fields are preserved).
+	 */
 	update: (id: string, updates: ToastUpdateArg) => void;
 	updateHeight: (id: string, height: number) => void;
 	promise: <Value>(promise: Promise<Value>, options: ToastPromiseOptions<Value>) => Promise<Value>;

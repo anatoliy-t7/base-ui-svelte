@@ -18,6 +18,10 @@ description: 'An input that suggests values as the user types.'
 
 </ComponentPreview>
 
+## `readOnly`
+
+`readOnly` locks the value and typing, not browsing. The popup can still open; selection stays blocked.
+
 ## API Reference
 
 <ApiReference slug="autocomplete" />

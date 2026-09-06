@@ -18,6 +18,10 @@ description: 'Displays a list of options for the user to pick from.'
 
 </ComponentPreview>
 
+## `readOnly`
+
+`readOnly` locks the value, not the interaction. The popup still opens for browsing; item presses, Enter-to-select, and closed-trigger typeahead commits stay blocked.
+
 ## API Reference
 
 <ApiReference slug="select" />

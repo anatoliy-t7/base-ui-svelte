@@ -30,9 +30,6 @@
 		"oxfmt": "^0.63.0",
 		"oxlint": "^1.81.0"
 	},
-	"overrides": {
-		"vite": "^7.0.0"
-	},
 	"engines": {
 		"node": ">=22"
 	},
