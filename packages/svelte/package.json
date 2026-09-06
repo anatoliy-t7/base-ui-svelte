@@ -1,6 +1,6 @@
 {
 	"name": "base-ui-svelte",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "Unofficial Svelte 5 port of Base UI — unstyled, accessible components",
 	"keywords": [
 		"a11y",

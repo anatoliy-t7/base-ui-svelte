@@ -1,6 +1,6 @@
 {
 	"name": "@base-ui-svelte/styles",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "CSS and TypeScript style recipes for base-ui-svelte",
 	"keywords": [
 		"base-ui-svelte",
