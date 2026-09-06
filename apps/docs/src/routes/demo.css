@@ -533,6 +533,7 @@ body {
 .docs-content > pre.shiki {
 	/* Theme colors come from Shiki; keep shell chrome consistent. */
 	background: #0d1117;
+	padding: 1rem;
 }
 
 .prose pre code,
@@ -569,11 +570,20 @@ body {
 	text-decoration-thickness: 2px;
 }
 
-.prose ul:not(:where(.demo *)) {
+.prose ul:not(:where(.demo *)),
+.prose ol:not(:where(.demo *)) {
 	margin: 0.55rem 0 1rem;
 	padding-left: 1.25rem;
 	line-height: 1.6;
 	max-width: 42rem;
+}
+
+.prose ul:not(:where(.demo *)) {
+	list-style: disc;
+}
+
+.prose ol:not(:where(.demo *)) {
+	list-style: decimal;
 }
 
 .prose li + li:not(:where(.demo *)) {
