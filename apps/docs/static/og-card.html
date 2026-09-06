@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=1200" />
+		<title>base-ui-svelte OG</title>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap"
+		/>
+		<style>
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+			html,
+			body {
+				width: 1200px;
+				height: 630px;
+				overflow: hidden;
+				background: #0f1318;
+				font-family:
+					Inter,
+					ui-sans-serif,
+					system-ui,
+					-apple-system,
+					sans-serif;
+				color: #e8ecf1;
+				-webkit-font-smoothing: antialiased;
+			}
+			.card {
+				position: relative;
+				width: 1200px;
+				height: 630px;
+				padding: 64px 72px;
+				background:
+					radial-gradient(ellipse 80% 60% at 100% 0%, rgba(255, 62, 0, 0.14), transparent 55%),
+					radial-gradient(ellipse 50% 40% at 0% 100%, rgba(255, 62, 0, 0.06), transparent 50%),
+					linear-gradient(160deg, #141a22 0%, #0f1318 45%, #0c1015 100%);
+				overflow: hidden;
+			}
+			.grid {
+				position: absolute;
+				inset: 0;
+				background-image:
+					linear-gradient(rgba(232, 236, 241, 0.03) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(232, 236, 241, 0.03) 1px, transparent 1px);
+				background-size: 48px 48px;
+				mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 20%, transparent 75%);
+				pointer-events: none;
+			}
+			.brand {
+				display: flex;
+				align-items: baseline;
+				gap: 3px;
+				margin-bottom: 48px;
+			}
+			.mark {
+				color: #ff3e00;
+				font-size: 56px;
+				font-weight: 800;
+			}
+			.name {
+				font-size: 36px;
+				font-weight: 700;
+				letter-spacing: -0.04em;
+				color: #e8ecf1;
+			}
+			.badge {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				margin-bottom: 28px;
+				padding: 8px 14px;
+				border-radius: 999px;
+				border: 1px solid rgba(255, 62, 0, 0.35);
+				background: rgba(255, 62, 0, 0.1);
+				color: #ff8f66;
+				font-size: 18px;
+				font-weight: 600;
+				letter-spacing: -0.01em;
+			}
+			.badge::before {
+				content: '';
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				background: #ff3e00;
+				box-shadow: 0 0 0 3px rgba(255, 62, 0, 0.25);
+			}
+			h1 {
+				max-width: 920px;
+				font-size: 64px;
+				font-weight: 800;
+				letter-spacing: -0.045em;
+				line-height: 1.08;
+				margin-bottom: 24px;
+			}
+			h1 span {
+				color: #ff3e00;
+			}
+			.sub {
+				max-width: 780px;
+				font-size: 26px;
+				font-weight: 500;
+				line-height: 1.4;
+				color: #9aa3ad;
+				margin-bottom: 48px;
+			}
+			.footer {
+				display: flex;
+				align-items: end;
+				justify-content: space-between;
+				position: absolute;
+				left: 72px;
+				right: 72px;
+				bottom: 56px;
+			}
+			.pills {
+				display: flex;
+				gap: 12px;
+			}
+			.pill {
+				padding: 10px 16px;
+				border-radius: 10px;
+				border: 1px solid rgba(232, 236, 241, 0.1);
+				background: rgba(232, 236, 241, 0.04);
+				font-size: 18px;
+				font-weight: 600;
+				color: #c5ccd4;
+				letter-spacing: -0.02em;
+			}
+			.url {
+				font-size: 20px;
+				font-weight: 600;
+				color: #9aa3ad;
+				letter-spacing: -0.02em;
+			}
+			.code {
+				width: 340px;
+				padding: 22px 24px;
+				border-radius: 16px;
+				border: 1px solid rgba(232, 236, 241, 0.1);
+				background: #0d1117;
+				box-shadow:
+					0 24px 48px rgba(0, 0, 0, 0.35),
+					inset 0 1px 0 rgba(255, 255, 255, 0.04);
+				font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+				font-size: 18px;
+				line-height: 1.55;
+				color: #c5ccd4;
+			}
+			.code .prompt {
+				color: #ff3e00;
+			}
+			.code .pkg {
+				color: #e8ecf1;
+			}
+			.code .muted {
+				color: #6b737c;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="card" id="card">
+			<div class="grid"></div>
+			<div class="brand">
+				<span class="mark">B</span>
+				<span class="name">ase-ui-svelte</span>
+			</div>
+			<h1>Unstyled, accessible<br />components for <span>Svelte 5</span></h1>
+			<p class="sub">Unofficial Base UI port — headless APIs, data-* hooks, design-system ready.</p>
+
+			<div class="footer">
+				<div class="code">
+					<div><span class="prompt">$</span> <span class="pkg">pnpm add base-ui-svelte</span></div>
+					<div class="muted"># peer: svelte ^5</div>
+				</div>
+
+				<span class="url">base-ui-svelte.t7t.app</span>
+			</div>
+		</div>
+	</body>
+</html>

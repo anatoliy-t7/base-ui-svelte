@@ -6,7 +6,9 @@
 		HOME_DESCRIPTION,
 		HOME_DOCUMENT_TITLE,
 		NPM_URL,
+		OG_IMAGE_HEIGHT,
 		OG_IMAGE_PATH,
+		OG_IMAGE_WIDTH,
 		SITE_NAME,
 		SITE_TAGLINE,
 		absoluteUrl,
@@ -174,8 +176,11 @@
 	<meta property="og:url" content={canonical} />
 	<meta property="og:image" content={ogImage} />
 	<meta property="og:image:alt" content={`${SITE_NAME} — ${SITE_TAGLINE}`} />
+	<meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+	<meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+	<meta property="og:image:type" content="image/png" />
 
-	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={pageTitle} />
 	<meta name="twitter:description" content={metaDescription} />
 	<meta name="twitter:image" content={ogImage} />

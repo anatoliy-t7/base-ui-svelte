@@ -8,11 +8,11 @@ description: base-ui-svelte is an unofficial Svelte 5 port of Base UI: unstyled,
 	import HomeFaq from '$lib/HomeFaq.svelte';
 </script>
 
-**base-ui-svelte** is an unofficial Svelte 5 port of [Base UI](https://base-ui.com): unstyled, accessible compound components for building design systems. It is not affiliated with MUI or the Base UI team.
+`base-ui-svelte` is an unofficial Svelte 5 port of [Base UI](https://base-ui.com): unstyled, accessible compound components for building design systems. It is not affiliated with MUI or the Base UI team.
 
 ## What is base-ui-svelte?
 
-base-ui-svelte reimplements Base UI–inspired APIs and accessibility behavior for Svelte 5. Components are headless (no default visual CSS), expose `data-*` hooks for styling, and follow Base UI part names unless Svelte requires a deliberate divergence. Prefer upstream Base UI docs for behavior details; use this site for install, Svelte adaptations, and demos.
+`base-ui-svelte` reimplements Base UI–inspired APIs and accessibility behavior for Svelte 5. Components are headless (no default visual CSS), expose `data-*` hooks for styling, and follow Base UI part names unless Svelte requires a deliberate divergence. Prefer upstream Base UI docs for behavior details; use this site for install, Svelte adaptations, and demos.
 
 ## How to install base-ui-svelte
 

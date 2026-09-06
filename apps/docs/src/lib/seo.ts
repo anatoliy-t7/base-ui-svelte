@@ -19,8 +19,12 @@ export const GITHUB_URL = 'https://github.com/anatoliy-t7/base-ui-svelte';
 
 export const NPM_URL = 'https://www.npmjs.com/package/base-ui-svelte';
 
-/** Absolute path under `static/` used for Open Graph / Twitter cards. */
-export const OG_IMAGE_PATH = '/logo.png';
+/** Absolute path under `static/` used for Open Graph / Twitter cards (1200×630 @2x). */
+export const OG_IMAGE_PATH = '/x.webp';
+
+export const OG_IMAGE_WIDTH = 2400;
+
+export const OG_IMAGE_HEIGHT = 1260;
 
 export function formatPageTitle(pageTitle: string | undefined): string {
 	const trimmed = pageTitle?.trim();
