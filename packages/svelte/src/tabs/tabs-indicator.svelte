@@ -2,6 +2,7 @@
 	import { getContext } from 'svelte';
 	import { TABS_CONTEXT } from '../internal/context-keys.js';
 	import { mergeProps } from '../internal/merge-props.js';
+	import { measureTabIndicator } from './indicator-measure.js';
 	import type { TabsContext, TabsIndicatorProps } from './types.js';
 
 	type TabEntry = {
@@ -33,13 +34,11 @@
 			return;
 		}
 
-		const listRect = list.getBoundingClientRect();
-		const tabRect = tab.getBoundingClientRect();
-
-		left = tabRect.left - listRect.left + list.scrollLeft;
-		top = tabRect.top - listRect.top + list.scrollTop;
-		width = tab.offsetWidth || tabRect.width;
-		height = tab.offsetHeight || tabRect.height;
+		const metrics = measureTabIndicator(list, tab);
+		left = metrics.left;
+		top = metrics.top;
+		width = metrics.width;
+		height = metrics.height;
 		ready = true;
 	}
 

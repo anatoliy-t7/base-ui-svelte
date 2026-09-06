@@ -13,6 +13,12 @@
 			class: className,
 			style,
 			'data-scrolling': ctx.scrolling ? '' : undefined,
+			'aria-hidden': 'true',
+			onpointerdown: (event: PointerEvent) => {
+				if (event.button === 0) {
+					event.preventDefault();
+				}
+			},
 		}),
 	);
 </script>

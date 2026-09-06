@@ -23,6 +23,7 @@
 		onOpenChange,
 		onOpenChangeComplete,
 		disabled = false,
+		readOnly = false,
 		filter = true,
 		filteredItems,
 		limit = -1,
@@ -121,7 +122,7 @@
 	let labelId = $state<string | undefined>(undefined);
 
 	function setValue(next: string | null, event: Event): void {
-		if (disabled) return;
+		if (disabled || readOnly) return;
 		if (isValueControlled) {
 			value = next;
 		} else {
@@ -131,7 +132,7 @@
 	}
 
 	function setInputValue(next: string, event?: Event): void {
-		if (disabled) return;
+		if (disabled || readOnly) return;
 		if (isInputControlled) {
 			inputValue = next;
 		} else {
@@ -298,6 +299,9 @@
 		get disabled() {
 			return disabled;
 		},
+		get readOnly() {
+			return readOnly;
+		},
 		get loopFocus() {
 			return loopFocus;
 		},
@@ -324,6 +328,7 @@
 			'data-open': openState.open ? '' : undefined,
 			'data-closed': !openState.open ? '' : undefined,
 			'data-disabled': disabled ? '' : undefined,
+			'data-readonly': readOnly ? '' : undefined,
 		}),
 	);
 </script>

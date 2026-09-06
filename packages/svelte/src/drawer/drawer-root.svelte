@@ -8,6 +8,7 @@
 		applySwipeResistance,
 		axisDelta,
 		DISMISS_PROGRESS,
+		isSwipeDirectionAttributed,
 		nearestSnapIndex,
 		OPEN_PROGRESS,
 		resolveSnapFractions,
@@ -21,6 +22,7 @@
 		DrawerRefs,
 		DrawerRootProps,
 		DrawerSnapPoint,
+		DrawerSnapPointChangeEventDetails,
 		DrawerSwipeMode,
 		DrawerSwipeVisual,
 	} from './types.js';
@@ -128,6 +130,8 @@
 	let lastTime = 0;
 	let velocity = 0;
 	let snapAnchorFraction = 1;
+	/** With snap points, visuals stay idle until direction is attributed. */
+	let directionAttributed = false;
 
 	function syncProviderRegistration(nextOpen: boolean): void {
 		if (!provider) return;
@@ -160,16 +164,27 @@
 		return index >= 0 ? index : 0;
 	}
 
-	function emitSnapPointChange(index: number): void {
+	function emitSnapPointChange(index: number): boolean {
 		const points = snapPoints;
 		const nextPoint = points?.[index] ?? null;
+		let canceled = false;
+		const details: DrawerSnapPointChangeEventDetails = {
+			cancel() {
+				canceled = true;
+			},
+			get isCanceled() {
+				return canceled;
+			},
+		};
+		onSnapPointChange?.(nextPoint, details);
+		if (details.isCanceled) return false;
 		if (snapPoint !== undefined) {
 			snapPoint = nextPoint;
 		}
-		onSnapPointChange?.(nextPoint);
+		return true;
 	}
 
-	function setActiveSnapPointIndex(index: number): void {
+	function setActiveSnapPointIndex(index: number): boolean {
 		const points = snapPoints;
 		const max = points && points.length > 0 ? points.length - 1 : 0;
 		let next = Math.max(0, Math.min(index, max));
@@ -179,9 +194,10 @@
 				next = activeSnapPointIndex + Math.sign(delta);
 			}
 		}
-		if (next === activeSnapPointIndex) return;
+		if (next === activeSnapPointIndex) return true;
+		if (!emitSnapPointChange(next)) return false;
 		activeSnapPointIndex = next;
-		emitSnapPointChange(next);
+		return true;
 	}
 
 	function resetSwipeVisual(): void {
@@ -193,6 +209,7 @@
 		swipeMode = null;
 		pointerId = null;
 		velocity = 0;
+		directionAttributed = false;
 	}
 
 	function setSwipeVisual(visual: DrawerSwipeVisual | null): void {
@@ -225,6 +242,8 @@
 		swipeMovementX = 0;
 		swipeMovementY = 0;
 		swipeStrengthValue = 1;
+		// Without snap points, attribute immediately; with snap points wait for axis movement.
+		directionAttributed = !(snapPoints && snapPoints.length > 0);
 
 		const size = Math.max(
 			refs.popup
@@ -258,6 +277,21 @@
 		const direction = resolvedSwipeDirection;
 		const dx = clientX - startX;
 		const dy = clientY - startY;
+
+		if (!directionAttributed) {
+			if (!isSwipeDirectionAttributed(direction, dx, dy)) {
+				return;
+			}
+			directionAttributed = true;
+			// Re-anchor once direction is known so residual cross-axis drift is ignored.
+			startX = clientX;
+			startY = clientY;
+			lastX = clientX;
+			lastY = clientY;
+			lastTime = timeStamp;
+			return;
+		}
+
 		const rawAxis = axisDelta(direction, dx, dy);
 
 		const dt = timeStamp - lastTime;
@@ -313,8 +347,13 @@
 		const mode = swipeMode;
 		const progress = swipeProgress;
 		const currentVelocity = velocity;
+		const attributed = directionAttributed;
 
 		resetSwipeVisual();
+
+		if (!attributed) {
+			return;
+		}
 
 		if (mode === 'open') {
 			const isTap = progress < 0.05 && Math.abs(currentVelocity) < VELOCITY_THRESHOLD;
@@ -339,13 +378,22 @@
 				(tentative <= (fractions[0] ?? 0) && progress > DISMISS_PROGRESS);
 
 			if (towardClosed && (progress > DISMISS_PROGRESS || currentVelocity > VELOCITY_THRESHOLD)) {
-				setActiveSnapPointIndex(0);
+				const previousIndex = activeSnapPointIndex;
+				if (!setActiveSnapPointIndex(0)) {
+					// Consumer canceled snap-to-closed; keep drawer open at prior snap.
+					activeSnapPointIndex = previousIndex;
+					setOpen(true, 'imperative-action');
+					return;
+				}
 				setOpen(false, 'imperative-action');
 				return;
 			}
 
 			const nextIndex = nearestSnapIndex(fractions, tentative);
-			setActiveSnapPointIndex(nextIndex);
+			if (!setActiveSnapPointIndex(nextIndex)) {
+				setOpen(true, 'imperative-action');
+				return;
+			}
 			setOpen(true, 'imperative-action');
 			return;
 		}

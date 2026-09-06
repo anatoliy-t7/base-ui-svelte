@@ -11,6 +11,7 @@
 	let inputEl = $state<HTMLElement | null>(null);
 
 	const isDisabled = $derived(Boolean(disabled || ctx.disabled));
+	const isReadOnly = $derived(Boolean(ctx.readOnly));
 
 	$effect(() => {
 		ctx.refs.input = inputEl;
@@ -38,6 +39,7 @@
 	}
 
 	function selectHighlighted(event: Event): void {
+		if (isReadOnly) return;
 		if (ctx.highlighted == null) return;
 		const item = ctx.getVisibleItems().find((entry) => entry.value === ctx.highlighted);
 		if (!item) return;
@@ -112,6 +114,7 @@
 			class: className,
 			style,
 			disabled: isDisabled || undefined,
+			readonly: isReadOnly || undefined,
 			value: ctx.inputValue,
 			autocomplete: 'off',
 			'aria-expanded': ctx.open,
@@ -120,10 +123,13 @@
 			'aria-labelledby': ctx.labelId,
 			'aria-activedescendant': activeDescendant,
 			'aria-disabled': isDisabled || undefined,
+			'aria-readonly': isReadOnly || undefined,
 			'data-open': ctx.open ? '' : undefined,
 			'data-closed': !ctx.open ? '' : undefined,
 			'data-disabled': isDisabled ? '' : undefined,
+			'data-readonly': isReadOnly ? '' : undefined,
 			oninput: (event: Event) => {
+				if (isReadOnly) return;
 				const target = event.currentTarget;
 				if (!(target instanceof HTMLInputElement)) return;
 				ctx.setInputValue(target.value, event);

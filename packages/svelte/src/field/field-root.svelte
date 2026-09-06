@@ -51,6 +51,17 @@
 	let hasDescription = $state(false);
 	let controlEl = $state<HTMLInputElement | null>(null);
 	let nativeFlags = $state<FieldValidityFlags>({ ...DEFAULT_VALIDITY_FLAGS });
+	/** True while an async `validate` is in flight and we published neutral validity. */
+	let validating = $state(false);
+	let validationCommitId = 0;
+	let validateTimer: ReturnType<typeof setTimeout> | undefined;
+
+	/** Tracks the message installed by Field and any foreign message it displaced. */
+	let ownedCustomValidity: {
+		el: HTMLInputElement;
+		owned: string;
+		displaced: string;
+	} | null = null;
 
 	const formError = $derived(name && form ? form.getFieldError(name) : undefined);
 
@@ -66,6 +77,21 @@
 
 	const validity = $derived.by((): FieldValidityFlags => {
 		const hasExternalInvalid = invalid === true || Boolean(formError);
+
+		if (validating && !hasExternalInvalid) {
+			// Keep synchronous native failures; otherwise publish neutral while async runs.
+			if (nativeFlags.valid === false && !nativeFlags.customError) {
+				return { ...nativeFlags };
+			}
+			// Keep a prior custom error outside onSubmit mode (blocks UX flicker).
+			if (validationMode !== 'onSubmit' && nativeFlags.customError && nativeFlags.valid === false) {
+				return { ...nativeFlags };
+			}
+			return {
+				...nativeFlags,
+				valid: null,
+			};
+		}
 
 		if (!hasValidated && !hasExternalInvalid) {
 			return {
@@ -104,32 +130,75 @@
 		};
 	}
 
+	function setOwnedCustomValidity(element: HTMLInputElement, message: string): void {
+		const displaced = element.validity.customError ? element.validationMessage : '';
+		const owned = message.replace(/\r\n?/g, '\n');
+		element.setCustomValidity(owned);
+		ownedCustomValidity = { el: element, owned, displaced };
+		nativeFlags = readNativeFlags(element);
+	}
+
+	function clearOwnedCustomValidity(): void {
+		const record = ownedCustomValidity;
+		ownedCustomValidity = null;
+		if (!record) return;
+		// Only clear if still Field-owned (or barred so message is unreadable).
+		if (!record.el.willValidate || record.el.validationMessage === record.owned) {
+			record.el.setCustomValidity(record.displaced);
+		}
+	}
+
 	function syncNativeValidity(element: HTMLInputElement): void {
 		nativeFlags = readNativeFlags(element);
 	}
 
 	function setCustomValidity(message: string): void {
 		if (!controlEl) return;
-		controlEl.setCustomValidity(message);
-		nativeFlags = readNativeFlags(controlEl);
+		if (message) {
+			setOwnedCustomValidity(controlEl, message);
+		} else {
+			clearOwnedCustomValidity();
+			if (controlEl) {
+				nativeFlags = readNativeFlags(controlEl);
+			}
+		}
 	}
 
 	function registerControl(element: HTMLInputElement | null): void {
+		if (controlEl && controlEl !== element) {
+			clearOwnedCustomValidity();
+		}
 		controlEl = element;
 		if (element) {
 			syncNativeValidity(element);
 		} else {
 			nativeFlags = { ...DEFAULT_VALIDITY_FLAGS };
+			// Cancel any in-flight validation when the control unregisters.
+			validationCommitId += 1;
+			validating = false;
 		}
 	}
 
+	function normalizeValidateResult(
+		result: string | string[] | null | undefined,
+	): string[] {
+		if (result === null || result === undefined) return [];
+		return Array.isArray(result) ? result.filter(Boolean) : result ? [result] : [];
+	}
+
 	async function runValidate(): Promise<boolean> {
+		validationCommitId += 1;
+		const commitId = validationCommitId;
 		hasValidated = true;
 		const nextErrors: string[] = [];
 
+		// Capture prior custom-error publish before clearing owned messages.
+		const hadPriorCustomError = nativeFlags.customError && nativeFlags.valid === false;
+
+		// Do not read Field's previous message back as a native constraint.
+		clearOwnedCustomValidity();
+
 		if (controlEl) {
-			// Clear previous custom validity from our validate prop before re-checking native.
-			controlEl.setCustomValidity('');
 			controlEl.checkValidity();
 			const flags = readNativeFlags(controlEl);
 			nativeFlags = flags;
@@ -146,35 +215,101 @@
 		const nativeInvalid = nativeFlags.valid === false;
 
 		if (validate && !nativeInvalid) {
-			const result = await validate(value);
-			const customMessages =
-				result === null || result === undefined
-					? []
-					: Array.isArray(result)
-						? result.filter(Boolean)
-						: [result];
+			const resultOrPromise = validate(value);
+			const isThenable =
+				typeof resultOrPromise === 'object' &&
+				resultOrPromise !== null &&
+				'then' in resultOrPromise;
 
-			if (customMessages.length > 0) {
-				nextErrors.push(...customMessages);
-				const message = customMessages.join('\n');
-				if (controlEl) {
-					controlEl.setCustomValidity(message);
-					nativeFlags = {
-						...readNativeFlags(controlEl),
-						customError: true,
-						valid: false,
-					};
+			if (isThenable) {
+				const priorErrors = [...validationErrors];
+				const priorFlags = { ...nativeFlags };
+
+				// Publish neutral while awaiting, but keep prior custom error outside onSubmit.
+				if (nativeFlags.valid === false) {
+					validationErrors = nextErrors;
+				} else if (validationMode === 'onSubmit' || !hadPriorCustomError) {
+					validating = true;
+					validationErrors = [];
 				} else {
+					// Restore published custom-error flags for the pending window.
 					nativeFlags = {
-						...DEFAULT_VALIDITY_FLAGS,
+						...priorFlags,
 						customError: true,
 						valid: false,
 					};
+					validationErrors = priorErrors;
 				}
-			} else if (controlEl) {
-				controlEl.setCustomValidity('');
-				nativeFlags = readNativeFlags(controlEl);
+
+				let result: string | string[] | null;
+				try {
+					result = await resultOrPromise;
+				} catch {
+					validating = false;
+					return false;
+				}
+
+				if (commitId !== validationCommitId) {
+					return false;
+				}
+				validating = false;
+
+				if (controlEl) {
+					controlEl.checkValidity();
+					nativeFlags = readNativeFlags(controlEl);
+				}
+
+				const customMessages = normalizeValidateResult(result);
+				if (customMessages.length > 0) {
+					nextErrors.length = 0;
+					nextErrors.push(...customMessages);
+					const message = customMessages.join('\n');
+					if (controlEl?.willValidate) {
+						setOwnedCustomValidity(controlEl, message);
+						nativeFlags = {
+							...readNativeFlags(controlEl),
+							customError: true,
+							valid: false,
+						};
+					} else {
+						nativeFlags = {
+							...DEFAULT_VALIDITY_FLAGS,
+							customError: true,
+							valid: false,
+						};
+					}
+				} else if (controlEl) {
+					nativeFlags = readNativeFlags(controlEl);
+				}
+			} else {
+				const customMessages = normalizeValidateResult(resultOrPromise);
+				if (customMessages.length > 0) {
+					nextErrors.push(...customMessages);
+					const message = customMessages.join('\n');
+					if (controlEl?.willValidate) {
+						setOwnedCustomValidity(controlEl, message);
+						nativeFlags = {
+							...readNativeFlags(controlEl),
+							customError: true,
+							valid: false,
+						};
+					} else {
+						nativeFlags = {
+							...DEFAULT_VALIDITY_FLAGS,
+							customError: true,
+							valid: false,
+						};
+					}
+				} else if (controlEl) {
+					nativeFlags = readNativeFlags(controlEl);
+				}
 			}
+		} else {
+			validating = false;
+		}
+
+		if (commitId !== validationCommitId) {
+			return false;
 		}
 
 		validationErrors = nextErrors;
@@ -187,11 +322,19 @@
 		return ok;
 	}
 
-	let validateTimer: ReturnType<typeof setTimeout> | undefined;
+	function cancelPendingValidation(): void {
+		if (validateTimer) {
+			clearTimeout(validateTimer);
+			validateTimer = undefined;
+		}
+		validationCommitId += 1;
+		validating = false;
+	}
 
 	function scheduleValidate(): void {
 		if (validationDebounceTime > 0) {
 			if (validateTimer) clearTimeout(validateTimer);
+			validationCommitId += 1;
 			validateTimer = setTimeout(() => {
 				void runValidate();
 			}, validationDebounceTime);
@@ -215,6 +358,28 @@
 			scheduleValidate();
 		}
 		void event;
+	}
+
+	/**
+	 * Sync field state when a controlled control's value prop changes
+	 * (programmatic clears, parent rewrites). Skips the initial mount path
+	 * which goes through setValue via onMount.
+	 */
+	function syncControlledValue(next: string): void {
+		if (!initialized) {
+			initialized = true;
+			initialValue = next;
+			value = next;
+			setDirty(false);
+			return;
+		}
+		if (value === next) return;
+		value = next;
+		setDirty(next !== initialValue);
+		if (name) form?.clearFieldError(name);
+		if (validationMode === 'onChange' || (validationMode === 'onSubmit' && hasValidated)) {
+			scheduleValidate();
+		}
 	}
 
 	function setTouched(next: boolean): void {
@@ -254,6 +419,7 @@
 		form.registerField(name, { validate: runValidate });
 		return () => {
 			form.unregisterField(name);
+			cancelPendingValidation();
 		};
 	});
 
@@ -307,6 +473,7 @@
 			return validationMode;
 		},
 		setValue,
+		syncControlledValue,
 		setTouched,
 		setFocused,
 		setDirty,

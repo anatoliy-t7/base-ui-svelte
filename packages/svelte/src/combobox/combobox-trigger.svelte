@@ -18,6 +18,7 @@
 	let triggerEl = $state<HTMLElement | null>(null);
 
 	const isDisabled = $derived(Boolean(disabled || ctx.disabled));
+	const isReadOnly = $derived(Boolean(ctx.readOnly));
 
 	$effect(() => {
 		ctx.refs.trigger = triggerEl;
@@ -38,9 +39,11 @@
 			'aria-label': 'Toggle list',
 			'aria-expanded': ctx.open,
 			'aria-controls': ctx.listId,
+			'aria-readonly': isReadOnly || undefined,
 			'data-open': ctx.open ? '' : undefined,
 			'data-closed': !ctx.open ? '' : undefined,
 			'data-disabled': isDisabled ? '' : undefined,
+			'data-readonly': isReadOnly ? '' : undefined,
 			onclick: () => {
 				if (isDisabled) return;
 				ctx.setOpen(!ctx.open, 'trigger-press');

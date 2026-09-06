@@ -31,6 +31,9 @@
 	});
 
 	function onPointerDown(event: PointerEvent): void {
+		if (event.button === 0) {
+			event.preventDefault();
+		}
 		if (event.button !== 0 || !trackEl) return;
 		const target = event.target;
 		if (!(target instanceof Element)) return;
@@ -75,6 +78,7 @@
 			style: scrollbarStyle,
 			'data-orientation': orientation,
 			'data-scrolling': ctx.scrolling ? '' : undefined,
+			'aria-hidden': 'true',
 			onpointerdown: onPointerDown,
 		}),
 	);

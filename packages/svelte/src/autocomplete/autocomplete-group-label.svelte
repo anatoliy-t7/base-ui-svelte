@@ -32,6 +32,7 @@
 			id,
 			class: className,
 			style,
+			'aria-hidden': 'true',
 		}),
 	);
 </script>

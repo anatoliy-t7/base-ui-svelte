@@ -43,6 +43,7 @@ export const Drawer = {
 export type {
 	DrawerSwipeDirection,
 	DrawerSnapPoint,
+	DrawerSnapPointChangeEventDetails,
 	DrawerSwipeMode,
 	DrawerRootProps,
 	DrawerTriggerProps,

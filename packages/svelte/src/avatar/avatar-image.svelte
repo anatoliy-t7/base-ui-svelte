@@ -9,6 +9,7 @@
 		alt = '',
 		class: className,
 		style,
+		keepMounted = false,
 		onLoadingStatusChange,
 		onload,
 		onerror,
@@ -31,10 +32,11 @@
 	});
 
 	const loaded = $derived(ctx.imageLoadingStatus === 'loaded');
+	const shouldRender = $derived(Boolean(src) || keepMounted);
 
 	const imageProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
-			src,
+			src: src || undefined,
 			alt,
 			class: className,
 			style,
@@ -55,6 +57,6 @@
 	);
 </script>
 
-{#if src}
+{#if shouldRender}
 	<img {...imageProps} />
 {/if}

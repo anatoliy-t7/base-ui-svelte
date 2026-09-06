@@ -9,6 +9,10 @@ import type {
 import type { OpenChangeReason } from '../internal/controllable.svelte.js';
 import type { Align, SharedPositionerProps, Side } from '../internal/floating.svelte.js';
 import type { createPresence } from '../internal/presence.svelte.js';
+import type { ComboboxCollectionItem, ComboboxItemCollection } from './create-items.js';
+
+export type { ComboboxCollectionItem, ComboboxItemCollection, CreateItemsOptions } from './create-items.js';
+export { createItems, isItemCollection } from './create-items.js';
 
 export type ComboboxValue = string | string[] | null;
 
@@ -16,16 +20,12 @@ export type ComboboxFilter =
 	| boolean
 	| ((itemValue: string, query: string, itemLabel: string) => boolean);
 
-
-export type ComboboxCollectionItem = {
-	readonly value: string;
-	readonly label: string;
-};
-
-export type ComboboxItemsProp = ReadonlyArray<{
-	readonly value: string;
-	readonly label?: string;
-}>;
+export type ComboboxItemsProp =
+	| ReadonlyArray<{
+			readonly value: string;
+			readonly label?: string;
+	  }>
+	| ComboboxItemCollection;
 
 export type ComboboxItemEntry = {
 	readonly id: string;
@@ -47,7 +47,11 @@ export type ComboboxContext = {
 	readonly value: ComboboxValue;
 	setValue(value: ComboboxValue, event: Event): void;
 	readonly inputValue: string;
-	setInputValue(value: string, event?: Event): void;
+	setInputValue(
+		value: string,
+		event?: Event,
+		options?: { reason?: ComboboxInputChangeEventDetails['reason']; isItemPress?: boolean },
+	): void;
 	clear(event: Event): void;
 	readonly open: boolean;
 	setOpen(open: boolean, reason: OpenChangeReason): void;
@@ -101,13 +105,23 @@ export type ComboboxGroupContext = {
 	setLabelId(id: string | undefined): void;
 };
 
+export type ComboboxInputChangeEventDetails = {
+	readonly reason: 'none' | 'input' | 'clear' | 'item-press';
+	/** True when the input clear was caused by selecting an item. */
+	readonly isItemPress: boolean;
+	cancel: () => void;
+	readonly isCanceled: boolean;
+};
+
 export type ComboboxRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	value?: ComboboxValue | undefined;
 	defaultValue?: ComboboxValue;
 	onValueChange?: ((value: ComboboxValue, event: Event) => void) | undefined;
 	inputValue?: string | undefined;
 	defaultInputValue?: string;
-	onInputChange?: ((value: string, event?: Event) => void) | undefined;
+	onInputChange?:
+		| ((value: string, eventDetails: ComboboxInputChangeEventDetails, event?: Event) => void)
+		| undefined;
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
 	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;

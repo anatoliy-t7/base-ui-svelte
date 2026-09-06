@@ -54,6 +54,8 @@ export type FieldContext = {
 	readonly validity: FieldValidityFlags;
 	readonly validationMode: FieldValidationMode;
 	setValue: (value: string, event?: Event) => void;
+	/** Sync field state when a controlled control's value prop changes. */
+	syncControlledValue: (value: string) => void;
 	setTouched: (touched: boolean) => void;
 	setFocused: (focused: boolean) => void;
 	setDirty: (dirty: boolean) => void;

@@ -54,6 +54,11 @@ export type DrawerContext = {
 	readonly payload: unknown;
 };
 
+export type DrawerSnapPointChangeEventDetails = {
+	cancel: () => void;
+	readonly isCanceled: boolean;
+};
+
 export type DrawerRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 	open?: boolean | undefined;
 	defaultOpen?: boolean;
@@ -71,7 +76,12 @@ export type DrawerRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
 	snapPoints?: ReadonlyArray<DrawerSnapPoint>;
 	snapPoint?: DrawerSnapPoint | null | undefined;
 	defaultSnapPoint?: DrawerSnapPoint | null;
-	onSnapPointChange?: ((snapPoint: DrawerSnapPoint | null) => void) | undefined;
+	onSnapPointChange?:
+		| ((
+				snapPoint: DrawerSnapPoint | null,
+				eventDetails: DrawerSnapPointChangeEventDetails,
+			) => void)
+		| undefined;
 	snapToSequentialPoints?: boolean;
 	/** Imperative handle from {@link createHandle}. */
 	handle?: DrawerHandle | undefined;

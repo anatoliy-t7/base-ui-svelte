@@ -4,8 +4,10 @@ const DISMISS_PROGRESS = 0.3;
 const OPEN_PROGRESS = 0.25;
 const VELOCITY_THRESHOLD = 0.5;
 const RUBBER_BAND = 0.15;
+/** Minimum axis movement before a snap-point swipe is attributed. */
+const DIRECTION_ATTRIBUTION_PX = 8;
 
-export { DISMISS_PROGRESS, OPEN_PROGRESS, VELOCITY_THRESHOLD };
+export { DISMISS_PROGRESS, OPEN_PROGRESS, VELOCITY_THRESHOLD, DIRECTION_ATTRIBUTION_PX };
 
 export function axisDelta(direction: DrawerSwipeDirection, dx: number, dy: number): number {
 	switch (direction) {
@@ -144,4 +146,73 @@ export function isFocusableField(target: EventTarget | null): target is HTMLElem
 	const tag = target.tagName;
 	if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true;
 	return target.isContentEditable;
+}
+
+/**
+ * True once movement along the swipe axis dominates the cross-axis and
+ * exceeds {@link DIRECTION_ATTRIBUTION_PX}.
+ */
+export function isSwipeDirectionAttributed(
+	direction: DrawerSwipeDirection,
+	dx: number,
+	dy: number,
+): boolean {
+	const along = Math.abs(axisDelta(direction, dx, dy));
+	const cross =
+		direction === 'up' || direction === 'down' ? Math.abs(dx) : Math.abs(dy);
+	return along >= DIRECTION_ATTRIBUTION_PX && along >= cross;
+}
+
+/**
+ * Returns true when a dismiss swipe should not start because the gesture
+ * began on a nested/page scroller that still has room to scroll in the
+ * swipe direction (or is the document scroller).
+ */
+export function shouldIgnoreSwipeFromScroller(
+	target: Element,
+	direction: DrawerSwipeDirection,
+	popup: HTMLElement | null,
+): boolean {
+	let node: Element | null = target;
+	while (node && node !== popup) {
+		if (node instanceof HTMLElement) {
+			const style = getComputedStyle(node);
+			const overflowY = style.overflowY;
+			const overflowX = style.overflowX;
+			const canScrollY =
+				(overflowY === 'auto' || overflowY === 'scroll' || overflowY === 'overlay') &&
+				node.scrollHeight > node.clientHeight + 1;
+			const canScrollX =
+				(overflowX === 'auto' || overflowX === 'scroll' || overflowX === 'overlay') &&
+				node.scrollWidth > node.clientWidth + 1;
+
+			if (direction === 'down' || direction === 'up') {
+				if (canScrollY) {
+					const atTop = node.scrollTop <= 0;
+					const atBottom = node.scrollTop + node.clientHeight >= node.scrollHeight - 1;
+					if (direction === 'down' && !atTop) return true;
+					if (direction === 'up' && !atBottom) return true;
+				}
+			} else if (canScrollX) {
+				const atStart = node.scrollLeft <= 0;
+				const atEnd = node.scrollLeft + node.clientWidth >= node.scrollWidth - 1;
+				if (direction === 'right' && !atStart) return true;
+				if (direction === 'left' && !atEnd) return true;
+			}
+		}
+		node = node.parentElement;
+	}
+
+	// Ignore swipes that begin on the page/document scroller itself.
+	const scrollingElement = document.scrollingElement;
+	if (
+		scrollingElement instanceof HTMLElement &&
+		(target === scrollingElement ||
+			target === document.documentElement ||
+			target === document.body)
+	) {
+		return true;
+	}
+
+	return false;
 }

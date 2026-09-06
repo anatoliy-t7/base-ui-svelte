@@ -3,6 +3,7 @@
 
 	let {
 		disabled = false,
+		readOnly = false,
 		defaultValue,
 		defaultOpen = false,
 		value = undefined as string | null | undefined,
@@ -11,6 +12,7 @@
 		onOpenChange,
 	}: {
 		disabled?: boolean;
+		readOnly?: boolean;
 		defaultValue?: string | null;
 		defaultOpen?: boolean;
 		value?: string | null | undefined;
@@ -23,6 +25,7 @@
 <form data-testid="form">
 	<Select.Root
 		{disabled}
+		{readOnly}
 		{defaultValue}
 		{defaultOpen}
 		{value}

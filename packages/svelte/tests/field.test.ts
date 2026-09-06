@@ -76,6 +76,51 @@ describe('Field', () => {
 		expect(screen.queryByTestId('error-custom')).not.toBeInTheDocument();
 	});
 
+	it('syncs filled/dirty when controlled value is cleared programmatically', async () => {
+		const { rerender } = render(FieldTest, {
+			props: { mode: 'controlled', controlledValue: 'hello' },
+		});
+
+		const field = screen.getByTestId('field');
+		await waitFor(() => {
+			expect(field).toHaveAttribute('data-filled');
+		});
+
+		await rerender({ mode: 'controlled', controlledValue: '' });
+
+		await waitFor(() => {
+			expect(field).not.toHaveAttribute('data-filled');
+		});
+	});
+
+	it('publishes neutral validity while async validate is in flight', async () => {
+		const user = userEvent.setup();
+		let resolveValidate: ((value: string | null) => void) | undefined;
+		const validate = () =>
+			new Promise<string | null>((resolve) => {
+				resolveValidate = resolve;
+			});
+
+		render(FieldTest, { props: { mode: 'async', validate } });
+
+		const control = screen.getByTestId('control');
+		const field = screen.getByTestId('field');
+
+		await user.type(control, 'x');
+		await user.tab();
+
+		await waitFor(() => {
+			expect(field).not.toHaveAttribute('data-valid');
+			expect(field).not.toHaveAttribute('data-invalid');
+		});
+
+		resolveValidate?.(null);
+
+		await waitFor(() => {
+			expect(field).toHaveAttribute('data-valid');
+		});
+	});
+
 	it('has no axe violations', async () => {
 		const { container } = render(FieldTest);
 		expect(await axe(container)).toHaveNoViolations();

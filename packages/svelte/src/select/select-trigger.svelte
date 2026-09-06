@@ -17,7 +17,8 @@
 
 	let triggerEl = $state<HTMLElement | null>(null);
 
-	const isDisabled = $derived(Boolean(disabled || ctx.disabled || ctx.readOnly));
+	const isDisabled = $derived(Boolean(disabled || ctx.disabled));
+	const isReadOnly = $derived(Boolean(ctx.readOnly));
 
 	$effect(() => {
 		ctx.refs.trigger = triggerEl;
@@ -43,6 +44,7 @@
 	}
 
 	function selectHighlighted(event: Event): void {
+		if (isReadOnly) return;
 		if (ctx.highlighted == null) return;
 		ctx.setValue(ctx.highlighted, event);
 		ctx.setOpen(false, 'imperative-action');
@@ -125,9 +127,11 @@
 			'aria-labelledby': ctx.labelId,
 			'aria-activedescendant': activeDescendant,
 			'aria-disabled': isDisabled || undefined,
+			'aria-readonly': isReadOnly || undefined,
 			'data-open': ctx.open ? '' : undefined,
 			'data-closed': !ctx.open ? '' : undefined,
 			'data-disabled': isDisabled ? '' : undefined,
+			'data-readonly': isReadOnly ? '' : undefined,
 			onclick: () => {
 				if (isDisabled) return;
 				ctx.setOpen(!ctx.open, 'trigger-press');

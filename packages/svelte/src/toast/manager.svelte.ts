@@ -52,6 +52,9 @@ export type ToastUpdateInput = {
 	limited?: boolean | undefined;
 };
 
+/** Object partial or updater derived from the current toast (#5629). */
+export type ToastUpdateArg = ToastUpdateInput | ((prev: ToastData) => ToastUpdateInput);
+
 export type ToastManagerOptions = {
 	timeout?: number | undefined;
 	limit?: number | undefined;
@@ -71,7 +74,7 @@ export type ToastManager = {
 	add: (data: ToastAddInput) => string;
 	close: (id?: string) => void;
 	remove: (id: string) => void;
-	update: (id: string, updates: ToastUpdateInput) => void;
+	update: (id: string, updates: ToastUpdateArg) => void;
 	updateHeight: (id: string, height: number) => void;
 	promise: <Value>(promise: Promise<Value>, options: ToastPromiseOptions<Value>) => Promise<Value>;
 	setHovering: (value: boolean) => void;
@@ -285,13 +288,14 @@ export function createToastManager(options: ToastManagerOptions = {}): ToastMana
 		toast.onClose?.();
 	}
 
-	function update(id: string, updates: ToastUpdateInput): void {
+	function update(id: string, updates: ToastUpdateArg): void {
 		const prev = toasts.find((toast) => toast.id === id);
 		if (!prev || prev.transitionStatus === 'ending') return;
 
+		const resolved = typeof updates === 'function' ? updates(prev) : updates;
 		const next: ToastData = {
 			...prev,
-			...updates,
+			...resolved,
 			updateKey: (prev.updateKey ?? 0) + 1,
 		};
 		setToasts(toasts.map((toast) => (toast.id === id ? next : toast)));
@@ -304,7 +308,7 @@ export function createToastManager(options: ToastManagerOptions = {}): ToastMana
 			return;
 		}
 		if (
-			Object.hasOwn(updates, 'timeout') ||
+			Object.hasOwn(resolved, 'timeout') ||
 			prev.type === 'loading' ||
 			(prev.timeout ?? timeout) !== nextTimeout ||
 			!timers.has(id)

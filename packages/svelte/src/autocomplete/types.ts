@@ -58,6 +58,7 @@ export type AutocompleteContext = {
 	readonly refs: AutocompleteRefs;
 	readonly presence: ReturnType<typeof createPresence>;
 	readonly disabled: boolean;
+	readonly readOnly: boolean;
 	readonly loopFocus: boolean;
 	readonly filter: AutocompleteFilter;
 	readonly highlightItemOnHover: boolean;
@@ -89,6 +90,7 @@ export type AutocompleteRootProps = Omit<HTMLAttributes<HTMLDivElement>, 'childr
 	defaultOpen?: boolean;
 	onOpenChange?: ((open: boolean, eventDetails: { reason: OpenChangeReason }) => void) | undefined;
 	disabled?: boolean;
+	readOnly?: boolean;
 	onOpenChangeComplete?: ((open: boolean) => void) | undefined;
 	loopFocus?: boolean;
 	filter?: AutocompleteFilter;

@@ -5,7 +5,7 @@
 	import { createFocusTrap } from '../internal/focus-trap.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
 	import { createScrollLock } from '../internal/scroll-lock.svelte.js';
-	import { dismissSize, resolveSnapFractions } from './swipe-utils.js';
+	import { dismissSize, resolveSnapFractions, shouldIgnoreSwipeFromScroller } from './swipe-utils.js';
 	import type { DrawerContext, DrawerPopupProps, DrawerVirtualKeyboardContext } from './types.js';
 
 	let {
@@ -108,6 +108,10 @@
 			return;
 		}
 		if (ctx.swiping) return;
+
+		if (shouldIgnoreSwipeFromScroller(target, ctx.swipeDirection, popupEl)) {
+			return;
+		}
 
 		ctx.beginSwipe(event.pointerId, event.clientX, event.clientY, 'dismiss');
 		if (popupEl) {

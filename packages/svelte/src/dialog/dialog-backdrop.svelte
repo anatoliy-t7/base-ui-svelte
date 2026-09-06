@@ -17,6 +17,37 @@
 
 	const shouldRender = $derived(forceRender || ctx.presence.isPresent);
 
+	/**
+	 * Intentional outside-press: ignore trailing clicks whose pointerdown
+	 * began before the dialog was open (e.g. drag-release from a menu item).
+	 * Keyboard/programmatic clicks (`detail === 0`) still dismiss.
+	 */
+	let pressBeganWhileOpen = $state(false);
+
+	$effect(() => {
+		if (!ctx.open || !shouldRender) {
+			pressBeganWhileOpen = false;
+			return;
+		}
+
+		const onPointerDown = (event: PointerEvent) => {
+			if (event.button !== 0) return;
+			pressBeganWhileOpen = true;
+		};
+
+		document.addEventListener('pointerdown', onPointerDown, true);
+		return () => {
+			document.removeEventListener('pointerdown', onPointerDown, true);
+		};
+	});
+
+	function onClick(event: MouseEvent): void {
+		if (ctx.disablePointerDismissal) return;
+		// Keyboard-generated / programmatic clicks always dismiss.
+		if (event.detail !== 0 && !pressBeganWhileOpen) return;
+		ctx.setOpen(false, 'outside-press');
+	}
+
 	const mergedProps: Record<string, unknown> = $derived(
 		mergeProps(rest, {
 			class: className,
@@ -28,10 +59,7 @@
 			'data-closed': !ctx.open || ctx.presence.isEnding ? '' : undefined,
 			'data-starting-style': ctx.presence.isStarting ? '' : undefined,
 			'data-ending-style': ctx.presence.isEnding ? '' : undefined,
-			onclick: () => {
-				if (ctx.disablePointerDismissal) return;
-				ctx.setOpen(false, 'outside-press');
-			},
+			onclick: onClick,
 		}),
 	);
 </script>

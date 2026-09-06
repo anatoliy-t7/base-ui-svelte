@@ -103,6 +103,27 @@ describe('Select', () => {
 		expect(screen.queryByTestId('popup')).toBeNull();
 	});
 
+	it('opens while readOnly but does not commit selection', async () => {
+		const user = userEvent.setup();
+		const onValueChange = vi.fn();
+		render(SelectTest, {
+			props: { readOnly: true, defaultValue: 'apple', onValueChange },
+		});
+
+		const trigger = screen.getByTestId('trigger');
+		expect(trigger).toHaveAttribute('aria-readonly', 'true');
+		expect(trigger).toHaveAttribute('data-readonly');
+		expect(trigger).not.toBeDisabled();
+
+		await user.click(trigger);
+		expect(screen.getByTestId('popup')).toBeInTheDocument();
+
+		await user.click(screen.getByTestId('item-banana'));
+		expect(onValueChange).not.toHaveBeenCalled();
+		expect(screen.getByTestId('value')).toHaveTextContent('Apple');
+		expect(screen.getByTestId('popup')).toBeInTheDocument();
+	});
+
 	it('notifies onValueChange when an item is selected', async () => {
 		const user = userEvent.setup();
 		const onValueChange = vi.fn();

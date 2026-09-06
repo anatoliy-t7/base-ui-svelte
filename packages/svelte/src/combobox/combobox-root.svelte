@@ -4,9 +4,11 @@
 	import { COMBOBOX_CONTEXT } from '../internal/context-keys.js';
 	import { createPresence } from '../internal/presence.svelte.js';
 	import { mergeProps } from '../internal/merge-props.js';
+	import { isItemCollection } from './create-items.js';
 	import type {
 		ComboboxCollectionItem,
 		ComboboxContext,
+		ComboboxInputChangeEventDetails,
 		ComboboxItemEntry,
 		ComboboxRefs,
 		ComboboxRootProps,
@@ -84,10 +86,18 @@
 
 	const collectionItems = $derived.by((): ReadonlyArray<ComboboxCollectionItem> => {
 		if (!itemsProp) return [];
+		if (isItemCollection(itemsProp)) return itemsProp.data;
 		return itemsProp.map((item) => ({
 			value: item.value,
 			label: item.label ?? item.value,
 		}));
+	});
+
+	const collectionLabel = $derived.by(() => {
+		if (itemsProp && isItemCollection(itemsProp)) {
+			return (value: string) => itemsProp.label(value);
+		}
+		return undefined;
 	});
 
 	const presence = createPresence(() => openState.open);
@@ -155,14 +165,39 @@
 		onValueChange?.(next, event);
 	}
 
-	function setInputValue(next: string, event?: Event): void {
+	function createInputChangeDetails(
+		reason: ComboboxInputChangeEventDetails['reason'],
+		isItemPress = false,
+	): ComboboxInputChangeEventDetails {
+		let canceled = false;
+		return {
+			reason,
+			isItemPress,
+			cancel() {
+				canceled = true;
+			},
+			get isCanceled() {
+				return canceled;
+			},
+		};
+	}
+
+	function setInputValue(
+		next: string,
+		event?: Event,
+		options?: { reason?: ComboboxInputChangeEventDetails['reason']; isItemPress?: boolean },
+	): void {
 		if (disabled || readOnly) return;
+		const reason = options?.reason ?? 'input';
+		const isItemPress = options?.isItemPress ?? false;
+		const details = createInputChangeDetails(reason, isItemPress);
+		onInputChange?.(next, details, event);
+		if (details.isCanceled) return;
 		if (isInputControlled) {
 			inputValue = next;
 		} else {
 			uncontrolledInput = next;
 		}
-		onInputChange?.(next, event);
 	}
 
 	function setOpen(next: boolean, reason: Parameters<ComboboxContext['setOpen']>[1]): void {
@@ -205,6 +240,8 @@
 		if (fallbackLabel) return fallbackLabel;
 		const registered = items.find((item) => item.value === itemValue);
 		if (registered) return registered.label;
+		const fromCollection = collectionLabel?.(itemValue);
+		if (fromCollection) return fromCollection;
 		const collection = collectionItems.find((item) => item.value === itemValue);
 		if (collection) return collection.label;
 		return itemValue;
@@ -264,6 +301,8 @@
 	function getLabelForValue(itemValue: string): string {
 		const registered = items.find((item) => item.value === itemValue);
 		if (registered) return registered.label;
+		const fromCollection = collectionLabel?.(itemValue);
+		if (fromCollection) return fromCollection;
 		const collection = collectionItems.find((item) => item.value === itemValue);
 		if (collection) return collection.label;
 		return itemValue;
@@ -276,12 +315,12 @@
 				? selected.filter((entry) => entry !== itemValue)
 				: [...selected, itemValue];
 			setValue(next, event);
-			setInputValue('', event);
+			setInputValue('', event, { reason: 'clear', isItemPress: true });
 			return;
 		}
 
 		setValue(itemValue, event);
-		setInputValue(label, event);
+		setInputValue(label, event, { reason: 'item-press', isItemPress: true });
 		setOpen(false, 'imperative-action');
 	}
 
@@ -296,13 +335,13 @@
 		}
 		if (currentValue === itemValue) {
 			setValue(null, event);
-			setInputValue('', event);
+			setInputValue('', event, { reason: 'clear' });
 		}
 	}
 
 	function clear(event: Event): void {
 		setValue(multiple ? [] : null, event);
-		setInputValue('', event);
+		setInputValue('', event, { reason: 'clear' });
 	}
 
 	function getSelectedLabel(): string | null {

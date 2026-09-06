@@ -24,23 +24,47 @@
 	);
 	const isDisabled = $derived(Boolean(disabled || ctx.disabled));
 
+	/** Tracks previous controlled value to detect prop-driven changes. */
+	let previousControlled: string | undefined = undefined;
+	let mounted = $state(false);
+
 	onMount(() => {
 		ctx.setValue(currentValue);
 		if (inputEl) {
 			ctx.registerControl(inputEl);
 			ctx.syncNativeValidity(inputEl);
 		}
+		if (isControlled) {
+			previousControlled = currentValue;
+		}
+		mounted = true;
 		return () => {
 			ctx.registerControl(null);
 		};
 	});
 
+	// Sync field state when the controlled value prop changes (programmatic clears, etc.).
+	$effect(() => {
+		if (!mounted || !isControlled) return;
+		const next = currentValue;
+		if (previousControlled === undefined) {
+			previousControlled = next;
+			return;
+		}
+		if (previousControlled === next) return;
+		previousControlled = next;
+		ctx.syncControlledValue(next);
+	});
+
 	function commit(next: string, event: Event): void {
 		if (isControlled) {
 			value = next;
-		} else {
-			uncontrolled = next;
+			// Controlled: wait for the prop to settle via syncControlledValue.
+			// Still notify the consumer immediately.
+			onValueChange?.(next, event);
+			return;
 		}
+		uncontrolled = next;
 		ctx.setValue(next, event);
 		onValueChange?.(next, event);
 	}
@@ -48,6 +72,26 @@
 	function syncFromEvent(event: Event): void {
 		const target = event.currentTarget as HTMLInputElement;
 		ctx.syncNativeValidity(target);
+	}
+
+	function onBlur(event: FocusEvent): void {
+		ctx.setFocused(false);
+		ctx.setTouched(true);
+		syncFromEvent(event);
+
+		// After blur validation, if controlled consumer normalized the value,
+		// re-sync from the DOM when it differs from the blur-time value and
+		// is not a reset back to the initial value.
+		if (isControlled && inputEl) {
+			const blurValue = inputEl.value;
+			queueMicrotask(() => {
+				if (!inputEl) return;
+				const domValue = inputEl.value;
+				if (domValue === blurValue) return;
+				if (domValue === String(ctx.initialValue ?? '')) return;
+				ctx.syncControlledValue(domValue);
+			});
+		}
 	}
 
 	const mergedProps: Record<string, unknown> = $derived(
@@ -79,11 +123,7 @@
 			onfocus: () => {
 				ctx.setFocused(true);
 			},
-			onblur: (event: FocusEvent) => {
-				ctx.setFocused(false);
-				ctx.setTouched(true);
-				syncFromEvent(event);
-			},
+			onblur: onBlur,
 		}),
 	);
 </script>

@@ -74,4 +74,5 @@ export type {
 	ToastPromiseOptions,
 	ToastTransitionStatus,
 	ToastUpdateInput,
+	ToastUpdateArg,
 } from './manager.svelte.js';

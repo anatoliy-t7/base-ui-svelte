@@ -21,6 +21,7 @@
 	const fallbackId = useId('input');
 	const inputId = $derived(field?.controlId ?? id ?? fallbackId);
 
+	let inputEl = $state<HTMLInputElement | undefined>(undefined);
 	let uncontrolled = $state<string | undefined>(undefined);
 	const isControlled = $derived(value !== undefined);
 	const currentValue = $derived(
@@ -28,16 +29,43 @@
 	);
 	const isDisabled = $derived(Boolean(disabled || field?.disabled));
 
+	let previousControlled: string | undefined = undefined;
+	let mounted = $state(false);
+
 	onMount(() => {
 		field?.setValue(currentValue);
+		if (field && inputEl) {
+			field.registerControl(inputEl);
+			field.syncNativeValidity(inputEl);
+		}
+		if (isControlled) {
+			previousControlled = currentValue;
+		}
+		mounted = true;
+		return () => {
+			field?.registerControl(null);
+		};
+	});
+
+	$effect(() => {
+		if (!mounted || !isControlled || !field) return;
+		const next = currentValue;
+		if (previousControlled === undefined) {
+			previousControlled = next;
+			return;
+		}
+		if (previousControlled === next) return;
+		previousControlled = next;
+		field.syncControlledValue(next);
 	});
 
 	function commit(next: string, event: Event): void {
 		if (isControlled) {
 			value = next;
-		} else {
-			uncontrolled = next;
+			onValueChange?.(next, event);
+			return;
 		}
+		uncontrolled = next;
 		field?.setValue(next, event);
 		onValueChange?.(next, event);
 	}
@@ -77,12 +105,23 @@
 			onblur: () => {
 				field?.setFocused(false);
 				field?.setTouched(true);
+				if (isControlled && field && inputEl) {
+					const blurValue = inputEl.value;
+					queueMicrotask(() => {
+						if (!inputEl || !field) return;
+						const domValue = inputEl.value;
+						if (domValue === blurValue) return;
+						if (domValue === String(field.initialValue ?? '')) return;
+						field.syncControlledValue(domValue);
+					});
+				}
 			},
 		}),
 	);
 </script>
 
 <input
+	bind:this={inputEl}
 	{...mergedProps}
 	style={typeof mergedProps.style === 'string' ? mergedProps.style : undefined}
 />

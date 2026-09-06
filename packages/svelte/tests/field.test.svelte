@@ -3,8 +3,14 @@
 
 	let {
 		mode = 'custom',
+		controlledValue = $bindable(''),
+		validate,
 	}: {
-		mode?: 'custom' | 'required' | 'email' | 'match';
+		mode?: 'custom' | 'required' | 'email' | 'match' | 'controlled' | 'async';
+		controlledValue?: string;
+		validate?:
+			| ((value: string) => string | string[] | null | Promise<string | string[] | null>)
+			| undefined;
 	} = $props();
 </script>
 
@@ -67,6 +73,22 @@
 				</div>
 			{/snippet}
 		</Field.Validity>
+	</Field.Root>
+{:else if mode === 'controlled'}
+	<Field.Root data-testid="field" name="controlled" validationMode="onChange">
+		<Field.Label data-testid="label">Controlled</Field.Label>
+		<Field.Control data-testid="control" bind:value={controlledValue} />
+	</Field.Root>
+{:else if mode === 'async'}
+	<Field.Root
+		data-testid="field"
+		name="async"
+		validationMode="onBlur"
+		validate={validate ?? (() => Promise.resolve(null))}
+	>
+		<Field.Label data-testid="label">Async</Field.Label>
+		<Field.Control data-testid="control" />
+		<Field.Error data-testid="error" />
 	</Field.Root>
 {:else}
 	<Field.Root data-testid="field" name="username" validationMode="onBlur">

@@ -44,6 +44,7 @@ export type {
 	ToastData,
 	ToastAddInput,
 	ToastUpdateInput,
+	ToastUpdateArg,
 	ToastManager,
 	ToastManagerOptions,
 	ToastPromiseOptions,

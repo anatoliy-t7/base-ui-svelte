@@ -44,6 +44,22 @@ describe('Dialog', () => {
 		});
 	});
 
+	it('ignores backdrop clicks whose press began before open', async () => {
+		const user = userEvent.setup();
+		render(DialogTest);
+
+		await user.click(screen.getByTestId('trigger'));
+		expect(screen.getByTestId('popup')).toBeInTheDocument();
+
+		// Trailing click without a pointerdown while open (press began before open).
+		const backdrop = screen.getByTestId('backdrop');
+		backdrop.dispatchEvent(
+			new MouseEvent('click', { bubbles: true, cancelable: true, detail: 1 }),
+		);
+
+		expect(screen.getByTestId('popup')).toBeInTheDocument();
+	});
+
 	it('does not close on backdrop when disablePointerDismissal is set', async () => {
 		const user = userEvent.setup();
 		render(DialogTest, { disablePointerDismissal: true });

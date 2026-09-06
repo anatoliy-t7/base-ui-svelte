@@ -160,17 +160,13 @@
 	}
 
 	function setOpen(next: boolean, reason: Parameters<SelectContext['setOpen']>[1]): void {
-		if ((disabled || readOnly) && next) return;
+		if (disabled && next) return;
 		openState.setOpen(next, reason);
 		if (next) {
-			const selected = getSelectedValues();
-			const firstSelected = selected[0];
-			highlighted =
-				(firstSelected != null
-					? registeredItems.find((item) => item.value === firstSelected)?.value
-					: undefined) ??
-				registeredItems[0]?.value ??
-				null;
+			const visible = getVisibleItems();
+			// Anchor highlight to the first selected item in rendered order.
+			const firstSelected = visible.find((item) => isSelected(item.value));
+			highlighted = firstSelected?.value ?? visible[0]?.value ?? null;
 		} else {
 			highlighted = null;
 		}
@@ -220,6 +216,7 @@
 	}
 
 	function selectItem(itemValue: string, event: Event): void {
+		if (readOnly) return;
 		if (multiple) {
 			const selected = getSelectedValues();
 			const next = selected.includes(itemValue)

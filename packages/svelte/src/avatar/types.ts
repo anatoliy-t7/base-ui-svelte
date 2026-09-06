@@ -14,6 +14,12 @@ export type AvatarRootProps = Omit<HTMLAttributes<HTMLSpanElement>, 'children'> 
 
 export type AvatarImageProps = Omit<HTMLImgAttributes, 'children'> & {
 	onLoadingStatusChange?: ((status: ImageLoadingStatus) => void) | undefined;
+	/**
+	 * When `true`, keep the image element mounted even after an error (useful
+	 * for stacked fallbacks and image optimizers that need the node present).
+	 * @default false
+	 */
+	keepMounted?: boolean;
 };
 
 export type AvatarFallbackProps = Omit<HTMLAttributes<HTMLSpanElement>, 'children'> & {

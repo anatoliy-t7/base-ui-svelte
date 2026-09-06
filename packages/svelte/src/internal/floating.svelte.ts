@@ -98,6 +98,53 @@ function toPadding(value: number | Partial<Record<Side, number>> | undefined, fa
 	};
 }
 
+function placedAlignOf(placement: Placement): Align {
+	const parts = placement.split('-');
+	if (parts[1] === 'start' || parts[1] === 'end') return parts[1];
+	return 'center';
+}
+
+/**
+ * Sets `--transform-origin` so enter/exit scale animations bloom from the
+ * anchor edge. For start/end alignment without an arrow, pins to 0%/100%.
+ */
+function transformOriginMiddleware(sideOffset: number): Middleware {
+	return {
+		name: 'transformOrigin',
+		fn(state) {
+			const { elements, middlewareData, placement } = state;
+			const side = placedSideOf(placement);
+			const align = placedAlignOf(placement);
+			const arrowData = middlewareData.arrow;
+			const hasArrowCoords = arrowData != null && (arrowData.x != null || arrowData.y != null);
+
+			let crossAxis: string;
+			if (hasArrowCoords) {
+				const x = arrowData.x ?? 0;
+				const y = arrowData.y ?? 0;
+				crossAxis =
+					side === 'left' || side === 'right' ? `${y}px` : `${x}px`;
+			} else if (align === 'start') {
+				crossAxis = '0%';
+			} else if (align === 'end') {
+				crossAxis = '100%';
+			} else {
+				crossAxis = '50%';
+			}
+
+			const origin = {
+				top: `${crossAxis} calc(100% + ${sideOffset}px)`,
+				bottom: `${crossAxis} ${-sideOffset}px`,
+				left: `calc(100% + ${sideOffset}px) ${crossAxis}`,
+				right: `${-sideOffset}px ${crossAxis}`,
+			}[side];
+
+			elements.floating.style.setProperty('--transform-origin', origin);
+			return {};
+		},
+	};
+}
+
 function buildMiddleware(options: {
 	sideOffset: number;
 	alignOffset: number;
@@ -158,6 +205,8 @@ function buildMiddleware(options: {
 	if (arrowElement) {
 		middleware.push(arrow({ element: arrowElement, padding: arrowPadding }));
 	}
+
+	middleware.push(transformOriginMiddleware(sideOffset));
 
 	return middleware;
 }
