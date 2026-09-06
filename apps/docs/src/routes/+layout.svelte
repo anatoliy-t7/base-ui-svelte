@@ -10,8 +10,11 @@
 	import Sidebar from '$lib/Sidebar.svelte';
 	import ThemeToggle from '$lib/ThemeToggle.svelte';
 	import GitHubLink from '$lib/GitHubLink.svelte';
+	import pkg from '../../../../packages/svelte/package.json';
 
 	let { children } = $props();
+
+	const version = pkg.version;
 
 	let menuOpen = $state(false);
 	let isNarrow = $state(false);
@@ -103,17 +106,24 @@
 		class="sidebar"
 		inert={isNarrow && !menuOpen ? true : undefined}
 	>
-		<div class="sidebar-brand">
+		<div class="sidebar-brand space-y-2">
 			<div class="sidebar-brand-row">
 				<a href="/" class="brand-link" onclick={closeMenu}>
 					<span style="color: #ff3e00;">b</span>ase-ui-svelte
 				</a>
+				<a href="/overview/releases" class="sidebar-version" onclick={closeMenu}>
+					v{version}
+				</a>
+			</div>
+
+			<div class="flex items-center gap-2">
+				<p class="sidebar-tag">Unofficial Base UI port for Svelte 5</p>
+
 				<div class="chrome-actions desktop-only">
 					<ThemeToggle />
 					<GitHubLink />
 				</div>
 			</div>
-			<p class="sidebar-tag">Unofficial Base UI port for Svelte 5</p>
 		</div>
 		<ScrollArea.Root class="sidebar-scroll">
 			<ScrollArea.Viewport class="sidebar-scroll-viewport">

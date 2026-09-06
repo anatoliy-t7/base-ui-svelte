@@ -316,8 +316,25 @@ body {
 	color: var(--docs-accent);
 }
 
+.sidebar-version {
+	flex-shrink: 0;
+	padding: 0.15rem 0.45rem;
+	border: 1px solid var(--docs-border);
+	border-radius: 0.35rem;
+	font-size: 0.72rem;
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	line-height: 1.2;
+	color: var(--docs-fg-muted);
+	text-decoration: none;
+}
+
+.sidebar-version:hover {
+	color: var(--docs-accent);
+	border-color: color-mix(in oklab, var(--docs-accent) 35%, var(--docs-border));
+}
+
 .sidebar-tag {
-	margin: 0.4rem 0 0;
 	font-size: 0.78rem;
 	line-height: 1.4;
 	color: var(--docs-fg-muted);
