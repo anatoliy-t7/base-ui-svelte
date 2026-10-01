@@ -1,6 +1,5 @@
 .menu-popup {
-	@apply min-w-40 origin-(--transform-origin,top) scroll-py-1 overflow-y-auto overscroll-contain bg-overlay p-1.5 text-sm shadow-overlay outline-none;
-	border-radius: min(32px, var(--radius-2xl));
+	@apply min-w-40 origin-(--transform-origin,top) scroll-py-1 overflow-y-auto overscroll-contain rounded-field bg-overlay p-1.5 text-sm shadow-overlay outline-none;
 	transform-origin: var(--transform-origin, top center);
 	transition:
 		opacity 150ms var(--ease-smooth),
@@ -15,7 +14,7 @@
 }
 
 .menu-item {
-	@apply relative flex min-h-9 w-full appearance-none items-center justify-between gap-3 rounded-2xl border-0 bg-transparent px-2.5 py-1.5 text-left text-sm outline-none no-highlight;
+	@apply relative flex min-h-9 w-full appearance-none items-center justify-between gap-3 rounded-lg border-0 bg-transparent px-2.5 py-1.5 text-left text-sm outline-none no-highlight;
 	cursor: var(--cursor-interactive);
 	transition:
 		transform 250ms var(--ease-out-quart),
@@ -67,18 +66,13 @@
 }
 
 .menu-submenu-trigger {
-	@apply relative flex min-h-9 w-full appearance-none items-center justify-between gap-3 rounded-2xl border-0 bg-transparent px-2.5 py-1.5 text-left text-sm outline-none no-highlight;
+	@apply relative flex min-h-9 w-full appearance-none items-center justify-between gap-3 rounded-lg border-0 bg-transparent px-2.5 py-1.5 text-left text-sm outline-none no-highlight;
 	cursor: var(--cursor-interactive);
 	transition:
 		transform 250ms var(--ease-out-quart),
 		background-color 150ms var(--ease-smooth),
 		box-shadow 150ms var(--ease-out);
 	@apply motion-reduce:transition-none;
-
-	&:focus-visible,
-	&[data-focus-visible='true'] {
-		@apply status-focused;
-	}
 
 	@media (hover: hover) {
 		&:hover,

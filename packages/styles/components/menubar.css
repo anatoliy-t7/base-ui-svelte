@@ -28,12 +28,11 @@
 }
 
 .menubar-popup {
-	@apply min-w-40 bg-overlay p-1.5 text-sm shadow-overlay outline-none;
-	border-radius: min(32px, var(--radius-2xl));
+	@apply min-w-40 rounded-field bg-overlay p-1.5 text-sm shadow-overlay outline-none;
 }
 
 .menubar-item {
-	@apply relative flex min-h-9 w-full appearance-none items-center justify-between gap-3 rounded-2xl border-0 bg-transparent px-2.5 py-1.5 text-left text-sm outline-none no-highlight;
+	@apply relative flex min-h-9 w-full appearance-none items-center justify-between gap-3 rounded-lg border-0 bg-transparent px-2.5 py-1.5 text-left text-sm outline-none no-highlight;
 	cursor: var(--cursor-interactive);
 	transition:
 		transform 250ms var(--ease-out-quart),

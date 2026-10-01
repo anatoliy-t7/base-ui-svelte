@@ -115,6 +115,12 @@
 		container-name: preview;
 	}
 
+	/* Package components own focus chrome; suppress docs :focus-visible outline. */
+	.component-preview-panel.demo :global(:focus-visible) {
+		outline: none;
+		outline-offset: 0;
+	}
+
 	/* Vertically center the canvas; stretch so section labels stay left-aligned. */
 	.component-preview-panel[data-align='center'] {
 		display: grid;

@@ -45,7 +45,7 @@
 }
 
 .select-icon {
-	@apply absolute inset-y-0 end-2 my-auto flex size-4 shrink-0 items-center justify-center text-field-placeholder transition duration-150;
+	@apply absolute inset-y-0 inset-e-2 my-auto flex size-4 shrink-0 items-center justify-center text-field-placeholder transition duration-150;
 	@apply motion-reduce:transition-none;
 
 	& svg {
@@ -60,8 +60,7 @@
 }
 
 .select-popup {
-	@apply max-h-72 min-w-(--anchor-width,10rem) origin-(--transform-origin,top) scroll-py-1 overflow-y-auto overscroll-contain bg-overlay p-1.5 text-sm shadow-overlay outline-none;
-	border-radius: min(32px, var(--radius-2xl));
+	@apply max-h-72 min-w-(--anchor-width,10rem) origin-(--transform-origin,top) scroll-py-1 overflow-y-auto overscroll-contain rounded-field bg-overlay p-1.5 text-sm shadow-overlay outline-none;
 	transform-origin: var(--transform-origin, top center);
 	transition:
 		opacity 150ms var(--ease-smooth),
@@ -76,7 +75,7 @@
 }
 
 .select-item {
-	@apply relative flex min-h-9 w-full cursor-default appearance-none items-center justify-between gap-3 rounded-2xl border-0 bg-transparent px-2.5 py-1.5 text-left text-sm outline-none no-highlight;
+	@apply relative flex min-h-9 w-full cursor-default appearance-none items-center justify-between gap-3 rounded-lg border-0 bg-transparent px-2.5 py-1.5 text-left text-sm outline-none no-highlight;
 	cursor: var(--cursor-interactive);
 	transition:
 		transform 250ms var(--ease-out-quart),

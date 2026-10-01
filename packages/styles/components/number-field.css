@@ -5,7 +5,7 @@
 	@apply inline-flex items-center gap-1.5;
 }
 .number-field-input {
-	@apply w-[4.5rem] appearance-none rounded-field border bg-field px-2 py-2 text-center text-sm text-field-foreground shadow-field outline-none;
+	@apply w-18 appearance-none rounded-field border bg-field p-2 text-center text-sm text-field-foreground shadow-field outline-none;
 	border-width: var(--border-width-field);
 	border-color: var(--field-border);
 	&:focus-visible,
@@ -15,7 +15,7 @@
 }
 .number-field-increment,
 .number-field-decrement {
-	@apply relative isolate inline-flex size-8 items-center justify-center rounded-lg text-xs outline-none;
+	@apply text-base relative isolate inline-flex size-9 items-center justify-center rounded-lg outline-none;
 	cursor: var(--cursor-interactive);
 	background-color: var(--default);
 	color: var(--default-foreground);

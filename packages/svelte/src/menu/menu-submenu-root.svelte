@@ -106,7 +106,7 @@
 		highlightedId = nextId;
 		if (nextId == null) return;
 		const entry = items.find((item) => item.id === nextId);
-		entry?.element.focus();
+		entry?.element.focus({ preventScroll: true });
 	}
 
 	function registerItem(itemId: string, element: HTMLElement, disabled: boolean): () => void {
